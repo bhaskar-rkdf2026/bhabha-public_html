@@ -1,0 +1,270 @@
+<?php  
+require_once('config.php');
+checksession($_SESSION[LOGIN_ADMIN]['userName'],'index.php');
+$stat=array();
+$action='';
+$action=$_GET['action'];
+define("PAGE",'course.php');
+define("TITLE",'Course');
+define("DBTAB",'course');
+
+if($_SESSION['success']!="")
+{
+   $stat['success']=$_SESSION['success'];
+	unset($_SESSION['success']);
+}
+if($_SESSION['error']!="")
+{
+   $stat['error']=$_SESSION['error'];
+	unset($_SESSION['error']);
+}
+if(isset($_POST['submit']))
+{
+
+	if($_REQUEST['action']=="add" && count($stat) == 0)	
+	{
+		$data = Array(
+					"program" => $_POST['program'],
+					"course" => $_POST['course'],
+					"department" => $_POST['department'],
+					"details" => $_POST['details'],
+					"status" => $_POST['status']
+					 );
+					
+					$id = $db->insert(DBTAB,$data);
+					unset($_POST);
+					unset($_SESSION['form']);
+					$_SESSION["success"] = 'Add Successfully';
+					redirect(PAGE);
+	}
+	elseif($_REQUEST['action']=="edit" && count($stat) == 0)	
+	{
+		$data = Array(
+					"program" => $_POST['program'],
+					"course" => $_POST['course'],
+					"department" => $_POST['department'],
+					"details" => $_POST['details'],
+					"status" => $_POST['status']
+					);
+
+					$db->where('id',$_REQUEST['id']);
+					$aryData = $db->update(DBTAB,$data);
+					unset($_POST);
+					unset($_SESSION['form']);
+					$_SESSION["success"] = 'Edit Successfully';
+					redirect(PAGE);
+			}
+}
+if($action=="delete")
+{
+	$db->where('id',$_REQUEST['id']);
+	$db->delete(DBTAB);
+	$_SESSION["success"] = 'Successfully Deleted';
+	redirect(PAGE);	
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
+<title><?php echo TITLE; ?>&nbsp;Dashboard - Silvery Infotech</title>
+<link href="<?php echo URL_PLUG;?>datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo URL_PLUG;?>datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo URL_PLUG;?>datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<?php include_once("inc.meta.php"); ?>
+</head>
+<body>
+<!-- Begin page -->
+<div id="wrapper"><!-- Top Bar Start -->
+  <?php include_once("inc.top.php"); ?>
+  <?php include_once("inc.menu.php"); ?>
+  <div class="content-page"><!-- Start content -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="page-title-box">
+              <h4 class="page-title"><?php echo TITLE; ?> Settings</h4>
+            </div>
+          </div>
+        </div>
+        <!-- end row -->
+        <?php
+    if($action=="edit" || $action=="add")
+		{
+			if($action=="edit")
+			{
+				$db->where('id',$_REQUEST['id']);
+				$aryData = $db->getOne(DBTAB);
+			}
+			?>
+        <div class="row">
+          <div class="col-12">
+            <div class="card m-b-20">
+              <div class="card-body">
+                <h4 class="mt-0 header-title"><?php echo ucfirst($action);?> <?php echo TITLE; ?></h4>
+                <br>
+                <div style="margin-left:10px; margin-right:10px;"> <?php echo msg($stat);?></div>
+                <form action="" method="post" enctype="multipart/form-data">
+                  
+                  <div class="form-group col-xs-12">
+                    <label>Select Program</label>
+                    <select name="program" class="form-control">
+                    <option value="">Select Program</option>
+                    
+                         <?php
+		$program = $db->get('program');
+         if(is_array($program) && count($program)>0)
+          {
+              foreach($program as $iprogram)
+              {
+                ?>
+                <option value="<?php echo $iprogram['id']?>"
+                <?php if($action=="edit"){
+						 if($iprogram['id']==$aryData['program']){?> selected="selected" <?php }}?><?php if($action=="add"){ if($iprogram['id']==$_POST['program']){?> selected="selected" <?php }}?>
+                
+                
+                ><?php echo $iprogram['program']?></option>
+                <?php
+			  }
+		  }?>
+                    </select>
+                  </div>
+                  
+                  <div class="form-group col-xs-12">
+                    <label>Select Department</label>
+                    <select name="department" class="form-control">
+                    <option value="">Select Department</option>
+                    
+                         <?php
+		$department = $db->get('department');
+         if(is_array($department) && count($department)>0)
+          {
+              foreach($department as $idepartment)
+              {
+                ?>
+                <option value="<?php echo $idepartment['id']?>"
+                <?php if($action=="edit"){
+						 if($idepartment['id']==$aryData['department']){?> selected="selected" <?php }}?><?php if($action=="add"){ if($idepartment['id']==$_POST['department']){?> selected="selected" <?php }}?>
+                
+                
+                ><?php echo $idepartment['title']?></option>
+                <?php
+			  }
+		  }?>
+                    </select>
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label>Course Name</label>
+                    <input type="text" name="course" class="form-control"  value="<?php if($action=="edit"){echo $aryData['course'];}else{echo $_POST['course'];}?>"/>
+                  </div>
+               <div class="form-group col-xs-12">
+                    <label>Details</label>
+                    <textarea name="details" class="form-control ckeditor" rows="3" ><?php if($action=="edit"){echo $aryData['details'];}else{echo $_POST['details'];}?>
+</textarea>
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label> Status </label>
+                    <input type="checkbox" name="status" value="1" <?php if($action=="edit"){
+					  if($aryData['status']==1){?> checked="checked" <?php }}?>/>
+                  </div>
+                  <input type="submit" value="<?php echo ucfirst($action);?> Data" name="submit" class="btn btn-default"/>
+                  <input value="Back" class="btn btn-warning waves-effect waves-light" 
+                  name="Back" type="button" onclick="window.location='javascript:history.go(-1)'" />
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- end col --></div>
+        <?php
+		}
+		else
+		{
+		?>
+        <div class="row">
+          <div class="col-12">
+            <div class="card m-b-20">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <h4 class="mt-0 header-title"><?php echo TITLE; ?></h4>
+                  </div>
+                  <div class="col-sm-2"> <a class="btn btn-primary" style="float:right" href="<?php echo PAGE;?>?action=add">Add <?php echo TITLE; ?></a> </div>
+                </div>
+                <br>
+                <div style="margin-left:10px; margin-right:10px;"> <?php echo msg($stat);?></div>
+                <div class="table-responsive">
+                  <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <?php
+		$aryData = $db->get(DBTAB);
+         if(is_array($aryData) && count($aryData)>0)
+          {
+  ?>
+                    <thead>
+                      <tr>
+                        <th>Course</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+              foreach($aryData as $iList)
+              {
+                ?>
+                      <tr>
+                        <td><?php echo ucfirst($iList['course']);?></td>
+                        <td><?php echo $iList['status'];?></td>
+                        <td><a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=edit" class="btn btn-sm btn-info">Edit</a>  <a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=delete" onclick="return deletex();" class="btn btn-sm btn-danger">Delete</a></td>
+                      </tr>
+                      <?php
+              }
+              ?>
+                      <?php
+          }
+          else
+          {
+          ?>
+                      <tr>
+                        <td colspan="5" class="list-tr">No Records Found.</td>
+                      </tr>
+                      <?php
+          }
+          ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end col --></div>
+        <?php 
+		}
+		?>
+        <!-- end row --></div>
+      <!-- container-fluid --></div>
+    <!-- content -->
+    <?php include_once("inc.footer.php"); ?>
+  </div>
+</div>
+<?php include_once("inc.footer.js.php"); ?>
+<!-- Required datatable js --> 
+<script src="<?php echo URL_PLUG;?>datatables/jquery.dataTables.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/dataTables.bootstrap4.min.js"></script> 
+<!-- Buttons examples --> 
+<script src="<?php echo URL_PLUG;?>datatables/dataTables.buttons.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/dataTables.responsive.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/responsive.bootstrap4.min.js"></script> 
+<!-- Datatable init js --> 
+<script src="<?php echo URL_PLUG;?>datatables/buttons.bootstrap4.min.js"></script> 
+<script src="<?php echo URL_JS;?>datatables.init.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/jszip.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/pdfmake.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/vfs_fonts.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/buttons.html5.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/buttons.print.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/buttons.colVis.min.js"></script>
+</body>
+</html>

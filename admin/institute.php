@@ -1,0 +1,288 @@
+<?php  
+require_once('config.php');
+checksession($_SESSION[LOGIN_ADMIN]['userName'],'index.php');
+$stat=array();
+$action='';
+$action=$_GET['action'];
+define("PAGE",'institute.php');
+define("TITLE",'Institute');
+define("DBTAB",'institute');
+
+if($_SESSION['success']!="")
+{
+   $stat['success']=$_SESSION['success'];
+	unset($_SESSION['success']);
+}
+if($_SESSION['error']!="")
+{
+   $stat['error']=$_SESSION['error'];
+	unset($_SESSION['error']);
+}
+if(isset($_POST['submit']))
+{
+
+	if($_REQUEST['action']=="add" && count($stat) == 0)	
+	{
+		$data = Array(
+					"department" => $_POST['department'],
+					"institute_name" => $_POST['institute_name'],
+					"about_institute" => $_POST['about_institute'],
+					"principal_message" => $_POST['principal_message'],
+					"courses" => $_POST['courses'],
+					"branches" => $_POST['branches'],
+					"departments" => $_POST['departments'],
+					"activities" => $_POST['activities'],
+					"placement" => $_POST['placement'],
+					"status" => $_POST['status']
+					 );
+					
+					$id = $db->insert(DBTAB,$data);
+					unset($_POST);
+					unset($_SESSION['form']);
+					$_SESSION["success"] = 'Add Successfully';
+					redirect(PAGE);
+	}
+	elseif($_REQUEST['action']=="edit" && count($stat) == 0)	
+	{
+		$data = Array(
+				"department" => $_POST['department'],
+					"institute_name" => $_POST['institute_name'],
+					"about_institute" => $_POST['about_institute'],
+					"principal_message" => $_POST['principal_message'],
+					"courses" => $_POST['courses'],
+					"branches" => $_POST['branches'],
+					"departments" => $_POST['departments'],
+					"activities" => $_POST['activities'],
+					"placement" => $_POST['placement'],
+					"status" => $_POST['status']
+					);
+
+					$db->where('id',$_REQUEST['id']);
+					$aryData = $db->update(DBTAB,$data);
+					unset($_POST);
+					unset($_SESSION['form']);
+					$_SESSION["success"] = 'Edit Successfully';
+					redirect(PAGE);
+			}
+}
+if($action=="delete")
+{
+	$db->where('id',$_REQUEST['id']);
+	$db->delete(DBTAB);
+	$_SESSION["success"] = 'Successfully Deleted';
+	redirect(PAGE);	
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
+<title><?php echo TITLE; ?>&nbsp;Dashboard - Silvery Infotech</title>
+<link href="<?php echo URL_PLUG;?>datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo URL_PLUG;?>datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<link href="<?php echo URL_PLUG;?>datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
+<?php include_once("inc.meta.php"); ?>
+</head>
+<body>
+<!-- Begin page -->
+<div id="wrapper"><!-- Top Bar Start -->
+  <?php include_once("inc.top.php"); ?>
+  <?php include_once("inc.menu.php"); ?>
+  <div class="content-page"><!-- Start content -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="page-title-box">
+              <h4 class="page-title"><?php echo TITLE; ?> Settings</h4>
+            </div>
+          </div>
+        </div>
+        <!-- end row -->
+        <?php
+    if($action=="edit" || $action=="add")
+		{
+			if($action=="edit")
+			{
+				$db->where('id',$_REQUEST['id']);
+				$aryData = $db->getOne(DBTAB);
+			}
+			?>
+        <div class="row">
+          <div class="col-12">
+            <div class="card m-b-20">
+              <div class="card-body">
+                <h4 class="mt-0 header-title"><?php echo ucfirst($action);?> <?php echo TITLE; ?></h4>
+                <br>
+                <div style="margin-left:10px; margin-right:10px;"> <?php echo msg($stat);?></div>
+                <form action="" method="post" enctype="multipart/form-data">
+                  <div class="form-group col-xs-12">
+                    <label>Institute Title (Name)</label>
+                    <input type="text" name="institute_name" class="form-control"  value="<?php if($action=="edit"){echo $aryData['institute_name'];}else{echo $_POST['institute_name'];}?>"/>
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label>Select Department</label>
+                    <select name="department" class="form-control">
+                    <option value="">Select Department</option>
+                    
+                         <?php
+		$department = $db->get('department');
+         if(is_array($department) && count($department)>0)
+          {
+              foreach($department as $idepartment)
+              {
+                ?>
+                <option value="<?php echo $idepartment['id']?>"
+                <?php if($action=="edit"){
+						 if($idepartment['id']==$aryData['department']){?> selected="selected" <?php }}?><?php if($action=="add"){ if($idepartment['id']==$_POST['department']){?> selected="selected" <?php }}?>
+                
+                
+                ><?php echo $idepartment['title']?></option>
+                <?php
+			  }
+		  }?>
+                    </select>
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label>About Institute</label>
+                    <textarea name="about_institute" class="form-control ckeditor" rows="3" ><?php if($action=="edit"){echo $aryData['about_institute'];}else{echo $_POST['about_institute'];}?>
+</textarea>
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label>Institute Principal Message</label>
+                    <textarea name="principal_message" class="form-control ckeditor" rows="3" ><?php if($action=="edit"){echo $aryData['principal_message'];}else{echo $_POST['principal_message'];}?>
+</textarea>
+                    
+                    
+                  </div>
+                  <div class="form-group col-xs-12" >
+                    <label>Courses </label>
+                    <textarea name="courses" class="form-control ckeditor" rows="3" ><?php if($action=="edit"){echo $aryData['courses'];}else{echo $_POST['courses'];}?>
+</textarea>
+                  </div>
+                  
+                  <div class="form-group col-xs-12" >
+                    <label>Branches </label>
+                    <textarea name="branches" class="form-control ckeditor" rows="3" ><?php if($action=="edit"){echo $aryData['branches'];}else{echo $_POST['branches'];}?>
+</textarea>
+                  </div>
+                  <div class="form-group col-xs-12" >
+                    <label>Departments </label>
+                    <textarea name="departments" class="form-control ckeditor" rows="3" ><?php if($action=="edit"){echo $aryData['departments'];}else{echo $_POST['departments'];}?>
+</textarea>
+                  </div>
+                  <div class="form-group col-xs-12" >
+                    <label>Activities </label>
+                    <textarea name="activities" class="form-control ckeditor" rows="3" ><?php if($action=="edit"){echo $aryData['activities'];}else{echo $_POST['activities'];}?>
+</textarea>
+                  </div>
+                  <div class="form-group col-xs-12" >
+                    <label>Placement </label>
+                    <textarea name="placement" class="form-control ckeditor" rows="3" ><?php if($action=="edit"){echo $aryData['placement'];}else{echo $_POST['placement'];}?>
+</textarea>
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label> Status </label>
+                    <input type="checkbox" name="status" value="1" <?php if($action=="edit"){
+					  if($aryData['status']==1){?> checked="checked" <?php }}?>/>
+                  </div>
+                  <input type="submit" value="<?php echo ucfirst($action);?> Data" name="submit" class="btn btn-default"/>
+                  <input value="Back" class="btn btn-warning waves-effect waves-light" 
+                  name="Back" type="button" onclick="window.location='javascript:history.go(-1)'" />
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- end col --></div>
+        <?php
+		}
+		else
+		{
+		?>
+        <div class="row">
+          <div class="col-12">
+            <div class="card m-b-20">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <h4 class="mt-0 header-title"><?php echo TITLE; ?></h4>
+                  </div>
+                  <div class="col-sm-2"> <a class="btn btn-primary" style="float:right" href="<?php echo PAGE;?>?action=add">Add <?php echo TITLE; ?></a> </div>
+                </div>
+                <br>
+                <div style="margin-left:10px; margin-right:10px;"> <?php echo msg($stat);?></div>
+                <div class="table-responsive">
+                  <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <?php
+		$aryData = $db->get(DBTAB);
+         if(is_array($aryData) && count($aryData)>0)
+          {
+  ?>
+                    <thead>
+                      <tr>
+                        <th> Title</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+              foreach($aryData as $iList)
+              {
+                ?>
+                      <tr>
+                        <td><?php echo ucfirst($iList['institute_name']);?></td>
+                        <td><?php echo $iList['status'];?></td>
+                        <td><a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=edit" class="btn btn-sm btn-info">Edit</a>  <a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=delete" onclick="return deletex();" class="btn btn-sm btn-danger">Delete</a></td>
+                      </tr>
+                      <?php
+              }
+              ?>
+                      <?php
+          }
+          else
+          {
+          ?>
+                      <tr>
+                        <td colspan="5" class="list-tr">No Records Found.</td>
+                      </tr>
+                      <?php
+          }
+          ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end col --></div>
+        <?php 
+		}
+		?>
+        <!-- end row --></div>
+      <!-- container-fluid --></div>
+    <!-- content -->
+    <?php include_once("inc.footer.php"); ?>
+  </div>
+</div>
+<?php include_once("inc.footer.js.php"); ?>
+<!-- Required datatable js --> 
+<script src="<?php echo URL_PLUG;?>datatables/jquery.dataTables.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/dataTables.bootstrap4.min.js"></script> 
+<!-- Buttons examples --> 
+<script src="<?php echo URL_PLUG;?>datatables/dataTables.buttons.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/dataTables.responsive.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/responsive.bootstrap4.min.js"></script> 
+<!-- Datatable init js --> 
+<script src="<?php echo URL_PLUG;?>datatables/buttons.bootstrap4.min.js"></script> 
+<script src="<?php echo URL_JS;?>datatables.init.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/jszip.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/pdfmake.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/vfs_fonts.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/buttons.html5.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/buttons.print.min.js"></script> 
+<script src="<?php echo URL_PLUG;?>datatables/buttons.colVis.min.js"></script>
+</body>
+</html>
