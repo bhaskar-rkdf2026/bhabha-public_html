@@ -45,7 +45,7 @@
             <!-- <li><a href="https://www.universitymanagementsystem.in/Bhabha" title="Students/Fuculty Login" ></i>ERP Login</span></a></li> -->
             <li><a href="https://bhabha.accsofterp.com/OAP/AdminLogin.aspx" target="_blank" title="OAP Login">  <span class="">OAP Login</a></li>  
               <li><a href="<?php echo $aryForm['webmail_link']?>" target="_blank"></i>Web Mail</a></li> 
-              <li><a href="https://www.bhabhauniversity.edu.in/upload/media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank"></i>Public Disclosure</a></li>
+              <li><a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank"></i>Public Disclosure</a></li>
               <li><a href="nirf.php" target="_blank" title="NIRF">NIRF</span></a></li>
              <!--<li><a href="https://cbseresults.nic.in/" target="_blank" title="CBSE Results 2023">CBSE Result</span></a></li> -->
             <!-- <li><a href="http://www.mpresults.nic.in/" target="_blank" title="MP BOARD Results 2023"><span class="blinking">MP Board Result</span></a></li> --> 
@@ -66,7 +66,7 @@
             <li><a href="<?php echo href("notice.php")?>">Notices</a></li>
             <li><a href="<?php echo href("grievance.php")?>">Grievance</a></li>
             <!--<li><a href="https://bhabha.accsofterp.com/OAP/Registration.aspx"><span class="blinking">Admission Enquiry</span></a></li> -->
-            <li><a href="https://www.bhabhauniversity.edu.in/enquiry/"><span class="blinking">Admission Enquiry</span></a></li>
+            <li><a href="<?php echo href('enquiry.php'); ?>"><span class="blinking">Admission Enquiry</span></a></li>
           </ul>
         </div>
       </div>
@@ -112,9 +112,9 @@
                   <!--<li><a href="<?php echo href("advisory.php")?>">Advisory Bodies</a></li>-->
                   <li><a href="<?php echo href("advisory.php")?>">Cells & Committees</a></li>
                   <li><a href="<?php echo href("approvals.php")?>">Approvals</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/upload/media/ffe90b0c7e9e55b00b1207aee3ce3971.pdf">Sponsoring Detail</a></li>
+                  <li><a href="<?php echo URL_UPLOAD; ?>media/ffe90b0c7e9e55b00b1207aee3ce3971.pdf">Sponsoring Detail</a></li>
                   <li><a href="auditreport.php">Finance Officer > Audit Report</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/upload/media/671d06f0fea73f07576a994c4343281c.pdf">Annual Report 2024</a></li>
+                  <li><a href="<?php echo URL_UPLOAD; ?>media/671d06f0fea73f07576a994c4343281c.pdf">Annual Report 2024</a></li>
                   <li><a href="ugc-proforma.php
 " title="Filled UGC Proforma Information in prescribed format">UGC Proforma</a></li>
                 </ul>
@@ -153,7 +153,7 @@ if(is_array($institutes) && count($institutes)>0)
                   <li><a href="https://www.universitymanagementsystem.in/Bhabha" target="_blank">Results</a></li> -->
                    <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Results</a></li>
                   <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Login</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/BUQuestionPapers_demo.php">Previous Question Papers</a></li>
+                  <li><a href="<?php echo href('BUQuestionPapers_demo.php'); ?>">Previous Question Papers</a></li>
                 </ul>
               </li>
               <li><a href="">Research</a>
@@ -186,8 +186,8 @@ if(is_array($institutes) && count($institutes)>0)
               <li><a href="<?php echo href("#")?>" title="Training & Placement Cell">T&P Cell</a>
                <ul>
                   <li><a href="<?php echo href("placements.php");?>">Traninig & Placement</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/upload/media/9018b4daec2ac10a45dfd539260998f5.pdf" target="_blank">Placement List</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/upload/media/f27e76c6a5c21432282101555c225b35.jpg" target="_blank">Our Major Recruiter's</a></li>
+                  <li><a href="<?php echo URL_UPLOAD; ?>media/9018b4daec2ac10a45dfd539260998f5.pdf" target="_blank">Placement List</a></li>
+                  <li><a href="<?php echo URL_UPLOAD; ?>media/f27e76c6a5c21432282101555c225b35.jpg" target="_blank">Our Major Recruiter's</a></li>
                 </ul>
               </li>
               
@@ -218,9 +218,9 @@ if(is_array($institutes) && count($institutes)>0)
                     <li><a href="<?php echo href("awards.php")?>">Awards & Achievements</a></li>
                     <li><a href="<?php echo href("advisory.php")?>">Advisory Bodies</a></li>
                     <li><a href="<?php echo href("approvals.php")?>">Approvals</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/upload/media/ffe90b0c7e9e55b00b1207aee3ce3971.pdf">Sponsoring Detail</a></li>
+                    <li><a href="<?php echo URL_UPLOAD; ?>media/ffe90b0c7e9e55b00b1207aee3ce3971.pdf">Sponsoring Detail</a></li>
                   <li><a href="auditreport.php">Finance Officer > Audit Report</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/upload/media/671d06f0fea73f07576a994c4343281c.pdf">Annual Report 2024</a></li>
+                  <li><a href="<?php echo URL_UPLOAD; ?>media/671d06f0fea73f07576a994c4343281c.pdf">Annual Report 2024</a></li>
                   
                     <!--
                     <li><a href="<?php echo href("#")?>">Annual Report 2024</a></li> 
@@ -265,7 +265,7 @@ if(is_array($institutes) && count($institutes)>0)
                     <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Results</a></li>
                     <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Login</a></li>
                     
-                    <li><a href="https://www.bhabhauniversity.edu.in/BUQuestionPapers_demo.php" target="_blank" >Question Papers</a></li>
+                    <li><a href="<?php echo href('BUQuestionPapers_demo.php'); ?>" target="_blank" >Question Papers</a></li>
                   </ul>
                 </li>
                 <li class="menu-item kode-parent-menu"><a href="<?php echo href("research.php")?>">Research</a>
