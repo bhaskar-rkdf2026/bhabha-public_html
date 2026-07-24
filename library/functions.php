@@ -795,7 +795,8 @@ function href($page,$param="")
 	$url = $url[0];
 	if($param!='')
 	{
-		$linkParam = end(explode("=",$param));
+		$paramParts = explode("=",$param);
+		$linkParam = end($paramParts);
 		return 	URL_ROOT.$url."/".$linkParam."/";
 	}
 	else
