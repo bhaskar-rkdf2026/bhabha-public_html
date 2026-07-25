@@ -72,20 +72,74 @@
             ['icon'=>'fa-music','name'=>'Auditorium','desc'=>'State-of-the-art auditorium for seminars, convocations, and cultural events.'],
           ];
           foreach($facilities as $f): ?>
-          <div style="background:#F8FAFC;border:1px solid #E5E7EB;border-radius:8px;padding:20px 16px;text-align:center;transition:all 0.25s;" onmouseover="this.style.background='#0A1B54';this.style.borderColor='#0A1B54';" onmouseout="this.style.background='#F8FAFC';this.style.borderColor='#E5E7EB';">
-            <div style="width:48px;height:48px;background:rgba(10,27,84,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;" class="fac-icon-wrap">
-              <i class="fa <?php echo $f['icon'];?>" style="font-size:20px;color:#0A1B54;" class="fac-icon"></i>
+          <div class="bu-fac-card">
+            <div class="fac-icon-wrap">
+              <i class="fa <?php echo $f['icon'];?> fac-icon"></i>
             </div>
-            <h4 style="font-size:13px;font-weight:700;color:#061D7C;margin:0 0 6px 0;font-family:'Plus Jakarta Sans',sans-serif;" class="fac-title"><?php echo $f['name'];?></h4>
-            <p style="font-size:12px;line-height:1.55;color:#6B7280;margin:0;" class="fac-desc"><?php echo $f['desc'];?></p>
+            <h4 class="fac-title"><?php echo $f['name'];?></h4>
+            <p class="fac-desc"><?php echo $f['desc'];?></p>
           </div>
           <?php endforeach; ?>
         </div>
         <style>
-          div:hover .fac-icon-wrap { background:rgba(255,193,7,0.15) !important; }
-          div:hover .fac-icon { color:#FFC107 !important; }
-          div:hover .fac-title { color:#fff !important; }
-          div:hover .fac-desc { color:rgba(255,255,255,0.7) !important; }
+          .bu-fac-card {
+            background: #F8FAFC;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 20px 16px;
+            text-align: center;
+            transition: all 0.25s ease;
+            cursor: pointer;
+          }
+          .bu-fac-card:hover {
+            background: #0A1B54 !important;
+            border-color: #0A1B54 !important;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(10, 27, 84, 0.15);
+          }
+          .bu-fac-card .fac-icon-wrap {
+            width: 48px;
+            height: 48px;
+            background: rgba(10, 27, 84, 0.08);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            transition: all 0.25s ease;
+          }
+          .bu-fac-card .fac-icon {
+            font-size: 20px;
+            color: #0A1B54;
+            transition: color 0.25s ease;
+          }
+          .bu-fac-card .fac-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #061D7C;
+            margin: 0 0 6px 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: color 0.25s ease;
+          }
+          .bu-fac-card .fac-desc {
+            font-size: 12px;
+            line-height: 1.55;
+            color: #6B7280;
+            margin: 0;
+            transition: color 0.25s ease;
+          }
+          .bu-fac-card:hover .fac-icon-wrap {
+            background: rgba(255, 193, 7, 0.18) !important;
+          }
+          .bu-fac-card:hover .fac-icon {
+            color: #FFC107 !important;
+          }
+          .bu-fac-card:hover .fac-title {
+            color: #ffffff !important;
+          }
+          .bu-fac-card:hover .fac-desc {
+            color: rgba(255, 255, 255, 0.8) !important;
+          }
         </style>
       </div>
 

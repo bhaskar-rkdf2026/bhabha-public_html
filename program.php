@@ -1,100 +1,146 @@
 <?php include('config.php');
-$db->where('id',$_REQUEST['id']);
+$id = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 1;
+$db->where('id', $id);
 $aryData = $db->getOne('department');
+
+if(!$aryData) {
+    header("Location: ".href("course.php"));
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?php echo $aryData['title']?>- Bhabha University Bhopal Madhya Pradesh</title>
-    <!-- Bootstrap core CSS -->
-    <?php include('inc.meta.php');?>
-    </head>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?php echo htmlspecialchars($aryData['title']);?> - Courses, Intake & Eligibility - Bhabha University Bhopal</title>
+<meta name="description" content="Offered courses, intake capacities, and eligibility requirements under <?php echo htmlspecialchars($aryData['title']);?> at Bhabha University Bhopal.">
+<?php include('inc.meta.php');?>
+<style>
+.bu-full-width-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 20px 80px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  box-sizing: border-box;
+}
 
-    <body>
-<!--KF KODE WRAPPER WRAP START-->
-<div class="kode_wrapper"> 
-      <!-- register Modal --> 
-      <!--HEADER START-->
-      <?php include('inc.header.php');?>
-      <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3><?php echo $aryData['title']?></h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                 <li><a href="<?php echo href("course.php")?>">Courses, Intake and Eligibility</a></li>
-                <li><a href="#"><?php echo $aryData['title']?></a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
+.bu-program-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+.bu-program-card {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 24px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(6,29,124,0.05);
+  transition: all 0.28s ease;
+  border-left: 4px solid #0A1B54;
+}
+.bu-program-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(6,29,124,0.12);
+  border-left-color: #FFC107;
+  text-decoration: none;
+}
+.bu-program-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #061D7C;
+  margin: 0 0 12px 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.4;
+}
+.bu-program-card p {
+  font-size: 13px;
+  color: #6B7280;
+  margin-bottom: 16px;
+}
+.bu-program-link {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #D99B00;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+}
+.bu-program-card:hover .bu-program-link i {
+  transform: translateX(4px);
+}
+.bu-program-link i {
+  transition: transform 0.2s ease;
+}
+</style>
+</head>
+
+<body>
+<div class="kode_wrapper">
+  <!-- HEADER START -->
+  <?php include('inc.header.php');?>
+  <!-- HEADER END -->
+
+  <?php
+  $page_title    = htmlspecialchars($aryData['title']);
+  $page_subtitle = 'Offered Degree Programs, Seat Intake Capacity & Eligibility Criteria.';
+  $page_icon     = 'fa-university';
+  $breadcrumbs   = [
+    ['label' => 'Home',       'url' => URL_ROOT],
+    ['label' => 'Courses & Intake', 'url' => href("course.php")],
+    ['label' => $aryData['title'], 'url' => '#'],
+  ];
+  include('inc.page-banner.php');
+  ?>
+
+  <div class="bu-full-width-container">
+    <main>
+
+      <div class="bu-content-card">
+        <span class="bu-content-label">Offered Programs</span>
+        <h2 class="bu-content-h2"><?php echo htmlspecialchars($aryData['title']);?> — <em>Courses &amp; Intake</em></h2>
+        <div class="bu-content-divider"></div>
+
+        <div class="bu-program-list-grid">
+          <?php
+          $db->where('department', $id);
+          $courses = $db->get('course');
+          if(is_array($courses) && count($courses) > 0) {
+            foreach($courses as $icourse) {
+          ?>
+          <a href="<?php echo href("eligibility.php", "id=".$icourse['id']);?>" class="bu-program-card">
+            <div>
+              <h4><?php echo htmlspecialchars($icourse['course']);?></h4>
+              <p>Explore seat intake, course duration, stream eligibility, and admission criteria.</p>
             </div>
-      </div>
+            <span class="bu-program-link">View Intake &amp; Eligibility <i class="fa fa-arrow-right"></i></span>
+          </a>
+          <?php
+            }
+          } else {
+            echo '<p style="font-size:14px;color:#6B7280;">No individual courses listed under this department yet. Please check back soon.</p>';
+          }
+          ?>
         </div>
-  </div>
-      <!--NEWS LETTERS END--> 
-      <!--FOOTER START-->
-      
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>Bhabha University</h5>
-                <h3><?php echo $aryData['title']?> : Courses, Intake and Eligibility</h3>
-              </div>
-                  <!-- HEADING 1 END-->
-                  <div class="abt_univ_des">
-                  <div class="widget widget-categories">
-                      <ul>
-                       <?php
-					   $db->where('department',$_REQUEST['id']);
-$course = $db->get('course');
-if(is_array($course) && count($course)>0)
-          {
-              foreach($course as $icourse)
-              { 
-?>
- <li><a  href="<?php echo href("eligibility.php","id=".$icourse['id']."");?>"><i class="fa fa-caret-right"></i><?php echo $icourse['course']?></a></li>
-            <?php 
-			  }
-		  }?>
-                      
-                  </ul>
-                    </div>
-                   </div>
-                </div>
-          </div>
-            </div>
       </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
+
+    </main>
   </div>
-      <?php include('inc.footer.php');?>
-      
-      <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
-    </div>
-<!--KF KODE WRAPPER WRAP END--> 
-<!--Bootstrap core JavaScript-->
+
+  <!-- FOOTER START -->
+  <?php include('inc.footer.php');?>
+  <!-- FOOTER END -->
+</div>
+
 <?php include('inc.footer.js.php');?>
 </body>
 </html>

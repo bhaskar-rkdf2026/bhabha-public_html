@@ -1,946 +1,337 @@
 <?php include('config.php');?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>T & P Cell - Bhabha University Bhopal Madhya Pradesh</title>
-    <!-- Bootstrap core CSS -->
-    <?php include('inc.meta.php');?>
-    </head>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Training & Placement Cell - Bhabha University Bhopal</title>
+<meta name="description" content="Training and Placement Cell at Bhabha University Bhopal — connecting students with top recruiters, corporate partnerships, campus placement statistics, and career guidance.">
+<?php include('inc.meta.php');?>
+<style>
+.bu-full-width-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 20px 80px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  box-sizing: border-box;
+}
 
-    <body>
-<!--KF KODE WRAPPER WRAP START-->
-<div class="kode_wrapper"> 
-      <!-- register Modal --> 
-      <!--HEADER START-->
-      <?php include('inc.header.php');?>
-      <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>T & P Cell</h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#">T & P Cell</a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
+/* Head of T&P Card */
+.bu-tnp-head-card {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  background: #F8FAFC;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+.bu-tnp-head-img {
+  width: 130px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(6,29,124,0.12);
+  flex-shrink: 0;
+}
+.bu-tnp-head-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #061D7C;
+  margin: 0 0 4px 0;
+}
+.bu-tnp-head-role {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #D99B00;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+.bu-tnp-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #4B5563;
+}
+.bu-tnp-contact-list i {
+  color: #0A1B54;
+  width: 18px;
+}
+
+/* Lists styling */
+.bu-feature-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 24px 0;
+}
+.bu-feature-list li {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(6,29,124,0.03);
+}
+.bu-feature-list li i {
+  color: #D99B00;
+  font-size: 14px;
+}
+
+/* Placed Students Grid */
+.bu-placed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 22px;
+  margin-top: 16px;
+}
+.bu-placed-card {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(6,29,124,0.06);
+  transition: all 0.28s ease;
+}
+.bu-placed-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(6,29,124,0.12);
+  border-color: #FFC107;
+}
+.bu-placed-img-wrap {
+  width: 100%;
+  height: 200px;
+  background: #0A1B54;
+  overflow: hidden;
+  position: relative;
+}
+.bu-placed-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.bu-placed-card:hover .bu-placed-img {
+  transform: scale(1.06);
+}
+.bu-placed-body {
+  padding: 18px 16px;
+}
+.bu-placed-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #061D7C;
+  margin: 0 0 4px 0;
+}
+.bu-placed-degree {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6B7280;
+  margin-bottom: 8px;
+}
+.bu-placed-company {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0A1B54;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bu-placed-pkg {
+  display: inline-block;
+  background: rgba(255,193,7,0.18);
+  color: #B47F00;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+}
+
+/* Recruiters Grid */
+.bu-recruiter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.bu-recruiter-item {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 16px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  box-shadow: 0 2px 10px rgba(6,29,124,0.04);
+  transition: all 0.25s ease;
+}
+.bu-recruiter-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(6,29,124,0.1);
+  border-color: #FFC107;
+}
+.bu-recruiter-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+</style>
+</head>
+
+<body>
+<div class="kode_wrapper">
+  <!-- HEADER START -->
+  <?php include('inc.header.php');?>
+  <!-- HEADER END -->
+
+  <?php
+  $page_title    = 'Training & <em>Placement Cell</em>';
+  $page_subtitle = 'Bridging academia and industry to secure career opportunities with premier global corporations.';
+  $page_icon     = 'fa-briefcase';
+  $breadcrumbs   = [
+    ['label' => 'Home',       'url' => URL_ROOT],
+    ['label' => 'Placements', 'url' => '#'],
+  ];
+  include('inc.page-banner.php');
+  ?>
+
+  <!-- Ticker & Counters Banner Component -->
+  <?php include('inc.placements.php'); ?>
+
+  <div class="bu-full-width-container">
+    <main>
+
+      <!-- Head of Placement Cell -->
+      <div class="bu-content-card">
+        <span class="bu-content-label">Cell Leadership</span>
+        <h2 class="bu-content-h2">Training &amp; <em>Placement Department</em></h2>
+        <div class="bu-content-divider"></div>
+        
+        <div class="bu-tnp-head-card">
+          <img src="https://www.bhabhauniversity.edu.in/upload/media/8cc8f94e9069b6237ce5bff460e08994.jpg" 
+               alt="Mr. Jitendra Karosia" class="bu-tnp-head-img"
+               onerror="this.src='extra-images/about-img.jpg';">
+          <div class="bu-tnp-head-info">
+            <h3>Mr. Jitendra Karosia</h3>
+            <span class="bu-tnp-head-role">Group Head – Training &amp; Placement Department | 17+ Years Experience</span>
+            <div class="bu-tnp-contact-list">
+              <div><i class="fa fa-envelope"></i> <strong>Email:</strong> headtnp@bhabhauniversity.edu.in / tpo@bhabhauniversity.edu.in</div>
+              <div><i class="fa fa-phone"></i> <strong>Mobile:</strong> +91 7566378153 | +91 7470545827</div>
+              <div><i class="fa fa-building"></i> <strong>Office:</strong> Training &amp; Placement Office, Bhabha University Campus, Bhopal</div>
             </div>
-      </div>
+          </div>
         </div>
+
+        <div class="bu-content-body">
+          <p>The Training and Placement Cell of Bhabha University, Bhopal plays a pivotal role in creating career opportunities for Under Graduate and Post Graduate passing out students. Operating round the year, the cell facilitates seamless interactions between corporate entities and graduating engineers, managers, scientists, and healthcare professionals.</p>
+          <p>Our ingenious alumnae have established exemplary standards across the corporate landscape through their valuable contributions, ensuring top recruiters regularly return to our campus for recruitment drives.</p>
+        </div>
+      </div>
+
+      <!-- Objectives & Career Programs -->
+      <div class="bu-content-card">
+        <span class="bu-content-label">Skill Enhancement</span>
+        <h2 class="bu-content-h2">Objectives &amp; <em>Development Programs</em></h2>
+        <div class="bu-content-divider"></div>
+
+        <h4 style="font-size:16px;font-weight:700;color:#061D7C;margin-bottom:12px;">Core Objectives of T&amp;P Cell:</h4>
+        <ul class="bu-feature-list">
+          <li><i class="fa fa-check-circle"></i> Developing student readiness for Corporate Recruitment Processes</li>
+          <li><i class="fa fa-check-circle"></i> Technical knowledge enrichment and Soft Skills workshops</li>
+          <li><i class="fa fa-check-circle"></i> Guidance for competitive exams (CAT, GATE, GRE, UPSC, IES)</li>
+          <li><i class="fa fa-check-circle"></i> Maximum campus &amp; off-campus placement drives with top tier MNCs</li>
+        </ul>
+
+        <h4 style="font-size:16px;font-weight:700;color:#061D7C;margin:24px 0 12px 0;">Career Development Programs Offered:</h4>
+        <ul class="bu-feature-list">
+          <li><i class="fa fa-star"></i> Personality Development Programs (PDP)</li>
+          <li><i class="fa fa-star"></i> Professional Communication &amp; Aptitude Training</li>
+          <li><i class="fa fa-star"></i> Mock Interview Sessions &amp; Group Discussions</li>
+          <li><i class="fa fa-star"></i> Industry-to-Institute Convergence Expert Sessions</li>
+          <li><i class="fa fa-star"></i> Public Sector &amp; Govt Competitive Exam Guidance</li>
+          <li><i class="fa fa-star"></i> In-plant Training &amp; Industrial Internships</li>
+        </ul>
+      </div>
+
+      <!-- Placed Students Grid Card -->
+      <div class="bu-content-card">
+        <span class="bu-content-label">Student Success Stories</span>
+        <h2 class="bu-content-h2">Recent <em>Placed Students</em></h2>
+        <div class="bu-content-divider"></div>
+
+        <div class="bu-placed-grid">
+          <?php
+          $placed_students = [
+            ['name'=>'Rachana Singh','degree'=>'MBA','company'=>'UFaber Edutech Pvt. Ltd.','pkg'=>'CTC 6.0 - 8.0 LPA','img'=>'https://www.bhabhauniversity.edu.in/upload/placed/Rachna%20singh1.jpg'],
+            ['name'=>'Anjali Maurya','degree'=>'M.Tech (EE)','company'=>'Pentagon Space Pvt. Ltd.','pkg'=>'CTC 3.0 - 12.0 LPA','img'=>'https://www.bhabhauniversity.edu.in/upload/placed/ANJALI%20MAURYA1.jpg'],
+            ['name'=>'Shivam Shukla','degree'=>'M.Tech (EE)','company'=>'Infosys Ltd.','pkg'=>'CTC 3.60 LPA','img'=>'https://www.bhabhauniversity.edu.in/upload/placed/Shivam%20Shukla1.jpg'],
+            ['name'=>'Deepak Patel','degree'=>'B.Tech (CSE)','company'=>'TCS (Tata Consultancy Services)','pkg'=>'CTC 4.50 LPA','img'=>''],
+          ];
+          foreach($placed_students as $student): ?>
+          <div class="bu-placed-card">
+            <div class="bu-placed-img-wrap">
+              <?php if(!empty($student['img'])): ?>
+                <img src="<?php echo $student['img'];?>" alt="<?php echo $student['name'];?>" class="bu-placed-img" onerror="this.src='extra-images/home-gallery1.jpg';">
+              <?php else: ?>
+                <div style="display:flex;align-items:center;justify-content:center;height:100%;"><i class="fa fa-user" style="font-size:50px;color:rgba(255,193,7,0.7);"></i></div>
+              <?php endif; ?>
+            </div>
+            <div class="bu-placed-body">
+              <h4 class="bu-placed-name"><?php echo $student['name'];?></h4>
+              <div class="bu-placed-degree"><?php echo $student['degree'];?></div>
+              <div class="bu-placed-company"><i class="fa fa-building-o"></i> <?php echo $student['company'];?></div>
+              <span class="bu-placed-pkg"><?php echo $student['pkg'];?></span>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <!-- Major Recruiters Card (Dynamically fetched from DB) -->
+      <?php
+      $recruiters = $db->get('recruiters');
+      if(is_array($recruiters) && count($recruiters) > 0): ?>
+      <div class="bu-content-card">
+        <span class="bu-content-label">Corporate Partners</span>
+        <h2 class="bu-content-h2">Our Major <em>Recruiters</em></h2>
+        <div class="bu-content-divider"></div>
+        <div class="bu-recruiter-grid">
+          <?php foreach($recruiters as $irecruiters): ?>
+          <div class="bu-recruiter-item">
+            <img src="<?php echo URL_UPLOAD;?>recruiters/<?php echo $irecruiters['image'];?>" 
+                 alt="<?php echo $irecruiters['name'];?>"
+                 title="<?php echo $irecruiters['name'];?>"
+                 onerror="this.src='extra-images/partner1.png';">
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+      <?php endif; ?>
+
+    </main>
   </div>
-      <section>
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12">
-              <div class="abt_univ_wrap"> 
-            <!-- HEADING 1 START-->
-            <div class="kf_edu2_heading1">
-                  <h5>Bhabha University</h5>
-                  <h3>T & P Cell</h3>
-                </div>
-            <!-- HEADING 1 END-->
-             <!-- breaking news text here -->
-		<!--	<h3>SLIPCO CONSTRUCTIONS (PVT) LTD. <br>
-			campus for Civil & Electrical Diploma Students.</h3>
-			<p>Diploma engineers<br>
-Civil /Electrical (65% and above score ) to be trained for projects
-For Safety Deptt 
-And construction projects.<br>
-Ready to move to 
-Gujrat
-Karnatka 
-Etc anywhere in India basis.<br>
 
-Free
-Lodging/ boarding/ conveyance and a stipend shall be given for six months probation/
-After that induction @1.5-2.5 lacs ctc 
-
-<br>
-<h5>Interested students are required to fill the form.</h5></p>
-				<table width="100%" border="0">
-					<tr bgcolor="#FF5733">
-						<!--<th width="60" scope="col"><font color="yellow">&nbsp;&nbsp;&nbsp;&nbsp;<b>Click</b> &nbsp;</font></th>-->
-					<!--	<th width="300" scope="col">
-			
-			<marquee direction="left" scrollamount="5" scrolldelay="2" OnMouseOver="this.stop();" OnMouseOut="this.start();" > 
-				
-
-<a href="https://forms.gle/DdUyhmmLEA27wDp76" target="_blank"><font color="ffffff">
-    Online Registration for Civil & Electrical Diploma Students.
-    </font></a>
-   <!-- &nbsp;&nbsp;||&nbsp;&nbsp;<img alt="new" src="images/new4.gif" />
-    <a href="#"><font color="ffffff">Publish Your Paper in 5 Days in SCOPUS Indexed Journals.</font>
-    <img alt="new" src="images/new4.gif" />
-    
-    </a>
-   
-    &nbsp;&nbsp;||&nbsp;&nbsp;
-<a href="" target="_blank"><font color="ffffff">
-    UGC CARE/SCOPUS/WoS/SCI Paper Publication/Writting
-    </font></a> 
-    &nbsp;&nbsp;||&nbsp;&nbsp;
-<a href="" target="_blank"><font color="ffffff">    
-Patent Writing and Publication 
-</font></a>
--->
-
-
-					
-				</marquee>
-			
-						</th>
-					</tr>
-				</table>
-	</div>
-<!-- breaking news text end -->
-
-
-
-            
-            <div class="abt_univ_des">
-                  <p><img src="https://www.bhabhauniversity.edu.in/upload/media/8cc8f94e9069b6237ce5bff460e08994.jpg" width="" /></p>
-                  <p><b>Mr. Jitendra Karosia</b><br/>
-<b>17-years of Experience in Training & Placement Cell & Corporate Sector </b><br/>
-<b>Group Head – Placement Department</b><br/>
-<b>Bhabha University, Bhopal</b><br/>
-<b>Email: headtnp@bhabhauniversity.edu.in</b><br/>
-<b>Email: tpo@bhabhauniversity.edu.in</b><br/>
-<b>Mobile: 7566378153 | 7470545827 </b><br/>
-</p>
-                  <p>The Placement Cell of Bhabha University, Bhopal plays a crucial role in locating job opportunities for Under Graduates and Post Graduates passing out from the college by keeping in touch with reputed firms and industrial establishments. The Placement Cell operates round the year to facilitate contacts between companies and graduates. The number of students placed through the campus interviews is continuously rising. On invitation, many reputed industries visit the institute to conduct interviews.</p>
-                  <p>We have been successful in maintaining our high placement statistics over the years and the fact that our students bear the recession blues with record breaking placements itself is a testimony to our quality. Our ingenious alumnae have set new standards in the corporate world through their estimable contributions and University is confident that it &nbsp;will continue that legacy in the years to come.</p>
-                  <p>The Placement Cell organizes career guidance programmes for all the students starting from first year. The cell arranges training programmes like Mock Interviews, Group Discussions, Communication Skills Workshop etc and it also organizes Public Sector Exam Training for students who are interested to join Government Sectors. It also invites HR Managers from different industries to conduct training programmes for final year students.</p>
-                  <div>
-                
-               
-                
-                
-                <p><strong>Objectives of Training and Placement Cell</strong></p>
-              </div>
-                  <ul>
-                <li>Developing the students to meet the Industries recruitment process</li>
-                <li>To motivate students to develop Technical knowledge and soft skills in terms of career planning, goal setting</li>
-                <li>To motivate students aspire for higher studies and guiding them to take competitive exams such as CAT, GATE, TOEFL, GRE, IES,UPSC,TNPSC etc</li>
-                <li>Aiming to Place the maximum number of students through campus &amp; off-campus interviews conducted by the top companies</li>
-              </ul><br>
-                  <div>
-                <p><strong>Career Development Programs organized by Training and Placement Cell</strong></p>
-              </div>
-                  <ul>
-                <li>Personality Development Program</li>
-                <li>Communication Skills Program</li>
-                <li>Group Discussion Practice</li>
-                <li>Entrepreneurship Development Program</li>
-                <li>Mock Interview Sessions</li>
-                <li>In plant Training</li>
-                <li>Conducting Industry to Institute Convergence expert interaction sessions</li>
-                <li>Public Sector Competitive Exams Training</li>
-                <li>Industry Internship Programs</li>
-              </ul>
-                </div>
-                
-                <div>
-                   
-                   <!-- placed students-->
-
-<section id="" class="page-section-content">
-
-			<h2>Placed Students 2021-22</h2>
-	
-
-			<div class="ab1"><div class="ab2"></div><div class="ab3"></div></div>
-
-			<div class="row">
-			    
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Rachna singh1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Rachana Singh
-, MBA,<br>UFaber Edutech Pvt. Ltd.,<br>CTC 6.0 to 8.0 LPA
- </b>
-</p>
-</div>
-</div>
-</div>			    
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/ANJALI MAURYA1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Anjali Muarya
-, M.Tech (EE),<br>	Pentagon Space Pvt. Ltd.
-<br>CTC 3.0 to 12.0 LPA
-
- </b>
-</p>
-</div>
-</div>
-</div>			    
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Shivam Shukla1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Shivam Shukla,
-M.Tech (EE),	
-<br>Infosys Ltd.
-<br>CTC 3.60 LPA
-</b>
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Anshika1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Anshika,
-BBA,<br> Drishti IAS, Delhi,<br> CTC 3.36 LPA &
-<!-- 
-<br> Sutherland Pvt. Ltd.,CTC upto 2.50 LPA &
-<br> Datapur Pvt. Ltd.,CTC 1.56  to 2.16 LPA
--->
-
-
-
-</b>
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Reema Yadav1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Reema Yadav, EE
-<br> E Ashwa Industry, Ghaziabad <br>CTC 3.5 LPA
-
-</b>
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Prakash Kumar Mahto1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Prakash Kumar Mahto
-, EE
-<br> E Ashwa Industry, Ghaziabad <br>CTC 3.5 LPA, 
-&,
-<!--
-
--->
-</b>
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Pankaj kumar chaudhary1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Pankaj kumar Choudhary, EE,<br> E Ashwa Industry, Ghaziabad,<br> CTC 3.5 LPA
-
-</b> 
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Oshin jain1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Oshin jain, CE,
-<br> Shailendra Sharma Associate,
-<br> CTC 3.0 LPA
-</b> 
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Khusboo Kumari1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Khusboo Kumari
-, EC,
-<br> ASTRO LIFE TECHNOLOGY,
-<br> CTC 3.0 LPA
-</b> 
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Hari Kisan Singh1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Hari Kisan Singh
-, ME,
-<br> Oorja Technical Services,
-<br> CTC 3.0 LPA
-</b> 
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Aval Saxena1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Aval Saxena
-, ME,
-<br> Oorja Technical Services & <br>TBI Technologies,
- CTC 3.0 LPA
-</b> 
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Ashish Kumar Soni1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Ashish Kumar Soni
-, ME,
-<br>Oorja Technical Services & <br>Hilton Valves Pvt. Ltd.,
- CTC 3.0 LPA
-</b> 
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Sanjeev Singh1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Sanjeev Singh
-, BA,
-<br>Sutherland Pvt. Ltd.,
-<br> CTC upto 2.50 LPA
-</b> 
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Preksha noriya1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Preksha Noriya
-, B.Com <br>Visudh Ajivam Private Ltd.,
-<br> CTC 2.4 LPA
-
-</b> 
-</p>
-</div>
-</div>
-</div>
-
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Vijay Kumar1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Vijay Kumar
-, ME,<br> SGK India Industrial Pvt. Ltd., Pune<br>
-CTC 2.04- to 2.28 LPA
-
-</p>
-</div>
-</div>
-</div>
-
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Swati tomar1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Swati tomar
-, CSE,<br> Visudh Ajivam Private Ltd.
-<br>CTC 2.4 LPA
-
-</b>
-
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Shahbaz Hussain1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Shahbaz Hussain
-, CE,<br> Datapur Pvt. Ltd.
-<br>CTC 1.56  to 2.16 LPA
-</b>
-</p>
-</div>
-</div>
-</div>
-			    
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Akash Deshmukh1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Akash Deshmukh, MBA,<br> Mandot Securities Pvt Ltd.<br>CTC 1.66 to 2.0 LPA
-</b>
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Pravesh Sharma1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Pravesh Sharma, BBA,<br> Visudh Ajivam Private Ltd.<br>CTC 2.4 LPA
-</b>
-</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Kirti Parmar1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Kirti parmar,	MBA,<br> Visudh Ajivam Private Ltd.<br>CTC upto 2.50 LPA
-</b>
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Neeraj Kumar1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Neeraj Kumar
-,B.Pharmacy,<br> Sutherland Pvt. Ltd.
-<br>CTC upto 2.50 LPA
-</b>
-</p>
-</div>
-</div>
-</div>
-
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Pankaj Bachhaniya1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Pankaj Bachhaniya, MBA,<br> Visudh Ajivam Private Ltd.<br>CTC 2.4 LPA
-</b>
-</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed//Shivani Sahu1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Shivani sahu, MBA,<br> Visudh Ajivam Private Ltd.<br>CTC 2.4 LPA
-</b>
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Shikha chaurasiya1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Shikha chaurasiya
-, MSc,<br> Datapur Pvt. Ltd.
-<br>CTC 1.56  to 2.16 LPA
-</b>
-</p>
-</div>
-</div>
-</div>
-
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Satyam Kumar
-1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Satyam Kumar
-, EE,<br> Datapur Pvt. Ltd.
-<br>
-CTC 1.56  to 2.16 LPA
-
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Rishabh Bastwar1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Rishabh Bastwar
-, ME,<br> Hilton Valves Pvt. Ltd.
-<br>
-CTC 1.50 -1.71 LPA
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Rahul pawar1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Rahul pawar
-, ME,<br> Visudh Ajivam Private Ltd.
-<br>
-CTC 2.4 LPA
-
-</p>
-</div>
+  <!-- FOOTER START -->
+  <?php include('inc.footer.php');?>
+  <!-- FOOTER END -->
 </div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Rahul Dev Rahi1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Rahul Dev Rahi
-, ME,<br> SGK India Industrial Pvt. Ltd., Pune
-<br>
-CTC 2.04- to 2.28 LPA
-
-
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Naveen Singh1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Naveen Singh
-, ME,<br> Datapur Pvt. Ltd.
-<br>
-CTC 1.56  to 2.16 LPA
-
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Mohammad Maroof1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Mohammad Maroof
-, ME,<br> SGK India Industrial Pvt. Ltd., Pune
-<br>
-CTC 2.04- to 2.28 LPA
-</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="https://www.bhabhauniversity.edu.in/upload/placed/Abul Aman khan1.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"><b>Abul Aman khan
-, ME,<br> SGK India Industrial Pvt. Ltd., Pune
-<br>
-CTC 2.04- to 2.28 LPA
-</p>
-</div>
-</div>
-</div>
-
-
-<div class="col-md-3">
-<div class="card">
-<div class="card-body">
-<p class="card-text text-left"><h3><font color="red">Many More...</font></h3>
-
-</p>
-</div>
-</div>
-</div>
-
-
-</div>
-			</section>
-
-
-
-
-
-                   
-                   
-                  
-                    
-                    
-                </div>
-                
-                
-                
-                <!--
-                
-                  MOU & Tieups
-                    
-                    <section id="" class="page-section-content">
-
-			<h2>Details of the MoUs</h2>
-	
-
-			<div class="ab1"><div class="ab2"></div><div class="ab3"></div></div>
-
-			<div class="row">
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Association.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Association of all industries, Mandideep</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/TBS.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">TBS Initiatives private limited</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Appin.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Appin Technology Lab</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/MPCON.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">MPCON Ltd. Bhopal</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Cyber.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Cyber Infrastructure (P) Ltd</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Red.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Red Hat Academy</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/South.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left"> ITSC Technologies Pvt. Ltd.</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Cambridge.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Chromo HPLC Training Center</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/ITSC.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Resort ShivVilas Jaipur</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/ITDP.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Cliniminds</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Asian.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Indian Pharmaceutical Association</p>
-</div>
-</div>
-</div>
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">NAD through NSDL</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Cambridge Assessment English,UK</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Innove Intellects</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Logistics Sector Skill Council (LSC)</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">APPWARS Technologies</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Parivartan Foundation, New Delhi</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Govt Middle school, Jatkhedi, Bhopal</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Govt Primary school, Bangrasiya, Bhopal</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Govt High School, Bakroda</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Bakroda village, Raisen</p>
-</div>
-</div>
-</div>
-
-<div class="col-md-3">
-<div class="card"><img class="card-img-top" src="uploads/ups/Integrated.jpg" alt="Card image cap" />
-<div class="card-body">
-<p class="card-text text-left">Apna ghar (Old Age Home), Kolar Bhopal</p>
-</div>
-</div>
-</div>
-
-
-
-
-
-</div>
-			</section>
-
-                -->
-                
-                
-                <!--
-                 <div>
-                 <p><strong>Computer Science & Engineering:</strong></p>
-•	Infosys Ltd.
-•	Amazon Development Centre (India) Pvt. Ltd.
-•	Microsoft Corporation (India) Pvt. Ltd
-•	Tata Consultancy Services
-•	Wipro Ltd.
-•	Capgemini Consulting India Ltd.
-•	HSBC India
-•	Hitachi Consulting Corporation
-•	Torry Harris Business Solutions
- <p><strong>Electrical Engineering:</strong></p>
-•	Azure Power
-•	Mohan Energy Corporation Pvt. Ltd
-•	Windmoller&Holscher India Pvt Ltd
-•	Cinda Engineering and Construction Pvt Ltd (CTCI Taiwan)
-•	Honda Siel Power Products Ltd
- 
- <p><strong>Mechanical Engineering:</strong></p>
-•	ISGEC Heavy Engineering Ltd
-•	JK Tyre & Industries Ltd.
-•	Uno Minda (N.K Minda Group)
-•	Technipfmc (Technip India Limited)
-•	Ashok Leyland Ltd.
- <p><strong>Electronics & Communications Engineering:</strong></p>
-•	Hewlett Packard Enterprise
-•	Samsung Electronics R & D
-•	VVDN Technologies Pvt. Ltd.
-•	Orange Business Services Pvt Ltd
-•	Dish TV India Ltd.
-•	Osram Lighting Pvt Ltd
-Civil Engineering:
-•	Delhi Integrated Multi-Modal Transit Systems Ltd
-•	Hindustan Sanitaryware & Industries Ltd.
-•	Interarch Building Projects Pvt Ltd
-•	Everest Industries Ltd. (Everest Group)
-•	Afcons Infrastructure Ltd
- <p><strong>Business Management:</strong></p>
-•	Ujjivan Small Finance Bank
-•	Coffee Day Beverages (A Division of Coffee Day Global Ltd)
-•	Bandhan Bank Ltd
-•	Berger Paints Ltd
-•	Jk Paper Ltd
-•	Jaro Education
-•	Upgrad
-•	Scaler
-•	HDFC
-•	ICICI
-
-
-
-</div> -->
-
-
-
-
-          </div>
-          <p><a href="https://www.bhabhauniversity.edu.in/upload/media/9018b4daec2ac10a45dfd539260998f5.pdf" target="_blank"><h3><font color="red">2021-2022,2022-2023 Placement List</font></h3></a></p>
-          <p><a href="https://www.bhabhauniversity.edu.in/upload/media/f27e76c6a5c21432282101555c225b35.jpg" target="_blank"><h3><font color="blue">Our Major Recruiter's</font></h3></a></p>
-            </div>
-      </div>
-        </div>
-        
-        <!-- sliding recruiters -->
-
-  <section>
-      <div class="container">
-        <div class="row"> 
-          <!-- HEADING 2 START-->
-          <div class="col-md-12">
-            <div class="kf_edu2_heading2">
-              <h3>Our Recruiters</h3>
-            </div>
-          </div>
-          <!-- HEADING 2 END--> 
-          <!-- TESTEMONIAL SLIDER WRAP START-->
-          <div class="edu2_testemonial_slider_wrap">
-            <div id="owl-demo-8">
-                                    <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/fc5f88c2e5e86434c8cf00d207207846.jpg" alt="Infosys"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/be6dce6b467138ed5da63bca53af7c79.jpg" alt="Zensar"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/fcc7063ae19568816bb5ca014c29437d.jpg" alt="Mahindra"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/b57cd8d1d3110ad0b7b6a31ae43a9926.jpg" alt="Parsistan"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/b00170d10909ec0620948ef6ff111be0.jpg" alt="LandT"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/46105367aa015578e7975c6bc5693693.jpg" alt="Eicher"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/485f649b76a59926133008fb50a7fef4.jpg" alt="N Software"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/bc6e50436615f8493dd4f92cc620be75.png" alt="DEL"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/d3caeae9e816d5fc99453d507f514203.png" alt="TCS"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/287bce7543bd9523612115973d1823e9.png" alt="Tech Mahindra"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/267602a126ca0fa3237b5689caf35b42.png" alt="Wipro"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/fcd40ef53870b5e70f69092351dd732c.png" alt="HDFC"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/1f17da56f6e681107ce8fd4e40472e10.png" alt="Syntel"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/36720c47d7ec81cd036be1bf86cad756.png" alt="IBM"/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                         <div class="item"> 
-                <!-- TESTEMONIAL SLIDER WRAP START-->
-                <figure><img src="https://www.bhabhauniversity.edu.in/upload/recruiters/bbffe2a8fa53d9c33316523169719bdd.png" alt="Cognizant "/></figure>
-                <!-- TESTEMONIAL SLIDER WRAP END--> 
-              </div>
-                       </div>
-          </div>
-          <!-- TESTEMONIAL SLIDER WRAP END--> 
-        </div>
-      </div>
-    </section>    <!--COUNTER SECTION END-->
 
-<!-- sliding end -->
-        
-        
-  </section>
-      <!--NEWS LETTERS END--> 
-      <!--FOOTER START-->
-      <?php include('inc.footer.php');?>
-      
-      <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
-    </div>
-<!--KF KODE WRAPPER WRAP END--> 
-<!--Bootstrap core JavaScript-->
 <?php include('inc.footer.js.php');?>
 </body>
 </html>

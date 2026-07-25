@@ -279,6 +279,8 @@
 /* ---- TIMELINE SECTION ---- */
 .bu-timeline {
   position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
   padding: 20px 0;
 }
 .bu-timeline::before {
@@ -287,62 +289,84 @@
   left: 50%;
   transform: translateX(-50%);
   top: 0; bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, #FFC107, rgba(255,193,7,0.1));
+  width: 4px;
+  background: #FFC107;
+  border-radius: 2px;
 }
 .bu-timeline-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 30px;
-  margin-bottom: 48px;
   position: relative;
+  width: 50%;
+  box-sizing: border-box;
+  margin-bottom: 32px;
 }
-.bu-timeline-item:nth-child(even) { flex-direction: row-reverse; }
-.bu-timeline-item-content {
-  flex: 1;
-  background: #fff;
-  border-radius: 6px;
-  padding: 28px 32px;
-  box-shadow: 0 4px 24px rgba(6,29,124,0.07);
-  border: 1px solid #E5E7EB;
-  position: relative;
+.bu-timeline-item:nth-child(odd) {
+  left: 0;
+  padding: 0 45px 0 0;
 }
-.bu-timeline-item-content::before {
-  content: '';
+.bu-timeline-item:nth-child(even) {
+  left: 50%;
+  padding: 0 0 0 45px;
+}
+.bu-timeline-dot {
   position: absolute;
   top: 22px;
-  width: 12px; height: 12px;
+  width: 18px;
+  height: 18px;
   background: #FFC107;
+  border: 3.5px solid #0A1B54;
   border-radius: 50%;
+  z-index: 3;
+  box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.25);
 }
-.bu-timeline-item:nth-child(odd) .bu-timeline-item-content::before { right: -36px; }
-.bu-timeline-item:nth-child(even) .bu-timeline-item-content::before { left: -36px; }
+.bu-timeline-item:nth-child(odd) .bu-timeline-dot {
+  right: -9px;
+  left: auto;
+}
+.bu-timeline-item:nth-child(even) .bu-timeline-dot {
+  left: -9px;
+  right: auto;
+}
+.bu-timeline-item-content {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 26px 30px;
+  box-shadow: 0 8px 26px rgba(6, 29, 124, 0.07);
+  border: 1px solid #E5E7EB;
+  border-top: 4px solid #0A1B54;
+  position: relative;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+.bu-timeline-item-content:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(6, 29, 124, 0.14);
+}
 .bu-timeline-year {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
   color: #FFC107;
   background: #0A1B54;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 20px;
   display: inline-block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   letter-spacing: 1px;
 }
 .bu-timeline-item-content h4 {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   color: #061D7C;
-  margin: 0 0 8px 0;
+  margin: 0 0 10px 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.3;
 }
 .bu-timeline-item-content p {
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.65;
-  color: #6B7280;
+  color: #4B5563;
   margin: 0;
 }
-.bu-timeline-spacer { flex: 1; }
 
 /* ---- VISION MISSION SECTION ---- */
 .bu-vm-grid {
@@ -355,10 +379,28 @@
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 8px;
-  padding: 36px 32px;
+  padding: 0 0 32px 0;
   position: relative;
   overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;
+}
+.bu-vm-card-img-wrap {
+  width: 100%;
+  height: 170px;
+  overflow: hidden;
+  position: relative;
+}
+.bu-vm-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.bu-vm-card:hover .bu-vm-card-img {
+  transform: scale(1.06);
+}
+.bu-vm-card-body {
+  padding: 24px 32px 0 32px;
 }
 .bu-vm-card:hover {
   transform: translateY(-4px);
@@ -370,11 +412,12 @@
   top: 0; left: 0;
   width: 4px; height: 100%;
   background: #FFC107;
+  z-index: 2;
 }
 .bu-vm-icon {
   font-size: 28px;
   color: #FFC107;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 .bu-vm-card h3 {
   font-family: 'Playfair Display', Georgia, serif;
@@ -388,6 +431,57 @@
   line-height: 1.75;
   color: rgba(255,255,255,0.72);
   margin: 0;
+}
+
+/* ---- CAMPUS HIGHLIGHTS GRID ---- */
+.bu-campus-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+.bu-campus-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(6,29,124,0.06);
+  border: 1px solid #E5E7EB;
+  transition: all 0.3s ease;
+}
+.bu-campus-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 36px rgba(6,29,124,0.12);
+}
+.bu-campus-img-wrap {
+  width: 100%;
+  height: 170px;
+  overflow: hidden;
+  position: relative;
+}
+.bu-campus-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.bu-campus-card:hover .bu-campus-img {
+  transform: scale(1.08);
+}
+.bu-campus-info {
+  padding: 18px 20px;
+}
+.bu-campus-info h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #061D7C;
+  margin: 0 0 6px 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.bu-campus-info p {
+  font-size: 12.5px;
+  color: #6B7280;
+  margin: 0;
+  line-height: 1.5;
 }
 
 /* ---- STATS STRIP ---- */
@@ -437,15 +531,37 @@
   background: #fff;
   border: 1px solid #E5E7EB;
   border-radius: 8px;
-  padding: 30px 26px;
+  padding: 0;
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   transition: all 0.28s;
   position: relative;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(6,29,124,0.05);
+}
+.bu-subpage-img-wrap {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+  background: #F3F4F6;
+}
+.bu-subpage-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.bu-subpage-card:hover .bu-subpage-img {
+  transform: scale(1.06);
+}
+.bu-subpage-body {
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
 }
 .bu-subpage-card::after {
   content: '';
@@ -459,11 +575,11 @@
 .bu-subpage-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(6,29,124,0.12); text-decoration: none; }
 .bu-subpage-card:hover::after { transform: scaleX(1); }
 .bu-subpage-icon {
-  width: 48px; height: 48px;
+  width: 44px; height: 44px;
   background: rgba(10,27,84,0.07);
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
+  font-size: 18px;
   color: #0A1B54;
   transition: all 0.28s;
 }
@@ -508,21 +624,32 @@
   background: #fff;
   border: 1px solid #E5E7EB;
   border-radius: 8px;
-  padding: 20px 28px;
+  padding: 18px 24px;
   text-align: center;
-  min-width: 120px;
+  min-width: 130px;
   box-shadow: 0 2px 12px rgba(6,29,124,0.06);
   transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .bu-accred-badge:hover { box-shadow: 0 12px 30px rgba(6,29,124,0.12); transform: translateY(-3px); }
+.bu-accred-logo {
+  height: 44px;
+  width: auto;
+  max-width: 90px;
+  object-fit: contain;
+  margin-bottom: 2px;
+}
 .bu-accred-badge-name {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   color: #061D7C;
   display: block;
   line-height: 1;
-  margin-bottom: 6px;
 }
 .bu-accred-badge-desc {
   font-size: 9.5px;
@@ -597,16 +724,17 @@
   .bu-overview-img { height: 340px; }
   .bu-overview-badge { left: 0; bottom: -16px; }
   .bu-timeline::before { left: 20px; transform: none; }
-  .bu-timeline-item, .bu-timeline-item:nth-child(even) { flex-direction: column; padding-left: 52px; }
-  .bu-timeline-item-content::before { left: -44px !important; right: auto !important; }
-  .bu-timeline-spacer { display: none; }
+  .bu-timeline-item, .bu-timeline-item:nth-child(odd), .bu-timeline-item:nth-child(even) { width: 100%; left: 0 !important; padding: 0 0 30px 50px !important; }
+  .bu-timeline-item:nth-child(odd) .bu-timeline-dot, .bu-timeline-item:nth-child(even) .bu-timeline-dot { left: 13px !important; right: auto !important; }
   .bu-vm-grid { grid-template-columns: 1fr; }
+  .bu-campus-grid { grid-template-columns: repeat(2, 1fr); }
   .bu-stats-strip { grid-template-columns: repeat(2, 1fr); }
   .bu-subpages-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 575px) {
   .bu-about-section { padding: 50px 16px; }
   .bu-about-hero-stats { flex-direction: column; gap: 18px; }
+  .bu-campus-grid { grid-template-columns: 1fr; }
   .bu-stats-strip { grid-template-columns: 1fr 1fr; }
   .bu-subpages-grid { grid-template-columns: 1fr; }
   .bu-accred-grid { gap: 12px; }
@@ -662,10 +790,10 @@
       <div class="bu-overview-grid">
         <!-- Image Side -->
         <div class="bu-overview-img-wrap">
-          <img src="https://www.bhabhauniversity.edu.in/images/campus.jpg" 
+          <img src="images/banner4.jpg" 
                alt="Bhabha University Campus, Bhopal" 
                class="bu-overview-img"
-               onerror="this.style.background='linear-gradient(135deg,#0A1B54,#061D7C)'; this.style.minHeight='480px';">
+               onerror="this.src='extra-images/abt-thumb.jpg';">
           <div class="bu-overview-badge">
             <span class="bu-overview-badge-num">2004</span>
             <span class="bu-overview-badge-lbl">Established</span>
@@ -742,23 +870,33 @@
       </div>
       <div class="bu-vm-grid">
         <div class="bu-vm-card">
-          <div class="bu-vm-icon"><i class="fa fa-eye"></i></div>
-          <h3>Our Vision</h3>
-          <p>
-            To be a globally recognised university that provides transformative, high-quality education across 
-            disciplines — producing innovative graduates and leaders who contribute to society, drive 
-            sustainability, and shape the future of India and the world.
-          </p>
+          <div class="bu-vm-card-img-wrap">
+            <img src="extra-images/intro-1.jpg" alt="Our Vision" class="bu-vm-card-img">
+          </div>
+          <div class="bu-vm-card-body">
+            <div class="bu-vm-icon"><i class="fa fa-eye"></i></div>
+            <h3>Our Vision</h3>
+            <p>
+              To be a globally recognised university that provides transformative, high-quality education across 
+              disciplines — producing innovative graduates and leaders who contribute to society, drive 
+              sustainability, and shape the future of India and the world.
+            </p>
+          </div>
         </div>
         <div class="bu-vm-card">
-          <div class="bu-vm-icon"><i class="fa fa-rocket"></i></div>
-          <h3>Our Mission</h3>
-          <p>
-            To provide greater access to higher education — especially for socially and economically 
-            disadvantaged youth — through excellence in teaching, research, and community engagement. 
-            To foster creativity, critical thinking, and interdisciplinary collaboration that prepares 
-            students for the challenges of the 21st century.
-          </p>
+          <div class="bu-vm-card-img-wrap">
+            <img src="extra-images/intro-2.jpg" alt="Our Mission" class="bu-vm-card-img">
+          </div>
+          <div class="bu-vm-card-body">
+            <div class="bu-vm-icon"><i class="fa fa-rocket"></i></div>
+            <h3>Our Mission</h3>
+            <p>
+              To provide greater access to higher education — especially for socially and economically 
+              disadvantaged youth — through excellence in teaching, research, and community engagement. 
+              To foster creativity, critical thinking, and interdisciplinary collaboration that prepares 
+              students for the challenges of the 21st century.
+            </p>
+          </div>
         </div>
       </div>
       <div style="text-align:center; margin-top:32px;">
@@ -777,118 +915,222 @@
         <h2 class="bu-section-title">Milestones of <em>excellence.</em></h2>
       </div>
       <div class="bu-timeline">
+        <!-- Item 1 (Left) -->
         <div class="bu-timeline-item">
+          <div class="bu-timeline-dot"></div>
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2004</span>
             <h4>Foundation Established</h4>
             <p>Bhabha University was founded by Ayushmati Education and Social Society with a vision to provide quality higher education in Central India.</p>
           </div>
-          <div class="bu-timeline-spacer"></div>
         </div>
+
+        <!-- Item 2 (Right) -->
         <div class="bu-timeline-item">
-          <div class="bu-timeline-spacer"></div>
+          <div class="bu-timeline-dot"></div>
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2010</span>
             <h4>Multi-Discipline Expansion</h4>
             <p>Expanded to include Engineering, Pharmacy, Dental Sciences, Nursing, and Management schools on the 150-acre Narmadapuram Road campus.</p>
           </div>
         </div>
+
+        <!-- Item 3 (Left) -->
         <div class="bu-timeline-item">
+          <div class="bu-timeline-dot"></div>
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2015</span>
             <h4>National Accreditation</h4>
             <p>Achieved NAAC accreditation and UGC recognition under 2(f) &amp; 12(B), marking a major milestone in quality assurance and credibility.</p>
           </div>
-          <div class="bu-timeline-spacer"></div>
         </div>
+
+        <!-- Item 4 (Right) -->
         <div class="bu-timeline-item">
-          <div class="bu-timeline-spacer"></div>
+          <div class="bu-timeline-dot"></div>
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2020</span>
             <h4>Digital Transformation</h4>
             <p>Launched smart classrooms, online examination systems, ERP portal, and digital library resources — empowering students in the digital era.</p>
           </div>
         </div>
+
+        <!-- Item 5 (Left) -->
         <div class="bu-timeline-item">
+          <div class="bu-timeline-dot"></div>
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2024+</span>
             <h4>Global Research Excellence</h4>
             <p>120+ research labs, 60+ international MoUs, 1,200+ publications, and placements exceeding ₹52 LPA — setting new benchmarks every year.</p>
           </div>
-          <div class="bu-timeline-spacer"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== CAMPUS HIGHLIGHTS / FACILITIES =================== -->
+  <section class="bu-about-section">
+    <div class="bu-about-container">
+      <div style="text-align:center; margin-bottom:40px;">
+        <span class="bu-section-label">Campus Life &amp; Infrastructure</span>
+        <h2 class="bu-section-title">World-class <em>facilities &amp; environment.</em></h2>
+      </div>
+      <div class="bu-campus-grid">
+        <div class="bu-campus-card">
+          <div class="bu-campus-img-wrap">
+            <img src="images/library.jpg" alt="Central Library" class="bu-campus-img">
+          </div>
+          <div class="bu-campus-info">
+            <h4>Central Library</h4>
+            <p>50,000+ books, digital e-journals &amp; silent reading halls</p>
+          </div>
+        </div>
+        <div class="bu-campus-card">
+          <div class="bu-campus-img-wrap">
+            <img src="images/solar.jpg" alt="Solar & Research Labs" class="bu-campus-img">
+          </div>
+          <div class="bu-campus-info">
+            <h4>Solar &amp; Green Energy</h4>
+            <p>Eco-friendly campus with advanced solar research wing</p>
+          </div>
+        </div>
+        <div class="bu-campus-card">
+          <div class="bu-campus-img-wrap">
+            <img src="images/radio.jpg" alt="Radio Bhabha FM Studio" class="bu-campus-img">
+          </div>
+          <div class="bu-campus-info">
+            <h4>Radio Bhabha 90.4 FM</h4>
+            <p>Community radio station broadcasting student media projects</p>
+          </div>
+        </div>
+        <div class="bu-campus-card">
+          <div class="bu-campus-img-wrap">
+            <img src="images/skill_lab.jpg" alt="Modern Skill & Practical Labs" class="bu-campus-img" onerror="this.src='extra-images/col-3-thum5.jpg';">
+          </div>
+          <div class="bu-campus-info">
+            <h4>Modern Skill Labs</h4>
+            <p>State-of-the-art practical simulation &amp; training centers</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- =================== EXPLORE ABOUT SUB-PAGES =================== -->
-  <section class="bu-about-section">
+  <section class="bu-about-section bu-about-section-alt">
     <div class="bu-about-container">
-      <span class="bu-section-label">Explore Further</span>
-      <h2 class="bu-section-title">Everything about <em>Bhabha University.</em></h2>
+      <div style="text-align:center; margin-bottom:40px;">
+        <span class="bu-section-label">Explore Further</span>
+        <h2 class="bu-section-title">Everything about <em>Bhabha University.</em></h2>
+      </div>
       <div class="bu-subpages-grid">
 
         <a href="<?php echo href('page.php','id=20');?>" class="bu-subpage-card">
-          <div class="bu-subpage-icon"><i class="fa fa-university"></i></div>
-          <h4>University Overview</h4>
-          <p>Learn about our establishment, governance, campus facilities, and academic ecosystem.</p>
-          <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          <div class="bu-subpage-img-wrap">
+            <img src="extra-images/abt-thumb.jpg" alt="University Overview" class="bu-subpage-img">
+          </div>
+          <div class="bu-subpage-body">
+            <div class="bu-subpage-icon"><i class="fa fa-university"></i></div>
+            <h4>University Overview</h4>
+            <p>Learn about our establishment, governance, campus facilities, and academic ecosystem.</p>
+            <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          </div>
         </a>
 
         <a href="<?php echo href('mission-vision.php');?>" class="bu-subpage-card">
-          <div class="bu-subpage-icon"><i class="fa fa-eye"></i></div>
-          <h4>Vision &amp; Mission</h4>
-          <p>Understand the core purpose that drives every decision and initiative at Bhabha University.</p>
-          <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          <div class="bu-subpage-img-wrap">
+            <img src="extra-images/intro-1.jpg" alt="Vision & Mission" class="bu-subpage-img">
+          </div>
+          <div class="bu-subpage-body">
+            <div class="bu-subpage-icon"><i class="fa fa-eye"></i></div>
+            <h4>Vision &amp; Mission</h4>
+            <p>Understand the core purpose that drives every decision and initiative at Bhabha University.</p>
+            <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          </div>
         </a>
 
         <a href="<?php echo href('infrastructure.php');?>" class="bu-subpage-card">
-          <div class="bu-subpage-icon"><i class="fa fa-building"></i></div>
-          <h4>Campus &amp; Infrastructure</h4>
-          <p>Discover our 150-acre green campus — smart classrooms, labs, hostels, library and more.</p>
-          <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          <div class="bu-subpage-img-wrap">
+            <img src="images/library.jpg" alt="Campus & Infrastructure" class="bu-subpage-img">
+          </div>
+          <div class="bu-subpage-body">
+            <div class="bu-subpage-icon"><i class="fa fa-building"></i></div>
+            <h4>Campus &amp; Infrastructure</h4>
+            <p>Discover our 150-acre green campus — smart classrooms, labs, hostels, library and more.</p>
+            <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          </div>
         </a>
 
         <a href="<?php echo href('page.php','id=18');?>" class="bu-subpage-card">
-          <div class="bu-subpage-icon"><i class="fa fa-heart"></i></div>
-          <h4>Core Values</h4>
-          <p>The principles of integrity, innovation, inclusivity, and excellence that define who we are.</p>
-          <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          <div class="bu-subpage-img-wrap">
+            <img src="extra-images/student.jpg" alt="Core Values" class="bu-subpage-img">
+          </div>
+          <div class="bu-subpage-body">
+            <div class="bu-subpage-icon"><i class="fa fa-heart"></i></div>
+            <h4>Core Values</h4>
+            <p>The principles of integrity, innovation, inclusivity, and excellence that define who we are.</p>
+            <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          </div>
         </a>
 
         <a href="<?php echo href('leadership.php');?>" class="bu-subpage-card">
-          <div class="bu-subpage-icon"><i class="fa fa-users"></i></div>
-          <h4>Administration &amp; Leadership</h4>
-          <p>Meet our visionary Chancellor, Vice-Chancellor, and the leadership team steering the university.</p>
-          <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          <div class="bu-subpage-img-wrap">
+            <img src="images/leadership.png" alt="Administration & Leadership" class="bu-subpage-img" onerror="this.src='extra-images/col-3-thum1.jpg';">
+          </div>
+          <div class="bu-subpage-body">
+            <div class="bu-subpage-icon"><i class="fa fa-users"></i></div>
+            <h4>Administration &amp; Leadership</h4>
+            <p>Meet our visionary Chancellor, Vice-Chancellor, and the leadership team steering the university.</p>
+            <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          </div>
         </a>
 
         <a href="<?php echo href('page.php','id=19');?>" class="bu-subpage-card">
-          <div class="bu-subpage-icon"><i class="fa fa-star"></i></div>
-          <h4>Why Choose Bhabha</h4>
-          <p>From NAAC accreditation to global placements — the reasons that make us the right choice.</p>
-          <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          <div class="bu-subpage-img-wrap">
+            <img src="extra-images/home-gallery1.jpg" alt="Why Choose Bhabha" class="bu-subpage-img">
+          </div>
+          <div class="bu-subpage-body">
+            <div class="bu-subpage-icon"><i class="fa fa-star"></i></div>
+            <h4>Why Choose Bhabha</h4>
+            <p>From NAAC accreditation to global placements — the reasons that make us the right choice.</p>
+            <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          </div>
         </a>
 
         <a href="<?php echo href('awards.php');?>" class="bu-subpage-card">
-          <div class="bu-subpage-icon"><i class="fa fa-trophy"></i></div>
-          <h4>Awards &amp; Achievements</h4>
-          <p>Recognised nationally and globally for academic excellence, innovation, and social impact.</p>
-          <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          <div class="bu-subpage-img-wrap">
+            <img src="extra-images/event-sp.jpg" alt="Awards & Achievements" class="bu-subpage-img">
+          </div>
+          <div class="bu-subpage-body">
+            <div class="bu-subpage-icon"><i class="fa fa-trophy"></i></div>
+            <h4>Awards &amp; Achievements</h4>
+            <p>Recognised nationally and globally for academic excellence, innovation, and social impact.</p>
+            <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          </div>
         </a>
 
         <a href="<?php echo href('advisory.php');?>" class="bu-subpage-card">
-          <div class="bu-subpage-icon"><i class="fa fa-sitemap"></i></div>
-          <h4>Cells &amp; Committees</h4>
-          <p>Our active statutory cells, grievance committees, ICC, IQAC and other regulatory bodies.</p>
-          <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          <div class="bu-subpage-img-wrap">
+            <img src="extra-images/col-3-thum3.jpg" alt="Cells & Committees" class="bu-subpage-img">
+          </div>
+          <div class="bu-subpage-body">
+            <div class="bu-subpage-icon"><i class="fa fa-sitemap"></i></div>
+            <h4>Cells &amp; Committees</h4>
+            <p>Our active statutory cells, grievance committees, ICC, IQAC and other regulatory bodies.</p>
+            <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          </div>
         </a>
 
         <a href="<?php echo href('approvals.php');?>" class="bu-subpage-card">
-          <div class="bu-subpage-icon"><i class="fa fa-certificate"></i></div>
-          <h4>Approvals &amp; Recognitions</h4>
-          <p>Official approvals from UGC, AICTE, PCI, DCI, BCI, NCTE and NAAC accreditation details.</p>
-          <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          <div class="bu-subpage-img-wrap">
+            <img src="images/AICT.png" alt="Approvals & Recognitions" class="bu-subpage-img" style="object-fit:contain; background:#fff; padding:12px;">
+          </div>
+          <div class="bu-subpage-body">
+            <div class="bu-subpage-icon"><i class="fa fa-certificate"></i></div>
+            <h4>Approvals &amp; Recognitions</h4>
+            <p>Official approvals from UGC, AICTE, PCI, DCI, BCI, NCTE and NAAC accreditation details.</p>
+            <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
+          </div>
         </a>
 
       </div>
@@ -896,40 +1138,48 @@
   </section>
 
   <!-- =================== ACCREDITATIONS =================== -->
-  <section class="bu-about-section bu-about-section-alt" style="padding-top:50px; padding-bottom:70px;">
+  <section class="bu-about-section" style="padding-top:50px; padding-bottom:70px;">
     <div class="bu-about-container" style="text-align:center;">
       <span class="bu-section-label">Statutory Approvals</span>
       <h2 class="bu-section-title">Recognised by <em>leading bodies.</em></h2>
       <div class="bu-accred-grid">
         <div class="bu-accred-badge">
+          <img src="images/ugc.png" alt="UGC" class="bu-accred-logo" onerror="this.style.display='none';">
           <span class="bu-accred-badge-name">UGC</span>
           <span class="bu-accred-badge-desc">2(f) &amp; 12(B)</span>
         </div>
         <div class="bu-accred-badge">
+          <img src="images/naac.png" alt="NAAC" class="bu-accred-logo" onerror="this.style.display='none';">
           <span class="bu-accred-badge-name">NAAC</span>
           <span class="bu-accred-badge-desc">Accredited</span>
         </div>
         <div class="bu-accred-badge">
+          <img src="images/AICT.png" alt="AICTE" class="bu-accred-logo">
           <span class="bu-accred-badge-name">AICTE</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
+          <img src="images/PCI.png" alt="PCI" class="bu-accred-logo">
           <span class="bu-accred-badge-name">PCI</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
+          <img src="images/bci.png" alt="BCI" class="bu-accred-logo">
           <span class="bu-accred-badge-name">BCI</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
+          <img src="images/dci.png" alt="DCI" class="bu-accred-logo">
           <span class="bu-accred-badge-name">DCI</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
+          <img src="images/nci.png" alt="NCTE" class="bu-accred-logo">
           <span class="bu-accred-badge-name">NCTE</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
+          <img src="images/MPNRC.png" alt="MPNRC" class="bu-accred-logo">
           <span class="bu-accred-badge-name">MPNRC</span>
           <span class="bu-accred-badge-desc">Recognized</span>
         </div>
