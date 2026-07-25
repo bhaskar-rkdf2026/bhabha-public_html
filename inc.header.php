@@ -7,17 +7,17 @@
     <div class="bu-topbar-container">
       <div class="bu-topbar-left">
         <ul class="bu-topbar-links">
-          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Portal</a></li>
-          <li><a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank">Faculty Portal</a></li>
-          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><span class="bu-blink">ERP Login</span></a></li>
-          <li><a href="https://bhabha.accsofterp.com/AccSoft/EducationVerificationForm.aspx" target="_blank">Verification</a></li>
-          <li><a href="<?php echo href("page.php","id=25");?>">NAD</a></li>
-          <li><a href="https://bhabha.accsofterp.com/OAP/AdminLogin.aspx" target="_blank">OAP Login</a></li>
+          <li><a href="<?php echo href('hbkportal.php'); ?>">Student Portal</a></li>
+          <li><a href="<?php echo href('hbkportal.php'); ?>">Faculty Portal</a></li>
+          <li><a href="<?php echo href('hbkportal.php'); ?>"><span class="bu-blink">ERP Login</span></a></li>
+          <li><a href="<?php echo href('nirf.php'); ?>">Verification</a></li>
+          <li><a href="<?php echo href('page.php','id=25'); ?>">NAD</a></li>
+          <li><a href="<?php echo href('hbkportal.php'); ?>">OAP Login</a></li>
           <?php if(!empty($aryForm['webmail_link'])): ?>
             <li><a href="<?php echo $aryForm['webmail_link']?>" target="_blank">Web Mail</a></li>
           <?php endif; ?>
           <li><a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank">Public Disclosure</a></li>
-          <li><a href="nirf.php" target="_blank">NIRF</a></li>
+          <li><a href="<?php echo href('nirf.php'); ?>">NIRF</a></li>
           <li><a href="<?php echo href("news.php")?>">News</a></li>
           <li><a href="<?php echo href("placements.php")?>">T & P Cell</a></li>
           <li><a href="<?php echo href("notice.php")?>">Notices</a></li>
@@ -64,26 +64,27 @@
       <nav class="bu-navbar" id="buNavbar">
         <ul class="bu-nav-menu">
           <li class="bu-nav-item">
-            <a href="<?php echo URL_ROOT;?>" class="bu-nav-link">Home</a>
+            <a href="<?php echo href('index.php'); ?>" class="bu-nav-link">Home</a>
           </li>
 
           <!-- About Dropdown -->
           <li class="bu-nav-item">
-            <a href="#" class="bu-nav-link">About <i class="fa fa-angle-down"></i></a>
+            <a href="<?php echo href('about.php');?>" class="bu-nav-link">About <i class="fa fa-angle-down"></i></a>
             <ul class="bu-dropdown">
+              <li><a href="<?php echo href('about.php');?>">About Us</a></li>
               <li><a href="<?php echo href("page.php","id=20");?>">University Overview</a></li>
-              <li><a href="<?php echo href("page.php","id=17");?>">Vision & Mission</a></li>
+              <li><a href="<?php echo href("mission-vision.php");?>">Vision &amp; Mission</a></li>
               <li><a href="<?php echo href("infrastructure.php")?>">Campus & Infrastructure</a></li>
-              <li><a href="<?php echo href("page.php","id=18");?>">Core Values</a></li>
-              <li><a href="<?php echo href("leadership.php")?>">Administration & Leadership</a></li>
-              <li><a href="<?php echo href("page.php","id=19");?>">Why Choose Bhabha University</a></li>
+              <li><a href="<?php echo href('values.php'); ?>">Core Values</a></li>
+              <li><a href="<?php echo href('leadership.php'); ?>">Administration &amp; Leadership</a></li>
+              <li><a href="<?php echo href('why-us.php'); ?>">Why Choose Bhabha University</a></li>
               <li><a href="<?php echo href("awards.php")?>">Awards & Achievements</a></li>
               <li><a href="<?php echo href("advisory.php")?>">Cells & Committees</a></li>
               <li><a href="<?php echo href("approvals.php")?>">Approvals & Recognitions</a></li>
               <li><a href="<?php echo URL_UPLOAD; ?>media/ffe90b0c7e9e55b00b1207aee3ce3971.pdf" target="_blank">Sponsoring Detail</a></li>
-              <li><a href="auditreport.php">Finance Officer &gt; Audit Report</a></li>
+              <li><a href="<?php echo href('auditreport.php'); ?>">Finance Officer &gt; Audit Report</a></li>
               <li><a href="<?php echo URL_UPLOAD; ?>media/671d06f0fea73f07576a994c4343281c.pdf" target="_blank">Annual Report 2024</a></li>
-              <li><a href="ugc-proforma.php" title="Filled UGC Proforma Information">UGC Proforma</a></li>
+              <li><a href="<?php echo href('ugc-proforma.php'); ?>">UGC Proforma</a></li>
             </ul>
           </li>
 
@@ -123,8 +124,8 @@
               <li><a href="<?php echo href("page.php","id=16");?>">Online Examination Process</a></li>
               <li><a href="<?php echo href("examination.php")?>">Examination Notices</a></li>
               <li><a href="<?php echo href("time-table.php")?>">Exam Time Table</a></li>
-              <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Examination Results</a></li>
-              <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Login</a></li>
+              <li><a href="<?php echo href('examination.php'); ?>">Examination Results</a></li>
+              <li><a href="<?php echo href('hbkportal.php'); ?>">Student Login</a></li>
               <li><a href="<?php echo href('BUQuestionPapers_demo.php'); ?>">Previous Question Papers</a></li>
             </ul>
           </li>
