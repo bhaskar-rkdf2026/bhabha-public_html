@@ -7,7 +7,7 @@
     <!-- LEFT: Image & Gold Quote Card -->
     <div class="bu-chancellor-img-col">
       <div class="bu-chancellor-img-wrapper">
-        <img src="https://www.bhabhauniversity.edu.in/images/vcpic.jpg" alt="Dr. Sadhna Kapoor, Chancellor Bhabha University" class="bu-chancellor-img">
+        <img src="<?php echo URL_IMG;?>vcpic.jpg" alt="Dr. Sadhna Kapoor, Chancellor Bhabha University" class="bu-chancellor-img" onerror="this.src='https://www.bhabhauniversity.edu.in/images/vcpic.jpg'">
         <div class="bu-chancellor-quote-card">
           <p class="bu-quote-text">“We bridge academic brilliance with industrial pragmatism.”</p>
           <span class="bu-quote-author">DR. SADHNA KAPOOR · CHANCELLOR</span>
@@ -77,11 +77,16 @@
 }
 .bu-chancellor-img {
   width: 100% !important;
-  height: 520px !important;
+  max-height: 450px !important;
   object-fit: cover !important;
-  border-radius: 4px !important;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08) !important;
+  object-position: center top !important;
+  border-radius: 6px !important;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.12) !important;
   display: block !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  image-rendering: high-quality !important;
+  filter: contrast(1.04) saturate(1.05) brightness(1.01) !important;
 }
 .bu-chancellor-quote-card {
   position: absolute !important;

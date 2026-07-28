@@ -26,6 +26,90 @@ if(!$pageData) {
   box-sizing: border-box;
 }
 
+/* ============================================================
+   BHABHA UNIVERSITY - DYNAMIC CMS PAGE CONTENT STYLING
+   ============================================================ */
+
+/* Main Headings inside CMS Body */
+.bu-content-body h1,
+.bu-content-body h2,
+.bu-content-body h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  color: #0A1B54 !important;
+  margin: 18px 0 10px 0 !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
+}
+
+.bu-content-body h1 { font-size: 22px !important; }
+.bu-content-body h2 { font-size: 20px !important; }
+.bu-content-body h3 { font-size: 18px !important; }
+
+/* When Headings wrap Links (e.g., <h1><a href="...">Title</a></h1> in CMS video/link lists) */
+.bu-content-body h1:has(a),
+.bu-content-body h2:has(a),
+.bu-content-body h3:has(a),
+.bu-content-body h4:has(a) {
+  font-size: 15.5px !important;
+  font-weight: 600 !important;
+  margin: 8px 0 10px 0 !important;
+  line-height: 1.6 !important;
+  padding: 10px 14px !important;
+  background: #F8FAFC !important;
+  border-left: 3px solid #1E6091 !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03) !important;
+}
+
+.bu-content-body h1:has(a):hover,
+.bu-content-body h2:has(a):hover,
+.bu-content-body h3:has(a):hover {
+  background: #F1F5F9 !important;
+  border-left-color: #0A1B54 !important;
+  transform: translateX(4px) !important;
+}
+
+/* Dynamic Links Styling */
+.bu-content-body a {
+  color: #1E6091 !important;
+  font-size: 15.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.6 !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  word-break: break-word !important;
+}
+
+.bu-content-body a span {
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  text-decoration: inherit !important;
+}
+
+.bu-content-body a:hover,
+.bu-content-body a:hover span {
+  color: #0A1B54 !important;
+  text-decoration: underline !important;
+}
+
+/* Paragraphs & Text */
+.bu-content-body p {
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+  color: #374151 !important;
+  margin-bottom: 14px !important;
+}
+
+/* Clean up empty tags and spacing */
+.bu-content-body p:empty,
+.bu-content-body h1:empty,
+.bu-content-body h2:empty {
+  display: none !important;
+}
+
 /* Styled Table Content for Dynamic CMS Pages */
 .bu-content-body table {
   width: 100% !important;
@@ -34,19 +118,46 @@ if(!$pageData) {
   font-size: 14px !important;
   border-radius: 8px !important;
   overflow: hidden !important;
-  box-shadow: 0 4px 16px rgba(6,29,124,0.05) !important;
+  box-shadow: 0 4px 16px rgba(6,29,124,0.06) !important;
 }
+
+/* Primary Header Row & Title Banner */
 .bu-content-body table th,
 .bu-content-body table tr:first-child td {
   background: #0A1B54 !important;
-  color: #FFC107 !important;
+  color: #ffffff !important;
   font-weight: 700 !important;
-  padding: 14px 18px !important;
-  text-align: left !important;
+  padding: 16px 18px !important;
+  text-align: center !important;
   border-bottom: 2px solid #061D7C !important;
 }
+
+/* Force inner text/spans in first row header to crisp white & gold */
+.bu-content-body table th *,
+.bu-content-body table tr:first-child td * {
+  color: #ffffff !important;
+}
+.bu-content-body table tr:first-child td p:first-child *,
+.bu-content-body table tr:first-child td span:first-child {
+  color: #FFC107 !important; /* Gold highlight for main title line */
+}
+
+/* Sub-header row styling when 2nd row contains column labels (e.g. S.No, Name of Institute, etc.) */
+.bu-content-body table tr:nth-child(2) td {
+  background: #F8FAFC !important;
+  color: #0A1B54 !important;
+  font-weight: 700 !important;
+  padding: 12px 14px !important;
+  border-bottom: 2px solid #E2E8F0 !important;
+  text-align: center !important;
+}
+.bu-content-body table tr:nth-child(2) td * {
+  color: #0A1B54 !important;
+  font-weight: 700 !important;
+}
+
 .bu-content-body table td {
-  padding: 14px 18px !important;
+  padding: 12px 16px !important;
   border-bottom: 1px solid #E5E7EB !important;
   color: #374151 !important;
   line-height: 1.6 !important;

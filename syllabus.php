@@ -129,22 +129,32 @@
 <script type="text/javascript">
    $(document).ready(function(){
 	   $("#course").change(function(){					 
-			 var course=$("#course").val();
+			 var course = $("#course").val();
+			 if(!course) {
+				 $("#branch").html('<option value="">-- Select Branch --</option>');
+				 $("#year").html('<option value="">-- Select Sem / Year --</option>');
+				 return;
+			 }
 			 $.ajax({
 				type:"post",
-				url:"<?php echo URL_ROOT;?>getBranch.php",
+				url:"getBranch.php",
 				data:"course="+course,
 				success:function(data){
 					  $("#branch").html(data);
+					  $("#year").html('<option value="">-- Select Sem / Year --</option>');
 				}
 			 });
 	   });
 
 	   $("#branch").change(function(){					 
-			 var branch=$("#branch").val();
+			 var branch = $("#branch").val();
+			 if(!branch) {
+				 $("#year").html('<option value="">-- Select Sem / Year --</option>');
+				 return;
+			 }
 			 $.ajax({
 				type:"post",
-				url:"<?php echo URL_ROOT;?>getYear.php",
+				url:"getYear.php",
 				data:"branch="+branch,
 				success:function(data){
 					  $("#year").html(data);
@@ -193,7 +203,7 @@
                 if(is_array($courses) && count($courses) > 0) {
                   foreach($courses as $icourse) {
                     $selected = (isset($_POST['course']) && $_POST['course'] == $icourse['id']) ? 'selected="selected"' : '';
-                    echo '<option value="'.$icourse['id'].'" '.$selected.'>'.$icourse['course'].'</option>';
+                    echo '<option value="'.$icourse['id'].'" '.$selected.'>'.htmlspecialchars($icourse['course']).'</option>';
                   }
                 }
                 ?>
@@ -205,13 +215,14 @@
               <select name="branch" id="branch" class="bu-form-control" required>
                 <option value="">-- Select Branch --</option>
                 <?php
-                if(isset($_POST['course'])) {
+                if(isset($_POST['course']) && !empty($_POST['course'])) {
                   $db->where('course', $_POST['course']);
+                  $db->where('status', 1);
                   $branches = $db->get('branch');
                   if(is_array($branches) && count($branches) > 0) {
                     foreach($branches as $ibranch) {
                       $selected = (isset($_POST['branch']) && $_POST['branch'] == $ibranch['id']) ? 'selected="selected"' : '';
-                      echo '<option value="'.$ibranch['id'].'" '.$selected.'>'.$ibranch['branch'].'</option>';
+                      echo '<option value="'.$ibranch['id'].'" '.$selected.'>'.htmlspecialchars($ibranch['branch']).'</option>';
                     }
                   }
                 }
@@ -220,9 +231,21 @@
             </div>
 
             <div class="bu-form-group">
-              <label>Semester / Year *</label>
-              <select name="year" id="year" class="bu-form-control" required>
+              <label>Semester / Year</label>
+              <select name="year" id="year" class="bu-form-control">
                 <option value="">-- Select Sem / Year --</option>
+                <?php
+                if(isset($_POST['branch']) && !empty($_POST['branch'])) {
+                  $db->where('branch', $_POST['branch']);
+                  $syllabuses = $db->get('syllabus');
+                  if(is_array($syllabuses) && count($syllabuses) > 0) {
+                    foreach($syllabuses as $isyll) {
+                      $selected = (isset($_POST['year']) && $_POST['year'] == $isyll['id']) ? 'selected="selected"' : '';
+                      echo '<option value="'.$isyll['id'].'" '.$selected.'>'.htmlspecialchars($isyll['heading']).'</option>';
+                    }
+                  }
+                }
+                ?>
               </select>
             </div>
 
@@ -240,36 +263,43 @@
             <thead>
               <tr>
                 <th>Course</th>
-                <th>Branch &amp; Semester / Year</th>
-                <th>Download Link</th>
+                <th>Branch - Year/SEM</th>
+                <th>Download</th>
               </tr>
             </thead>
             <tbody>
               <?php
-              $db->where('course', $_POST['course']);
-              $db->where('branch', $_POST['branch']);
-              $syllabus = $db->get('syllabus');
-              if(is_array($syllabus) && count($syllabus) > 0) {
-                foreach($syllabus as $isyllabus) {
-                  $db->where('id', $isyllabus['course']);
-                  $c_data = $db->getOne('course');
+              if(!empty($_POST['course']) && !empty($_POST['branch'])) {
+                $db->where('course', $_POST['course']);
+                $db->where('branch', $_POST['branch']);
+                if(!empty($_POST['year'])) {
+                  $db->where('id', $_POST['year']);
+                }
+                $syllabus = $db->get('syllabus');
+                if(is_array($syllabus) && count($syllabus) > 0) {
+                  foreach($syllabus as $isyllabus) {
+                    $db->where('id', $isyllabus['course']);
+                    $c_data = $db->getOne('course');
 
-                  $db->where('id', $isyllabus['branch']);
-                  $b_data = $db->getOne('branch');
+                    $db->where('id', $isyllabus['branch']);
+                    $b_data = $db->getOne('branch');
               ?>
               <tr>
-                <td><strong><?php echo isset($c_data['course']) ? $c_data['course'] : '';?></strong></td>
-                <td><?php echo isset($b_data['branch']) ? $b_data['branch'] : '';?> — <?php echo $isyllabus['heading'];?></td>
+                <td><strong><?php echo isset($c_data['course']) ? htmlspecialchars($c_data['course']) : '';?></strong></td>
+                <td><?php echo isset($b_data['branch']) ? htmlspecialchars($b_data['branch']) : '';?> - <?php echo htmlspecialchars($isyllabus['heading']);?></td>
                 <td>
-                  <a target="_blank" href="<?php echo URL_UPLOAD;?>syllabus/<?php echo $isyllabus['image'];?>" class="bu-dl-link">
-                    <i class="fa fa-download"></i> Download Syllabus PDF
+                  <a target="_blank" href="<?php echo URL_UPLOAD;?>syllabus/<?php echo htmlspecialchars($isyllabus['image']);?>" class="bu-dl-link">
+                    <i class="fa fa-download"></i> Click To Download
                   </a>
                 </td>
               </tr>
               <?php
+                  }
+                } else {
+                  echo '<tr><td colspan="3" style="text-align:center;color:#6B7280;padding:24px;">No syllabus document found for the selected criteria. Please check back soon or try another selection.</td></tr>';
                 }
               } else {
-                echo '<tr><td colspan="3" style="text-align:center;color:#6B7280;padding:24px;">No syllabus document found for the selected criteria. Please check back soon or try another selection.</td></tr>';
+                echo '<tr><td colspan="3" style="text-align:center;color:#EF4444;padding:24px;">Please select Course and Branch.</td></tr>';
               }
               ?>
             </tbody>

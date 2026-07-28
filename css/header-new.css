@@ -49,17 +49,25 @@ body {
 .bu-topbar-left {
   display: flex;
   align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
+  gap: 0;
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .bu-topbar-links {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 0;
   list-style: none;
   margin: 0;
   padding: 0;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.bu-topbar-links li {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .bu-topbar-links li a {

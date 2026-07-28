@@ -27,6 +27,32 @@ body {
 
 .kf_content_wrap { background: transparent !important; }
 
+/* ---- GLOBAL HD IMAGE QUALITY ENHANCEMENT ---- */
+img {
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  image-rendering: high-quality !important;
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+  transform: translateZ(0) !important;
+}
+
+img, 
+.bu-brand-logo, 
+.bu-chancellor-img, 
+.bu-footer-logo, 
+.bu-hero-video, 
+.bu-subpage-img, 
+.bu-card-img, 
+.bu-facility-card img, 
+.bu-gallery-item img, 
+.bu-recruiter-logo img, 
+.kf_edu2_grid img, 
+.kf_edu2_thumb img,
+.kf_cur_catg_des img {
+  filter: contrast(1.03) saturate(1.04) brightness(1.01) !important;
+}
+
 /* ================================================================
    1. COURSES / PROGRAMMES SECTION
    ================================================================ */
@@ -571,3 +597,83 @@ footer .row:last-child {
   .kf_edu2_heading1 h3, .kf_edu2_heading2 h3 { font-size: 26px !important; }
   .edu2_training_wrap h2 { font-size: 28px !important; }
 }
+
+/* ================================================================
+   15. DYNAMIC CMS PAGE CONTENT STYLING
+   ================================================================ */
+.bu-content-body h1,
+.bu-content-body h2,
+.bu-content-body h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  color: var(--navy) !important;
+  margin: 18px 0 10px 0 !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
+}
+
+.bu-content-body h1 { font-size: 22px !important; }
+.bu-content-body h2 { font-size: 20px !important; }
+.bu-content-body h3 { font-size: 18px !important; }
+
+/* When Headings wrap Links (e.g. video resource links, announcements) */
+.bu-content-body h1:has(a),
+.bu-content-body h2:has(a),
+.bu-content-body h3:has(a),
+.bu-content-body h4:has(a) {
+  font-size: 15.5px !important;
+  font-weight: 600 !important;
+  margin: 8px 0 10px 0 !important;
+  line-height: 1.6 !important;
+  padding: 10px 14px !important;
+  background: var(--off-white) !important;
+  border-left: 3px solid var(--navy) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03) !important;
+}
+
+.bu-content-body h1:has(a):hover,
+.bu-content-body h2:has(a):hover,
+.bu-content-body h3:has(a):hover {
+  background: var(--light-gray) !important;
+  border-left-color: var(--gold-dk) !important;
+  transform: translateX(4px) !important;
+}
+
+.bu-content-body a {
+  color: #1E6091 !important;
+  font-size: 15.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.6 !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  word-break: break-word !important;
+}
+
+.bu-content-body a span {
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  text-decoration: inherit !important;
+}
+
+.bu-content-body a:hover,
+.bu-content-body a:hover span {
+  color: var(--navy) !important;
+  text-decoration: underline !important;
+}
+
+.bu-content-body p {
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+  color: var(--text-mid) !important;
+  margin-bottom: 14px !important;
+}
+
+.bu-content-body p:empty,
+.bu-content-body h1:empty,
+.bu-content-body h2:empty {
+  display: none !important;
+}
+

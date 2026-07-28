@@ -38,11 +38,21 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  max-width: 1380px !important;
+  max-width: 1400px !important;
   margin: 0 auto !important;
-  padding: 0 24px !important;
+  padding: 0 16px !important;
+  overflow: hidden !important;
 }
-.bu-topbar-left { display: flex !important; align-items: center !important; }
+.bu-topbar-left {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  flex-shrink: 1 !important;
+  min-width: 0 !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+.bu-topbar-left::-webkit-scrollbar { display: none !important; }
 .bu-topbar-links {
   display: flex !important;
   align-items: center !important;
@@ -50,25 +60,33 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   list-style: none !important;
   margin: 0 !important;
   padding: 0 !important;
-  flex-wrap: wrap !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
 }
-.bu-topbar-links li { margin: 0 !important; padding: 0 !important; }
+.bu-topbar-links li { margin: 0 !important; padding: 0 !important; flex-shrink: 0 !important; white-space: nowrap !important; }
 .bu-topbar-links li a {
-  color: rgba(255,255,255,0.88) !important;
+  color: rgba(255,255,255,0.92) !important;
   text-decoration: none !important;
-  font-size: 10.5px !important;
+  font-size: 10px !important;
   font-weight: 600 !important;
-  letter-spacing: 0.7px !important;
+  letter-spacing: 0.5px !important;
   text-transform: uppercase !important;
-  padding: 0 12px !important;
-  border-right: 1px solid rgba(255,255,255,0.15) !important;
+  padding: 0 9px !important;
+  border-right: 1px solid rgba(255,255,255,0.18) !important;
   display: inline-block !important;
   line-height: 1 !important;
+  white-space: nowrap !important;
   transition: color 0.2s !important;
 }
 .bu-topbar-links li:last-child a { border-right: none !important; }
 .bu-topbar-links li a:hover { color: var(--bu-gold) !important; text-decoration: none !important; }
-.bu-topbar-right { display: flex !important; align-items: center !important; gap: 16px !important; }
+.bu-topbar-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
 .bu-topbar-phone {
   color: #fff !important; font-size: 12px !important; font-weight: 700 !important;
   text-decoration: none !important; display: flex !important; align-items: center !important; gap: 6px !important;
@@ -504,5 +522,21 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
       font-size: 22px;
       font-weight: 500;
       color: #FFF;
+      }
+      /* Global HD Image Enhancement */
+      img {
+        image-rendering: -webkit-optimize-contrast !important;
+        image-rendering: crisp-edges !important;
+        image-rendering: high-quality !important;
+        -webkit-backface-visibility: hidden !important;
+        backface-visibility: hidden !important;
+        transform: translateZ(0) !important;
+      }
+      .bu-brand-logo, .bu-footer-logo {
+        height: auto !important;
+        max-height: 48px !important;
+        object-fit: contain !important;
+        image-rendering: -webkit-optimize-contrast !important;
+        filter: contrast(1.02) saturate(1.03) !important;
       }
     </style>

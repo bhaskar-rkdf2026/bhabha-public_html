@@ -10,7 +10,7 @@
       <!-- Column 1: Bhabha University Logo & Info -->
       <div class="bu-footer-col bu-footer-info-col">
         <div class="bu-footer-logo-wrap">
-          <img src="https://www.bhabhauniversity.edu.in/images/Bhabha university logo.png" alt="Bhabha University Logo" class="bu-footer-logo">
+          <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Bhabha University Logo" class="bu-footer-logo" onerror="this.src='https://www.bhabhauniversity.edu.in/images/Bhabha university logo.png'">
           <div class="bu-footer-title-wrap">
             <h3 class="bu-footer-main-title">Bhabha University</h3>
             <span class="bu-footer-subtitle">BHOPAL &nbsp;·&nbsp; INDIA</span>
@@ -85,19 +85,21 @@
           <li><a href="<?php echo href("page.php","id=23"); ?>">Scholarships</a></li>
           <li><a href="<?php echo href("page.php","id=24"); ?>">Downloads</a></li>
           <li><a href="<?php echo href("page.php","id=25"); ?>">Mandatory Disclosures</a></li>
+          <li><a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank">Public Disclosure</a></li>
           <li><a href="<?php echo href("page.php","id=26"); ?>">Anti-Ragging</a></li>
         </ul>
       </div>
 
       <!-- Column 5: Community -->
       <div class="bu-footer-col">
-        <h4 class="bu-footer-heading">COMMUNITY</h4>
+        <h4 class="bu-footer-heading">COMMUNITY & SUPPORT</h4>
         <ul class="bu-footer-links">
           <li><a href="<?php echo href("contact.php"); ?>">Student Services</a></li>
           <li><a href="<?php echo href("contact.php"); ?>">Alumni Network</a></li>
           <li><a href="<?php echo href("contact.php"); ?>">Careers</a></li>
           <li><a href="<?php echo href("contact.php"); ?>">Recruiters</a></li>
-          <li><a href="<?php echo href("contact.php"); ?>">Media & News</a></li>
+          <li><a href="<?php echo href("grievance.php"); ?>">Grievance Redressal</a></li>
+          <li><a href="<?php echo href("news.php"); ?>">Media & News</a></li>
         </ul>
       </div>
 

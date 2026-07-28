@@ -1,15 +1,14 @@
 <?php
 include_once("config.php");
-$branch=$_POST["branch"];
-$db->where('branch',$branch);
-$syllabus = $db->get('syllabus');
-echo "<option>Select Sem / Year</option>";
-if(is_array($syllabus) & count($syllabus)>0)
-	{
-		foreach($syllabus as $isyllabus)
-		{
-			echo "<option value=$isyllabus[id]>$isyllabus[heading]</option>";
-		}
-	}
-
+$branch = isset($_POST["branch"]) ? $_POST["branch"] : '';
+echo '<option value="">-- Select Sem / Year --</option>';
+if (!empty($branch)) {
+    $db->where('branch', $branch);
+    $syllabus = $db->get('syllabus');
+    if (is_array($syllabus) && count($syllabus) > 0) {
+        foreach ($syllabus as $isyllabus) {
+            echo '<option value="' . htmlspecialchars($isyllabus['id']) . '">' . htmlspecialchars($isyllabus['heading']) . '</option>';
+        }
+    }
+}
 ?>

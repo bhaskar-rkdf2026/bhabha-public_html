@@ -16,12 +16,10 @@
           <?php if(!empty($aryForm['webmail_link'])): ?>
             <li><a href="<?php echo $aryForm['webmail_link']?>" target="_blank">Web Mail</a></li>
           <?php endif; ?>
-          <li><a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank">Public Disclosure</a></li>
           <li><a href="<?php echo href('nirf.php'); ?>">NIRF</a></li>
           <li><a href="<?php echo href("news.php")?>">News</a></li>
           <li><a href="<?php echo href("placements.php")?>">T & P Cell</a></li>
           <li><a href="<?php echo href("notice.php")?>">Notices</a></li>
-          <li><a href="<?php echo href("grievance.php")?>">Grievance</a></li>
         </ul>
       </div>
 
@@ -46,7 +44,7 @@
       
       <!-- Brand Logo -->
       <a href="<?php echo URL_ROOT;?>" class="bu-brand">
-        <img src="<?php echo URL_IMG;?>logo.png" alt="Bhabha University Emblem" class="bu-brand-logo" onerror="this.src='<?php echo URL_IMG;?>bhabha univ logo.jpg'">
+        <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Bhabha University Emblem" class="bu-brand-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
         <div class="bu-brand-text">
           <span class="bu-brand-title">Bhabha University</span>
           <span class="bu-brand-subtitle">Bhopal &bull; Since 2004</span>
@@ -125,7 +123,7 @@
               <li><a href="<?php echo href("examination.php")?>">Examination Notices</a></li>
               <li><a href="<?php echo href("time-table.php")?>">Exam Time Table</a></li>
               <li><a href="<?php echo href('examination.php'); ?>">Examination Results</a></li>
-              <li><a href="<?php echo href('hbkportal.php'); ?>">Student Login</a></li>
+              <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Login</a></li>
               <li><a href="<?php echo href('BUQuestionPapers_demo.php'); ?>">Previous Question Papers</a></li>
             </ul>
           </li>
