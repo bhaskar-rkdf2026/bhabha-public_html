@@ -1,0 +1,603 @@
+/* ==========================================================================
+   Bhabha University - New Modern Header Stylesheet (Navy & Gold Theme)
+   ========================================================================== */
+
+:root {
+  --bu-navy: #091E60;
+  --bu-navy-dark: #051342;
+  --bu-navy-light: #153285;
+  --bu-gold: #FFC107;
+  --bu-gold-dark: #D99B00;
+  --bu-gold-hover: #E0A800;
+  --bu-bg-header: #FAF8F5;
+  --bu-text: #0F172A;
+  --bu-text-muted: #64748B;
+  --bu-border: #E2E8F0;
+  --bu-font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --bu-font-title: 'Playfair Display', Georgia, serif;
+}
+
+body {
+  font-family: var(--bu-font-main);
+}
+
+/* --------------------------------------------------------------------------
+   1. Top Utility Bar
+   -------------------------------------------------------------------------- */
+.bu-topbar {
+  background-color: var(--bu-navy);
+  color: #FFFFFF;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 6px 0;
+  position: relative;
+  z-index: 1010;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bu-topbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.bu-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.bu-topbar-links {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.bu-topbar-links li {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.bu-topbar-links li a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bu-topbar-links li a:hover {
+  color: var(--bu-gold);
+}
+
+.bu-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.bu-topbar-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.bu-topbar-phone i {
+  color: var(--bu-gold);
+}
+
+.bu-btn-top-gold {
+  background-color: var(--bu-gold);
+  color: var(--bu-navy);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  padding: 5px 14px;
+  border-radius: 3px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: inline-block;
+}
+
+.bu-btn-top-gold:hover {
+  background-color: var(--bu-gold-hover);
+  color: var(--bu-navy-dark);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+/* Blinking Badge */
+.bu-blink {
+  animation: buBlink 1.4s infinite;
+  display: inline-block;
+}
+
+@keyframes buBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.03); }
+}
+
+/* --------------------------------------------------------------------------
+   2. Main Header & Navigation Bar
+   -------------------------------------------------------------------------- */
+.bu-main-header {
+  background-color: var(--bu-bg-header);
+  border-bottom: 1px solid var(--bu-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 1000;
+}
+
+.bu-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+/* Logo Brand Styling */
+.bu-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  padding: 4px 0;
+}
+
+.bu-brand-logo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+}
+
+.bu-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.bu-brand-title {
+  font-family: var(--bu-font-title);
+  font-size: 23px;
+  font-weight: 800;
+  color: var(--bu-navy);
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+
+.bu-brand-subtitle {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--bu-gold-dark);
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+/* Main Navigation Menu */
+.bu-navbar {
+  display: flex;
+  align-items: center;
+}
+
+.bu-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bu-nav-item {
+  position: relative;
+}
+
+.bu-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 11px;
+  color: var(--bu-navy);
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.bu-nav-link i.fa-angle-down {
+  font-size: 11px;
+  transition: transform 0.2s ease;
+}
+
+.bu-nav-item:hover > .bu-nav-link i.fa-angle-down {
+  transform: rotate(180deg);
+}
+
+.bu-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 11px;
+  right: 11px;
+  height: 2px;
+  background-color: var(--bu-gold-dark);
+  transform: scaleX(0);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bu-nav-item:hover > .bu-nav-link,
+.bu-nav-link.active {
+  color: var(--bu-navy-light);
+  text-decoration: none;
+}
+
+.bu-nav-item:hover > .bu-nav-link::after,
+.bu-nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* --------------------------------------------------------------------------
+   3. Dropdown Menu Styling
+   -------------------------------------------------------------------------- */
+.bu-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 250px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 14px 35px rgba(9, 30, 96, 0.12);
+  border: 1px solid var(--bu-border);
+  padding: 8px 0;
+  margin: 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1050;
+}
+
+.bu-nav-item:hover > .bu-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.bu-dropdown li {
+  position: relative;
+}
+
+.bu-dropdown li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 18px;
+  color: #334155;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  line-height: 1.4;
+}
+
+.bu-dropdown li a:hover {
+  background-color: #F8FAFC;
+  color: var(--bu-navy);
+  padding-left: 22px;
+}
+
+/* Nested Sub-dropdown */
+.bu-dropdown .bu-dropdown {
+  top: 0;
+  left: 100%;
+  margin-left: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Header Action Controls (Search & Apply CTA)
+   -------------------------------------------------------------------------- */
+.bu-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Search Trigger Button */
+.bu-search-btn {
+  background: transparent;
+  border: none;
+  color: var(--bu-navy);
+  font-size: 16px;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bu-search-btn:hover {
+  background-color: rgba(9, 30, 96, 0.08);
+  color: var(--bu-gold-dark);
+}
+
+/* Main Apply Button */
+.bu-btn-navy {
+  background-color: var(--bu-navy);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 12.5px;
+  letter-spacing: 1px;
+  padding: 9px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(9, 30, 96, 0.2);
+  display: inline-block;
+  border: 1px solid var(--bu-navy);
+}
+
+.bu-btn-navy:hover {
+  background-color: var(--bu-gold);
+  color: var(--bu-navy-dark);
+  border-color: var(--bu-gold);
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(255, 193, 7, 0.35);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   5. Interactive Search Bar Modal Overlay
+   -------------------------------------------------------------------------- */
+.bu-search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(9, 30, 96, 0.94);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.bu-search-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.bu-search-box {
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+}
+
+.bu-search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--bu-gold);
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 12px 50px 12px 10px;
+  outline: none;
+}
+
+.bu-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bu-search-submit {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--bu-gold);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.bu-search-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-size: 32px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.bu-search-close:hover {
+  color: var(--bu-gold);
+}
+
+/* --------------------------------------------------------------------------
+   6. News Ticker Bar
+   -------------------------------------------------------------------------- */
+.bu-ticker-wrapper {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid var(--bu-border);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 38px;
+  box-shadow: inset 0 -1px 3px rgba(0,0,0,0.03);
+}
+
+.bu-ticker-label {
+  background-color: var(--bu-navy);
+  color: var(--bu-gold);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 0 18px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 6px;
+  z-index: 2;
+}
+
+.bu-ticker-content {
+  flex: 1;
+  padding: 0 15px;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.bu-ticker-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bu-ticker-list li a {
+  color: var(--bu-text);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.bu-ticker-list li a:hover {
+  color: var(--bu-navy-light);
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   7. Responsive & Mobile Styling
+   -------------------------------------------------------------------------- */
+.bu-mobile-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--bu-navy);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 6px 10px;
+}
+
+@media (max-width: 1120px) {
+  .bu-topbar-left {
+    gap: 10px;
+  }
+  .bu-topbar-links {
+    gap: 10px;
+  }
+  .bu-nav-link {
+    padding: 12px 7px;
+    font-size: 11.5px;
+  }
+}
+
+@media (max-width: 991px) {
+  .bu-topbar {
+    display: none; /* Hide topbar on small mobile screens or collapse */
+  }
+  
+  .bu-mobile-toggle {
+    display: block;
+  }
+  
+  .bu-navbar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 280px;
+    height: 100vh;
+    background-color: var(--bu-navy);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    z-index: 2000;
+    padding: 60px 20px 30px;
+  }
+  
+  .bu-navbar.mobile-open {
+    left: 0;
+  }
+  
+  .bu-nav-menu {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0;
+  }
+  
+  .bu-nav-item {
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .bu-nav-link {
+    color: #FFFFFF;
+    width: 100%;
+    justify-content: space-between;
+    padding: 14px 0;
+  }
+  
+  .bu-dropdown {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: none;
+    border: none;
+    display: none;
+    width: 100%;
+  }
+
+  .bu-nav-item.open > .bu-dropdown {
+    display: block;
+  }
+  
+  .bu-dropdown li a {
+    color: rgba(255, 255, 255, 0.85);
+    padding: 10px 15px;
+  }
+}

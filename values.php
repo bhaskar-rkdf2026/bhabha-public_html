@@ -1,107 +1,110 @@
 <?php include('config.php');?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Our Values - Bhabha University Bhopal Madhya Pradesh</title>
-    <!-- Bootstrap core CSS -->
-    <?php include('inc.meta.php');?>
-    </head>
-    
-    <body>
-<!--KF KODE WRAPPER WRAP START-->
-<div class="kode_wrapper"> 
-      <!-- register Modal --> 
-      <!--HEADER START-->
-      <?php include('inc.header.php');?>
-      <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>Our Values</h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#">Our Values</a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Core Values - Bhabha University Bhopal</title>
+<meta name="description" content="The core values of Bhabha University — Integrity, Innovation, Care, Excellence, Collaboration and Social Responsibility that guide everything we do.">
+<?php include('inc.meta.php');?>
+</head>
+<body>
+<div class="kode_wrapper">
+  <?php include('inc.header.php');?>
+
+  <?php
+  $page_title    = 'Core <em>Values</em>';
+  $page_subtitle = 'The principles that define who we are, how we work, and guide how we act with each other and every stakeholder.';
+  $page_icon     = 'fa-heart';
+  $breadcrumbs   = [
+    ['label' => 'Home',  'url' => URL_ROOT],
+    ['label' => 'About', 'url' => href('about.php')],
+    ['label' => 'Core Values', 'url' => '#'],
+  ];
+  include('inc.page-banner.php');
+  ?>
+
+  <div class="bu-inner-layout">
+    <?php $active_page = 'values'; include('inc.about-sidebar.php'); ?>
+
+    <main class="bu-inner-content">
+
+      <!-- Intro -->
+      <div class="bu-content-card">
+        <span class="bu-content-label">Our Foundation</span>
+        <h2 class="bu-content-h2">Core <em>Values</em></h2>
+        <div class="bu-content-divider"></div>
+        <div class="bu-content-body">
+          <p>
+            In fulfilling our mission, the faculty, staff, and students of Bhabha University are committed 
+            to the following values — both as an institution and in our actions as individuals. 
+            <strong>Core Values are at the heart of our education.</strong> They define who we are, 
+            how we work, and guide how we act with each other and with other stakeholders. They are our DNA.
+          </p>
         </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>Our Values</h3>
-              </div>
-                  <!-- HEADING 1 END-->
-                  <div class="abt_univ_des">
-                <p>In fulfilling our mission, the faculty, staff, and students of the Bhabha University are committed to the following values as an institution and in our actions as individuals</p>
-                <ul style="list-style-type:circle">
-                      <li>Accountability</li>
-                      <li>Collaboration</li>
-                      <li>Diversity &amp; Inclusiveness</li>
-                      <li>Entrepreneurism</li>
-                      <li>Integrity</li>
-                      <li>Professionalism</li>
-                      <li>Respect</li>
-                      <li>Leadership</li>
-                      <li>Discovery &amp; innovation</li>
-                      <li>Social responsibility</li>
-                    </ul>
-                <br>
-                <ul>
-                      <li>People: Success, diversity</li>
-                      <li>Learning: Discovery, innovation, scholarship</li>
-                      <li>Partnerships: Regional, entrepreneurial, global</li>
-                      <li>Relationships: Collegial, professional, ethical</li>
-                      <li>Sustainability: Social justice, economic opportunity, environmental protection</li>
-                      <li>Stewardship: Fiscal, intellectual<a name="diversity"></a></li>
-                    </ul>
-                <br>
-                <p>Core Values are at the heart of our Education. They define who we are, how we work and guide how we act with each other and with other stakeholders. They’re our DNA.</p>
-                <p><strong>INTEGRITY</strong>:&nbsp;We build relationships through trust, honesty and&nbsp;respect</p>
-                <p><strong>PASSION &amp; PRIDE:</strong>&nbsp;We love what we do and strive for excellence</p>
-                <p><strong>CARE:</strong>&nbsp;We put our students and their goals at the heart of&nbsp;everything we do</p>
-                <p><strong>CREATIVITY:</strong>&nbsp;We are not afraid to be different and we celebrate&nbsp;innovation Oh, and we believe that a&nbsp;SMILE&nbsp;goes a long way&hellip;</p>
-                <p>Our Core Values are the foundation of our Mission and Vision Statements.</p>
-              </div>
-                </div>
-          </div>
-            </div>
       </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
+
+      <!-- Primary Values Cards -->
+      <div class="bu-content-card">
+        <span class="bu-content-label">What We Stand For</span>
+        <h2 class="bu-content-h2">Our <em>Guiding Principles</em></h2>
+        <div class="bu-content-divider"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:10px;">
+          <?php
+          $core_values = [
+            ['icon'=>'fa-shield','color'=>'#0A1B54','title'=>'Integrity','desc'=>'We build relationships through trust, honesty and respect. Integrity is non-negotiable in everything we do — academic or otherwise.'],
+            ['icon'=>'fa-fire','color'=>'#D99B00','title'=>'Passion & Pride','desc'=>'We love what we do and strive for excellence in every endeavour. We take pride in our institution and in the achievements of our students and alumni.'],
+            ['icon'=>'fa-heart','color'=>'#E53E3E','title'=>'Care','desc'=>'We put our students and their goals at the heart of everything we do. Every decision is guided by our commitment to student success and wellbeing.'],
+            ['icon'=>'fa-lightbulb-o','color'=>'#38A169','title'=>'Creativity & Innovation','desc'=>'We are not afraid to be different and we celebrate innovation. We encourage creative thinking, entrepreneurship and problem-solving at every level.'],
+            ['icon'=>'fa-users','color'=>'#6B46C1','title'=>'Collaboration','desc'=>'We believe in the power of working together — faculty, students, industry and community — to achieve outcomes greater than what any one can accomplish alone.'],
+            ['icon'=>'fa-globe','color'=>'#2B6CB0','title'=>'Social Responsibility','desc'=>'We recognise our duty to society and the environment. We empower students to be responsible global citizens who contribute positively to their communities.'],
+            ['icon'=>'fa-graduation-cap','color'=>'#C05621','title'=>'Discovery & Learning','desc'=>'We foster a culture of curiosity, continuous learning and intellectual exploration. Research and scholarship are embedded in every aspect of university life.'],
+            ['icon'=>'fa-balance-scale','color'=>'#285E61','title'=>'Diversity & Inclusiveness','desc'=>'We celebrate diversity in all its forms and are committed to providing an inclusive environment where every student and faculty member feels valued and respected.'],
+          ];
+          foreach($core_values as $v): ?>
+          <div style="display:flex;gap:16px;align-items:flex-start;padding:22px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:8px;transition:all 0.25s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(6,29,124,0.1)';this.style.transform='translateY(-2px)';" onmouseout="this.style.boxShadow='none';this.style.transform='none';">
+            <div style="width:44px;height:44px;background:<?php echo $v['color'];?>1a;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fa <?php echo $v['icon'];?>" style="font-size:18px;color:<?php echo $v['color'];?>;"></i>
+            </div>
+            <div>
+              <h4 style="font-size:15px;font-weight:700;color:#061D7C;margin:0 0 6px 0;font-family:'Plus Jakarta Sans',sans-serif;"><?php echo $v['title'];?></h4>
+              <p style="font-size:13px;line-height:1.65;color:#6B7280;margin:0;"><?php echo $v['desc'];?></p>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <!-- Values Pillars -->
+      <div class="bu-content-card" style="background:linear-gradient(135deg,#0A1B54,#061D7C);border-color:#0A1B54;">
+        <span class="bu-content-label" style="color:#FFC107;">Five Pillars</span>
+        <h2 class="bu-content-h2" style="color:#fff;">Our Value <em style="color:#FFC107;">Pillars</em></h2>
+        <div style="width:50px;height:3px;background:#FFC107;border-radius:2px;margin:16px 0 24px 0;"></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;">
+          <?php
+          $pillars = [
+            ['title'=>'People','sub'=>'Success & Diversity','icon'=>'fa-user'],
+            ['title'=>'Learning','sub'=>'Discovery, Innovation & Scholarship','icon'=>'fa-book'],
+            ['title'=>'Partnerships','sub'=>'Regional, Entrepreneurial & Global','icon'=>'fa-handshake-o'],
+            ['title'=>'Relationships','sub'=>'Collegial, Professional & Ethical','icon'=>'fa-heart'],
+            ['title'=>'Sustainability','sub'=>'Social Justice, Economic & Environmental','icon'=>'fa-leaf'],
+          ];
+          foreach($pillars as $p): ?>
+          <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:22px 18px;text-align:center;">
+            <i class="fa <?php echo $p['icon'];?>" style="font-size:26px;color:#FFC107;margin-bottom:12px;display:block;"></i>
+            <h4 style="font-size:15px;font-weight:700;color:#fff;margin:0 0 6px 0;font-family:'Plus Jakarta Sans',sans-serif;"><?php echo $p['title'];?></h4>
+            <p style="font-size:12px;line-height:1.5;color:rgba(255,255,255,0.6);margin:0;"><?php echo $p['sub'];?></p>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+    </main>
   </div>
-      <!--FOOTER START-->
-      <?php include('inc.footer.php');?>
-      
-      <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
-    </div>
-<!--KF KODE WRAPPER WRAP END--> 
-<!--Bootstrap core JavaScript-->
+
+  <?php include('inc.footer.php');?>
+</div>
 <?php include('inc.footer.js.php');?>
 </body>
 </html>

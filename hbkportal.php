@@ -1,543 +1,315 @@
-
+<?php include('config.php');?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dr Homi Bhabha Online Knowledge Center-  Bhabha University Bhopal Madhya Pradesh</title>
-    <!-- Bootstrap core CSS -->
-     <link rel="icon" href="https://www.bhabhauniversity.edu.in/images/favicon.png" type="image/gif" sizes="16x16"> 
-<link href="https://www.bhabhauniversity.edu.in/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Full Calender CSS -->
-	<!-- Owl Carousel CSS -->
-	<link href="https://www.bhabhauniversity.edu.in/css/owl.carousel.css" rel="stylesheet">
-	<!-- Pretty Photo CSS -->
-	<link href="https://www.bhabhauniversity.edu.in/css/prettyPhoto.css" rel="stylesheet">
-	<!-- Bx-Slider StyleSheet CSS -->
-	<!-- Font Awesome StyleSheet CSS -->
-	<link href="https://www.bhabhauniversity.edu.in/css/font-awesome.min.css" rel="stylesheet">
-    <!-- DL Menu CSS -->
-    <link href="https://www.bhabhauniversity.edu.in/js/dl-menu/component.css" rel="stylesheet">
-	<link href="https://www.bhabhauniversity.edu.in/svg/style.css" rel="stylesheet">
-	<!-- Widget CSS -->
-	<link href="https://www.bhabhauniversity.edu.in/css/widget.css" rel="stylesheet">
-	<!-- Typography CSS -->
-	<link href="https://www.bhabhauniversity.edu.in/css/typography.css" rel="stylesheet">
-	<!-- Shortcodes CSS -->
-	<link href="https://www.bhabhauniversity.edu.in/css/shortcodes.css" rel="stylesheet">
-	<!-- Custom Main StyleSheet CSS -->
-	<link href="https://www.bhabhauniversity.edu.in/style.css" rel="stylesheet">
-	<link href="https://www.bhabhauniversity.edu.in/css/validation.css" rel="stylesheet">
-	<!-- Color CSS -->
-	<link href="https://www.bhabhauniversity.edu.in/css/color.css" rel="stylesheet">
-	<!-- Responsive CSS -->
-	<link href="https://www.bhabhauniversity.edu.in/css/responsive.css" rel="stylesheet">
-	<!-- SELECT MENU -->
-	<link href="https://www.bhabhauniversity.edu.in/css/breaking-news-ticker.css" rel="stylesheet">
-	<!-- SIDE MENU -->
-	<link rel="stylesheet" href="https://www.bhabhauniversity.edu.in/css/jquery.sidr.dark.css">
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://www.bhabhauniversity.edu.in/js/jquery.js"></script> 
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dr Homi Bhabha Online Knowledge Portal - Bhabha University Bhopal</title>
+<meta name="description" content="Access Dr Homi Bhabha Online Knowledge Portal, Moodle LMS, digital courseware, MOOC e-learning materials, and video lectures at Bhabha University Bhopal.">
+<?php include('inc.meta.php');?>
+<style>
+.bu-full-width-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 20px 80px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  box-sizing: border-box;
+}
 
-    <style>
-      marquee{
-      font-size: 22px;
-      font-weight: 500;
-      color: #FFF;
-      }
-    </style>
-    </head>
+/* Featured LMS Portal Card */
+.bu-portal-hero-card {
+  background: linear-gradient(135deg, #0A1B54 0%, #061D7C 60%, #1E3A8A 100%);
+  border-radius: 16px;
+  padding: 40px 36px;
+  color: #ffffff;
+  margin: 24px 0 40px;
+  box-shadow: 0 16px 36px rgba(10,27,84,0.18);
+  position: relative;
+  overflow: hidden;
+}
+.bu-portal-hero-card::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 220px;
+  height: 220px;
+  background: rgba(255, 193, 7, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+}
 
-    <body>
-<!--KF KODE WRAPPER WRAP START-->
-<div class="kode_wrapper"> 
-      <!-- register Modal --> 
-      <!--HEADER START-->
-      
-<header id="header_2"> 
-  <!--kode top bar start-->
-  <div class="top_bar_2">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-2">
-          <div class="pull-left"> <em class="contct_2"><!--<i class="fa fa-phone"></i> -->
-                                    </em> </div>
-        </div>
-        <div class="col-md-10">
-          <ul class="login_wrap">
-            <li><a href="https://www.bhabhauniversity.edu.in/enquiry/"><i class="fa fa-sign-in"></i>Admission Enquiry</a></li>
-            <li><a href="http://webmail.bhabhauniversity.edu.in/" target="_blank"><i class="fa fa-sign-in"></i>Web Mail</a></li>
-            <li><a href="https://bhabha.academiaerp.com/academia/" target="_blank"><i class="fa fa-sign-in"></i>ERP Login</a></li>
-            
-             <li><a href="https://www.bhabhauniversity.edu.in/page/25/"><i class="fa fa-sign-in"></i>NAD</a></li>
-             
-          </ul>
-          <ul class="top_nav">
-            <li><a href="https://www.bhabhauniversity.edu.in/news/">News</a></li>
-            <li><a href="https://www.bhabhauniversity.edu.in/jobs/">Current Jobs</a></li>
-            <li><a href="https://www.bhabhauniversity.edu.in/alumni/">Alumni</a></li>
-            <li><a href="https://www.bhabhauniversity.edu.in/placements/">T & P Cell</a></li>
-            <li><a href="https://www.bhabhauniversity.edu.in/notice/">Notices</a></li>
-            <li><a href="https://www.bhabhauniversity.edu.in/grievance/">Grievance</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--kode top bar end--> 
-  
-  <!--kode navigation start-->
-  <div class="kode_navigation">
-    <div id="mobile-header"> <a id="responsive-menu-button" href="#sidr-main"><i class="fa fa-bars"></i></a> </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-1">
-          <div class="logo_wrap"> <a href="https://www.bhabhauniversity.edu.in/"><img src="https://www.bhabhauniversity.edu.in/images/logo.png" alt="Bhabha University" ></a> </div>
-        </div>
-        <div class="col-md-11"> 
-          <!--kode nav_2 start-->
-          <div class="nav_2" id="navigation">
-            <ul>
-              <li><a href="https://www.bhabhauniversity.edu.in/">Home</a></li>
-              <li><a href="https://www.bhabhauniversity.edu.in/virtual/">Virtual Tour</a></li>
-              <li><a href="#">About</a>
-                <ul>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/20/">University</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/17/">Vision & Mission</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/infrastructure/">Infrastructure</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/18/">Core Values</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/leadership/">Leadership</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/19/">Why Choose Bhabha University</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/awards/">Awards & Achievements</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/advisory/">Advisory Bodies</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/approvals/">Approvals</a></li>
-                </ul>
-              </li>
-              <li><a href="https://www.bhabhauniversity.edu.in/institutes/">Institutes</a>
-                <ul>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/1/">ENGINEERING</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/2/">PHARMACY</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/3/">DENTAL</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/4/">MANAGEMENT</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/5/">COMPUTER APPLICATIONS</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/6/">EDUCATION</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/7/">HOTEL MANAGEMENT</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/8/">AGRICULTURE</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/9/">LAW</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/10/">COMMERCE</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/11/">SCIENCE</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/12/">ART</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/13/">NURSING</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/14/">LIBRARY SCIENCE</a></li>
-                                    <li><a href="https://www.bhabhauniversity.edu.in/department/15/">JOURNALISM</a></li>
-                                  </ul>
-              </li>
-              <li><a href="">Academic</a>
-                <ul>
-                  <li><a href="https://www.bhabhauniversity.edu.in/faculties/">Faculties & Institutes</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/syllabus/">Scheme & Syllabus</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/academic/">Academic Calendar</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/9/">MOU & Collaboration</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/8/">Online Video Resources</a></li>
-                </ul>
-              </li>
-              <li><a href="">Examinations</a>
-                <ul>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/16/">Online Examination Alert</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/examination/">Examination Notice</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/time-table/">Exam Time Table</a></li>
-                  <li><a href="https://bhabha.academiaerp.com/academia/" target="_blank">Results</a></li>
-                  <li><a href="https://bhabha.academiaerp.com/academia/" target="_blank">Student Login</a></li>
-                </ul>
-              </li>
-              <li><a href="">Research</a>
-                <ul>
-                  <li><a target="_blank" href="https://www.bhabhauniversity.edu.in/upload/research/overview.pdf">Overview</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/3/">Research at Glance</a></li>
-                  <li><a target="_blank" href="https://www.bhabhauniversity.edu.in/page/14/">PhD student (List)</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/15/">Journal</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/4/">Funding Agency</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/5/">Publication</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/10/">Conference /Seminar</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/11/">Industrial Visits</a></li>
-                </ul>
-              </li>
-              <li><a href="">Admissions</a>
-                <ul>
-                  <li><a href="https://www.bhabhauniversity.edu.in/enquiry/">Admission Enquiry & Check Eligibility</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/12/">Admission Process</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/course/">Courses, Intake and Eligibility</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/fees/">Fees Structure</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/1/">University Account Details</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/online-admission/">Registration Form</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/13/">Scholarship</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/24/">Admission Contact Number</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Vocational Courses</a>
-                <ul>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/6/">Media</a></li>
-                  <li><a href="https://www.bhabhauniversity.edu.in/page/7/">Hotel Management</a></li>
-                </ul>
-              </li>
-              <li><a href="https://www.bhabhauniversity.edu.in/contact/">Contact</a></li>
-            </ul>
-            <!--DL Menu Start-->
-            <div id="kode-responsive-navigation" class="dl-menuwrapper">
-              <button class="dl-trigger">Open Menu</button>
-              <ul class="dl-menu">
-                <li><a href="https://www.bhabhauniversity.edu.in/">Home</a></li>
-                <li><a href="https://www.bhabhauniversity.edu.in/virtual/">Virtual Tour</a></li>
-                <li class="menu-item kode-parent-menu"><a href="#">About</a>
-                  <ul class="dl-submenu">
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/20/">University</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/17/">Vision & Mission</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/infrastructure/">Infrastructure</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/18/">Core Values</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/leadership/">Leadership</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/19/">Why Choose Bhabha University</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/awards/">Awards & Achievements</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/advisory/">Advisory Bodies</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/approvals/">Approvals</a></li>
-                  </ul>
-                </li>
-                <li class="menu-item kode-parent-menu"><a href="https://www.bhabhauniversity.edu.in/institutes/">Institutes</a>
-                  <ul class="dl-submenu">
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/1/">ENGINEERING</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/2/">PHARMACY</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/3/">DENTAL</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/4/">MANAGEMENT</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/5/">COMPUTER APPLICATIONS</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/6/">EDUCATION</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/7/">HOTEL MANAGEMENT</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/8/">AGRICULTURE</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/9/">LAW</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/10/">COMMERCE</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/11/">SCIENCE</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/12/">ART</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/13/">NURSING</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/14/">LIBRARY SCIENCE</a></li>
-                                        <li><a href="https://www.bhabhauniversity.edu.in/department/15/">JOURNALISM</a></li>
-                                      </ul>
-                </li>
-                <li class="menu-item kode-parent-menu"><a href="#">Academic</a>
-                  <ul class="dl-submenu">
-                    <li><a href="https://www.bhabhauniversity.edu.in/faculties/">Faculties & Institutes</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/syllabus/">Scheme & Syllabus</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/academic/">Academic Calendar</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/9/">MOU & Collaboration</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/8/">Online Video Resources</a></li>
-                  </ul>
-                </li>
-                <li class="menu-item kode-parent-menu"><a href="">Examinations</a>
-                  <ul class="dl-submenu">
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/16/">Online Examination Alert</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/examination/">Examination Notice</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/time-table/">Exam Time Table</a></li>
-                    <li><a href="https://bhabha.academiaerp.com/academia/" target="_blank">Results</a></li>
-                    <li><a href="https://bhabha.academiaerp.com/academia/" target="_blank">Student Login</a></li>
-                  </ul>
-                </li>
-                <li class="menu-item kode-parent-menu"><a href="https://www.bhabhauniversity.edu.in/research/">Research</a>
-                  <ul class="dl-submenu">
-                    <li><a target="_blank" href="https://www.bhabhauniversity.edu.in/upload/research/overview.pdf">Overview</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/3/">Research at Glance</a></li>
-                    <li><a target="_blank" href="https://www.bhabhauniversity.edu.in/page/14/">PhD student (List)</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/15/">Journal</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/4/">Funding Agency</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/5/">Publication</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/10/">Conference /Seminar</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/11/">Industrial Visits</a></li>
-                  </ul>
-                </li>
-                <li class="menu-item kode-parent-menu"><a href="">Admissions</a>
-                  <ul class="dl-submenu">
-                    <li><a href="https://www.bhabhauniversity.edu.in/enquiry/">Admission Enquiry & Check Eligibility</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/12/">Admission Process</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/course/">Courses, Intake and Eligibility</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/fees/">Fees Structure</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/1/">University Account Details</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/online-admission/">Registration Form</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/13/">Scholarship</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/24/">Admission Contact Number</a></li>
-                  </ul>
-                </li>
-                <li class="menu-item kode-parent-menu"><a href="#">Vocational Courses</a>
-                  <ul class="dl-submenu">
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/6/">Media</a></li>
-                    <li><a href="https://www.bhabhauniversity.edu.in/page/7/">Hotel Management</a></li>
-                  </ul>
-                </li>
-                <li><a href="https://www.bhabhauniversity.edu.in/news/">News</a></li>
-                <li><a href="https://www.bhabhauniversity.edu.in/jobs/">Current Jobs</a></li>
-                <li><a href="https://www.bhabhauniversity.edu.in/alumni/">Alumni</a></li>
-                <li><a href="https://www.bhabhauniversity.edu.in/placements/">T & P Cell</a></li>
-                <li><a href="https://www.bhabhauniversity.edu.in/notice/">Notices</a></li>
-                <li><a href="https://www.bhabhauniversity.edu.in/grievance/">Grievance</a></li>
-                <li><a href="https://www.bhabhauniversity.edu.in/contact/">Contact</a></li>
-              </ul>
+.bu-portal-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 991px) {
+  .bu-portal-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.bu-portal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #FFC107;
+  margin: 0 0 12px 0;
+  line-height: 1.35;
+}
+.bu-portal-subtitle {
+  font-size: 15px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+
+/* Credentials Sub-Card */
+.bu-cred-box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+}
+.bu-cred-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #FFC107;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bu-cred-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.bu-cred-row:last-child {
+  margin-bottom: 0;
+}
+.bu-cred-label {
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+}
+.bu-cred-value {
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: #FFC107;
+  letter-spacing: 1px;
+}
+
+/* Action Button */
+.bu-btn-portal-launch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFC107;
+  color: #0A1B54;
+  font-size: 14.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(255,193,7,0.3);
+}
+.bu-btn-portal-launch:hover {
+  background: #ffffff;
+  color: #0A1B54;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,255,255,0.4);
+  text-decoration: none;
+}
+
+/* Features Grid */
+.bu-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin: 32px 0;
+}
+.bu-feature-item {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 24px;
+  transition: all 0.25s ease;
+}
+.bu-feature-item:hover {
+  background: #ffffff;
+  border-color: #0A1B54;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(10,27,84,0.08);
+}
+.bu-feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(10,27,84,0.08);
+  color: #0A1B54;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+.bu-feature-item h4 {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #0A1B54;
+  margin: 0 0 8px 0;
+}
+.bu-feature-item p {
+  font-size: 13.5px;
+  color: #64748B;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Notice Guide */
+.bu-guide-card {
+  background: #F1F5F9;
+  border-left: 4px solid #0A1B54;
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 30px;
+}
+.bu-guide-card h4 {
+  color: #0A1B54;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+.bu-guide-card p {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.7;
+  margin: 0;
+}
+</style>
+</head>
+
+<body>
+<div class="kode_wrapper">
+  <!-- HEADER START -->
+  <?php include('inc.header.php');?>
+  <!-- HEADER END -->
+
+  <?php
+  $page_title    = 'Online <em>Knowledge Portal</em>';
+  $page_subtitle = 'Dr Homi Bhabha Online E-Learning &amp; MOOC LMS Portal for students and faculty.';
+  $page_icon     = 'fa-laptop';
+  $breadcrumbs   = [
+    ['label' => 'Home',      'url' => URL_ROOT],
+    ['label' => 'Academics', 'url' => '#'],
+    ['label' => 'Online Knowledge Portal', 'url' => '#'],
+  ];
+  include('inc.page-banner.php');
+  ?>
+
+  <div class="bu-full-width-container">
+    <main>
+
+      <div class="bu-content-card">
+        <span class="bu-content-label">Digital E-Learning Portal</span>
+        <h2 class="bu-content-h2">Dr Homi Bhabha <em>Online Knowledge Portal</em></h2>
+        <div class="bu-content-divider"></div>
+
+        <!-- Featured LMS Hero Box -->
+        <div class="bu-portal-hero-card">
+          <div class="bu-portal-grid">
+            <div>
+              <h3 class="bu-portal-title">Interactive Learning Management System (LMS)</h3>
+              <p class="bu-portal-subtitle">Access course modules, video lectures, online quizzes, study notes, and assignments anytime, anywhere through Bhabha University's cloud-based e-learning portal.</p>
+              <a href="https://bhabhamooc.moodlecloud.com/" target="_blank" class="bu-btn-portal-launch">
+                <i class="fa fa-sign-in"></i> Launch Knowledge Portal <i class="fa fa-external-link" style="margin-left:4px;"></i>
+              </a>
             </div>
-            <!--DL Menu END--> 
-          </div>
-          
-          <!--kode nav_2 end--> 
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--kode navigation end--> 
-  
-</header>
-<div class="breaking-news-ticker" id="newsTicker1">
-  <div class="bn-label">Latest News</div>
-  <div class="bn-news">
-    <ul>
-            <li><strong><a href="https://www.bhabhauniversity.edu.in/announcements/1/">Admission Enquiry</a></strong></li>
-            <li><strong><a href="https://www.bhabhauniversity.edu.in/announcements/2/">Anti Ragging Help Line : 1800-180-5522</a></strong></li>
-            <li><strong><a href="https://www.bhabhauniversity.edu.in/announcements/6/">COVID-19</a></strong></li>
-            <li><strong><a href="https://www.bhabhauniversity.edu.in/announcements/7/">Online Video Resources</a></strong></li>
-            <li><strong><a href="https://www.bhabhauniversity.edu.in/announcements/8/">International Webinar on "Basics of Childhood  Development" 17 July 2020</a></strong></li>
-            <li><strong><a href="https://www.bhabhauniversity.edu.in/announcements/9/">Recruitment for the Upcoming Paramedical courses</a></strong></li>
-            <li><strong><a href="https://www.bhabhauniversity.edu.in/announcements/10/">Webinar on "Labour Productivity in Housekeeping" on 23rd July 2020</a></strong></li>
-            <li><strong><a href="https://www.bhabhauniversity.edu.in/announcements/11/">Webinar on "How to Write Research Article" 29 July 2020</a></strong></li>
-            <li><strong><a href="https://www.bhabhauniversity.edu.in/announcements/12/">Virtual Seminar on "Artificial Intelligence" 19 August 2020</a></strong></li>
-          </ul>
-  </div>
-  <div class="bn-controls">
-    <button><span class="bn-arrow bn-prev"></span></button>
-    <button><span class="bn-action"></span></button>
-    <button><span class="bn-arrow bn-next"></span></button>
-  </div>
-</div>
-      <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>Dr Homi Bhabha Online Knowledge Portal</h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="https://www.bhabhauniversity.edu.in/">Home</a></li>
-                <li><a href="#">Dr Homi Bhabha Online Knowledge Portal</a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
-        </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>Bhabha University</h5>
-                <h3>Dr Homi Bhabha Online Knowledge Portal</h3>
+
+            <div class="bu-cred-box">
+              <div class="bu-cred-title">
+                <i class="fa fa-key"></i> Default Portal Credentials
               </div>
-                  <!-- HEADING 1 END-->
-                  <div class="abt_univ_des" > 
-<p><table width="100%" border="0" cellspacing="1" cellpadding="1">
-  <tr>
-    <td>Login ID : <font color="red">bhabha</font></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Password : <font color="red">bhabha</font></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td colspan="2"><h3>Please Click for <a href="https://bhabhamooc.moodlecloud.com/" target="_blank"><font color="red">Login</font></a></h3> </td>
-    </tr>
-</table>
-</p>
- </div>
-                </div>
-          </div>
-            </div>
-      </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
-  </div>
-      <!--FOOTER START-->
-      <footer> 
-  <!--EDU2 FOOTER CONTANT WRAP START-->
-  <div class="container">
-    <div class="row"> 
-      <!--EDU2 FOOTER CONTANT DES START-->
-      <div class="col-md-3">
-        <div class="widget widget-links">
-          <h5>Quick Links</h5>
-          <ul>
-                        <li><a href="https://dte.mponline.gov.in/portal/services/onlinecounselling/counshomepage/home.aspx" target="_blank">M.P. Online Counselling 2020</a></li>
-                        <li><a href="http://www.mptechedu.org/" target="_blank">Directorate Technical Education M.P.</a></li>
-                        <li><a href="https://www.antiragging.in/" target="_blank">Anti Ragging</a></li>
-                        <li><a href="http://governor.mp.gov.in/" target="_blank">Hon'ble Governor : Raj Bhavan MP</a></li>
-                        <li><a href="https://bhabhamooc.moodlecloud.com/" target="_blank">Dr Homi Bhabha Online Knowledge Portal</a></li>
-                        <li><a href="https://www.bhabhauniversity.edu.in/page/2/" >Online Fee Payment</a></li>
-          </ul>
-        </div>
-      </div>
-      <!--EDU2 FOOTER CONTANT DES END--> 
-      
-      <!--EDU2 FOOTER CONTANT DES START-->
-      <div class="col-md-3">
-        <div class="widget widget-links">
-          <h5>Rules and Regulations</h5>
-          <ul>
-            <li><a href="https://www.bhabhauniversity.edu.in/term-and-condition/">Terms & Conditions</a></li>
-            <li><a href="https://www.bhabhauniversity.edu.in/privacy-policy/">Privacy Policy</a></li>
-            <li><a href="https://www.bhabhauniversity.edu.in/refund-policy/">Refund and Cancellation Policy</a></li>
-          </ul>
-        </div>
-      </div>
-      <!--EDU2 FOOTER CONTANT DES END--> 
-      
-      <!--EDU2 FOOTER CONTANT DES START-->
-      <div class="col-md-3">
-        <div class="widget widget-links">
-          <h5>Announcements</h5>
-          <ul>
-                        <li><a href="https://www.bhabhauniversity.edu.in/announcements/1/" >Admission Enquiry</a></li>
-                        <li><a href="https://www.bhabhauniversity.edu.in/announcements/6/" >COVID-19</a></li>
-                        <li><a href="https://www.bhabhauniversity.edu.in/announcements/9/" >Recruitment for the Upcoming Paramedical courses</a></li>
-                        <li><a href="https://www.bhabhauniversity.edu.in/announcements/12/" >Virtual Seminar on "Artificial Intelligence" 19 August 2020</a></li>
-                      </ul>
-        </div>
-      </div>
-      <!--EDU2 FOOTER CONTANT DES END--> 
-      
-      <!--EDU2 FOOTER CONTANT DES START-->
-      <div class="col-md-3">
-        <div class="widget widget-contact">
-          <h5>Contact</h5>
-          <ul>
-            <li>Jatkhedi, NH-12, Hoshangabad Road, Bhopal, Madhya Pradesh  Pin-462026</li>
-            <li>Phone : <a href="tel:0755-4936800"> 0755-4936800</a></li>
-            <li>For Admission : <a href="tel:9111105431, 9165025500"> 9111105431, 9165025500</a>, <a href="tel:"> </a></li>
-            <li>Email : <a href="mailto:info@bhabhauniversity.edu.in"> info@bhabhauniversity.edu.in</a></li>
-          </ul>
-        </div>
-      </div>
-      <!--EDU2 FOOTER CONTANT DES END--> 
-    </div>
-  </div>
-  
-<div class="container" style="margin-top:20px;">
-  <div class="row"> 
-    <!-- HEADING 2 START-->
-    <!-- HEADING 2 END--> 
-    <!-- TESTEMONIAL SLIDER WRAP START-->
-    <div class="edu2_testemonial_slider_wrap">
-      <div id="owl-demo-87">
-                <div class="item"> 
-          <!-- TESTEMONIAL SLIDER WRAP START-->
-          <figure><img width="100px" src="https://www.bhabhauniversity.edu.in/upload/affiliate/thumb/acb8eee1a562210766b5593e80deb8c6.png" alt="Test"/></figure>
-          <!-- TESTEMONIAL SLIDER WRAP END--> 
-        </div>
-                <div class="item"> 
-          <!-- TESTEMONIAL SLIDER WRAP START-->
-          <figure><img width="100px" src="https://www.bhabhauniversity.edu.in/upload/affiliate/thumb/9ce7a811c9b668191a19dd78481d7b3e.png" alt="Test"/></figure>
-          <!-- TESTEMONIAL SLIDER WRAP END--> 
-        </div>
-                <div class="item"> 
-          <!-- TESTEMONIAL SLIDER WRAP START-->
-          <figure><img width="100px" src="https://www.bhabhauniversity.edu.in/upload/affiliate/thumb/9b676e4fd7062c42c32c9c1894579beb.png" alt="Test"/></figure>
-          <!-- TESTEMONIAL SLIDER WRAP END--> 
-        </div>
-                <div class="item"> 
-          <!-- TESTEMONIAL SLIDER WRAP START-->
-          <figure><img width="100px" src="https://www.bhabhauniversity.edu.in/upload/affiliate/thumb/58fdd9a0d21d03ee76824f7e6cb38b73.png" alt="Test"/></figure>
-          <!-- TESTEMONIAL SLIDER WRAP END--> 
-        </div>
-                <div class="item"> 
-          <!-- TESTEMONIAL SLIDER WRAP START-->
-          <figure><img width="100px" src="https://www.bhabhauniversity.edu.in/upload/affiliate/thumb/ab535ae855faa66fc149722c38a4177f.png" alt="Test"/></figure>
-          <!-- TESTEMONIAL SLIDER WRAP END--> 
-        </div>
-                <div class="item"> 
-          <!-- TESTEMONIAL SLIDER WRAP START-->
-          <figure><img width="100px" src="https://www.bhabhauniversity.edu.in/upload/affiliate/thumb/7020196c0b18dc1d8f2496b01ebb6380.png" alt="mahakoshal"/></figure>
-          <!-- TESTEMONIAL SLIDER WRAP END--> 
-        </div>
+              <div class="bu-cred-row">
+                <span class="bu-cred-label">Login ID:</span>
+                <span class="bu-cred-value">bhabha</span>
               </div>
-    </div>
-    <!-- TESTEMONIAL SLIDER WRAP END--> 
-  </div>
-</div>
-</footer>
-<div class="edu2_copyright_wrap">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3"> </div>
-      <div class="col-md-6">
-        <div class="copyright_des"> <span>&copy; 2018 All Rights reserved. Website Design & Developed By <a href="https://www.silveryinfotech.com/">Silery Infotech</a></span> </div>
+              <div class="bu-cred-row">
+                <span class="bu-cred-label">Password:</span>
+                <span class="bu-cred-value">bhabha</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features & Resources Grid -->
+        <h3 style="font-size:20px;font-weight:700;color:#0A1B54;margin-top:40px;">Portal Services &amp; Digital Resources</h3>
+        <div class="bu-features-grid">
+          <div class="bu-feature-item">
+            <div class="bu-feature-icon">
+              <i class="fa fa-book"></i>
+            </div>
+            <h4>E-Books &amp; Lecture Notes</h4>
+            <p>Download syllabus-mapped unit notes, reference e-books, and faculty presentation slides.</p>
+          </div>
+
+          <div class="bu-feature-item">
+            <div class="bu-feature-icon">
+              <i class="fa fa-play-circle"></i>
+            </div>
+            <h4>Recorded Video Tutorials</h4>
+            <p>Watch recorded classroom lectures, virtual lab tutorials, and subject revision webinars.</p>
+          </div>
+
+          <div class="bu-feature-item">
+            <div class="bu-feature-icon">
+              <i class="fa fa-check-square-o"></i>
+            </div>
+            <h4>Online Quizzes &amp; Tests</h4>
+            <p>Participate in mid-semester online quizzes, self-assessment tests, and instant grading.</p>
+          </div>
+
+          <div class="bu-feature-item">
+            <div class="bu-feature-icon">
+              <i class="fa fa-comments"></i>
+            </div>
+            <h4>Discussion Forums</h4>
+            <p>Engage with department faculty members and peers for doubt resolution and collaborative learning.</p>
+          </div>
+        </div>
+
+        <!-- First Time User Guide Card -->
+        <div class="bu-guide-card">
+          <h4><i class="fa fa-info-circle" style="color:#0A1B54;margin-right:6px;"></i> Instructions for Students &amp; Faculty</h4>
+          <p>Click on the <strong>Launch Knowledge Portal</strong> button above to open the Bhabha MOOC Moodle Cloud platform. Enter the provided default credentials or use your student enrollment ID assigned by your department head. If you face any login issues, please contact your department IT coordinator or university IT desk.</p>
+        </div>
+
       </div>
-      <div class="col-md-3"> </div>
-    </div>
+
+    </main>
   </div>
+
+  <!-- FOOTER START -->
+  <?php include('inc.footer.php');?>
+  <!-- FOOTER END -->
 </div>
-      
-    </div>
-<!--KF KODE WRAPPER WRAP END--> 
-<!--Bootstrap core JavaScript-->
-<script src="https://www.bhabhauniversity.edu.in/js/breaking-news-ticker.min.js"></script>
-<script type="text/javascript">
-$('#newsTicker1').breakingNews();
-</script>
 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-$( function() {
-$( ".datepicker" ).datepicker({
-  changeMonth: true,
-  changeYear: true,
-  yearRange: '1950:2020'
-});
-} );
-</script>
-
-
-<script src="https://www.bhabhauniversity.edu.in/js/bootstrap.min.js"></script> 
-<!--Bx-Slider JavaScript--> 
-<!--Owl Carousel JavaScript--> 
-<script src="https://www.bhabhauniversity.edu.in/js/owl.carousel.min.js"></script> 
-<!--Pretty Photo JavaScript--> 
-<script src="https://www.bhabhauniversity.edu.in/js/jquery.prettyPhoto.js"></script> 
-<!--Dl Menu Script--> 
-<script src="https://www.bhabhauniversity.edu.in/js/dl-menu/modernizr.custom.js"></script> 
-<!--Dl Menu Script--> 
-<!--Dl Menu Script--> 
-<!--Dl Menu Script--> 
-<script src="https://www.bhabhauniversity.edu.in/js/dl-menu/jquery.dlmenu.js"></script> 
-<!--Full Calender JavaScript--> 
-<script src="https://www.bhabhauniversity.edu.in/js/moment.min.js"></script> 
-<script src="https://www.bhabhauniversity.edu.in/js/fullcalendar.min.js"></script> 
-<script src="https://www.bhabhauniversity.edu.in/js/jquery.downCount.js"></script> 
-<!--Image Filterable JavaScript--> 
-<script src="https://www.bhabhauniversity.edu.in/js/jquery-filterable.js"></script> 
-<!--Accordian JavaScript--> 
-<script src="https://www.bhabhauniversity.edu.in/js/jquery.accordion.js"></script> 
-<!--Number Count (Waypoints) JavaScript--> 
-<script src="https://www.bhabhauniversity.edu.in/js/waypoints-min.js"></script> 
-<!--v ticker--> 
-<script src="https://www.bhabhauniversity.edu.in/js/jquery.vticker.min.js"></script> 
-<!--select menu--> 
-<!--Side Menu--> 
-<script src="https://www.bhabhauniversity.edu.in/js/jquery.sidr.min.js"></script> 
-<!--Custom JavaScript--> 
-<script src="https://www.bhabhauniversity.edu.in/js/custom.js"></script>
+<?php include('inc.footer.js.php');?>
 </body>
 </html>

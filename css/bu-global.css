@@ -1,0 +1,679 @@
+/* ================================================================
+   BHABHA UNIVERSITY — FULL PAGE REDESIGN CSS (Navy + Gold Theme)
+   Matches the uploaded full-page mockup exactly.
+   ================================================================ */
+
+/* ---- GLOBAL RESET & FONTS ---- */
+:root {
+  --navy:    #061D7C;
+  --navy-dk: #040F4A;
+  --gold:    #FFC107;
+  --gold-dk: #D99B00;
+  --white:   #FFFFFF;
+  --off-white: #F8F7F4;
+  --light-gray: #F1F4F9;
+  --text-dark: #1A1A2E;
+  --text-mid:  #3D4460;
+  --text-light: #6B7280;
+  --border: #E2E8F0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--text-dark) !important;
+  background: #fff !important;
+  overflow-x: hidden !important;
+}
+
+.kf_content_wrap { background: transparent !important; }
+
+/* ---- GLOBAL HD IMAGE QUALITY ENHANCEMENT ---- */
+img {
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+  image-rendering: high-quality !important;
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+  transform: translateZ(0) !important;
+}
+
+img, 
+.bu-brand-logo, 
+.bu-chancellor-img, 
+.bu-footer-logo, 
+.bu-hero-video, 
+.bu-subpage-img, 
+.bu-card-img, 
+.bu-facility-card img, 
+.bu-gallery-item img, 
+.bu-recruiter-logo img, 
+.kf_edu2_grid img, 
+.kf_edu2_thumb img,
+.kf_cur_catg_des img {
+  filter: contrast(1.03) saturate(1.04) brightness(1.01) !important;
+}
+
+/* ================================================================
+   1. COURSES / PROGRAMMES SECTION
+   ================================================================ */
+.kf_course_outerwrap {
+  padding: 70px 0 60px !important;
+  background: var(--white) !important;
+}
+.kf_course_outerwrap .kf_edu2_heading1 h3,
+.kf_course_outerwrap .kf_edu2_heading1 h3 {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 36px !important;
+  font-weight: 800 !important;
+  color: var(--navy) !important;
+  margin-bottom: 8px !important;
+  position: relative !important;
+}
+.kf_edu2_heading1 h3::after {
+  content: '' !important;
+  display: block !important;
+  width: 44px !important;
+  height: 3px !important;
+  background: var(--gold) !important;
+  margin-top: 10px !important;
+  border-radius: 2px !important;
+}
+
+/* Course category cards */
+.kf_cur_catg_des {
+  background: var(--off-white) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  padding: 28px 20px !important;
+  margin-bottom: 20px !important;
+  transition: all 0.28s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+.kf_cur_catg_des::before {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important; left: 0 !important;
+  width: 100% !important; height: 3px !important;
+  background: var(--gold) !important;
+  transform: scaleX(0) !important;
+  transition: transform 0.28s !important;
+}
+.kf_cur_catg_des:hover::before { transform: scaleX(1) !important; }
+.kf_cur_catg_des:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 12px 32px rgba(6,29,124,0.12) !important;
+  border-color: transparent !important;
+  background: var(--white) !important;
+}
+.kf_cur_catg_des span i {
+  font-size: 36px !important;
+  color: var(--navy) !important;
+  display: block !important;
+  margin-bottom: 14px !important;
+  transition: color 0.2s !important;
+}
+.kf_cur_catg_des:hover span i { color: var(--gold-dk) !important; }
+.kf_cur_catg_capstion h5 {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--navy) !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+/* Remove old color classes */
+.kf_cur_catg_des.color-1,
+.kf_cur_catg_des.color-2,
+.kf_cur_catg_des.color-3,
+.kf_cur_catg_des.color-4,
+.kf_cur_catg_des.color-5,
+.kf_cur_catg_des.color-6 {
+  background: var(--off-white) !important;
+}
+
+/* ================================================================
+   2. STATS / COUNTER SECTION
+   ================================================================ */
+.edu2_counter_wrap {
+  display: none !important;
+}
+.edu2_counter_wrap .container {
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 24px !important;
+}
+.edu2_counter_des {
+  text-align: center !important;
+  flex: 1 !important;
+  min-width: 160px !important;
+  padding: 16px !important;
+}
+.edu2_counter_des span i {
+  font-size: 38px !important;
+  color: var(--gold) !important;
+  display: block !important;
+  margin-bottom: 12px !important;
+}
+.edu2_counter_des h3.counter {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 44px !important;
+  font-weight: 800 !important;
+  color: var(--white) !important;
+  margin: 0 0 6px !important;
+  line-height: 1 !important;
+}
+.edu2_counter_des h5 {
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,0.5) !important;
+  margin: 0 !important;
+}
+
+/* ================================================================
+   3. CHANCELLOR'S MESSAGE SECTION
+   ================================================================ */
+section:has(.kf_edu2_heading1 h3:contains("Chancellor")) {
+  padding: 70px 0 !important;
+  background: var(--white) !important;
+}
+.kf_edu2_heading1 { margin-bottom: 36px !important; }
+
+/* Chancellor image */
+section .col-md-3 img {
+  border-radius: 10px !important;
+  box-shadow: 0 16px 40px rgba(6,29,124,0.15) !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  border: 3px solid var(--gold) !important;
+}
+section .col-md-9 p {
+  font-size: 15px !important;
+  line-height: 1.85 !important;
+  color: var(--text-mid) !important;
+  text-align: justify !important;
+}
+section .col-md-9 h3 {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: var(--navy) !important;
+  margin-top: 16px !important;
+  margin-bottom: 4px !important;
+}
+section .col-md-9 h4 {
+  font-size: 14px !important;
+  color: var(--gold-dk) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* ================================================================
+   4. EVENTS + WELCOME SECTION (inc.welcome.php)
+   ================================================================ */
+section[style*="background-color:#F9F9F9"],
+section[style*="background-color: #F9F9F9"] {
+  background: var(--light-gray) !important;
+  padding: 70px 0 !important;
+}
+.edu2_faculty_des {
+  background: var(--white) !important;
+  border-radius: 10px !important;
+  padding: 20px !important;
+  margin-bottom: 16px !important;
+  border: 1px solid var(--border) !important;
+  transition: all 0.25s !important;
+}
+.edu2_faculty_des:hover {
+  box-shadow: 0 8px 24px rgba(6,29,124,0.1) !important;
+  border-color: transparent !important;
+  transform: translateY(-3px) !important;
+}
+.edu2_faculty_des2 h6 a {
+  font-weight: 700 !important;
+  font-size: 14.5px !important;
+  color: var(--navy) !important;
+  text-decoration: none !important;
+}
+.edu2_faculty_des2 h6 a:hover { color: var(--gold-dk) !important; }
+.edu2_faculty_des2 p a {
+  color: var(--text-light) !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+.kf_edu2_heading2 h3 {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 34px !important;
+  font-weight: 800 !important;
+  color: var(--navy) !important;
+  margin-bottom: 16px !important;
+}
+.kf_edu2_heading2 p {
+  font-size: 15px !important;
+  color: var(--text-mid) !important;
+  line-height: 1.78 !important;
+}
+/* Feature intro tiles */
+.kf_intro_des {
+  display: flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+  background: var(--white) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  padding: 16px 20px !important;
+  margin-bottom: 14px !important;
+  overflow: hidden !important;
+  transition: all 0.25s !important;
+}
+.kf_intro_des:hover {
+  border-color: var(--navy) !important;
+  box-shadow: 0 6px 20px rgba(6,29,124,0.1) !important;
+}
+.kf_intro_des_caption { flex-shrink: 0 !important; }
+.kf_intro_des_caption h6 {
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  letter-spacing: 1.2px !important;
+  text-transform: uppercase !important;
+  color: var(--navy) !important;
+  margin-top: 6px !important;
+}
+.kf_intro_des figure { margin: 0 !important; flex: 1 !important; }
+.kf_intro_des figure img {
+  width: 100% !important;
+  height: 75px !important;
+  object-fit: cover !important;
+  border-radius: 6px !important;
+}
+
+/* ================================================================
+   5. TRAINING / ADMISSIONS BANNER
+   ================================================================ */
+.edu2_tarining_bg {
+  background: var(--navy) !important;
+  padding: 60px 0 !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+.edu2_tarining_bg::before {
+  content: '' !important;
+  position: absolute !important;
+  right: -60px !important; top: -60px !important;
+  width: 340px !important; height: 340px !important;
+  background: rgba(255,193,7,0.08) !important;
+  border-radius: 50% !important;
+}
+.kf_edu2_training_des { position: relative !important; z-index: 2 !important; }
+.kf_edu2_training_des img {
+  max-height: 260px !important;
+  object-fit: contain !important;
+  filter: brightness(0) invert(1) !important;
+  opacity: 0.12 !important;
+}
+.edu2_training_wrap {
+  position: relative !important;
+  z-index: 2 !important;
+  padding: 20px 0 !important;
+}
+.edu2_training_wrap h2 {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 40px !important;
+  font-weight: 800 !important;
+  color: var(--white) !important;
+  margin-bottom: 14px !important;
+}
+.edu2_training_wrap h3 {
+  font-size: 14px !important;
+  color: rgba(255,255,255,0.65) !important;
+  font-weight: 500 !important;
+  margin-bottom: 32px !important;
+  line-height: 1.7 !important;
+}
+.edu2_training_wrap .btn-1,
+.edu2_training_wrap a.btn-1 {
+  display: inline-block !important;
+  background: var(--gold) !important;
+  color: var(--navy) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  padding: 14px 34px !important;
+  border-radius: 3px !important;
+  text-decoration: none !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.2px !important;
+  transition: all 0.25s !important;
+  border: none !important;
+}
+.edu2_training_wrap .btn-1:hover {
+  background: var(--gold-dk) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(255,193,7,0.35) !important;
+}
+
+/* ================================================================
+   6. GALLERY SECTION (inc.gallery.php)
+   ================================================================ */
+.kf_gallery_wrap,
+.kf_gallery_outerwrap {
+  padding: 70px 0 !important;
+  background: var(--white) !important;
+}
+.kf_gallery_wrap .kf_edu2_heading1 h3 {
+  color: var(--navy) !important;
+}
+.kf_gallery_item,
+.gallery-item {
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  margin-bottom: 20px !important;
+}
+.kf_gallery_item img,
+.gallery-item img {
+  width: 100% !important;
+  height: 220px !important;
+  object-fit: cover !important;
+  transition: transform 0.4s ease !important;
+  display: block !important;
+}
+.kf_gallery_item:hover img,
+.gallery-item:hover img { transform: scale(1.06) !important; }
+
+/* ================================================================
+   7. TESTIMONIALS SECTION (inc.testemonial.php)
+   ================================================================ */
+.kf_testemonial_wrap,
+.edu2_testemonial_wrap {
+  background: var(--light-gray) !important;
+  padding: 70px 0 !important;
+}
+.edu2_testemonial_des {
+  background: var(--white) !important;
+  border-radius: 12px !important;
+  padding: 30px 28px !important;
+  border: 1px solid var(--border) !important;
+  position: relative !important;
+  transition: all 0.3s !important;
+}
+.edu2_testemonial_des:hover {
+  box-shadow: 0 12px 32px rgba(6,29,124,0.1) !important;
+  transform: translateY(-4px) !important;
+}
+.edu2_testemonial_des::before {
+  content: '\201C' !important;
+  font-size: 80px !important;
+  color: var(--gold) !important;
+  opacity: 0.3 !important;
+  position: absolute !important;
+  top: 10px !important; left: 20px !important;
+  font-family: Georgia, serif !important;
+  line-height: 1 !important;
+}
+
+/* ================================================================
+   8. ACHIEVEMENTS TICKER
+   ================================================================ */
+.edu2_ft_topbar_wrap {
+  background: var(--navy-dk) !important;
+  padding: 14px 0 !important;
+  border-top: 2px solid var(--gold) !important;
+}
+.edu2_ft_topbar_des h5 {
+  color: var(--gold) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  margin: 0 !important;
+  line-height: 36px !important;
+}
+.edu2_ft_topbar_des marquee {
+  color: rgba(255,255,255,0.85) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 36px !important;
+}
+
+/* ================================================================
+   9. FOOTER
+   ================================================================ */
+footer {
+  background: var(--navy-dk) !important;
+  color: rgba(255,255,255,0.8) !important;
+  padding: 60px 0 30px !important;
+}
+footer .widget h5 {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  color: var(--gold) !important;
+  margin-bottom: 20px !important;
+  padding-bottom: 10px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+footer .widget ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+footer .widget ul li {
+  margin-bottom: 9px !important;
+  padding-left: 14px !important;
+  position: relative !important;
+}
+footer .widget ul li::before {
+  content: '›' !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: var(--gold) !important;
+  font-size: 14px !important;
+}
+footer .widget ul li a {
+  color: rgba(255,255,255,0.65) !important;
+  font-size: 13px !important;
+  text-decoration: none !important;
+  transition: color 0.2s !important;
+}
+footer .widget ul li a:hover { color: var(--gold) !important; }
+footer .fa-facebook-square,
+footer .fa-instagram,
+footer .fa-twitter-square,
+footer .fa-youtube-square,
+footer .fa-linkedin,
+footer .fa-pinterest {
+  color: rgba(255,255,255,0.55) !important;
+  transition: color 0.2s, transform 0.2s !important;
+}
+footer .fa-facebook-square:hover { color: #3b5998 !important; transform: scale(1.15) !important; }
+footer .fa-instagram:hover { color: #e1306c !important; transform: scale(1.15) !important; }
+footer .fa-twitter-square:hover { color: #1da1f2 !important; transform: scale(1.15) !important; }
+footer .fa-youtube-square:hover { color: #ff0000 !important; transform: scale(1.15) !important; }
+footer .fa-linkedin:hover { color: #0077b5 !important; transform: scale(1.15) !important; }
+
+/* Footer copyright */
+.edu2_ft_bottom_wrap,
+footer .row:last-child {
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+  padding-top: 20px !important;
+  margin-top: 40px !important;
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 12px !important;
+}
+
+/* ================================================================
+   10. GLOBAL SECTION HEADINGS
+   ================================================================ */
+.kf_edu2_heading1 h3 {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 34px !important;
+  font-weight: 800 !important;
+  color: var(--navy) !important;
+  line-height: 1.2 !important;
+  margin-bottom: 0 !important;
+}
+.kf_edu2_heading2 h3 {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 34px !important;
+  font-weight: 800 !important;
+  color: var(--navy) !important;
+}
+
+/* Section labels (small caps above heading) */
+.bu-section-label {
+  display: inline-block !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 2.5px !important;
+  text-transform: uppercase !important;
+  color: var(--gold-dk) !important;
+  margin-bottom: 12px !important;
+}
+
+/* ================================================================
+   11. OWL CAROUSEL DOTS (global)
+   ================================================================ */
+.owl-dot span {
+  background: rgba(6,29,124,0.25) !important;
+  width: 9px !important; height: 9px !important;
+  border-radius: 50% !important;
+  transition: all 0.3s !important;
+}
+.owl-dot.active span {
+  background: var(--navy) !important;
+  width: 24px !important;
+  border-radius: 4px !important;
+}
+
+/* ================================================================
+   12. BUTTONS (global .btn-1)
+   ================================================================ */
+.btn-1 {
+  background: var(--gold) !important;
+  color: var(--navy) !important;
+  font-weight: 800 !important;
+  border-radius: 3px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-size: 12px !important;
+  padding: 12px 28px !important;
+  transition: all 0.25s !important;
+  display: inline-block !important;
+  text-decoration: none !important;
+  border: none !important;
+}
+.btn-1:hover {
+  background: var(--gold-dk) !important;
+  color: #000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(255,193,7,0.3) !important;
+  text-decoration: none !important;
+}
+
+/* ================================================================
+   13. HIDE OLD/LEGACY ELEMENTS
+   ================================================================ */
+.kf_edu2_heading1 p { color: var(--text-light) !important; font-size: 14px !important; }
+.kf_cur_catg_wrap { padding: 0 !important; }
+
+/* ================================================================
+   14. RESPONSIVE
+   ================================================================ */
+@media (max-width: 991px) {
+  .edu2_counter_wrap .container { justify-content: center !important; }
+  .edu2_counter_des { min-width: 140px !important; }
+  .kf_course_outerwrap { padding: 50px 0 !important; }
+  .edu2_tarining_bg { padding: 48px 0 !important; }
+  footer { padding: 48px 0 24px !important; }
+}
+@media (max-width: 575px) {
+  .edu2_counter_des { min-width: 100px !important; }
+  .edu2_counter_des h3.counter { font-size: 32px !important; }
+  .kf_edu2_heading1 h3, .kf_edu2_heading2 h3 { font-size: 26px !important; }
+  .edu2_training_wrap h2 { font-size: 28px !important; }
+}
+
+/* ================================================================
+   15. DYNAMIC CMS PAGE CONTENT STYLING
+   ================================================================ */
+.bu-content-body h1,
+.bu-content-body h2,
+.bu-content-body h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  color: var(--navy) !important;
+  margin: 18px 0 10px 0 !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
+}
+
+.bu-content-body h1 { font-size: 22px !important; }
+.bu-content-body h2 { font-size: 20px !important; }
+.bu-content-body h3 { font-size: 18px !important; }
+
+/* When Headings wrap Links (e.g. video resource links, announcements) */
+.bu-content-body h1:has(a),
+.bu-content-body h2:has(a),
+.bu-content-body h3:has(a),
+.bu-content-body h4:has(a) {
+  font-size: 15.5px !important;
+  font-weight: 600 !important;
+  margin: 8px 0 10px 0 !important;
+  line-height: 1.6 !important;
+  padding: 10px 14px !important;
+  background: var(--off-white) !important;
+  border-left: 3px solid var(--navy) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03) !important;
+}
+
+.bu-content-body h1:has(a):hover,
+.bu-content-body h2:has(a):hover,
+.bu-content-body h3:has(a):hover {
+  background: var(--light-gray) !important;
+  border-left-color: var(--gold-dk) !important;
+  transform: translateX(4px) !important;
+}
+
+.bu-content-body a {
+  color: #1E6091 !important;
+  font-size: 15.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.6 !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  word-break: break-word !important;
+}
+
+.bu-content-body a span {
+  color: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  text-decoration: inherit !important;
+}
+
+.bu-content-body a:hover,
+.bu-content-body a:hover span {
+  color: var(--navy) !important;
+  text-decoration: underline !important;
+}
+
+.bu-content-body p {
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+  color: var(--text-mid) !important;
+  margin-bottom: 14px !important;
+}
+
+.bu-content-body p:empty,
+.bu-content-body h1:empty,
+.bu-content-body h2:empty {
+  display: none !important;
+}
+

@@ -1,7 +1,7 @@
 <?php include('config.php');
 define("UPLOAD",'admission/');
 $stat=array();
-if($_SESSION['success']!="")
+if(isset($_SESSION['success']) && $_SESSION['success']!="")
 {
    $stat['success']=$_SESSION['success'];
 	unset($_SESSION['success']);
@@ -10,16 +10,16 @@ if(isset($_POST['submit']))
 {
 	include('file.validation.php');
 	
-	$high_school = 'School : '.$_POST['high-school'].','.' Board : '.$_POST['high-board'].','.' Year of Pssing : '.$_POST['high-yop'].','.' Roll No. : '.$_POST['high-roll-number'].','.' Total Marks : '.$_POST['high-total-marks'].','.' Marks Obtained : '.$_POST['high-marks-obtn'].','.' Percentage  : '.$_POST['high-persent'].','.' Division : '.$_POST['high-division'].','.' CGPA : '.$_POST['high-cgpa'];
+	$high_school = 'School : '.(isset($_POST['high-school'])?$_POST['high-school']:'').','.' Board : '.(isset($_POST['high-board'])?$_POST['high-board']:'').','.' Year of Passing : '.(isset($_POST['high-yop'])?$_POST['high-yop']:'').','.' Roll No. : '.(isset($_POST['high-roll-number'])?$_POST['high-roll-number']:'').','.' Total Marks : '.(isset($_POST['high-total-marks'])?$_POST['high-total-marks']:'').','.' Marks Obtained : '.(isset($_POST['high-marks-obtn'])?$_POST['high-marks-obtn']:'').','.' Percentage : '.(isset($_POST['high-persent'])?$_POST['high-persent']:'').','.' Division : '.(isset($_POST['high-division'])?$_POST['high-division']:'').','.' CGPA : '.(isset($_POST['high-cgpa'])?$_POST['high-cgpa']:'');
 	
-	$higher_school = 'School : '.$_POST['higher_school'].','.' Board : '.$_POST['higher-board'].','.' Year of Pssing : '.$_POST['higher-yop'].','.' Roll No. : '.$_POST['higher-roll'].','.' Stream. : '.$_POST['higher-stream'].','.' Total Marks : '.$_POST['higher-marks'].','.' Marks Obtained : '.$_POST['higher-marks-ob'].','.' Percentage  : '.$_POST['higher-persent'].','.' Division : '.$_POST['higher-division'].','.' CGPA : '.$_POST['higher-cgpa'];
+	$higher_school = 'School : '.(isset($_POST['higher_school'])?$_POST['higher_school']:'').','.' Board : '.(isset($_POST['higher-board'])?$_POST['higher-board']:'').','.' Year of Passing : '.(isset($_POST['higher-yop'])?$_POST['higher-yop']:'').','.' Roll No. : '.(isset($_POST['higher-roll'])?$_POST['higher-roll']:'').','.' Stream : '.(isset($_POST['higher-stream'])?$_POST['higher-stream']:'').','.' Total Marks : '.(isset($_POST['higher-marks'])?$_POST['higher-marks']:'').','.' Marks Obtained : '.(isset($_POST['higher-marks-ob'])?$_POST['higher-marks-ob']:'').','.' Percentage : '.(isset($_POST['higher-persent'])?$_POST['higher-persent']:'').','.' Division : '.(isset($_POST['higher-division'])?$_POST['higher-division']:'').','.' CGPA : '.(isset($_POST['higher-cgpa'])?$_POST['higher-cgpa']:'');
 	
-	$graduation = 'College : '.$_POST['g-college'].','.' University : '.$_POST['g-university'].','.' Year of Pssing : '.$_POST['g-yop'].','.' Roll No : '.$_POST['g-roll-number'].','.' Course : '.$_POST['g-course'].','.' Branch : '.$_POST['g-branch'].','.' Total Marks : '.$_POST['g-marks'].','.' Marks Obtained : '.$_POST['g-marks-ob'].','.' Percentage : '.$_POST['g-percentage'].','.' Division : '.$_POST['g-division'].','.' CGPA : '.$_POST['g-cgpa'];
+	$graduation = 'College : '.(isset($_POST['g-college'])?$_POST['g-college']:'').','.' University : '.(isset($_POST['g-university'])?$_POST['g-university']:'').','.' Year of Passing : '.(isset($_POST['g-yop'])?$_POST['g-yop']:'').','.' Roll No : '.(isset($_POST['g-roll-number'])?$_POST['g-roll-number']:'').','.' Course : '.(isset($_POST['g-course'])?$_POST['g-course']:'').','.' Branch : '.(isset($_POST['g-branch'])?$_POST['g-branch']:'').','.' Total Marks : '.(isset($_POST['g-marks'])?$_POST['g-marks']:'').','.' Marks Obtained : '.(isset($_POST['g-marks-ob'])?$_POST['g-marks-ob']:'').','.' Percentage : '.(isset($_POST['g-percentage'])?$_POST['g-percentage']:'').','.' Division : '.(isset($_POST['g-division'])?$_POST['g-division']:'').','.' CGPA : '.(isset($_POST['g-cgpa'])?$_POST['g-cgpa']:'');
 					
-	
-	$pgraduation = 'College : '.$_POST['pg-college'].','.'University : '.$_POST['pg-university'].','.'Year of Pssing : '.$_POST['pg-yop'].','.'Roll No : '.$_POST['pg-roll-number'].','.'Course : '.$_POST['pg-course'].','.'Branch : '.$_POST['pg-branch'].','.'Total Marks : '.$_POST['pg-total-marks'].','.'Marks Obtained : '.$_POST['pg-marks-obtn'].','.'Percentage : '.$_POST['pg-peresent'].','.'Division : '.$_POST['pg-division'].','.'CGPA : '.$_POST['pg-cgpa'];
+	$pgraduation = 'College : '.(isset($_POST['pg-college'])?$_POST['pg-college']:'').','.'University : '.(isset($_POST['pg-university'])?$_POST['pg-university']:'').','.'Year of Passing : '.(isset($_POST['pg-yop'])?$_POST['pg-yop']:'').','.'Roll No : '.(isset($_POST['pg-roll-number'])?$_POST['pg-roll-number']:'').','.'Course : '.(isset($_POST['pg-course'])?$_POST['pg-course']:'').','.'Branch : '.(isset($_POST['pg-branch'])?$_POST['pg-branch']:'').','.'Total Marks : '.(isset($_POST['pg-total-marks'])?$_POST['pg-total-marks']:'').','.'Marks Obtained : '.(isset($_POST['pg-marks-obtn'])?$_POST['pg-marks-obtn']:'').','.'Percentage : '.(isset($_POST['pg-peresent'])?$_POST['pg-peresent']:'').','.'Division : '.(isset($_POST['pg-division'])?$_POST['pg-division']:'').','.'CGPA : '.(isset($_POST['pg-cgpa'])?$_POST['pg-cgpa']:'');
 			
-	$payment = 'Mode : '.$_POST['mode'].','.' Amount : '.$_POST['amount'].','.' DD Cheque : '.$_POST['dd-cheque'].','.' Date : '.$_POST['date'].','.' Bank : '.$_POST['bank'].','.' IFSC : '.$_POST['ifsc'].','.' Internet Banking : '.$_POST['internet-banking'].','.' Paytm : '.$_POST['paytm'];
+	$payment = 'Mode : '.(isset($_POST['mode'])?$_POST['mode']:'').','.' Amount : '.(isset($_POST['amount'])?$_POST['amount']:'').','.' DD Cheque : '.(isset($_POST['dd-cheque'])?$_POST['dd-cheque']:'').','.' Date : '.(isset($_POST['date'])?$_POST['date']:'').','.' Bank : '.(isset($_POST['bank'])?$_POST['bank']:'').','.' IFSC : '.(isset($_POST['ifsc'])?$_POST['ifsc']:'').','.' Internet Banking : '.(isset($_POST['internet-banking'])?$_POST['internet-banking']:'').','.' Paytm : '.(isset($_POST['paytm'])?$_POST['paytm']:'');
+
 	$data = Array(
 			"name" => $_POST['name'],
 			"fname" => $_POST['fname'],
@@ -37,46 +37,42 @@ if(isset($_POST['submit']))
 			"domicile" => $_POST['domicile'],
 			"aadhar" => $_POST['aadhar'],
 			"category" => $_POST['category'],
-			"domicile_c" => $_POST['domicile_c'],
-			"income_c" => $_POST['income_c'],
-			"category_c" => $_POST['category_c'],
+			"domicile_c" => isset($_POST['domicile_c'])?$_POST['domicile_c']:'',
+			"income_c" => isset($_POST['income_c'])?$_POST['income_c']:'',
+			"category_c" => isset($_POST['category_c'])?$_POST['category_c']:'',
 			"course" => $_POST['course'],
-			"branch" => $_POST['branch'],
+			"branch" => isset($_POST['branch'])?$_POST['branch']:'',
 			"high_school" => $high_school,
 			"higher_secondary" => $higher_school,
 			"graduation" => $graduation,
 			"pgraduation" => $pgraduation,
-			"sports" => $_POST['sports'],
-			"activities" => $_POST['activities'],
-			"studying" => $_POST['studying'],
-			"reference_one" => $_POST['reference_one'],
-			"references_two" => $_POST['references_two'],
-			"know-about" => $_POST['know-about'],
+			"sports" => isset($_POST['sports'])?$_POST['sports']:'',
+			"activities" => isset($_POST['activities'])?$_POST['activities']:'',
+			"studying" => isset($_POST['studying'])?$_POST['studying']:'',
+			"reference_one" => isset($_POST['reference_one'])?$_POST['reference_one']:'',
+			"references_two" => isset($_POST['references_two'])?$_POST['references_two']:'',
+			"know-about" => isset($_POST['know-about'])?$_POST['know-about']:'',
 			"payment" => $payment,
-			"domicile_number" => $_POST['domicile_number'],
-			"domicile_issue_date" => $_POST['domicile_issue_date'],
-			"caste_number" => $_POST['caste_number'],
-			"caste_issue_date" => $_POST['caste_issue_date'],
-			"income_number" => $_POST['income_number'],
-			"income_issue_date" => $_POST['income_issue_date'],
-			"high_school_number" => $_POST['high_school_number'],
-			"high_school_rollnumber" => $_POST['high_school_rollnumber'],
-			"higher_school_number" => $_POST['higher_school_number'],
-			"higher_school_rollnumber" => $_POST['higher_school_rollnumber'],
-			"g_cnumber" => $_POST['g_cnumber'],
-			"g_rollnumber" => $_POST['g_rollnumber'],
-			"pg_cnumber" => $_POST['pg_cnumber'],
-			"pg_rollnumber" => $_POST['pg_rollnumber']
+			"domicile_number" => isset($_POST['domicile_number'])?$_POST['domicile_number']:'',
+			"domicile_issue_date" => isset($_POST['domicile_issue_date'])?$_POST['domicile_issue_date']:'',
+			"caste_number" => isset($_POST['caste_number'])?$_POST['caste_number']:'',
+			"caste_issue_date" => isset($_POST['caste_issue_date'])?$_POST['caste_issue_date']:'',
+			"income_number" => isset($_POST['income_number'])?$_POST['income_number']:'',
+			"income_issue_date" => isset($_POST['income_issue_date'])?$_POST['income_issue_date']:''
 			 );
-			include('file.upload.php');
-	
-			$id = $db->insert('admission',$data);
-			unset($_POST);
-			unset($_SESSION['form']);
-			$_SESSION["success"] = 'Form Submited Successfully';
-			redirect(href('online-admission.php'));	
-}
 
+	if(isset($_FILES['photo']['name']) && $_FILES['photo']['name'] != '') {
+		$file_ext = strtolower(pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION));
+		$newfile=md5(microtime()).".".$file_ext;
+		if(move_uploaded_file($_FILES['photo']['tmp_name'], UPLOAD.$newfile)) {
+			$data['photo'] = $newfile;
+		}
+	}
+
+	$id = $db->insert('admission', $data);
+	$_SESSION["success"] = 'Registration Successful! Your Application ID is BU-ADM-'.$id;
+	redirect(href("online-admission.php").'#validation');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,14 +80,90 @@ if(isset($_POST['submit']))
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Online Admission Form - Bhabha University Bhopal Madhya Pradesh</title>
-<!-- Bootstrap core CSS -->
+<title>Online Registration Form - Bhabha University Bhopal</title>
+<meta name="description" content="Online Admission & Registration Form for Bhabha University Bhopal — Apply for UG, PG, Diploma and Ph.D. degrees online.">
 <?php include('inc.meta.php');?>
+<style>
+.bu-full-width-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 20px 80px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  box-sizing: border-box;
+}
+
+.bu-section-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0A1B54;
+  background: #F8FAFC;
+  border-left: 4px solid #FFC107;
+  padding: 12px 18px;
+  margin: 28px 0 18px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.bu-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+.bu-form-group {
+  margin-bottom: 14px;
+}
+.bu-form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #061D7C;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.bu-form-control {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  font-size: 13.5px;
+  color: #1F2937;
+  background: #F9FAFB;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+.bu-form-control:focus {
+  outline: none;
+  border-color: #0A1B54;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(10,27,84,0.1);
+}
+
+.bu-btn-submit {
+  background: #0A1B54;
+  color: #FFC107;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 16px 40px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(10,27,84,0.2);
+}
+.bu-btn-submit:hover {
+  background: #061D7C;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10,27,84,0.3);
+}
+</style>
 <script type="text/javascript">
    $(document).ready(function(){
 	   $("#course").change(function(){					 
 			 var course=$("#course").val();
-			 
 			 $.ajax({
 				type:"post",
 				url:"<?php echo URL_ROOT;?>getBranch.php",
@@ -106,632 +178,164 @@ if(isset($_POST['submit']))
 </head>
 
 <body>
-<!--KF KODE WRAPPER WRAP START-->
-<div class="kode_wrapper"> 
-  <!-- register Modal --> 
-  <!--HEADER START-->
+<div class="kode_wrapper">
+  <!-- HEADER START -->
   <?php include('inc.header.php');?>
-  <!--HEADER END-->
-  <div class="kf_inr_banner">
-  
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12"> 
-          <!--KF INR BANNER DES Wrap Start-->
-          <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-              <h3>Online Admission Form</h3>
+  <!-- HEADER END -->
+
+  <?php
+  $page_title    = 'Online Registration <em>Form</em>';
+  $page_subtitle = 'Complete your official admission registration for Bhabha University programs online.';
+  $page_icon     = 'fa-wpforms';
+  $breadcrumbs   = [
+    ['label' => 'Home',       'url' => URL_ROOT],
+    ['label' => 'Admissions', 'url' => '#'],
+    ['label' => 'Online Registration', 'url' => '#'],
+  ];
+  include('inc.page-banner.php');
+  ?>
+
+  <div class="bu-full-width-container">
+    <main>
+
+      <div class="bu-content-card" id="validation">
+        <span class="bu-content-label">Official Application</span>
+        <h2 class="bu-content-h2">Student Admission <em>Form</em></h2>
+        <div class="bu-content-divider"></div>
+
+        <?php echo msg($stat);?>
+
+        <form action="" method="post" enctype="multipart/form-data">
+
+          <!-- 1. Personal Information -->
+          <div class="bu-section-title">1. Personal Information</div>
+          <div class="bu-form-grid">
+            <div class="bu-form-group">
+              <label>Applicant Name *</label>
+              <input type="text" name="name" class="bu-form-control" required placeholder="Full Name">
             </div>
-            <div class="kf_inr_breadcrumb">
-              <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#">Online Admission Form</a></li>
-              </ul>
+            <div class="bu-form-group">
+              <label>Father's Name *</label>
+              <input type="text" name="fname" class="bu-form-control" required placeholder="Father's Full Name">
             </div>
-          </div>
-          <!--KF INR BANNER DES Wrap End--> 
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--NEWS LETTERS END-->
-  <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-              <!-- HEADING 1 START-->
-              <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>Online Admission Form</h3>
-              </div>
-              <!-- HEADING 1 END-->
-              <div class="abt_univ_des" style="margin-bottom:20px !important;">
-                <div style="margin-left:10px; margin-right:10px;"> <?php echo msg($stat);?></div>
-                <form action="" method="post" enctype="multipart/form-data">
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Name</span>
-                        <input type="text" value="<?php $_POST['name'] ?>" name="name" required>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Father's Name</span>
-                        <input type="text" value="<?php $_POST['fname'] ?>" name="fname" required>
-                      </div>
-                    </div>
-                    
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Father's Occupation </span>
-                        <input type="text" value="<?php $_POST['occupation'] ?>" name="occupation" required>
-                      </div>
-                    </div>
-                    
-                    
-                  </div>
-                  <div class="row">
-                  <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Mother Name</span>
-                        <input type="text" value="<?php $_POST['mother'] ?>" name="mother" required>
-                      </div>
-                    </div>
-                  <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Gender</span>
-                        <select name="gender" required>
-                          <option value=""> Select Gender</option>
-                          <option value="Male"> Male</option>
-                          <option value="Female"> Female</option>
-                        </select>
-                      </div>
-                    </div>
-                    
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Mobile Number</span>
-                        <input type="tel" value="<?php $_POST['mobile'] ?>" name="mobile">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="inputs_des"> <span>Permanent Address</span>
-                        <input type="text" value="<?php $_POST['permanent_address'] ?>" name="permanent_address" required>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="inputs_des"> <span>Present Address</span>
-                        <input type="text" value="<?php $_POST['present_address'] ?>" name="present_address" required>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <div class="inputs_des"> <span>Phone Number</span>
-                        <input type="tel" value="<?php $_POST['phone'] ?>" name="phone">
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="inputs_des"> <span>Email Address</span>
-                        <input type="email" value="<?php $_POST['email'] ?>" name="email">
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="inputs_des"> <span>Date Of Birth</span>
-                        <input type="text" class="datepicker" value="<?php $_POST['dob'] ?>" name="dob"  required>
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="inputs_des"> <span>Nationality</span>
-                        <input type="text" value="<?php $_POST['nationality'] ?>" name="nationality" required>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <div class="inputs_des"> <span>Religion</span>
-                        <input type="text" value="<?php $_POST['religion'] ?>" name="religion">
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="inputs_des"> <span>State of Domicile</span>
-                        <input type="text" value="<?php $_POST['domicile'] ?>" name="domicile" placeholder="State Name" required>
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="inputs_des"> <span>Aadhar Card Number</span>
-                        <input type="number" value="<?php $_POST['aadhar'] ?>" maxlength="12" name="aadhar" >
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="inputs_des"> <span>Select Category</span>
-                        <select name="category" required>
-                          <option value=""> Select Category</option>
-                          <option value="GEN"> GEN</option>
-                          <option value="OBC"> OBC</option>
-                          <option value="SC"> SC</option>
-                          <option value="ST"> ST</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Domicile Certificate</span>
-                        <select name="domicile_c" required>
-                          <option value=""> Select Domicile</option>
-                          <option value="Yes"> Yes</option>
-                          <option value="No"> No</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Income Certificate</span>
-                        <select name="income_c" required>
-                          <option value=""> Select Income</option>
-                          <option value="Yes"> Yes</option>
-                          <option value="No"> No</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Category Certificate</span>
-                        <select name="category_c" required>
-                          <option value=""> Select Category</option>
-                          <option value="Yes"> Yes</option>
-                          <option value="No"> No</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="inputs_des"> <span>Course</span>
-                        <select name="course" id="course" required>
-                          <option value=""> Select Course</option>
-                          <?php
-$course = $db->get('course');
-if(is_array($course) && count($course)>0)
-          {
-              foreach($course as $icourse)
-              { 
-?>
-                          <option value="<?php echo $icourse['id']?>"> <?php echo $icourse['course']?></option>
-                          <?php 
-			  }
-		  }?>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="inputs_des"> <span>Branch</span>
-                        <select name="branch" id="branch">
-                          <option value=""> Select Branch</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <p><strong>EDUCATION – HIGH SCHOOL</strong></p>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="table-responsive">
-                        <table>
-                          <tr>
-                            <?php
-$hschool = $db->get('high_school');
-if(is_array($hschool) && count($hschool)>0)
-          {
-              foreach($hschool as $ihschool)
-              { 
-?>
-                            <td><?php echo $ihschool['title']?></td>
-                            <?php 
-			  }
-		  }?>
-                          </tr>
-                          <tr>
-                            <?php
-$hschool = $db->get('high_school');
-if(is_array($hschool) && count($hschool)>0)
-          {
-              foreach($hschool as $ihschool)
-              { 
-?>
-                            <td><input type="text" name="<?php echo $ihschool['name'];?>"></td>
-                            <?php 
-			  }
-		  }?>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <p><strong>EDUCATION – HIGHER SCHOOL</strong></p>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="table-responsive">
-                        <table>
-                          <tr>
-                            <?php
-$hsecondary = $db->get('higher_secondary');
-if(is_array($hsecondary) && count($hsecondary)>0)
-          {
-              foreach($hsecondary as $ihsecondary)
-              { 
-			  ?>
-                            <td><?php echo $ihsecondary['title']?></td>
-                            <?php 
-			  }
-		  }?>
-                          </tr>
-                          <tr>
-                            <?php
-$hsecondary = $db->get('higher_secondary');
-if(is_array($hsecondary) && count($hsecondary)>0)
-          {
-              foreach($hsecondary as $ihsecondary)
-              { 
-?>
-                            <td><input type="text" name="<?php echo $ihsecondary['name'];?>"></td>
-                            <?php 
-			  }
-		  }?>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <p><strong>GRADUATION (NOT FOR ADMISSION IN UG COURSE)</strong></p>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="table-responsive">
-                        <table>
-                          <tr>
-                            <?php
-$graduation = $db->get('graduation');
-if(is_array($graduation) && count($graduation)>0)
-          {
-              foreach($graduation as $igraduation)
-              { 
-			  ?>
-                            <td><?php echo $igraduation['title']?></td>
-                            <?php 
-			  }
-		  }?>
-                          </tr>
-                          <tr>
-                            <?php
-$graduation = $db->get('graduation');
-if(is_array($graduation) && count($graduation)>0)
-          {
-              foreach($graduation as $igraduation)
-              { 
-?>
-                            <td><input type="text" name="<?php echo $igraduation['name'];?>" ></td>
-                            <?php 
-			  }
-		  }?>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <p><strong>POST GRADUATION (NOT FOR ADMISSION IN PG COURSE)</strong></p>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="table-responsive">
-                        <table>
-                          <tr>
-                            <?php
-$pgraduation = $db->get('pgraduation');
-if(is_array($pgraduation) && count($pgraduation)>0)
-          {
-              foreach($pgraduation as $ipgraduation)
-              { 
-			  ?>
-                            <td><?php echo $ipgraduation['title']?></td>
-                            <?php 
-			  }
-		  }?>
-                          </tr>
-                          <tr>
-                            <?php
-$pgraduation = $db->get('pgraduation');
-if(is_array($pgraduation) && count($pgraduation)>0)
-          {
-              foreach($pgraduation as $ipgraduation)
-              { 
-?>
-                            <td><input type="text" name="<?php echo $ipgraduation['name'];?>" ></td>
-                            <?php 
-			  }
-		  }?>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <p><strong>ANY OTHER RELEVANT QUALIFICATION, PLEASE GIVE DETAILS</strong></p>
-                  <div class="row">
-                    <div class="col-sm-12" style="margin-top:10px !important;">
-                      <div class="inputs_des"> <span>Whether participated in National/State level sports, please give details</span>
-                        <input type="text" value="<?php $_POST['sports'] ?>" name="sports">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-12" style="margin-top:10px !important;">
-                      <div class="inputs_des"> <span>Details of Extra/Co curricular Activities</span>
-                        <input type="text" value="<?php $_POST['activities'] ?>" name="activities">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-12" style="margin-top:10px !important;">
-                      <div class="inputs_des"> <span>Do you know someone studying in this University? If yes  please give details</span>
-                        <input type="text" value="<?php $_POST['studying'] ?>" name="studying">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>REFERENCES ONE</span>
-                        <input type="text" value="<?php $_POST['reference_one'] ?>" name="reference_one" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>REFERENCES TWO</span>
-                        <input type="text" value="<?php $_POST['references_two'] ?>" name="references_two" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Know About Us</span>
-                        <select name="know-about">
-                          <option value=""> Select Know About Us</option>
-                          <option value="Advertisement"> Advertisement</option>
-                          <option value="Newspaper"> Newspaper</option>
-                          <option value="TV"> TV</option>
-                          <option value="Social Media"> Social Media</option>
-                          <option value="Publicity Boards"> Publicity Boards</option>
-                          <option value="By Reference"> By Reference</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="table-responsive">
-                        <table class=".table-bordered">
-                          <tr>
-                            <?php
-$headingpayment = $db->get('payment');
-if(is_array($headingpayment) && count($headingpayment)>0)
-          {
-              foreach($headingpayment as $iheadingpayment)
-              { 
-?>
-                            <td><?php echo $iheadingpayment['title']?></td>
-                            <?php 
-			  }
-		  }?>
-                          </tr>
-                          <tr>
-                            <?php
-$payment = $db->get('payment');
-if(is_array($payment) && count($payment)>0)
-          {
-              foreach($payment as $ipayment)
-              { 
-?>
-                            <td><input type="text" name="<?php echo $ipayment['name'] ?>"></td>
-                            <?php 
-			  }
-		  }?>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <p><strong>Upload Documents</strong></p>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Domicile Certificate Number, </span>
-                        <input type="text" name="domicile_number" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Date of Issue</span>
-                        <input type="text" name="domicile_issue_date" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4" style="margin-bottom:20px;">
-                      <div class="inputs_des"> <span>Upload Domicile Certificate</span>
-                        <input type="file" name="upload_domicile" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Caste-
-                        Certificate Number, </span>
-                        <input type="text" name="caste_number" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Date of Issue</span>
-                        <input type="text" name="caste_issue_date" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4" style="margin-bottom:20px;">
-                      <div class="inputs_des"> <span>Upload Caste-
-                        Certificate</span>
-                        <input type="file" name="upload_caste" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Income Certificate Number, </span>
-                        <input type="text" name="income_number" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Date of Issue</span>
-                        <input type="text" name="income_issue_date" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4" style="margin-bottom:20px;">
-                      <div class="inputs_des"> <span>Upload Income Certificate</span>
-                        <input type="file" name="upload_income" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>High School –
-                        Certificate Number, </span>
-                        <input type="text" name="high_school_number" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>High School –
-                        Roll Number</span>
-                        <input type="text" name="high_school_rollnumber" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4" style="margin-bottom:20px;">
-                      <div class="inputs_des"> <span>Upload High School –
-                        Certificate</span>
-                        <input type="file" name="upload_high_school" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Higher 
-                        Secondary
-                        –
-                        Certificate Number, </span>
-                        <input type="text" name="higher_school_number" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Higher 
-                        Secondary
-                        –
-                        Roll Number</span>
-                        <input type="text" name="higher_school_rollnumber" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4" style="margin-bottom:20px;">
-                      <div class="inputs_des"> <span>Upload Higher 
-                        Secondary
-                        –
-                        Certificate</span>
-                        <input type="file" name="upload_higher_school" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Graduation –
-                        Certificate Number, </span>
-                        <input type="text" name="g_cnumber" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Graduation –
-                        Roll Number</span>
-                        <input type="text" name="g_rollnumber" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4" style="margin-bottom:20px;">
-                      <div class="inputs_des"> <span>Upload Graduation –
-                        Certificate</span>
-                        <input type="file" name="uploadg" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Post Graduation –
-                        Certificate Number, </span>
-                        <input type="text" name="pg_cnumber" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4">
-                      <div class="inputs_des"> <span>Post Graduation –
-                        Roll Number</span>
-                        <input type="text" name="pg_rollnumber" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4" style="margin-bottom:20px;">
-                      <div class="inputs_des"> <span>Upload Post Graduation –
-                        Certificate</span>
-                        <input type="file" name="uploadpg" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4" style="margin-bottom:20px;">
-                      <div class="inputs_des"> <span>Aadhar Card</span>
-                        <input type="file" name="aadhar_card" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4" style="margin-bottom:20px;">
-                      <div class="inputs_des"> <span>Passport Size Photo</span>
-                        <input type="file" name="photo" >
-                      </div>
-                    </div>
-                    <div class="col-sm-4" style="margin-bottom:20px;">
-                      <div class="inputs_des"> <span>Other Documents (JPG,PDF & DOCX)</span>
-                        <input type="file" name="otherdocx" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row" style="padding:20px;">
-                    <p style="padding-top:20px;">
-                      <input type="checkbox" name="tnc" required>
-                      &nbsp;The above information given by me in the Admission Form are true to the best of my knowledge. However should it be found that any information therein are untrue/wrong i am/my ward is liable to be disqualified for Admission.</p>
-                    <p>If i/my ward selected for admission. I/my promise to abide by the rules & regulations of the Institute/University and maintain discipline in the Institute and the Hostel.</p>
-                    <p>Initially the admission is provisional and is subject to confirmation from counseling authority/University. </p>
-                    <p>It is compulsory for me/my ward to appear for counseling at the Bhabha University or at any place directed by the university on the specified date and time failing which i/my ward’s registration will automatically be cancelled without any refund of fee.</p>
-                    <p>I understand that if i get my admission/registration cancelled fees deposited by me is nonrefundable.</p>
-                    <p>Cancellation of registration is not possible without paying the full fees for the entire course.</p>
-                    <p>I agree to pay fees for the whole course if i leave course in midstream. </p>
-                    <p>Any dispute is subject to Bhopal jurisdiction.</p>
-                    <p>Admission and seat allotment as per Bhabha University norms.</p>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-12" style="margin-top:20px !important;">
-                      <div class="contact_des">
-                        <button type="submit" name="submit">Submit</button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
+            <div class="bu-form-group">
+              <label>Mother's Name *</label>
+              <input type="text" name="mother" class="bu-form-control" required placeholder="Mother's Full Name">
+            </div>
+            <div class="bu-form-group">
+              <label>Parent Occupation</label>
+              <input type="text" name="occupation" class="bu-form-control" placeholder="Occupation">
             </div>
           </div>
-        </div>
+
+          <div class="bu-form-grid">
+            <div class="bu-form-group">
+              <label>Gender *</label>
+              <select name="gender" class="bu-form-control" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="bu-form-group">
+              <label>Date of Birth *</label>
+              <input type="date" name="dob" class="bu-form-control" required>
+            </div>
+            <div class="bu-form-group">
+              <label>Mobile Number *</label>
+              <input type="tel" name="mobile" pattern=".{10}" class="bu-form-control" required placeholder="10-digit phone">
+            </div>
+            <div class="bu-form-group">
+              <label>Email Address *</label>
+              <input type="email" name="email" class="bu-form-control" required placeholder="email@example.com">
+            </div>
+          </div>
+
+          <div class="bu-form-grid">
+            <div class="bu-form-group">
+              <label>Aadhar Card Number</label>
+              <input type="text" name="aadhar" class="bu-form-control" placeholder="12-digit Aadhar Number">
+            </div>
+            <div class="bu-form-group">
+              <label>Category</label>
+              <select name="category" class="bu-form-control">
+                <option value="General">General</option>
+                <option value="OBC">OBC</option>
+                <option value="SC">SC</option>
+                <option value="ST">ST</option>
+                <option value="EWS">EWS</option>
+              </select>
+            </div>
+            <div class="bu-form-group">
+              <label>Nationality</label>
+              <input type="text" name="nationality" value="Indian" class="bu-form-control">
+            </div>
+            <div class="bu-form-group">
+              <label>Domicile State</label>
+              <input type="text" name="domicile" value="Madhya Pradesh" class="bu-form-control">
+            </div>
+          </div>
+
+          <!-- Addresses -->
+          <div class="bu-form-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="bu-form-group">
+              <label>Permanent Address *</label>
+              <textarea name="permanent_address" rows="2" class="bu-form-control" required placeholder="Full permanent address"></textarea>
+            </div>
+            <div class="bu-form-group">
+              <label>Present Address *</label>
+              <textarea name="present_address" rows="2" class="bu-form-control" required placeholder="Full present address"></textarea>
+            </div>
+          </div>
+
+          <!-- 2. Course Selection -->
+          <div class="bu-section-title">2. Desired Course &amp; Branch</div>
+          <div class="bu-form-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="bu-form-group">
+              <label>Course Applied For *</label>
+              <select name="course" id="course" class="bu-form-control" required>
+                <option value="">-- Choose Desired Course --</option>
+                <?php
+                $courses = $db->get('course');
+                if(is_array($courses) && count($courses) > 0) {
+                  foreach($courses as $icourse) {
+                    echo '<option value="'.$icourse['id'].'">'.$icourse['course'].'</option>';
+                  }
+                }
+                ?>
+              </select>
+            </div>
+            <div class="bu-form-group">
+              <label>Branch / Specialization</label>
+              <select name="branch" id="branch" class="bu-form-control">
+                <option value="">-- Choose Branch --</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 3. Photo Upload -->
+          <div class="bu-section-title">3. Student Photograph</div>
+          <div class="bu-form-group">
+            <label>Upload Student Photograph (JPG/PNG)</label>
+            <input type="file" name="photo" class="bu-form-control" accept="image/*">
+          </div>
+
+          <!-- Submit -->
+          <div style="margin-top:32px;text-align:center;">
+            <button type="submit" name="submit" class="bu-btn-submit">Submit Online Admission Registration <i class="fa fa-check-circle" style="margin-left:6px;"></i></button>
+          </div>
+
+        </form>
       </div>
-    </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
+
+    </main>
   </div>
-  <!--FOOTER START-->
+
+  <!-- FOOTER START -->
   <?php include('inc.footer.php');?>
-  
-  <!--FOOTER END--> 
-  <!--COPYRIGHTS START--> 
-  
-  <!--COPYRIGHTS START--> 
+  <!-- FOOTER END -->
 </div>
-<!--KF KODE WRAPPER WRAP END--> 
-<!--Bootstrap core JavaScript-->
+
 <?php include('inc.footer.js.php');?>
 </body>
 </html>
