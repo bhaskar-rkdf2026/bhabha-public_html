@@ -1,5 +1,5 @@
 <?php
-// Bhabha University – Redesigned Premium Footer matching the mockup exactly
+// Bhabha University – Redesigned Premium Footer with Ultra-Fast Map & High Performance
 ?>
 <footer class="bu-main-footer"> 
   <div class="bu-footer-container">
@@ -118,9 +118,17 @@
       </form>
     </div>
 
-    <!-- BOTTOM SECTION: Grayscale Leaflet Map -->
+    <!-- BOTTOM SECTION: High Speed Interactive Google Map -->
     <div class="bu-footer-map-row">
-      <div id="buFooterMap" class="bu-footer-map"></div>
+      <iframe src="https://maps.google.com/maps?q=Bhabha%20University%2C%20NH-12%2C%20Jatkhedi%2C%20Bhopal&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+              width="100%" 
+              height="350" 
+              style="border:0; border-radius:10px; box-shadow: 0 4px 20px rgba(0,0,0,0.25);" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade" 
+              title="Bhabha University Location Map">
+      </iframe>
     </div>
 
   </div>
@@ -134,10 +142,6 @@
     <span>&copy; <?php echo date('Y'); ?> Bhabha University. All Rights reserved. Maintained by Bhabha IT Cell.</span>
   </div>
 </div>
-
-<!-- Leaflet Map CSS & JS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <!-- ===== FOOTER STYLES ===== -->
 <style>
@@ -363,18 +367,10 @@
   background-color: #D99B00 !important;
 }
 
-/* Grayscale Leaflet Map */
+/* Footer Map Row */
 .bu-footer-map-row {
   width: 100% !important;
   margin-bottom: 30px !important;
-}
-.bu-footer-map {
-  width: 100% !important;
-  height: 380px !important;
-  border-radius: 4px !important;
-  overflow: hidden !important;
-  filter: grayscale(100%) contrast(1.15) invert(5%) !important; /* Grayscale blueprint style matching mockup */
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Copyright Row */
@@ -421,48 +417,5 @@
   .bu-footer-heading {
     margin-bottom: 12px !important;
   }
-  .bu-footer-map {
-    height: 260px !important;
-  }
 }
 </style>
-
-<!-- ===== MAP LOADER ===== -->
-<script>
-(function() {
-  function initFooterMap() {
-    if (typeof L === 'undefined') { setTimeout(initFooterMap, 150); return; }
-    var target = document.getElementById('buFooterMap');
-    if (!target) return;
-    
-    // Coordinates for Bhabha University Bhopal
-    var lat = 23.2384;
-    var lng = 77.4939;
-    
-    var map = L.map('buFooterMap', {
-      zoomControl: true,
-      scrollWheelZoom: false
-    }).setView([lat, lng], 14);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    var markerIcon = L.divIcon({
-      className: 'bu-custom-marker',
-      html: '<div style="background-color:#FFC107; width:12px; height:12px; border-radius:50%; border:2px solid #040F4A; box-shadow: 0 0 8px rgba(255,193,7,0.8);"></div>',
-      iconSize: [12, 12]
-    });
-
-    L.marker([lat, lng], {icon: markerIcon}).addTo(map)
-      .bindPopup('<b style="color:#040F4A; font-family:\'Plus Jakarta Sans\',sans-serif;">Bhabha University</b><br><span style="font-size:11px;color:#666;">University Estate, Bhopal</span>')
-      .openPopup();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFooterMap);
-  } else {
-    initFooterMap();
-  }
-})();
-</script>

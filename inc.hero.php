@@ -88,17 +88,18 @@
   background: #040F4A !important;
 }
 
-/* Background Video */
+/* Background Video - Cropped & Scaled to hide burned-in video logos/text */
 .bu-hero-video {
   position: absolute !important;
   top: 50% !important;
   left: 50% !important;
   min-width: 100% !important;
   min-height: 100% !important;
-  width: auto !important;
-  height: auto !important;
-  transform: translate(-50%, -50%) !important;
+  width: 100% !important;
+  height: 100% !important;
+  transform: translate(-50%, -50%) scale(1.28) !important;
   object-fit: cover !important;
+  object-position: center center !important;
   z-index: 0 !important;
 }
 
