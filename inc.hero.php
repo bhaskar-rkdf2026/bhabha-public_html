@@ -4,17 +4,17 @@
 <!-- ============ HERO VIDEO SECTION ============ -->
 <section class="bu-hero-fw" id="buHeroSection">
 
-  <!-- Background Video -->
-  <video class="bu-hero-video" autoplay loop muted playsinline poster="<?php echo URL_IMG; ?>bhabha univ logo.jpg">
-    <source src="upload/video/bhabha_video.mp4" type="video/mp4">
-    <source src="<?php echo URL_UPLOAD; ?>video/bhabha_video.mp4" type="video/mp4">
+  <!-- Background Video (Infinite Autoplay Loop) -->
+  <video class="bu-hero-video" id="buHeroVideo" autoplay loop muted playsinline preload="auto" poster="new-media/image/campus-aerial.png">
+    <source src="new-media/image/hero/drone-campus.mp4" type="video/mp4">
+    <source src="new-media/hero/drone-campus.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
   <!-- Gradient Overlay (Dark Navy at bottom-left for crisp text legibility) -->
   <div class="bu-fwslide-overlay"></div>
 
-  <!-- Text Content (Overlay at bottom-left) -->
+  <!-- Text Content (Overlay with Top Padding & 2-Line Heading) -->
   <div class="bu-fwslide-content">
     <span class="bu-fwslide-label">
       <span class="bu-label-dot"></span>
@@ -88,17 +88,18 @@
   background: #040F4A !important;
 }
 
-/* Background Video */
+/* Background Video - Cropped & Scaled to hide burned-in video logos/text */
 .bu-hero-video {
   position: absolute !important;
   top: 50% !important;
   left: 50% !important;
   min-width: 100% !important;
   min-height: 100% !important;
-  width: auto !important;
-  height: auto !important;
+  width: 100% !important;
+  height: 100% !important;
   transform: translate(-50%, -50%) !important;
   object-fit: cover !important;
+  object-position: center center !important;
   z-index: 0 !important;
 }
 
@@ -122,13 +123,13 @@
   z-index: 1 !important;
 }
 
-/* Text Content (Bottom-Left) */
+/* Text Content (Bottom-Left with Reduced Bottom Padding) */
 .bu-fwslide-content {
   position: absolute !important;
-  bottom: 70px !important;
+  bottom: 35px !important;
   left: 60px !important;
   z-index: 2 !important;
-  max-width: 650px !important;
+  max-width: 850px !important;
   animation: buFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
@@ -171,11 +172,11 @@
 /* Heading */
 .bu-fwslide-heading {
   font-family: 'Playfair Display', Georgia, serif !important;
-  font-size: clamp(38px, 4.8vw, 66px) !important;
+  font-size: clamp(38px, 4.8vw, 62px) !important;
   font-weight: 800 !important;
   color: #FFFFFF !important;
-  line-height: 1.1 !important;
-  margin: 0 0 18px 0 !important;
+  line-height: 1.15 !important;
+  margin: 0 0 14px 0 !important;
   letter-spacing: -0.5px !important;
 }
 .bu-fwslide-heading em {
@@ -293,43 +294,88 @@
 }
 </style>
 
-<!-- ===== COUNTER COUNT-UP ANIMATION SCRIPT ===== -->
+<!-- ===== COUNTER & VIDEO ANIMATION SCRIPT ===== -->
 <script>
 (function() {
-  document.addEventListener('DOMContentLoaded', function () {
+  var counterAnimated = false;
+
+  function startCounterAnimation() {
+    if (counterAnimated) return;
+    counterAnimated = true;
+
     var counters = document.querySelectorAll('.bu-stat-number');
-    
-    function startCounterAnimation() {
-      counters.forEach(function (counter) {
-        var target = parseInt(counter.getAttribute('data-target'), 10);
-        var suffix = counter.getAttribute('data-suffix') || '';
-        var useCommas = counter.getAttribute('data-commas') === 'true';
-        var current = 0;
-        
-        // duration of 2 seconds (2000ms)
-        var duration = 1800; 
-        var steps = 50;
-        var stepTime = duration / steps;
-        var stepValue = Math.ceil(target / steps);
-        
-        var timer = setInterval(function () {
-          current += stepValue;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          
-          var formattedVal = current;
-          if (useCommas) {
-            // Native format for numbers with commas
-            formattedVal = current.toLocaleString('en-IN');
-          }
-          counter.textContent = formattedVal + suffix;
-        }, stepTime);
-      });
+    var startTime = null;
+    var duration = 2000; // 2 seconds ultra-smooth easing
+
+    function easeOutQuart(t) {
+      return 1 - Math.pow(1 - t, 4);
     }
 
-    // IntersectionObserver to start counting when scrolled into view
+    function animate(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var elapsed = timestamp - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      var easedProgress = easeOutQuart(progress);
+
+      counters.forEach(function (counter) {
+        var target = parseInt(counter.getAttribute('data-target'), 10);
+        if (isNaN(target)) return;
+
+        var prefix = counter.getAttribute('data-prefix') || '';
+        var suffix = counter.getAttribute('data-suffix') || '';
+        var useCommas = counter.getAttribute('data-commas') === 'true';
+
+        var currentVal = Math.floor(easedProgress * target);
+
+        var formattedVal = currentVal;
+        if (useCommas) {
+          formattedVal = currentVal.toLocaleString('en-IN');
+        }
+        counter.textContent = prefix + formattedVal + suffix;
+      });
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  function initHeroVideo() {
+    var heroVideo = document.getElementById('buHeroVideo');
+    if (!heroVideo) return;
+    heroVideo.muted = true;
+
+    var playVideo = function() {
+      var promise = heroVideo.play();
+      if (promise !== undefined) {
+        promise.catch(function() {
+          document.addEventListener('click', function playOnClick() {
+            heroVideo.play();
+          }, { once: true });
+        });
+      }
+    };
+
+    playVideo();
+
+    heroVideo.addEventListener('ended', function () {
+      heroVideo.currentTime = 0;
+      playVideo();
+    });
+
+    heroVideo.addEventListener('pause', function () {
+      if (!heroVideo.seeking) {
+        playVideo();
+      }
+    });
+  }
+
+  function initAll() {
+    initHeroVideo();
+
+    // IntersectionObserver for Stats Counter
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -338,7 +384,7 @@
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.1 });
 
       var targetBar = document.querySelector('.bu-stats-bar');
       if (targetBar) {
@@ -347,10 +393,18 @@
         startCounterAnimation();
       }
     } else {
-      // Fallback
       startCounterAnimation();
     }
-  });
+
+    // Safety fallback: ensure counters animate even if observer threshold is missed
+    setTimeout(startCounterAnimation, 600);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
 })();
 </script>
 

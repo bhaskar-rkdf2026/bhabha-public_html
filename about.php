@@ -520,80 +520,95 @@
   text-transform: uppercase;
 }
 
-/* ---- SUB-PAGES QUICK LINKS ---- */
+/* ---- SUB-PAGES QUICK LINKS (EXPLORE FURTHER) ---- */
 .bu-subpages-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 28px;
   margin-top: 48px;
 }
 .bu-subpage-card {
-  background: #fff;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
   padding: 0;
-  text-decoration: none;
+  text-decoration: none !important;
   display: flex;
   flex-direction: column;
-  transition: all 0.28s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(6,29,124,0.05);
+  box-shadow: 0 4px 18px rgba(6, 29, 124, 0.05);
+}
+.bu-subpage-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 38px rgba(6, 29, 124, 0.12);
+  border-color: #FFC107;
 }
 .bu-subpage-img-wrap {
   width: 100%;
-  height: 150px;
+  height: 185px;
   overflow: hidden;
   position: relative;
-  background: #F3F4F6;
+  background: #0A1B54;
 }
 .bu-subpage-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  object-position: center;
+  display: block;
+  transition: transform 0.45s ease;
+  image-rendering: -webkit-optimize-contrast;
+  filter: contrast(1.03) brightness(1.02);
 }
 .bu-subpage-card:hover .bu-subpage-img {
   transform: scale(1.06);
 }
+
+/* Floating Icon Badge over Image */
+.bu-subpage-icon-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  background: #0A1B54;
+  color: #FFC107;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+.bu-subpage-card:hover .bu-subpage-icon-badge {
+  background: #FFC107;
+  color: #0A1B54;
+  transform: scale(1.08);
+}
+
 .bu-subpage-body {
   padding: 22px 24px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   flex-grow: 1;
+  justify-content: space-between;
 }
-.bu-subpage-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%; height: 3px;
-  background: #FFC107;
-  transform: scaleX(0);
-  transition: transform 0.28s;
-}
-.bu-subpage-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(6,29,124,0.12); text-decoration: none; }
-.bu-subpage-card:hover::after { transform: scaleX(1); }
-.bu-subpage-icon {
-  width: 44px; height: 44px;
-  background: rgba(10,27,84,0.07);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
-  color: #0A1B54;
-  transition: all 0.28s;
-}
-.bu-subpage-card:hover .bu-subpage-icon { background: #0A1B54; color: #FFC107; }
 .bu-subpage-card h4 {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: #061D7C;
-  margin: 0;
+  margin: 0 0 6px 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 .bu-subpage-card p {
-  font-size: 13px;
+  font-size: 13.5px;
   line-height: 1.6;
   color: #6B7280;
   margin: 0;
@@ -602,61 +617,85 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.8px;
   text-transform: uppercase;
   color: #D99B00;
-  margin-top: 4px;
+  margin-top: 10px;
 }
-.bu-subpage-arrow i { font-size: 10px; transition: transform 0.2s; }
+.bu-subpage-arrow i { font-size: 10px; transition: transform 0.2s ease; }
 .bu-subpage-card:hover .bu-subpage-arrow i { transform: translateX(4px); }
 
-/* ---- ACCREDITATIONS ---- */
+/* ---- ACCREDITATIONS & STATUTORY APPROVAL LOGOS (ALL IN 1 ROW) ---- */
 .bu-accred-grid {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 12px;
   margin-top: 40px;
-  justify-content: center;
+  width: 100%;
 }
 .bu-accred-badge {
-  background: #fff;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  padding: 18px 24px;
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 16px 8px;
   text-align: center;
-  min-width: 130px;
-  box-shadow: 0 2px 12px rgba(6,29,124,0.06);
-  transition: all 0.25s;
+  box-shadow: 0 4px 14px rgba(6, 29, 124, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
-.bu-accred-badge:hover { box-shadow: 0 12px 30px rgba(6,29,124,0.12); transform: translateY(-3px); }
+.bu-accred-badge:hover {
+  box-shadow: 0 14px 30px rgba(6, 29, 124, 0.12);
+  transform: translateY(-4px);
+  border-color: #FFC107;
+}
 .bu-accred-logo {
-  height: 44px;
+  height: 52px;
   width: auto;
-  max-width: 90px;
+  max-width: 85px;
   object-fit: contain;
   margin-bottom: 2px;
+  image-rendering: -webkit-optimize-contrast;
+  filter: contrast(1.08) brightness(1.02);
+  transition: transform 0.3s ease;
+}
+.bu-accred-badge:hover .bu-accred-logo {
+  transform: scale(1.06);
 }
 .bu-accred-badge-name {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 800;
   color: #061D7C;
   display: block;
   line-height: 1;
 }
 .bu-accred-badge-desc {
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 800;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   color: #9CA3AF;
   text-transform: uppercase;
+}
+
+@media (max-width: 991px) {
+  .bu-accred-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+}
+@media (max-width: 575px) {
+  .bu-accred-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
 }
 
 /* ---- CTA ---- */
@@ -1027,108 +1066,126 @@
 
         <a href="<?php echo href('page.php','id=20');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/abt-thumb.jpg" alt="University Overview" class="bu-subpage-img">
+            <img src="extra-images/1.jpg" alt="University Overview" class="bu-subpage-img" onerror="this.src='extra-images/intro-1.jpg';">
+            <div class="bu-subpage-icon-badge"><i class="fa fa-university"></i></div>
           </div>
           <div class="bu-subpage-body">
-            <div class="bu-subpage-icon"><i class="fa fa-university"></i></div>
-            <h4>University Overview</h4>
-            <p>Learn about our establishment, governance, campus facilities, and academic ecosystem.</p>
+            <div>
+              <h4>University Overview</h4>
+              <p>Learn about our establishment, governance, campus facilities, and academic ecosystem.</p>
+            </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
         </a>
 
         <a href="<?php echo href('mission-vision.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/intro-1.jpg" alt="Vision & Mission" class="bu-subpage-img">
+            <img src="extra-images/intro-1.jpg" alt="Vision & Mission" class="bu-subpage-img" onerror="this.src='extra-images/2.jpg';">
+            <div class="bu-subpage-icon-badge"><i class="fa fa-eye"></i></div>
           </div>
           <div class="bu-subpage-body">
-            <div class="bu-subpage-icon"><i class="fa fa-eye"></i></div>
-            <h4>Vision &amp; Mission</h4>
-            <p>Understand the core purpose that drives every decision and initiative at Bhabha University.</p>
+            <div>
+              <h4>Vision &amp; Mission</h4>
+              <p>Understand the core purpose that drives every decision and initiative at Bhabha University.</p>
+            </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
         </a>
 
         <a href="<?php echo href('infrastructure.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="images/library.jpg" alt="Campus & Infrastructure" class="bu-subpage-img">
+            <img src="images/library.jpg" alt="Campus & Infrastructure" class="bu-subpage-img" onerror="this.src='extra-images/4.jpg';">
+            <div class="bu-subpage-icon-badge"><i class="fa fa-building"></i></div>
           </div>
           <div class="bu-subpage-body">
-            <div class="bu-subpage-icon"><i class="fa fa-building"></i></div>
-            <h4>Campus &amp; Infrastructure</h4>
-            <p>Discover our 150-acre green campus — smart classrooms, labs, hostels, library and more.</p>
+            <div>
+              <h4>Campus &amp; Infrastructure</h4>
+              <p>Discover our 150-acre green campus — smart classrooms, labs, hostels, library and more.</p>
+            </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
         </a>
 
         <a href="<?php echo href('page.php','id=18');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/student.jpg" alt="Core Values" class="bu-subpage-img">
+            <img src="extra-images/student-3.jpg" alt="Core Values" class="bu-subpage-img" onerror="this.src='extra-images/student.jpg';">
+            <div class="bu-subpage-icon-badge"><i class="fa fa-heart"></i></div>
           </div>
           <div class="bu-subpage-body">
-            <div class="bu-subpage-icon"><i class="fa fa-heart"></i></div>
-            <h4>Core Values</h4>
-            <p>The principles of integrity, innovation, inclusivity, and excellence that define who we are.</p>
+            <div>
+              <h4>Core Values</h4>
+              <p>The principles of integrity, innovation, inclusivity, and excellence that define who we are.</p>
+            </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
         </a>
 
         <a href="<?php echo href('leadership.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="images/leadership.png" alt="Administration & Leadership" class="bu-subpage-img" onerror="this.src='extra-images/col-3-thum1.jpg';">
+            <img src="extra-images/5.jpg" alt="Administration & Leadership" class="bu-subpage-img" onerror="this.src='extra-images/intro-2.jpg';">
+            <div class="bu-subpage-icon-badge"><i class="fa fa-users"></i></div>
           </div>
           <div class="bu-subpage-body">
-            <div class="bu-subpage-icon"><i class="fa fa-users"></i></div>
-            <h4>Administration &amp; Leadership</h4>
-            <p>Meet our visionary Chancellor, Vice-Chancellor, and the leadership team steering the university.</p>
+            <div>
+              <h4>Administration &amp; Leadership</h4>
+              <p>Meet our visionary Chancellor, Vice-Chancellor, and the leadership team steering the university.</p>
+            </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
         </a>
 
         <a href="<?php echo href('page.php','id=19');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/home-gallery1.jpg" alt="Why Choose Bhabha" class="bu-subpage-img">
+            <img src="extra-images/home-gallery1.jpg" alt="Why Choose Bhabha" class="bu-subpage-img" onerror="this.src='extra-images/6.jpg';">
+            <div class="bu-subpage-icon-badge"><i class="fa fa-star"></i></div>
           </div>
           <div class="bu-subpage-body">
-            <div class="bu-subpage-icon"><i class="fa fa-star"></i></div>
-            <h4>Why Choose Bhabha</h4>
-            <p>From NAAC accreditation to global placements — the reasons that make us the right choice.</p>
+            <div>
+              <h4>Why Choose Bhabha</h4>
+              <p>From NAAC accreditation to global placements — the reasons that make us the right choice.</p>
+            </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
         </a>
 
         <a href="<?php echo href('awards.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/event-sp.jpg" alt="Awards & Achievements" class="bu-subpage-img">
+            <img src="extra-images/7.jpg" alt="Awards & Achievements" class="bu-subpage-img" onerror="this.src='extra-images/8.jpg';">
+            <div class="bu-subpage-icon-badge"><i class="fa fa-trophy"></i></div>
           </div>
           <div class="bu-subpage-body">
-            <div class="bu-subpage-icon"><i class="fa fa-trophy"></i></div>
-            <h4>Awards &amp; Achievements</h4>
-            <p>Recognised nationally and globally for academic excellence, innovation, and social impact.</p>
+            <div>
+              <h4>Awards &amp; Achievements</h4>
+              <p>Recognised nationally and globally for academic excellence, innovation, and social impact.</p>
+            </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
         </a>
 
         <a href="<?php echo href('advisory.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/col-3-thum3.jpg" alt="Cells & Committees" class="bu-subpage-img">
+            <img src="extra-images/8.jpg" alt="Cells & Committees" class="bu-subpage-img" onerror="this.src='extra-images/intro-3.jpg';">
+            <div class="bu-subpage-icon-badge"><i class="fa fa-sitemap"></i></div>
           </div>
           <div class="bu-subpage-body">
-            <div class="bu-subpage-icon"><i class="fa fa-sitemap"></i></div>
-            <h4>Cells &amp; Committees</h4>
-            <p>Our active statutory cells, grievance committees, ICC, IQAC and other regulatory bodies.</p>
+            <div>
+              <h4>Cells &amp; Committees</h4>
+              <p>Our active statutory cells, grievance committees, ICC, IQAC and other regulatory bodies.</p>
+            </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
         </a>
 
         <a href="<?php echo href('approvals.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="images/AICT.png" alt="Approvals & Recognitions" class="bu-subpage-img" style="object-fit:contain; background:#fff; padding:12px;">
+            <img src="extra-images/9.jpg" alt="Approvals & Recognitions" class="bu-subpage-img" onerror="this.src='extra-images/home-gallery3.jpg';">
+            <div class="bu-subpage-icon-badge"><i class="fa fa-certificate"></i></div>
           </div>
           <div class="bu-subpage-body">
-            <div class="bu-subpage-icon"><i class="fa fa-certificate"></i></div>
-            <h4>Approvals &amp; Recognitions</h4>
-            <p>Official approvals from UGC, AICTE, PCI, DCI, BCI, NCTE and NAAC accreditation details.</p>
+            <div>
+              <h4>Approvals &amp; Recognitions</h4>
+              <p>Official approvals from UGC, AICTE, PCI, DCI, BCI, NCTE and NAAC accreditation details.</p>
+            </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
         </a>

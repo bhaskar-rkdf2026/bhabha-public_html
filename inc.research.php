@@ -36,7 +36,7 @@
     <!-- RIGHT: Image & Highlight Card -->
     <div class="bu-research-img-col">
       <div class="bu-res-img-wrapper">
-        <img src="<?php echo URL_IMG; ?>solar.jpg" alt="Research at Bhabha University" class="bu-res-img">
+        <img src="new-media/image/campus-aerial.png" alt="Research at Bhabha University" class="bu-res-img">
         <div class="bu-res-highlight-card">
           <div class="bu-card-icon"><i class="fa fa-flask"></i></div>
           <p class="bu-card-highlight-text">Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.</p>

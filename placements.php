@@ -91,105 +91,133 @@
   font-size: 14px;
 }
 
-/* Placed Students Grid */
+/* Placed Students Grid & Framed Image Container */
 .bu-placed-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 22px;
-  margin-top: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 26px;
+  margin-top: 20px;
 }
 .bu-placed-card {
   background: #ffffff;
   border: 1px solid #E5E7EB;
-  border-radius: 10px;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(6,29,124,0.06);
-  transition: all 0.28s ease;
+  box-shadow: 0 4px 18px rgba(6,29,124,0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .bu-placed-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 16px 32px rgba(6,29,124,0.12);
+  box-shadow: 0 16px 35px rgba(6,29,124,0.12);
   border-color: #FFC107;
 }
+
+/* Framed Image Container */
 .bu-placed-img-wrap {
   width: 100%;
-  height: 200px;
-  background: #0A1B54;
+  height: 180px;
+  background: #F8FAFC;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   position: relative;
+  border-bottom: 1px solid #F1F5F9;
 }
 .bu-placed-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  image-rendering: -webkit-optimize-contrast;
+  transition: transform 0.35s ease;
 }
 .bu-placed-card:hover .bu-placed-img {
-  transform: scale(1.06);
+  transform: scale(1.04);
 }
 .bu-placed-body {
-  padding: 18px 16px;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
 }
 .bu-placed-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 17px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
   font-weight: 700;
   color: #061D7C;
   margin: 0 0 4px 0;
 }
 .bu-placed-degree {
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   color: #6B7280;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .bu-placed-company {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   color: #0A1B54;
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-bottom: 12px;
 }
 .bu-placed-pkg {
   display: inline-block;
-  background: rgba(255,193,7,0.18);
+  background: #FFFBEB;
   color: #B47F00;
+  border: 1px solid #FDE68A;
   font-weight: 800;
-  font-size: 11px;
-  padding: 4px 10px;
+  font-size: 11.5px;
+  padding: 5px 12px;
   border-radius: 20px;
-  margin-top: 8px;
+  width: fit-content;
 }
 
-/* Recruiters Grid */
+/* Major Recruiters Grid (Clear, Large & Crisp Logos) */
 .bu-recruiter-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
 }
 .bu-recruiter-item {
   background: #ffffff;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  padding: 16px 12px;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80px;
-  box-shadow: 0 2px 10px rgba(6,29,124,0.04);
-  transition: all 0.25s ease;
+  height: 95px;
+  box-shadow: 0 4px 14px rgba(6, 29, 124, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .bu-recruiter-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(6,29,124,0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(6, 29, 124, 0.12);
   border-color: #FFC107;
 }
 .bu-recruiter-item img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  max-width: 90% !important;
+  max-height: 82% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  filter: contrast(1.06) brightness(1.02) !important;
+  transition: transform 0.3s ease;
+}
+.bu-recruiter-item:hover img {
+  transform: scale(1.06);
 }
 </style>
 </head>
@@ -289,13 +317,15 @@
               <?php if(!empty($student['img'])): ?>
                 <img src="<?php echo $student['img'];?>" alt="<?php echo $student['name'];?>" class="bu-placed-img" onerror="this.src='extra-images/home-gallery1.jpg';">
               <?php else: ?>
-                <div style="display:flex;align-items:center;justify-content:center;height:100%;"><i class="fa fa-user" style="font-size:50px;color:rgba(255,193,7,0.7);"></i></div>
+                <div style="display:flex;align-items:center;justify-content:center;height:100%;"><i class="fa fa-user" style="font-size:50px;color:rgba(10,27,84,0.3);"></i></div>
               <?php endif; ?>
             </div>
             <div class="bu-placed-body">
-              <h4 class="bu-placed-name"><?php echo $student['name'];?></h4>
-              <div class="bu-placed-degree"><?php echo $student['degree'];?></div>
-              <div class="bu-placed-company"><i class="fa fa-building-o"></i> <?php echo $student['company'];?></div>
+              <div>
+                <h4 class="bu-placed-name"><?php echo $student['name'];?></h4>
+                <div class="bu-placed-degree"><?php echo $student['degree'];?></div>
+                <div class="bu-placed-company"><i class="fa fa-building-o"></i> <?php echo $student['company'];?></div>
+              </div>
               <span class="bu-placed-pkg"><?php echo $student['pkg'];?></span>
             </div>
           </div>
