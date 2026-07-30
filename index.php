@@ -253,9 +253,7 @@ src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
   <div class="kf_content_wrap"> 
     <?php include('inc.chancellor.php');?>
 
-    <!--COURSE OUTER WRAP START-->
-    <?php include('inc.course.php');?>
-    <!--COURSE OUTER WRAP END--> 
+
     <?php include('inc.whybhabha.php');?>
     <?php include('inc.faculties_grid.php');?>
     <?php include('inc.degree_programs.php');?>

@@ -56,9 +56,9 @@
         <ul class="bu-footer-links">
           <li><a href="<?php echo href("course.php"); ?>">Undergraduate</a></li>
           <li><a href="<?php echo href("course.php"); ?>">Postgraduate</a></li>
-          <li><a href="<?php echo href("course.php"); ?>">Doctoral Programs</a></li>
-          <li><a href="<?php echo href("course.php"); ?>">Diploma & Certificate</a></li>
-          <li><a href="<?php echo href("course.php"); ?>">Online Learning</a></li>
+          <li><a href="<?php echo href("faculties.php"); ?>">Faculties &amp; Institutes</a></li>
+          <li><a href="<?php echo href("syllabus.php"); ?>">Scheme &amp; Syllabus</a></li>
+          <li><a href="<?php echo href("academic.php"); ?>">Academic Calendar</a></li>
         </ul>
       </div>
 
@@ -66,13 +66,13 @@
       <div class="bu-footer-col">
         <h4 class="bu-footer-heading">UNIVERSITY</h4>
         <ul class="bu-footer-links">
-          <li><a href="<?php echo href("page.php","id=1"); ?>">About Us</a></li>
-          <li><a href="<?php echo href("page.php","id=2"); ?>">Leadership</a></li>
-          <li><a href="<?php echo href("page.php","id=3"); ?>">Vision & Mission</a></li>
-          <li><a href="<?php echo href("page.php","id=4"); ?>">Accreditation</a></li>
-          <li><a href="<?php echo href("page.php","id=5"); ?>">IQAC</a></li>
-          <li><a href="<?php echo href("page.php","id=6"); ?>">NAAC</a></li>
-          <li><a href="<?php echo href("page.php","id=7"); ?>">NIRF Rankings</a></li>
+          <li><a href="<?php echo href("about.php"); ?>">About Us</a></li>
+          <li><a href="<?php echo href("leadership.php"); ?>">Leadership</a></li>
+          <li><a href="<?php echo href("mission-vision.php"); ?>">Vision &amp; Mission</a></li>
+          <li><a href="<?php echo href("infrastructure.php"); ?>">Campus Infrastructure</a></li>
+          <li><a href="<?php echo href("approvals.php"); ?>">Approvals &amp; Recognitions</a></li>
+          <li><a href="<?php echo href("nirf.php"); ?>">NIRF Rankings</a></li>
+          <li><a href="<?php echo href("auditreport.php"); ?>">Audit Report</a></li>
         </ul>
       </div>
 
@@ -80,26 +80,26 @@
       <div class="bu-footer-col">
         <h4 class="bu-footer-heading">RESOURCES</h4>
         <ul class="bu-footer-links">
-          <li><a href="<?php echo href("page.php","id=21"); ?>">Digital Library</a></li>
-          <li><a href="<?php echo href("page.php","id=22"); ?>">Research Centres</a></li>
-          <li><a href="<?php echo href("page.php","id=23"); ?>">Scholarships</a></li>
-          <li><a href="<?php echo href("page.php","id=24"); ?>">Downloads</a></li>
-          <li><a href="<?php echo href("page.php","id=25"); ?>">Mandatory Disclosures</a></li>
-          <li><a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank">Public Disclosure</a></li>
-          <li><a href="<?php echo href("page.php","id=26"); ?>">Anti-Ragging</a></li>
+          <li><a href="<?php echo href("research.php"); ?>">Research &amp; Innovation</a></li>
+          <li><a href="<?php echo href("scholarship.php"); ?>">Scholarships &amp; Aid</a></li>
+          <li><a href="<?php echo href("downlod1.php"); ?>">Form Downloads</a></li>
+          <li><a href="<?php echo href("BUQuestionPapers.php"); ?>">Previous Question Papers</a></li>
+          <li><a href="<?php echo href("mandatory-disclosure.php"); ?>">Mandatory Disclosures</a></li>
+          <li><a href="<?php echo href("public-md.php"); ?>">Public Disclosure</a></li>
+          <li><a href="<?php echo href("ugc-proforma.php"); ?>">UGC Proforma</a></li>
         </ul>
       </div>
 
       <!-- Column 5: Community -->
       <div class="bu-footer-col">
-        <h4 class="bu-footer-heading">COMMUNITY & SUPPORT</h4>
+        <h4 class="bu-footer-heading">COMMUNITY &amp; SUPPORT</h4>
         <ul class="bu-footer-links">
           <li><a href="<?php echo href("contact.php"); ?>">Student Services</a></li>
-          <li><a href="<?php echo href("contact.php"); ?>">Alumni Network</a></li>
-          <li><a href="<?php echo href("contact.php"); ?>">Careers</a></li>
-          <li><a href="<?php echo href("contact.php"); ?>">Recruiters</a></li>
+          <li><a href="<?php echo href("alumni.php"); ?>">Alumni Network</a></li>
+          <li><a href="<?php echo href("jobs.php"); ?>">Careers &amp; Jobs</a></li>
+          <li><a href="<?php echo href("placements.php"); ?>">Training &amp; Placements</a></li>
           <li><a href="<?php echo href("grievance.php"); ?>">Grievance Redressal</a></li>
-          <li><a href="<?php echo href("news.php"); ?>">Media & News</a></li>
+          <li><a href="<?php echo href("news.php"); ?>">Media &amp; News</a></li>
         </ul>
       </div>
 

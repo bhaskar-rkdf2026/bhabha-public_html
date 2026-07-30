@@ -17,129 +17,55 @@
       </div>
     </div>
 
-    <!-- Main Grid (6 major schools) -->
+    <!-- Main Grid (Dynamic Schools from DB) -->
     <div class="bu-faculties-grid">
-      
-      <!-- Card 1: Engineering -->
+      <?php
+      $department = $db->get('department');
+      $other_schools = [];
+      if(is_array($department) && count($department) > 0) {
+        $count = 1;
+        $images = [
+          'new-media/image/school-of-engineering.jpg',
+          'new-media/image/school-of-medical.jpg'
+        ];
+        
+        $main_schools = array_slice($department, 0, 6);
+        $other_schools = array_slice($department, 6);
+
+        foreach($main_schools as $index => $idepartment) {
+          $img_src = $images[$index % 2];
+          $num_str = str_pad($count, 2, '0', STR_PAD_LEFT);
+          $count++;
+      ?>
       <div class="bu-faculty-card">
         <div class="bu-card-img-wrapper">
-          <span class="bu-card-number">01</span>
-          <img src="<?php echo URL_IMG; ?>library.jpg" alt="School of Engineering & Technology" class="bu-card-img">
+          <span class="bu-card-number"><?php echo $num_str; ?></span>
+          <img src="<?php echo $img_src; ?>" alt="<?php echo htmlspecialchars($idepartment['title']); ?>" class="bu-card-img">
         </div>
         <div class="bu-card-body">
-          <h3 class="bu-card-title">School of Engineering & Technology</h3>
-          <p class="bu-card-desc">AI, Robotics, Mechanical, Civil & Sustainable Energy.</p>
-          <div class="bu-card-tags">
-            <span class="bu-tag">B.TECH</span>
-            <span class="bu-tag">M.TECH</span>
-            <span class="bu-tag">PH.D</span>
-          </div>
-          <a href="<?php echo href("department.php","id=1"); ?>" class="bu-card-explore">EXPLORE FACULTY &nbsp;›</a>
+          <h3 class="bu-card-title"><?php echo htmlspecialchars($idepartment['title']); ?></h3>
+          <p class="bu-card-desc"><?php echo !empty($idepartment['short_description']) ? htmlspecialchars($idepartment['short_description']) : 'Industry-aligned curriculum, research labs and expert faculty.'; ?></p>
+          <a href="<?php echo href("department.php","id=".$idepartment['id']); ?>" class="bu-card-explore">EXPLORE FACULTY &nbsp;›</a>
         </div>
       </div>
-
-      <!-- Card 2: Medical Sciences -->
-      <div class="bu-faculty-card">
-        <div class="bu-card-img-wrapper">
-          <span class="bu-card-number">02</span>
-          <img src="<?php echo URL_IMG; ?>radio.jpg" alt="School of Medical Sciences" class="bu-card-img">
-        </div>
-        <div class="bu-card-body">
-          <h3 class="bu-card-title">School of Medical Sciences</h3>
-          <p class="bu-card-desc">MBBS, clinical research and a 500-bed teaching hospital.</p>
-          <div class="bu-card-tags">
-            <span class="bu-tag">MBBS</span>
-            <span class="bu-tag">MD/MS</span>
-            <span class="bu-tag">FELLOWSHIPS</span>
-          </div>
-          <a href="<?php echo href("department.php","id=2"); ?>" class="bu-card-explore">EXPLORE FACULTY &nbsp;›</a>
-        </div>
-      </div>
-
-      <!-- Card 3: Dental Sciences -->
-      <div class="bu-faculty-card">
-        <div class="bu-card-img-wrapper">
-          <span class="bu-card-number">03</span>
-          <img src="<?php echo URL_IMG; ?>solar.jpg" alt="School of Dental Sciences" class="bu-card-img">
-        </div>
-        <div class="bu-card-body">
-          <h3 class="bu-card-title">School of Dental Sciences</h3>
-          <p class="bu-card-desc">BDS, MDS and advanced craniofacial research.</p>
-          <div class="bu-card-tags">
-            <span class="bu-tag">BDS</span>
-            <span class="bu-tag">MDS</span>
-          </div>
-          <a href="<?php echo href("department.php","id=3"); ?>" class="bu-card-explore">EXPLORE FACULTY &nbsp;›</a>
-        </div>
-      </div>
-
-      <!-- Card 4: Pharmacy -->
-      <div class="bu-faculty-card">
-        <div class="bu-card-img-wrapper">
-          <span class="bu-card-number">04</span>
-          <img src="<?php echo URL_IMG; ?>library.jpg" alt="School of Pharmacy" class="bu-card-img">
-        </div>
-        <div class="bu-card-body">
-          <h3 class="bu-card-title">School of Pharmacy</h3>
-          <p class="bu-card-desc">B.Pharm, M.Pharm, Pharm.D and drug discovery labs.</p>
-          <div class="bu-card-tags">
-            <span class="bu-tag">B.PHARM</span>
-            <span class="bu-tag">M.PHARM</span>
-            <span class="bu-tag">PHARM.D</span>
-          </div>
-          <a href="<?php echo href("department.php","id=4"); ?>" class="bu-card-explore">EXPLORE FACULTY &nbsp;›</a>
-        </div>
-      </div>
-
-      <!-- Card 5: Nursing -->
-      <div class="bu-faculty-card">
-        <div class="bu-card-img-wrapper">
-          <span class="bu-card-number">05</span>
-          <img src="<?php echo URL_IMG; ?>radio.jpg" alt="School of Nursing" class="bu-card-img">
-        </div>
-        <div class="bu-card-body">
-          <h3 class="bu-card-title">School of Nursing</h3>
-          <p class="bu-card-desc">GNM, B.Sc. Nursing and postgraduate specialisations.</p>
-          <div class="bu-card-tags">
-            <span class="bu-tag">GNM</span>
-            <span class="bu-tag">B.SC</span>
-            <span class="bu-tag">M.SC</span>
-          </div>
-          <a href="<?php echo href("department.php","id=5"); ?>" class="bu-card-explore">EXPLORE FACULTY &nbsp;›</a>
-        </div>
-      </div>
-
-      <!-- Card 6: Paramedical Sciences -->
-      <div class="bu-faculty-card">
-        <div class="bu-card-img-wrapper">
-          <span class="bu-card-number">06</span>
-          <img src="<?php echo URL_IMG; ?>solar.jpg" alt="School of Paramedical Sciences" class="bu-card-img">
-        </div>
-        <div class="bu-card-body">
-          <h3 class="bu-card-title">School of Paramedical Sciences</h3>
-          <p class="bu-card-desc">Allied health diplomas and BMLT programs.</p>
-          <div class="bu-card-tags">
-            <span class="bu-tag">DIPLOMA</span>
-            <span class="bu-tag">B.SC MLT</span>
-          </div>
-          <a href="<?php echo href("department.php","id=6"); ?>" class="bu-card-explore">EXPLORE FACULTY &nbsp;›</a>
-        </div>
-      </div>
-
+      <?php 
+        }
+      } else {
+        echo '<p>No schools found.</p>';
+      }
+      ?>
     </div>
 
-    <!-- Bottom Buttons (Remaining Schools) -->
+    <?php if(!empty($other_schools) && count($other_schools) > 0) { ?>
+    <!-- Bottom Buttons (Remaining Schools from DB) -->
     <div class="bu-faculties-footer-links">
-      <a href="<?php echo href("department.php","id=7"); ?>" class="bu-footer-tag">Agriculture</a>
-      <a href="<?php echo href("department.php","id=8"); ?>" class="bu-footer-tag">Management & Commerce</a>
-      <a href="<?php echo href("department.php","id=9"); ?>" class="bu-footer-tag">Computer Applications</a>
-      <a href="<?php echo href("department.php","id=10"); ?>" class="bu-footer-tag">Law</a>
-      <a href="<?php echo href("department.php","id=11"); ?>" class="bu-footer-tag">Education</a>
-      <a href="<?php echo href("department.php","id=12"); ?>" class="bu-footer-tag">Science</a>
-      <a href="<?php echo href("department.php","id=13"); ?>" class="bu-footer-tag">Arts & Humanities</a>
-      <a href="<?php echo href("department.php","id=14"); ?>" class="bu-footer-tag">Hotel Management</a>
-      <a href="<?php echo href("department.php","id=15"); ?>" class="bu-footer-tag">Allied Health Sciences</a>
+      <?php
+      foreach($other_schools as $idepartment) {
+        echo '<a href="'.href("department.php","id=".$idepartment['id']).'" class="bu-footer-tag">'.htmlspecialchars($idepartment['title']).'</a>';
+      }
+      ?>
     </div>
+    <?php } ?>
 
   </div>
 </section>
