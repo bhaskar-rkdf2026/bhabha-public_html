@@ -1,4 +1,4 @@
-<?php
+online-admission.php<?php
 // Bhabha University – Redesigned Schools & Faculties Section
 ?>
 <section class="bu-faculties-section">
@@ -228,26 +228,30 @@
 
 /* Footer Tag Links Grid */
 .bu-faculties-footer-links {
-  display: grid !important;
-  grid-template-columns: repeat(9, 1fr) !important;
-  gap: 12px !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  width: 100% !important;
   border-top: 1px solid #EAEAEA !important;
   padding-top: 40px !important;
 }
 .bu-footer-tag {
+  flex: 1 1 0px !important;
+  min-width: 0 !important;
   background-color: #F3EFE7 !important;
   color: #061D7C !important;
-  font-size: 11px !important;
+  font-size: 10.5px !important;
   font-weight: 700 !important;
   text-align: center !important;
-  padding: 18px 10px !important;
+  padding: 14px 4px !important;
   border-radius: 3px !important;
   text-decoration: none !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   transition: all 0.25s ease !important;
-  line-height: 1.3 !important;
+  line-height: 1.25 !important;
 }
 .bu-footer-tag:hover {
   background-color: #061D7C !important;
@@ -257,9 +261,11 @@
 }
 
 /* ---- RESPONSIVE ---- */
-@media (max-width: 1100px) {
+@media (max-width: 1024px) {
   .bu-faculties-footer-links {
+    display: grid !important;
     grid-template-columns: repeat(5, 1fr) !important;
+    gap: 10px !important;
   }
 }
 @media (max-width: 991px) {
@@ -271,6 +277,7 @@
     height: 280px !important;
   }
   .bu-faculties-footer-links {
+    display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
   }
   .bu-faculties-section {
@@ -288,6 +295,7 @@
     gap: 30px !important;
   }
   .bu-faculties-footer-links {
+    display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 8px !important;
   }

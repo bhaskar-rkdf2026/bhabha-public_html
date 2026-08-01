@@ -40,13 +40,13 @@
           </div>
         </div>
 
-        <!-- Social Badges (F I L T Y) -->
+        <!-- Social Badges -->
         <div class="bu-footer-socials">
-          <a href="https://www.facebook.com/BhabhaUniversityIndia/" target="_blank" class="bu-social-badge" title="Facebook">F</a>
-          <a href="https://www.instagram.com/bhabhauniversitybhopal/" target="_blank" class="bu-social-badge" title="Instagram">I</a>
-          <a href="https://in.linkedin.com/company/bhabha-university" target="_blank" class="bu-social-badge" title="LinkedIn">L</a>
-          <a href="https://twitter.com/bhabhaUniversty" target="_blank" class="bu-social-badge" title="Twitter">T</a>
-          <a href="https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g" target="_blank" class="bu-social-badge" title="YouTube">Y</a>
+          <a href="https://www.facebook.com/BhabhaUniversityIndia/" target="_blank" class="bu-social-badge" title="Facebook"><i class="fa fa-facebook"></i></a>
+          <a href="https://www.instagram.com/bhabhauniversitybhopal/" target="_blank" class="bu-social-badge" title="Instagram"><i class="fa fa-instagram"></i></a>
+          <a href="https://in.linkedin.com/company/bhabha-university" target="_blank" class="bu-social-badge" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+          <a href="https://twitter.com/bhabhaUniversty" target="_blank" class="bu-social-badge" title="Twitter"><i class="fa fa-twitter"></i></a>
+          <a href="https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g" target="_blank" class="bu-social-badge" title="YouTube"><i class="fa fa-youtube-play"></i></a>
         </div>
       </div>
 

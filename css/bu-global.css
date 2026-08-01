@@ -601,19 +601,44 @@ footer .row:last-child {
 /* ================================================================
    15. DYNAMIC CMS PAGE CONTENT STYLING
    ================================================================ */
+.bu-content-body {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  color: var(--text-dark) !important;
+  line-height: 1.75 !important;
+  overflow-wrap: break-word !important;
+}
+
+.bu-content-body::after,
+.bu-content-body p::after,
+.bu-content-body div::after,
+.bu-content-body section::after {
+  content: "" !important;
+  display: table !important;
+  clear: both !important;
+}
+
 .bu-content-body h1,
 .bu-content-body h2,
-.bu-content-body h3 {
+.bu-content-body h3,
+.bu-content-body h4,
+.bu-content-body h5,
+.bu-content-body h6 {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   color: var(--navy) !important;
-  margin: 18px 0 10px 0 !important;
+  margin: 24px 0 12px 0 !important;
   font-weight: 700 !important;
-  line-height: 1.5 !important;
+  line-height: 1.4 !important;
+  clear: both !important;
 }
 
 .bu-content-body h1 { font-size: 22px !important; }
 .bu-content-body h2 { font-size: 20px !important; }
 .bu-content-body h3 { font-size: 18px !important; }
+.bu-content-body h4 {
+  font-size: 16px !important;
+  padding-left: 12px !important;
+  border-left: 3px solid var(--gold) !important;
+}
 
 /* When Headings wrap Links (e.g. video resource links, announcements) */
 .bu-content-body h1:has(a),
@@ -666,7 +691,7 @@ footer .row:last-child {
 
 .bu-content-body p {
   font-size: 15px !important;
-  line-height: 1.75 !important;
+  line-height: 1.8 !important;
   color: var(--text-mid) !important;
   margin-bottom: 14px !important;
 }
@@ -675,5 +700,154 @@ footer .row:last-child {
 .bu-content-body h1:empty,
 .bu-content-body h2:empty {
   display: none !important;
+}
+
+.bu-content-body strong,
+.bu-content-body b {
+  color: var(--navy) !important;
+  font-weight: 700 !important;
+}
+
+/* CMS Images Styling & Float Enhancements */
+.bu-content-body img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(6, 29, 124, 0.08) !important;
+  margin: 12px 0 !important;
+  display: inline-block !important;
+}
+
+.bu-content-body img[style*="float: left"],
+.bu-content-body img[style*="float:left"],
+.bu-content-body img[align="left"],
+.bu-content-body .pull-left img,
+.bu-content-body img.alignleft {
+  float: left !important;
+  margin: 6px 24px 20px 0 !important;
+}
+
+.bu-content-body img[style*="float: right"],
+.bu-content-body img[style*="float:right"],
+.bu-content-body img[align="right"],
+.bu-content-body .pull-right img,
+.bu-content-body img.alignright {
+  float: right !important;
+  margin: 6px 0 20px 24px !important;
+}
+
+@media (max-width: 767px) {
+  .bu-content-body img[style*="float: left"],
+  .bu-content-body img[style*="float:left"],
+  .bu-content-body img[style*="float: right"],
+  .bu-content-body img[style*="float:right"],
+  .bu-content-body img[align="left"],
+  .bu-content-body img[align="right"] {
+    float: none !important;
+    display: block !important;
+    margin: 16px auto !important;
+  }
+}
+
+/* CMS Unordered & Ordered Lists Styling */
+.bu-content-body ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 0 20px 0 !important;
+}
+.bu-content-body ul li {
+  position: relative !important;
+  padding-left: 24px !important;
+  font-size: 14.5px !important;
+  line-height: 1.75 !important;
+  color: var(--text-mid) !important;
+  margin-bottom: 10px !important;
+  display: block !important;
+}
+.bu-content-body ul li::before {
+  content: '\f00c' !important;
+  font-family: 'FontAwesome' !important;
+  color: var(--gold-dk) !important;
+  font-size: 11px !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 4px !important;
+}
+
+.bu-content-body ol {
+  margin: 0 0 20px 24px !important;
+  padding: 0 !important;
+  font-size: 14.5px !important;
+  line-height: 1.75 !important;
+  color: var(--text-mid) !important;
+}
+.bu-content-body ol li {
+  margin-bottom: 8px !important;
+}
+
+/* CMS Dynamic Tables Styling */
+.bu-content-body table {
+  width: 100% !important;
+  max-width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 20px 0 !important;
+  font-size: 14px !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 16px rgba(6,29,124,0.06) !important;
+}
+
+/* Default body cells */
+.bu-content-body table td {
+  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* Override all CMS inline colors in table cells (except links) */
+.bu-content-body table td,
+.bu-content-body table td *:not(a):not(a *) {
+  color: var(--text-mid) !important;
+}
+
+/* Links inside regular table cells */
+.bu-content-body table td a,
+.bu-content-body table td a * {
+  color: var(--navy) !important;
+  font-weight: 600 !important;
+}
+
+/* Header row (th and first tr) */
+.bu-content-body table th,
+.bu-content-body table tr:first-child td {
+  background: var(--navy) !important;
+  padding: 14px 16px !important;
+  text-align: left !important;
+  border-bottom: none !important;
+}
+
+/* Header text must be white */
+.bu-content-body table th,
+.bu-content-body table tr:first-child td,
+.bu-content-body table th *:not(a):not(a *),
+.bu-content-body table tr:first-child td *:not(a):not(a *) {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* Header links must be gold */
+.bu-content-body table th a,
+.bu-content-body table tr:first-child td a,
+.bu-content-body table th a *,
+.bu-content-body table tr:first-child td a * {
+  color: var(--gold) !important;
+}
+
+/* Alternating rows */
+.bu-content-body table tr:nth-child(even) {
+  background: var(--off-white) !important;
+}
+.bu-content-body table tr:hover {
+  background: var(--light-gray) !important;
 }
 

@@ -222,7 +222,7 @@ $breadcrumbs   = $breadcrumbs   ?? [['label' => 'Home', 'url' => URL_ROOT], ['la
   margin-bottom: 16px;
 }
 .bu-content-body p:last-child { margin-bottom: 0; }
-.bu-content-body strong { color: #061D7C; font-weight: 700; }
+.bu-content-body strong, .bu-content-body b { color: #061D7C; font-weight: 700; }
 .bu-content-body h4 {
   font-size: 18px;
   font-weight: 700;
@@ -231,6 +231,7 @@ $breadcrumbs   = $breadcrumbs   ?? [['label' => 'Home', 'url' => URL_ROOT], ['la
   font-family: 'Plus Jakarta Sans', sans-serif;
   padding-left: 14px;
   border-left: 3px solid #FFC107;
+  clear: both;
 }
 .bu-content-body ul {
   list-style: none;
@@ -238,14 +239,15 @@ $breadcrumbs   = $breadcrumbs   ?? [['label' => 'Home', 'url' => URL_ROOT], ['la
   margin: 0 0 16px 0;
 }
 .bu-content-body ul li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  position: relative;
+  padding-left: 24px;
   font-size: 14.5px;
   line-height: 1.7;
   color: #4B5563;
-  padding: 8px 0;
+  padding-top: 4px;
+  padding-bottom: 8px;
   border-bottom: 1px solid #F3F4F6;
+  display: block;
 }
 .bu-content-body ul li:last-child { border-bottom: none; }
 .bu-content-body ul li::before {
@@ -253,8 +255,9 @@ $breadcrumbs   = $breadcrumbs   ?? [['label' => 'Home', 'url' => URL_ROOT], ['la
   font-family: 'FontAwesome';
   color: #D99B00;
   font-size: 11px;
-  flex-shrink: 0;
-  margin-top: 4px;
+  position: absolute;
+  left: 0;
+  top: 7px;
 }
 .bu-content-body a {
   color: #0A1B54;
