@@ -47,8 +47,8 @@
           foreach($docs as $doc): ?>
           <a href="<?php echo $doc['url'];?>" target="_blank" 
              style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:8px;border-left:3px solid #FFC107;text-decoration:none;transition:all 0.25s;"
-             onmouseover="this.style.background='#0A1B54';"
-             onmouseout="this.style.background='#F8FAFC';">
+             onmouseover="this.style.background='#0A1B54'; this.style.color='#ffffff';"
+             onmouseout="this.style.background='#F8FAFC'; this.style.color='';">
             <div style="width:44px;height:44px;background:rgba(217,155,0,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
               <i class="fa fa-file-pdf-o" style="font-size:20px;color:#D99B00;"></i>
             </div>

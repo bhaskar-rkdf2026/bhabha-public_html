@@ -205,16 +205,23 @@ if(!$pageData) {
   include('inc.page-banner.php');
   ?>
 
-  <div class="bu-full-width-container">
-    <main>
+  <div class="bu-inner-layout">
+    <?php 
+      // If it's the University Overview page (id 20), highlight it in the sidebar
+      $active_page = ($id == 20) ? 'overview' : ''; 
+      include('inc.about-sidebar.php'); 
+    ?>
 
-      <div class="bu-content-card">
+    <main class="bu-inner-content">
+
+      <div class="bu-content-card" style="overflow: hidden;">
         <span class="bu-content-label">Bhabha University</span>
         <h2 class="bu-content-h2"><?php echo htmlspecialchars($pageData['heading']);?></h2>
         <div class="bu-content-divider"></div>
 
         <div class="bu-content-body">
           <?php echo $pageData['data'];?>
+          <div style="clear:both;"></div>
         </div>
       </div>
 

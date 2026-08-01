@@ -1,4 +1,4 @@
-online-admission.php<?php
+awards.phponline-admission.php<?php
 // Bhabha University – Redesigned Schools & Faculties Section
 ?>
 <section class="bu-faculties-section">

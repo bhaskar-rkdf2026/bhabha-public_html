@@ -70,8 +70,8 @@
           <a target="_blank" 
              href="<?php echo URL_UPLOAD;?>approvals/<?php echo $iapprovals['image']?>"
              style="display:flex;align-items:center;gap:14px;padding:16px 20px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:7px;border-left:3px solid #FFC107;text-decoration:none;transition:all 0.25s;"
-             onmouseover="this.style.background='#0A1B54';"
-             onmouseout="this.style.background='#F8FAFC';">
+             onmouseover="this.style.background='#0A1B54'; this.style.color='#ffffff';"
+             onmouseout="this.style.background='#F8FAFC'; this.style.color='';">
             <i class="fa fa-file-pdf-o" style="font-size:22px;color:#D99B00;flex-shrink:0;"></i>
             <div style="flex:1;">
               <span style="font-size:14px;font-weight:600;color:inherit;display:block;line-height:1.4;"><?php echo $iapprovals['title']?></span>

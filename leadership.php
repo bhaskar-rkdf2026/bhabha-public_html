@@ -42,10 +42,15 @@
         ?>
         <div style="display:flex; gap:28px; align-items:flex-start; padding:28px 0; border-bottom:1px solid #F3F4F6; flex-wrap:wrap;">
           <?php if($ileadership['image'] != ''): ?>
-          <div style="flex-shrink:0;">
+          <div style="flex-shrink:0;width:140px;height:160px;background:linear-gradient(135deg,#0A1B54,#061D7C);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 24px rgba(6,29,124,0.15);">
             <img src="<?php echo URL_UPLOAD;?>leadership/<?php echo $ileadership['image']?>" 
                  alt="<?php echo $ileadership['name']?>"
-                 style="width:140px; height:160px; object-fit:cover; border-radius:8px; box-shadow:0 8px 24px rgba(6,29,124,0.15);">
+                 onerror="this.outerHTML='<i class=\'fa fa-user\' style=\'font-size:56px;color:rgba(255,193,7,0.7);\'></i>'"
+                 style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <?php else: ?>
+          <div style="flex-shrink:0;width:140px;height:160px;background:linear-gradient(135deg,#0A1B54,#061D7C);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 24px rgba(6,29,124,0.15);">
+            <i class="fa fa-user" style="font-size:56px;color:rgba(255,193,7,0.7);"></i>
           </div>
           <?php endif; ?>
           <div style="flex:1; min-width:200px;">
