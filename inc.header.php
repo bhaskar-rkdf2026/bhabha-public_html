@@ -227,19 +227,6 @@
 
 <!-- Header Scripts -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Search Overlay Toggle
-  const searchOpen = document.getElementById('buSearchOpen');
-  const searchClose = document.getElementById('buSearchClose');
-  const searchOverlay = document.getElementById('buSearchOverlay');
-
-  if(searchOpen && searchOverlay) {
-    searchOpen.addEventListener('click', function() {
-      searchOverlay.classList.add('active');
-    });
-  }
-
-<script>
 (function() {
   document.addEventListener('DOMContentLoaded', function () {
 

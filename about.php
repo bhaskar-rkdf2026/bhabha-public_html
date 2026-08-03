@@ -829,10 +829,10 @@
       <div class="bu-overview-grid">
         <!-- Image Side -->
         <div class="bu-overview-img-wrap">
-          <img src="images/banner4.jpg" 
+          <img src="<?php echo URL_ROOT;?>images/banner4.jpg" 
                alt="Bhabha University Campus, Bhopal" 
                class="bu-overview-img"
-               onerror="this.src='extra-images/abt-thumb.jpg';">
+               onerror="this.src='<?php echo URL_ROOT;?>extra-images/abt-thumb.jpg';">
           <div class="bu-overview-badge">
             <span class="bu-overview-badge-num">2004</span>
             <span class="bu-overview-badge-lbl">Established</span>
@@ -910,7 +910,7 @@
       <div class="bu-vm-grid">
         <div class="bu-vm-card">
           <div class="bu-vm-card-img-wrap">
-            <img src="extra-images/intro-1.jpg" alt="Our Vision" class="bu-vm-card-img">
+            <img src="<?php echo URL_ROOT;?>extra-images/intro-1.jpg" alt="Our Vision" class="bu-vm-card-img">
           </div>
           <div class="bu-vm-card-body">
             <div class="bu-vm-icon"><i class="fa fa-eye"></i></div>
@@ -924,7 +924,7 @@
         </div>
         <div class="bu-vm-card">
           <div class="bu-vm-card-img-wrap">
-            <img src="extra-images/intro-2.jpg" alt="Our Mission" class="bu-vm-card-img">
+            <img src="<?php echo URL_ROOT;?>extra-images/intro-2.jpg" alt="Our Mission" class="bu-vm-card-img">
           </div>
           <div class="bu-vm-card-body">
             <div class="bu-vm-icon"><i class="fa fa-rocket"></i></div>
@@ -1017,7 +1017,7 @@
       <div class="bu-campus-grid">
         <div class="bu-campus-card">
           <div class="bu-campus-img-wrap">
-            <img src="images/library.jpg" alt="Central Library" class="bu-campus-img">
+            <img src="<?php echo URL_ROOT;?>images/library.jpg" alt="Central Library" class="bu-campus-img">
           </div>
           <div class="bu-campus-info">
             <h4>Central Library</h4>
@@ -1026,7 +1026,7 @@
         </div>
         <div class="bu-campus-card">
           <div class="bu-campus-img-wrap">
-            <img src="images/solar.jpg" alt="Solar & Research Labs" class="bu-campus-img">
+            <img src="<?php echo URL_ROOT;?>images/solar.jpg" alt="Solar & Research Labs" class="bu-campus-img">
           </div>
           <div class="bu-campus-info">
             <h4>Solar &amp; Green Energy</h4>
@@ -1035,7 +1035,7 @@
         </div>
         <div class="bu-campus-card">
           <div class="bu-campus-img-wrap">
-            <img src="images/radio.jpg" alt="Radio Bhabha FM Studio" class="bu-campus-img">
+            <img src="<?php echo URL_ROOT;?>images/radio.jpg" alt="Radio Bhabha FM Studio" class="bu-campus-img">
           </div>
           <div class="bu-campus-info">
             <h4>Radio Bhabha 90.4 FM</h4>
@@ -1044,7 +1044,7 @@
         </div>
         <div class="bu-campus-card">
           <div class="bu-campus-img-wrap">
-            <img src="images/skill_lab.jpg" alt="Modern Skill & Practical Labs" class="bu-campus-img" onerror="this.src='extra-images/col-3-thum5.jpg';">
+            <img src="<?php echo URL_ROOT;?>images/skill_lab.jpg" alt="Modern Skill & Practical Labs" class="bu-campus-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/col-3-thum5.jpg';">
           </div>
           <div class="bu-campus-info">
             <h4>Modern Skill Labs</h4>
@@ -1066,7 +1066,7 @@
 
         <a href="<?php echo href('page.php','id=20');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/1.jpg" alt="University Overview" class="bu-subpage-img" onerror="this.src='extra-images/intro-1.jpg';">
+            <img src="<?php echo URL_ROOT;?>extra-images/1.jpg" alt="University Overview" class="bu-subpage-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/intro-1.jpg';">
             <div class="bu-subpage-icon-badge"><i class="fa fa-university"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1080,7 +1080,7 @@
 
         <a href="<?php echo href('mission-vision.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/intro-1.jpg" alt="Vision & Mission" class="bu-subpage-img" onerror="this.src='extra-images/2.jpg';">
+            <img src="<?php echo URL_ROOT;?>extra-images/intro-1.jpg" alt="Vision & Mission" class="bu-subpage-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/2.jpg';">
             <div class="bu-subpage-icon-badge"><i class="fa fa-eye"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1094,7 +1094,7 @@
 
         <a href="<?php echo href('infrastructure.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="images/library.jpg" alt="Campus & Infrastructure" class="bu-subpage-img" onerror="this.src='extra-images/4.jpg';">
+            <img src="<?php echo URL_ROOT;?>images/library.jpg" alt="Campus & Infrastructure" class="bu-subpage-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/4.jpg';">
             <div class="bu-subpage-icon-badge"><i class="fa fa-building"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1108,7 +1108,7 @@
 
         <a href="<?php echo href('page.php','id=18');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/student-3.jpg" alt="Core Values" class="bu-subpage-img" onerror="this.src='extra-images/student.jpg';">
+            <img src="<?php echo URL_ROOT;?>extra-images/student-3.jpg" alt="Core Values" class="bu-subpage-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/student.jpg';">
             <div class="bu-subpage-icon-badge"><i class="fa fa-heart"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1122,7 +1122,7 @@
 
         <a href="<?php echo href('leadership.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/5.jpg" alt="Administration & Leadership" class="bu-subpage-img" onerror="this.src='extra-images/intro-2.jpg';">
+            <img src="<?php echo URL_ROOT;?>extra-images/5.jpg" alt="Administration & Leadership" class="bu-subpage-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/intro-2.jpg';">
             <div class="bu-subpage-icon-badge"><i class="fa fa-users"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1136,7 +1136,7 @@
 
         <a href="<?php echo href('page.php','id=19');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/home-gallery1.jpg" alt="Why Choose Bhabha" class="bu-subpage-img" onerror="this.src='extra-images/6.jpg';">
+            <img src="<?php echo URL_ROOT;?>extra-images/home-gallery1.jpg" alt="Why Choose Bhabha" class="bu-subpage-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/6.jpg';">
             <div class="bu-subpage-icon-badge"><i class="fa fa-star"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1150,7 +1150,7 @@
 
         <a href="<?php echo href('awards.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/7.jpg" alt="Awards & Achievements" class="bu-subpage-img" onerror="this.src='extra-images/8.jpg';">
+            <img src="<?php echo URL_ROOT;?>extra-images/7.jpg" alt="Awards & Achievements" class="bu-subpage-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/8.jpg';">
             <div class="bu-subpage-icon-badge"><i class="fa fa-trophy"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1164,7 +1164,7 @@
 
         <a href="<?php echo href('advisory.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/8.jpg" alt="Cells & Committees" class="bu-subpage-img" onerror="this.src='extra-images/intro-3.jpg';">
+            <img src="<?php echo URL_ROOT;?>extra-images/8.jpg" alt="Cells & Committees" class="bu-subpage-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/intro-3.jpg';">
             <div class="bu-subpage-icon-badge"><i class="fa fa-sitemap"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1178,7 +1178,7 @@
 
         <a href="<?php echo href('approvals.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="extra-images/9.jpg" alt="Approvals & Recognitions" class="bu-subpage-img" onerror="this.src='extra-images/home-gallery3.jpg';">
+            <img src="<?php echo URL_ROOT;?>extra-images/9.jpg" alt="Approvals & Recognitions" class="bu-subpage-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/home-gallery3.jpg';">
             <div class="bu-subpage-icon-badge"><i class="fa fa-certificate"></i></div>
           </div>
           <div class="bu-subpage-body">

@@ -5,9 +5,9 @@
 <section class="bu-hero-fw" id="buHeroSection">
 
   <!-- Background Video (Infinite Autoplay Loop) -->
-  <video class="bu-hero-video" id="buHeroVideo" autoplay loop muted playsinline preload="auto" poster="new-media/image/campus-aerial.png">
-    <source src="new-media/image/hero/drone-campus.mp4" type="video/mp4">
-    <source src="new-media/hero/drone-campus.mp4" type="video/mp4">
+  <video class="bu-hero-video" id="buHeroVideo" autoplay loop muted playsinline preload="auto" poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
+    <source src="<?php echo URL_ROOT;?>new-media/image/hero/drone-campus.mp4" type="video/mp4">
+    <source src="<?php echo URL_ROOT;?>new-media/hero/drone-campus.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 

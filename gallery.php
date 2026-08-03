@@ -57,13 +57,13 @@ $breadcrumbs   = [
             $deptVal = isset($item['department']) ? trim($item['department']) : '';
             
             // Image fallback path check
-            $thumbUrl = !empty($item['image']) ? URL_UPLOAD.'gallery/thumb/'.$item['image'] : 'new-media/image/school-of-engineering.jpg';
+            $thumbUrl = !empty($item['image']) ? URL_UPLOAD.'gallery/thumb/'.$item['image'] : URL_ROOT.'new-media/image/school-of-engineering.jpg';
             $largeUrl = !empty($item['image']) ? URL_UPLOAD.'gallery/large/'.$item['image'] : $thumbUrl;
             $title = !empty($item['title']) ? htmlspecialchars($item['title']) : 'Campus Life Gallery';
         ?>
         <div class="bu-gallery-card dept-<?php echo $deptVal; ?>" data-dept="<?php echo htmlspecialchars($deptVal); ?>">
           <div class="bu-gallery-card-inner">
-            <img src="<?php echo $thumbUrl; ?>" alt="<?php echo $title; ?>" class="bu-gallery-img" loading="lazy" onerror="this.src='new-media/image/school-of-engineering.jpg';">
+            <img src="<?php echo $thumbUrl; ?>" alt="<?php echo $title; ?>" class="bu-gallery-img" loading="lazy" onerror="this.src='<?php echo URL_ROOT;?>new-media/image/school-of-engineering.jpg';">
             <div class="bu-gallery-overlay">
               <div class="bu-gallery-info">
                 <h4 class="bu-gallery-title"><?php echo $title; ?></h4>

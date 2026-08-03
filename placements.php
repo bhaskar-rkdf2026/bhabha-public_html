@@ -254,7 +254,7 @@
         <div class="bu-tnp-head-card">
           <img src="https://www.bhabhauniversity.edu.in/upload/media/8cc8f94e9069b6237ce5bff460e08994.jpg" 
                alt="Mr. Jitendra Karosia" class="bu-tnp-head-img"
-               onerror="this.src='extra-images/about-img.jpg';">
+               onerror="this.src='<?php echo URL_ROOT;?>extra-images/about-img.jpg';">
           <div class="bu-tnp-head-info">
             <h3>Mr. Jitendra Karosia</h3>
             <span class="bu-tnp-head-role">Group Head – Training &amp; Placement Department | 17+ Years Experience</span>
@@ -315,7 +315,7 @@
           <div class="bu-placed-card">
             <div class="bu-placed-img-wrap">
               <?php if(!empty($student['img'])): ?>
-                <img src="<?php echo $student['img'];?>" alt="<?php echo $student['name'];?>" class="bu-placed-img" onerror="this.src='extra-images/home-gallery1.jpg';">
+                <img src="<?php echo $student['img'];?>" alt="<?php echo $student['name'];?>" class="bu-placed-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/home-gallery1.jpg';">
               <?php else: ?>
                 <div style="display:flex;align-items:center;justify-content:center;height:100%;"><i class="fa fa-user" style="font-size:50px;color:rgba(10,27,84,0.3);"></i></div>
               <?php endif; ?>
@@ -347,7 +347,7 @@
             <img src="<?php echo URL_UPLOAD;?>recruiters/<?php echo $irecruiters['image'];?>" 
                  alt="<?php echo $irecruiters['name'];?>"
                  title="<?php echo $irecruiters['name'];?>"
-                 onerror="this.src='extra-images/partner1.png';">
+                 onerror="this.src='<?php echo URL_ROOT;?>extra-images/partner1.png';">
           </div>
           <?php endforeach; ?>
         </div>

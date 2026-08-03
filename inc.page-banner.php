@@ -275,6 +275,20 @@ $breadcrumbs   = $breadcrumbs   ?? [['label' => 'Home', 'url' => URL_ROOT], ['la
   .bu-content-card { padding: 28px 20px; }
   .bu-sidebar-nav { position: static; }
 }
+@media (max-width: 575px) {
+  .bu-inner-layout { padding: 24px 12px 48px; }
+  .bu-content-card { padding: 20px 14px; }
+  .bu-inner-hero { padding: 36px 14px 28px; }
+  .bu-inner-hero-title { font-size: clamp(20px, 6vw, 32px); }
+  .bu-inner-hero-subtitle { font-size: 13px; }
+}
+@media (max-width: 380px) {
+  .bu-inner-layout { padding: 18px 10px 36px; }
+  .bu-content-card { padding: 16px 12px; }
+  .bu-inner-hero { padding: 28px 12px 22px; }
+  .bu-inner-hero-title { font-size: 20px; }
+  .bu-inner-hero-icon-wrap { width: 48px; height: 48px; font-size: 19px; }
+}
 </style>
 
 <div class="bu-inner-hero">

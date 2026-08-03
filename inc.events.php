@@ -241,33 +241,48 @@
 
 /* ---- RESPONSIVE ---- */
 @media (max-width: 991px) {
+  .bu-events-section { padding: 60px 16px !important; }
   .bu-event-row {
-    grid-template-columns: 120px 120px 1fr 30px !important;
-    padding: 24px 0 !important;
+    grid-template-columns: 110px 110px 1fr 28px !important;
+    padding: 22px 0 !important;
   }
-  .bu-event-title {
-    font-size: 18px !important;
-  }
+  .bu-event-title { font-size: 18px !important; }
+  .bu-events-header { margin-bottom: 32px !important; }
 }
-@media (max-width: 768px) {
-  .bu-event-row {
-    grid-template-columns: 100px 1fr 20px !important;
+@media (max-width: 767px) {
+  .bu-events-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
     gap: 10px !important;
+    margin-bottom: 20px !important;
+  }
+  .bu-event-row {
+    grid-template-columns: 1fr 24px !important;
+    grid-template-rows: auto auto auto !important;
+    gap: 4px 8px !important;
+    padding: 18px 0 !important;
+  }
+  .bu-event-date {
+    grid-column: 1 !important; grid-row: 1 !important;
+    font-size: 12px !important;
   }
   .bu-event-category {
-    grid-column: 2 !important;
-    grid-row: 1 !important;
+    grid-column: 1 !important; grid-row: 2 !important;
   }
   .bu-event-title {
-    grid-column: 2 !important;
-    grid-row: 2 !important;
-    font-size: 16px !important;
-    padding-right: 0 !important;
+    grid-column: 1 !important; grid-row: 3 !important;
+    font-size: 16px !important; padding-right: 0 !important; margin-top: 4px !important;
   }
   .bu-event-arrow {
-    grid-column: 3 !important;
-    grid-row: 1 / span 2 !important;
+    grid-column: 2 !important; grid-row: 1 / span 3 !important; align-self: center !important;
   }
+  .bu-event-row:hover { padding-left: 10px !important; }
+}
+@media (max-width: 480px) {
+  .bu-events-section { padding: 44px 12px !important; }
+  .bu-event-title { font-size: 15px !important; }
+  .bu-event-date { font-size: 11px !important; }
+  .bu-event-row { padding: 14px 0 !important; }
 }
 </style>
 

@@ -137,7 +137,7 @@
 			 }
 			 $.ajax({
 				type:"post",
-				url:"getBranch.php",
+				url:"<?php echo URL_ROOT;?>getBranch.php",
 				data:"course="+course,
 				success:function(data){
 					  $("#branch").html(data);
@@ -154,7 +154,7 @@
 			 }
 			 $.ajax({
 				type:"post",
-				url:"getYear.php",
+				url:"<?php echo URL_ROOT;?>getYear.php",
 				data:"branch="+branch,
 				success:function(data){
 					  $("#year").html(data);

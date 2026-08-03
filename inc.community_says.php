@@ -9,7 +9,7 @@ if (isset($db) && is_object($db)) {
     if (is_array($db_testimonials) && count($db_testimonials) > 0) {
         foreach ($db_testimonials as $t) {
             $imgName = !empty($t['image']) ? trim($t['image']) : '';
-            $imgSrc = !empty($imgName) ? (defined('URL_UPLOAD') ? URL_UPLOAD . 'testimonial/' . $imgName : 'upload/testimonial/' . $imgName) : 'extra-images/author.jpg';
+            $imgSrc = !empty($imgName) ? (defined('URL_UPLOAD') ? URL_UPLOAD . 'testimonial/' . $imgName : 'upload/testimonial/' . $imgName) : URL_ROOT . 'extra-images/author.jpg';
             $testimonials_list[] = [
                 'name' => !empty($t['name']) ? htmlspecialchars($t['name']) : '',
                 'desig' => !empty($t['designation']) ? htmlspecialchars($t['designation']) : '',
@@ -70,7 +70,7 @@ if (empty($testimonials_list)) {
               <img src="<?php echo $item['img']; ?>" 
                    alt="<?php echo $item['name']; ?>" 
                    class="bu-voices-img" 
-                   onerror="this.src='extra-images/author.jpg'">
+                   onerror="this.src='<?php echo URL_ROOT;?>extra-images/author.jpg'">
             </div>
 
             <!-- Right Column: Content & Quote -->

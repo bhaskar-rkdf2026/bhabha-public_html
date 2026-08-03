@@ -40,6 +40,7 @@ $( ".datepicker" ).datepicker({
 <!--v ticker--> 
 <script src="<?php echo URL_JS;?>jquery.vticker.min.js"></script> 
 <!--select menu--> 
+<script src="<?php echo URL_JS;?>jquery.selectric.min.js"></script> 
 <!--Side Menu--> 
 <script src="<?php echo URL_JS;?>jquery.sidr.min.js"></script> 
 <!--Custom JavaScript--> 

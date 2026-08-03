@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  <link rel="icon" href="<?php echo URL_IMG;?>favicon.png" type="image/gif" sizes="16x16"> 
 <!-- Modern Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -7,7 +8,7 @@
 <link rel="stylesheet" href="<?php echo URL_CSS;?>font-awesome.min.css">
 <link href="<?php echo URL_CSS;?>bootstrap.min.css" rel="stylesheet">
 <!-- BU Global Page Redesign CSS -->
-<link href="/bhabha-public_html/css/bu-global.css" rel="stylesheet">
+<link href="<?php echo URL_CSS;?>bu-global.css" rel="stylesheet">
 
 <style>
 /* ============================================================
@@ -478,6 +479,25 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   backdrop-filter: blur(2px) !important;
 }
 .bu-nav-backdrop.active { display: block !important; }
+
+/* ---- VERY SMALL PHONES (max-width: 480px) ---- */
+@media (max-width: 480px) {
+  .bu-brand-subtitle { display: none !important; }
+  .bu-brand-title { font-size: 15px !important; }
+  .bu-brand-logo { height: 36px !important; }
+  .bu-brand { gap: 8px !important; }
+  .bu-header-container { padding: 8px 10px !important; gap: 6px !important; }
+  .bu-header-actions { gap: 6px !important; }
+  .bu-mobile-toggle { font-size: 20px !important; padding: 4px 6px !important; }
+}
+
+/* ---- EXTRA SMALL PHONES (max-width: 360px) ---- */
+@media (max-width: 360px) {
+  .bu-brand-logo { height: 30px !important; }
+  .bu-brand-title { font-size: 13px !important; max-width: 150px !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
+  .bu-header-container { padding: 6px 8px !important; gap: 4px !important; }
+  .bu-mobile-toggle { font-size: 18px !important; padding: 4px !important; }
+}
 </style>
 
 
@@ -505,6 +525,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 	<link href="<?php echo URL_CSS;?>color.css" rel="stylesheet">
 	<!-- Responsive CSS -->
 	<link href="<?php echo URL_CSS;?>responsive.css" rel="stylesheet">
+	<!-- BU Comprehensive Responsive CSS (All Devices) -->
+	<link href="<?php echo URL_CSS;?>bu-responsive.css" rel="stylesheet">
 	<!-- SELECT MENU -->
 	<link href="<?php echo URL_CSS;?>breaking-news-ticker.css" rel="stylesheet">
 	<!-- SIDE MENU -->

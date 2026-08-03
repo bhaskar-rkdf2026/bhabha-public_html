@@ -24,13 +24,13 @@ $homeGallery = $db->get('gallery', 8);
       <?php
       if (is_array($homeGallery) && count($homeGallery) > 0) {
         foreach ($homeGallery as $gItem) {
-          $thumbImg = !empty($gItem['image']) ? URL_UPLOAD.'gallery/thumb/'.$gItem['image'] : 'new-media/image/school-of-engineering.jpg';
+          $thumbImg = !empty($gItem['image']) ? URL_UPLOAD.'gallery/thumb/'.$gItem['image'] : URL_ROOT.'new-media/image/school-of-engineering.jpg';
           $largeImg = !empty($gItem['image']) ? URL_UPLOAD.'gallery/large/'.$gItem['image'] : $thumbImg;
           $gTitle   = !empty($gItem['title']) ? htmlspecialchars($gItem['title']) : 'Campus Gallery';
       ?>
       <div class="bu-hg-card">
         <div class="bu-hg-card-inner">
-          <img src="<?php echo $thumbImg; ?>" alt="<?php echo $gTitle; ?>" class="bu-hg-img" loading="lazy" onerror="this.src='new-media/image/school-of-engineering.jpg';">
+          <img src="<?php echo $thumbImg; ?>" alt="<?php echo $gTitle; ?>" class="bu-hg-img" loading="lazy" onerror="this.src='<?php echo URL_ROOT;?>new-media/image/school-of-engineering.jpg';">
           <div class="bu-hg-overlay">
             <div class="bu-hg-info">
               <h4 class="bu-hg-item-title"><?php echo $gTitle; ?></h4>

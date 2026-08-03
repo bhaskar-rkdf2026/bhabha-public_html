@@ -35,14 +35,14 @@
     <div class="bu-infra-collage-col">
       <div class="bu-collage-wrapper">
         <div class="bu-collage-main">
-          <img src="new-media/image/campus-students.jpg" alt="Bhabha University Students" class="bu-collage-img">
+          <img src="<?php echo URL_ROOT;?>new-media/image/campus-students.jpg" alt="Bhabha University Students" class="bu-collage-img">
         </div>
         <div class="bu-collage-side">
           <div class="bu-collage-side-top">
-            <img src="new-media/image/campus-entrance.png" alt="Bhabha University Campus Entrance" class="bu-collage-img">
+            <img src="<?php echo URL_ROOT;?>new-media/image/campus-entrance.png" alt="Bhabha University Campus Entrance" class="bu-collage-img">
           </div>
           <div class="bu-collage-side-bottom">
-            <img src="new-media/image/campus-academic-block.png" alt="Bhabha University Academic Block" class="bu-collage-img">
+            <img src="<?php echo URL_ROOT;?>new-media/image/campus-academic-block.png" alt="Bhabha University Academic Block" class="bu-collage-img">
           </div>
         </div>
       </div>

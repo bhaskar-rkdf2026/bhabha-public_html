@@ -480,14 +480,14 @@ body {
         
         if (is_array($news) && count($news) > 0):
           foreach ($news as $inews):
-            $imgUrl = !empty($inews['image']) ? URL_UPLOAD . 'news/' . $inews['image'] : 'extra-images/news1.jpg';
+            $imgUrl = !empty($inews['image']) ? URL_UPLOAD . 'news/' . $inews['image'] : URL_ROOT . 'extra-images/news1.jpg';
             $thumbUrl = !empty($inews['image']) ? URL_UPLOAD . 'news/thumb/' . $inews['image'] : $imgUrl;
             $title = !empty($inews['title']) ? htmlspecialchars($inews['title']) : 'Bhabha University News Update';
         ?>
         <div class="bu-news-card bu-news-item" data-title="<?php echo htmlspecialchars(strtolower($title)); ?>">
           <!-- Framed Image Box -->
           <div class="bu-news-card-img-wrap" onclick="openNewsModal('<?php echo $imgUrl; ?>', '<?php echo addslashes($title); ?>')">
-            <img src="<?php echo $thumbUrl; ?>" alt="<?php echo $title; ?>" class="bu-news-card-img" onerror="this.src='extra-images/news1.jpg'">
+            <img src="<?php echo $thumbUrl; ?>" alt="<?php echo $title; ?>" class="bu-news-card-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/news1.jpg'">
             <div class="bu-news-card-overlay">
               <button type="button" class="bu-news-zoom-btn">
                 <i class="fa fa-search-plus"></i> View Clipping

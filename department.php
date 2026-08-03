@@ -196,7 +196,7 @@ if(!$aryData) {
             <img src="<?php echo URL_UPLOAD;?>gallery/thumb/<?php echo $igallery['image'];?>" 
                  alt="<?php echo $igallery['title'];?>" 
                  class="bu-gallery-img"
-                 onerror="this.src='extra-images/home-gallery1.jpg';">
+                 onerror="this.src='<?php echo URL_ROOT;?>extra-images/home-gallery1.jpg';">
             <div class="bu-gallery-overlay">
               <span><?php echo $igallery['title'];?></span>
             </div>

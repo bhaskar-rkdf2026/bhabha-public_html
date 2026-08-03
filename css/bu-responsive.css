@@ -1,0 +1,982 @@
+/* ================================================================
+   BHABHA UNIVERSITY — COMPREHENSIVE RESPONSIVE STYLESHEET v2.0
+   Covers: Header, Navigation, Hero, All Sections, Inner Pages,
+           Footer, Forms, Tables, Cards — All Device Sizes
+   Breakpoints:
+     XL Desktop  : > 1380px
+     Desktop     : 992px - 1380px
+     Tablet-Lg   : 768px - 991px
+     Tablet-Sm   : 576px - 767px
+     Mobile-Lg   : 480px - 575px
+     Mobile-Sm   : 320px - 479px
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   0. GLOBAL FOUNDATION — Apply to ALL screen sizes
+   ---------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html, body { max-width: 100vw; overflow-x: hidden !important; }
+img, video, iframe, embed, object { max-width: 100% !important; height: auto; }
+table { max-width: 100% !important; }
+
+/* ================================================================
+   1. HEADER — TOPBAR
+   ================================================================ */
+@media (max-width: 1280px) {
+  .bu-topbar-links li a { padding: 0 6px !important; font-size: 10px !important; }
+  .bu-topbar-container { padding: 0 16px !important; }
+}
+@media (max-width: 1100px) {
+  .bu-topbar-links li a { padding: 0 5px !important; font-size: 9.5px !important; }
+}
+@media (max-width: 991px) {
+  .bu-topbar { display: none !important; }
+  .bu-header-wrapper { position: sticky !important; top: 0 !important; z-index: 1000 !important; }
+}
+
+/* ================================================================
+   2. HEADER — MAIN BAR & LOGO
+   ================================================================ */
+@media (max-width: 1280px) {
+  .bu-header-container { padding: 10px 20px !important; }
+  .bu-brand-title { font-size: 21px !important; }
+  .bu-nav-link { font-size: 11.5px !important; padding: 14px 8px !important; }
+}
+@media (max-width: 1100px) {
+  .bu-nav-link { font-size: 11px !important; padding: 14px 6px !important; }
+  .bu-btn-navy { padding: 8px 16px !important; font-size: 11px !important; }
+}
+@media (max-width: 991px) {
+  .bu-mobile-toggle { display: flex !important; }
+  .bu-header-container { padding: 10px 16px !important; }
+  .bu-brand-title { font-size: 19px !important; }
+  .bu-brand-logo { height: 46px !important; }
+}
+@media (max-width: 767px) {
+  .bu-brand-title { font-size: 17px !important; }
+  .bu-brand-subtitle { font-size: 9px !important; letter-spacing: 1.5px !important; }
+  .bu-brand-logo { height: 42px !important; }
+  .bu-header-container { gap: 8px !important; padding: 8px 12px !important; }
+}
+@media (max-width: 480px) {
+  .bu-brand-subtitle { display: none !important; }
+  .bu-brand-title { font-size: 15px !important; }
+  .bu-brand-logo { height: 36px !important; }
+  .bu-btn-navy { display: none !important; }
+  .bu-brand { gap: 8px !important; }
+}
+@media (max-width: 360px) {
+  .bu-brand-title { font-size: 14px !important; }
+  .bu-brand-logo { height: 32px !important; }
+  .bu-mobile-toggle { font-size: 18px !important; padding: 4px 8px !important; }
+}
+
+/* ================================================================
+   3. HEADER — MOBILE NAV DRAWER
+   ================================================================ */
+@media (max-width: 991px) {
+  .bu-navbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: -310px !important;
+    width: 290px !important;
+    height: 100vh !important;
+    background: #0A1B54 !important;
+    box-shadow: 4px 0 30px rgba(0,0,0,0.35) !important;
+    transition: left 0.32s cubic-bezier(0.4,0,0.2,1) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    z-index: 9998 !important;
+    padding: 72px 0 40px !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+  }
+  .bu-navbar.mobile-open { left: 0 !important; }
+  .bu-nav-menu {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+  .bu-nav-item {
+    width: 100% !important;
+    border-bottom: 1px solid rgba(255,255,255,0.09) !important;
+  }
+  .bu-nav-link {
+    color: rgba(255,255,255,0.9) !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    padding: 14px 20px !important;
+    font-size: 13px !important;
+    white-space: normal !important;
+  }
+  .bu-nav-link::after { display: none !important; }
+  .bu-dropdown {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    background: rgba(0,0,0,0.22) !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    display: none !important;
+    width: 100% !important;
+    padding: 4px 0 !important;
+    min-width: 0 !important;
+  }
+  .bu-nav-item.open > .bu-dropdown { display: block !important; }
+  .bu-dropdown li a {
+    color: rgba(255,255,255,0.75) !important;
+    padding: 11px 20px 11px 34px !important;
+    font-size: 12.5px !important;
+    border-left: none !important;
+  }
+  .bu-dropdown li a:hover {
+    background: rgba(255,255,255,0.07) !important;
+    color: #FFC107 !important;
+    padding-left: 38px !important;
+  }
+  .bu-nav-item.open > .bu-nav-link i.fa-angle-down { transform: rotate(180deg) !important; }
+  /* Nav Backdrop */
+  .bu-nav-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.5) !important;
+    z-index: 9997 !important;
+    display: none !important;
+  }
+  .bu-nav-backdrop.active { display: block !important; }
+}
+
+/* ================================================================
+   4. NEWS TICKER
+   ================================================================ */
+@media (max-width: 767px) {
+  .bu-ticker-label { padding: 0 10px !important; font-size: 9px !important; }
+  .bu-ticker-list li a { font-size: 11.5px !important; }
+  .bu-ticker-wrapper { height: 34px !important; }
+}
+@media (max-width: 480px) {
+  .bu-ticker-label { display: none !important; }
+  .bu-ticker-content { padding: 0 10px !important; }
+}
+
+/* ================================================================
+   5. HERO / SLIDER SECTION (Full-Width Video)
+   ================================================================ */
+@media (max-width: 1200px) {
+  .bu-fwslide-content { left: 40px !important; }
+}
+@media (max-width: 991px) {
+  .bu-hero-fw { height: 60vh !important; min-height: 400px !important; }
+  .bu-fwslide-content { left: 28px !important; bottom: 50px !important; max-width: 85% !important; }
+  .bu-scroll-hint { display: none !important; }
+  .bu-stats-bar { padding: 18px 10px !important; }
+  .bu-stat-item { min-width: 95px !important; }
+  .bu-stat-number { font-size: 20px !important; }
+}
+@media (max-width: 767px) {
+  .bu-hero-fw { height: 58vh !important; min-height: 360px !important; }
+  .bu-fwslide-content { left: 20px !important; right: 20px !important; bottom: 40px !important; max-width: 100% !important; }
+  .bu-fwslide-heading { font-size: 30px !important; }
+  .bu-fwslide-sub { font-size: 13px !important; }
+  .bu-fwslide-label { font-size: 9px !important; margin-bottom: 12px !important; }
+}
+@media (max-width: 575px) {
+  .bu-hero-fw { height: 55vh !important; min-height: 320px !important; }
+  .bu-fwslide-content { left: 16px !important; right: 16px !important; bottom: 30px !important; }
+  .bu-fwslide-heading { font-size: 26px !important; line-height: 1.2 !important; }
+  .bu-fwslide-sub { font-size: 12px !important; max-width: 100% !important; }
+  /* Stats bar grid on mobile */
+  .bu-stats-container {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 12px 4px !important;
+  }
+  .bu-stat-number { font-size: 16px !important; }
+  .bu-stat-label { font-size: 8px !important; letter-spacing: 0.8px !important; }
+  .bu-stat-item { min-width: 0 !important; padding: 0 4px !important; }
+}
+@media (max-width: 380px) {
+  .bu-hero-fw { height: 52vh !important; min-height: 280px !important; }
+  .bu-fwslide-heading { font-size: 22px !important; }
+  .bu-stats-container { grid-template-columns: repeat(4, 1fr) !important; gap: 10px 2px !important; }
+  .bu-stat-number { font-size: 14px !important; }
+  .bu-stat-label { font-size: 7.5px !important; letter-spacing: 0.5px !important; }
+}
+
+/* Old slider hero (legacy) */
+@media (max-width: 991px) {
+  .edu2_main_bn_wrap figcaption h2 { font-size: 32px !important; }
+  .edu2_main_bn_wrap figcaption p { display: none !important; }
+}
+@media (max-width: 767px) {
+  .edu2_main_bn_wrap figcaption h2 { font-size: 22px !important; }
+  .edu2_main_bn_wrap figure figcaption { top: 25% !important; padding: 0 20px !important; margin: 0 !important; }
+  .edu2_main_bn_wrap figcaption span,
+  .edu2_main_bn_wrap .btn-1 { display: none !important; }
+}
+@media (max-width: 480px) {
+  .edu2_main_bn_wrap figcaption h2 { font-size: 18px !important; }
+}
+
+/* ================================================================
+   6. INNER PAGE HERO BANNER (inc.page-banner.php)
+   ================================================================ */
+@media (max-width: 991px) {
+  .bu-inner-hero { padding: 50px 20px 42px !important; }
+  .bu-inner-hero-inner { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
+  .bu-inner-hero-title { font-size: clamp(24px, 5vw, 38px) !important; }
+}
+@media (max-width: 575px) {
+  .bu-inner-hero { padding: 36px 14px 30px !important; }
+  .bu-inner-hero-icon-wrap { width: 54px !important; height: 54px !important; font-size: 22px !important; }
+  .bu-inner-hero-title { font-size: 24px !important; }
+  .bu-inner-hero-subtitle { font-size: 13px !important; }
+  .bu-inner-breadcrumb li { font-size: 10px !important; }
+}
+@media (max-width: 380px) {
+  .bu-inner-hero { padding: 28px 12px 24px !important; }
+  .bu-inner-hero-title { font-size: 22px !important; }
+}
+
+/* ================================================================
+   7. INNER PAGE LAYOUT — Sidebar + Content Grid
+   ================================================================ */
+@media (max-width: 991px) {
+  .bu-inner-layout {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    padding: 36px 16px 60px !important;
+  }
+  .bu-sidebar-nav { position: static !important; }
+  .bu-content-card { padding: 28px 22px !important; }
+}
+@media (max-width: 575px) {
+  .bu-inner-layout { padding: 20px 12px 40px !important; }
+  .bu-content-card { padding: 20px 14px !important; }
+  .bu-content-h2 { font-size: 22px !important; }
+}
+@media (max-width: 380px) {
+  .bu-inner-layout { padding: 16px 10px 32px !important; }
+  .bu-content-card { padding: 16px 12px !important; }
+  .bu-content-h2 { font-size: 20px !important; }
+}
+
+/* ================================================================
+   8. SECTION HEADINGS — Global
+   ================================================================ */
+@media (max-width: 991px) {
+  .kf_edu2_heading1 h3,
+  .kf_edu2_heading2 h3 { font-size: 28px !important; }
+}
+@media (max-width: 575px) {
+  .kf_edu2_heading1 h3,
+  .kf_edu2_heading2 h3 { font-size: 22px !important; }
+  .edu2_training_wrap h2 { font-size: 26px !important; }
+}
+@media (max-width: 380px) {
+  .kf_edu2_heading1 h3,
+  .kf_edu2_heading2 h3 { font-size: 20px !important; }
+}
+
+/* ================================================================
+   9. HOMEPAGE SECTIONS — Padding adjustments
+   ================================================================ */
+@media (max-width: 991px) {
+  .kf_course_outerwrap { padding: 50px 0 !important; }
+  .kf_gallery_wrap, .kf_gallery_outerwrap { padding: 50px 0 !important; }
+  .kf_testemonial_wrap, .edu2_testemonial_wrap { padding: 50px 0 !important; }
+  .edu2_tarining_bg { padding: 48px 0 !important; }
+}
+@media (max-width: 575px) {
+  .kf_course_outerwrap { padding: 36px 0 !important; }
+  .kf_gallery_wrap, .kf_gallery_outerwrap { padding: 36px 0 !important; }
+  .kf_testemonial_wrap, .edu2_testemonial_wrap { padding: 36px 0 !important; }
+  .edu2_tarining_bg { padding: 36px 0 !important; }
+}
+
+/* ================================================================
+   10. FACULTIES GRID (inc.faculties_grid.php) — ENHANCED
+   ================================================================ */
+@media (max-width: 991px) {
+  .bu-faculties-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 28px 20px !important;
+  }
+  .bu-card-img-wrapper { height: 260px !important; }
+  .bu-faculties-section { padding: 60px 16px !important; }
+  .bu-faculties-footer-links {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    flex-wrap: wrap !important;
+  }
+}
+@media (max-width: 767px) {
+  .bu-faculties-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+  .bu-card-img-wrapper { height: 220px !important; }
+  .bu-faculties-footer-links {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+}
+@media (max-width: 575px) {
+  .bu-faculties-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+    margin-bottom: 30px !important;
+  }
+  .bu-faculties-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .bu-card-img-wrapper { height: 200px !important; }
+  .bu-faculties-footer-links {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+}
+@media (max-width: 380px) {
+  .bu-faculties-grid { grid-template-columns: 1fr !important; }
+  .bu-faculties-footer-links {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ================================================================
+   11. WHY BHABHA SECTION (inc.whybhabha.php)
+   ================================================================ */
+@media (max-width: 991px) {
+  .bu-why-section { padding: 60px 16px !important; }
+  .bu-why-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+    margin-bottom: 50px !important;
+  }
+  .bu-why-header-right { max-width: 100% !important; }
+  .bu-why-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 36px 28px !important;
+  }
+  .bu-why-item {
+    border-right: none !important;
+    padding-right: 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    padding-bottom: 24px !important;
+  }
+  .bu-why-item:nth-child(-n+3) {
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    padding-bottom: 24px !important;
+  }
+  .bu-why-item:nth-child(n+4) { padding-top: 0 !important; }
+  .bu-why-item:last-child { border-bottom: none !important; padding-bottom: 0 !important; }
+}
+@media (max-width: 575px) {
+  .bu-why-section { padding: 50px 16px !important; }
+  .bu-why-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .bu-why-title { font-size: 19px !important; }
+}
+
+/* ================================================================
+   12. CHANCELLOR SECTION (inc.chancellor.php)
+   ================================================================ */
+@media (max-width: 1100px) {
+  .bu-chancellor-container { gap: 40px !important; }
+}
+@media (max-width: 991px) {
+  .bu-chancellor-section { padding: 60px 16px !important; }
+  .bu-chancellor-container {
+    flex-direction: column !important;
+    gap: 40px !important;
+  }
+  .bu-chancellor-img-col {
+    max-width: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+  .bu-chancellor-img-wrapper { max-width: 420px !important; }
+  .bu-chancellor-text-col {
+    width: 100% !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+  .bu-chancellor-recognitions { gap: 36px !important; }
+}
+@media (max-width: 575px) {
+  .bu-chancellor-section { padding: 44px 14px !important; }
+  .bu-chancellor-img { height: 360px !important; }
+  .bu-chancellor-quote-card {
+    position: static !important;
+    max-width: 100% !important;
+    margin-top: 16px !important;
+    box-shadow: 0 8px 24px rgba(217,155,0,0.15) !important;
+    right: auto !important;
+    bottom: auto !important;
+  }
+  .bu-chancellor-recognitions { gap: 24px !important; }
+  .bu-recog-title { font-size: 20px !important; }
+}
+@media (max-width: 380px) {
+  .bu-chancellor-recognitions {
+    gap: 16px !important;
+    flex-wrap: wrap !important;
+  }
+}
+
+/* ================================================================
+   13. PLACEMENTS SECTION (inc.placements.php)
+   ================================================================ */
+@media (max-width: 991px) {
+  .bu-placements-section { padding: 60px 16px !important; }
+  .bu-place-top-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 28px !important;
+    margin-bottom: 36px !important;
+  }
+  .bu-place-counters {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    gap: 40px !important;
+  }
+}
+@media (max-width: 575px) {
+  .bu-place-counters {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 16px 8px !important;
+  }
+  .bu-place-number { font-size: 26px !important; }
+  .bu-place-sub { font-size: 8.5px !important; letter-spacing: 1px !important; }
+  .bu-place-ticker-track { gap: 40px !important; }
+  .bu-company { font-size: 20px !important; }
+}
+@media (max-width: 380px) {
+  .bu-place-counters {
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 10px 4px !important;
+  }
+  .bu-place-number { font-size: 22px !important; }
+}
+
+/* ================================================================
+   14. EVENTS SECTION (inc.events.php) — ENHANCED
+   ================================================================ */
+@media (max-width: 991px) {
+  .bu-events-section { padding: 60px 16px !important; }
+  .bu-event-row {
+    grid-template-columns: 110px 110px 1fr 28px !important;
+    padding: 22px 0 !important;
+  }
+  .bu-event-title { font-size: 17px !important; }
+  .bu-events-header { margin-bottom: 32px !important; }
+}
+@media (max-width: 767px) {
+  .bu-events-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    margin-bottom: 24px !important;
+  }
+  .bu-event-row {
+    grid-template-columns: 1fr 24px !important;
+    grid-template-rows: auto auto auto !important;
+    gap: 4px 8px !important;
+    padding: 18px 0 !important;
+  }
+  .bu-event-date {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    font-size: 12px !important;
+  }
+  .bu-event-category {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+  .bu-event-title {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    font-size: 16px !important;
+    padding-right: 0 !important;
+    margin-top: 4px !important;
+  }
+  .bu-event-arrow {
+    grid-column: 2 !important;
+    grid-row: 1 / span 3 !important;
+    align-self: center !important;
+  }
+  .bu-event-row:hover { padding-left: 10px !important; }
+}
+@media (max-width: 480px) {
+  .bu-event-title { font-size: 15px !important; }
+}
+
+/* ================================================================
+   15. TESTIMONIALS / VOICES (inc.community_says.php)
+   ================================================================ */
+@media (max-width: 991px) {
+  .bu-voices-section { padding: 56px 16px 64px !important; }
+  .bu-voices-title { font-size: 32px !important; }
+  .bu-voices-card {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    padding: 24px !important;
+  }
+  .bu-voices-img-wrap {
+    width: 160px !important;
+    height: 190px !important;
+    margin: 0 auto !important;
+  }
+  .bu-voices-text {
+    font-size: 18px !important;
+    margin-bottom: 22px !important;
+    text-align: center !important;
+  }
+  .bu-voices-content { align-items: center !important; }
+  .bu-voices-footer { justify-content: center !important; flex-direction: column !important; align-items: center !important; text-align: center !important; }
+  .bu-voices-author { text-align: center !important; }
+}
+@media (max-width: 575px) {
+  .bu-voices-title { font-size: 26px !important; }
+  .bu-voices-img-wrap {
+    width: 130px !important;
+    height: 160px !important;
+  }
+  .bu-voices-text { font-size: 16px !important; line-height: 1.55 !important; }
+  .bu-voices-card { padding: 18px 14px !important; }
+}
+@media (max-width: 380px) {
+  .bu-voices-img-wrap { width: 110px !important; height: 130px !important; }
+  .bu-voices-text { font-size: 15px !important; }
+}
+
+/* ================================================================
+   16. GALLERY
+   ================================================================ */
+@media (max-width: 767px) {
+  .kf_gallery_item img, .gallery-item img { height: 180px !important; }
+  .gallery3 .filterable-item.col-md-3 { width: 50% !important; float: left !important; }
+}
+@media (max-width: 480px) {
+  .kf_gallery_item img, .gallery-item img { height: 160px !important; }
+  .gallery3 .filterable-item.col-md-3 { width: 100% !important; float: none !important; }
+}
+
+/* ================================================================
+   17. COUNTERS / STATS
+   ================================================================ */
+@media (max-width: 767px) {
+  .edu2_counter_des { width: 50% !important; border-right: none !important; }
+}
+@media (max-width: 480px) {
+  .edu2_counter_des { width: 100% !important; }
+  .edu2_counter_des h3.counter { font-size: 32px !important; }
+}
+
+/* ================================================================
+   18. TRAINING BANNER
+   ================================================================ */
+@media (max-width: 767px) {
+  .kf_edu2_training_des { display: none !important; }
+  .edu2_training_wrap { padding: 10px 0 !important; }
+}
+@media (max-width: 480px) {
+  .edu2_training_wrap .btn-1 { width: 100% !important; text-align: center !important; }
+  .edu2_training_wrap h2 { font-size: 24px !important; }
+}
+
+/* ================================================================
+   19. CMS CONTENT BODY — Tables / Images / Text
+   ================================================================ */
+@media (max-width: 991px) {
+  .bu-content-body table {
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+  }
+}
+@media (max-width: 767px) {
+  .bu-content-body img[style*="float"] {
+    float: none !important;
+    display: block !important;
+    margin: 16px auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .bu-content-body h1 { font-size: 20px !important; }
+  .bu-content-body h2 { font-size: 18px !important; }
+  .bu-content-body h3 { font-size: 16px !important; }
+  .bu-content-body p, .bu-content-body li { font-size: 14px !important; }
+  .bu-content-body table th,
+  .bu-content-body table td { font-size: 13px !important; padding: 8px 10px !important; }
+}
+@media (max-width: 480px) {
+  .bu-content-body table th,
+  .bu-content-body table td { font-size: 12px !important; padding: 6px 8px !important; }
+}
+
+/* ================================================================
+   20. FORMS — Enquiry / Admission / Contact
+   ================================================================ */
+@media (max-width: 767px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="password"],
+  input[type="search"],
+  select,
+  textarea { width: 100% !important; font-size: 14px !important; }
+  .search_bar_des { width: 100% !important; }
+  .search_bar_des > input[type="search"],
+  .search_bar_des .selectric-wrapper { width: 100% !important; margin: 8px 0 !important; }
+  .inr_pg_search_wrap { padding: 10px 16px !important; }
+}
+@media (max-width: 480px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"] { font-size: 16px !important; } /* Prevent zoom on iOS */
+}
+
+/* ================================================================
+   21. FOOTER (inc.footer.php)
+   ================================================================ */
+@media (max-width: 1199px) {
+  .bu-footer-grid { grid-template-columns: 1.5fr repeat(3, 1fr) !important; gap: 28px 20px !important; }
+}
+@media (max-width: 991px) {
+  .bu-main-footer { padding: 60px 16px 30px !important; }
+  .bu-footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 30px 24px !important;
+  }
+  .bu-footer-info-col {
+    grid-column: 1 / -1 !important;
+    max-width: 100% !important;
+  }
+  .bu-footer-sub-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+  .bu-sub-form { max-width: 100% !important; }
+  .bu-footer-map-row iframe { height: 280px !important; }
+}
+@media (max-width: 767px) {
+  .bu-footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+  }
+  .bu-footer-info-col { grid-column: 1 / -1 !important; }
+  .bu-main-footer { padding: 48px 16px 24px !important; }
+}
+@media (max-width: 575px) {
+  .bu-footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .bu-footer-info-col { grid-column: auto !important; }
+  .bu-footer-bottom-bar { flex-direction: column !important; gap: 10px !important; text-align: center !important; }
+  .bu-footer-map-row iframe { height: 200px !important; }
+  .bu-sub-form { flex-direction: column !important; }
+  .bu-sub-input {
+    border-right: 1px solid rgba(255,255,255,0.15) !important;
+    border-bottom: none !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-right-radius: 3px !important;
+    width: 100% !important;
+  }
+  .bu-sub-btn {
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 3px !important;
+    border-top-left-radius: 0 !important;
+    width: 100% !important;
+    padding: 12px !important;
+  }
+  .bu-footer-heading { margin-top: 0 !important; }
+}
+@media (max-width: 380px) {
+  .bu-footer-logo { max-height: 40px !important; }
+  .bu-footer-main-title { font-size: 17px !important; }
+  .bu-main-footer { padding: 40px 12px 20px !important; }
+}
+
+/* ================================================================
+   22. BOOTSTRAP LEGACY GRID — Full Responsive Override
+   ================================================================ */
+@media (max-width: 767px) {
+  .col-md-1, .col-md-2, .col-md-3, .col-md-4,
+  .col-md-5, .col-md-6, .col-md-7, .col-md-8,
+  .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+    width: 100% !important;
+    float: none !important;
+  }
+  .col-sm-6 { width: 50% !important; float: left !important; }
+  .col-sm-12 { width: 100% !important; float: none !important; }
+  .container { padding-left: 14px !important; padding-right: 14px !important; }
+  .row { margin-left: -14px !important; margin-right: -14px !important; }
+}
+@media (max-width: 480px) {
+  .col-sm-6 { width: 100% !important; float: none !important; }
+}
+
+/* ================================================================
+   23. FILTER TABS & QUESTION PAPERS
+   ================================================================ */
+@media (max-width: 767px) {
+  .kf_courses_tabs .nav-tabs > li { width: 100% !important; }
+  .kf_courses_tabs .nav-tabs > li a { padding: 10px !important; }
+  #filterable-item-filter-1 a { padding: 5px 10px !important; }
+  #filterable-item-filter-1 li { margin: 3px !important; }
+  .filterable_heading .btn-group { width: 100% !important; margin: 16px 0 !important; }
+  .nav-tabs { border: none !important; }
+  .nav-tabs > li { width: 100% !important; float: none !important; margin-bottom: 2px !important; }
+}
+
+/* ================================================================
+   24. ABOUT, LEADERSHIP, AWARDS, EVENTS INNER PAGES
+   ================================================================ */
+@media (max-width: 991px) {
+  .abt_univ_wrap { margin-bottom: 28px !important; }
+  .kf-sidebar div.widget:first-child { margin-top: 28px !important; }
+  .kf_inr_breadcrumb { display: none !important; }
+  .inr_banner_heading { width: 100% !important; }
+}
+@media (max-width: 767px) {
+  .teacher_bio_logo { width: 100% !important; }
+  .kf_event_gallery { margin-bottom: 24px !important; }
+  .kf_event_list_wrap { padding: 24px 16px !important; }
+  .event_gallery_des { float: none !important; width: auto !important; margin: 0 -1% !important; }
+  .event_gallery_des li { width: 48% !important; margin: 1% !important; }
+  .event_gallery_des li img { width: 100% !important; }
+}
+@media (max-width: 480px) {
+  .event_gallery_des li { width: 100% !important; margin: 1% 0 !important; }
+  .teacher_bio_des ul li { width: 100% !important; margin: 4px 0 !important; }
+}
+
+/* ================================================================
+   25. CONTACT / LOCATION MAP
+   ================================================================ */
+@media (max-width: 767px) {
+  .location_des { position: static !important; margin: 40px 0 0 0 !important; width: 100% !important; float: none !important; }
+  iframe { width: 100% !important; }
+}
+
+/* ================================================================
+   26. ERROR / 404 PAGE
+   ================================================================ */
+@media (max-width: 767px) {
+  .error_des span { font-size: 130px !important; top: -80px !important; }
+  .error_wrap { padding: 90px 0 0 !important; }
+  .error_thumb { width: 100% !important; position: static !important; float: none !important; }
+  .error_thumb figure img { width: 100% !important; max-width: 100% !important; }
+  .error_des { padding: 0 20px !important; }
+}
+@media (max-width: 480px) {
+  .error_des span { font-size: 100px !important; top: -60px !important; }
+}
+
+/* ================================================================
+   27. SEARCH OVERLAY — Mobile
+   ================================================================ */
+@media (max-width: 575px) {
+  .bu-search-input { font-size: 18px !important; padding: 10px 44px 10px 8px !important; }
+  .bu-search-close { top: 16px !important; right: 16px !important; font-size: 28px !important; }
+}
+
+/* ================================================================
+   28. OWL CAROUSEL / SLIDER — Responsive dots
+   ================================================================ */
+@media (max-width: 767px) {
+  .owl-carousel .owl-item img { height: auto !important; }
+  .edu2_main_bn_wrap .owl-theme .owl-pagination { bottom: 6px !important; z-index: 7 !important; }
+}
+
+/* ================================================================
+   29. UTILITY — Visibility Helpers
+   ================================================================ */
+@media (max-width: 767px) { .hide-mobile { display: none !important; } }
+@media (min-width: 768px) { .show-mobile-only { display: none !important; } }
+@media (max-width: 991px) { .hide-tablet { display: none !important; } }
+@media (min-width: 992px) { .show-tablet-only { display: none !important; } }
+
+/* ================================================================
+   30. RESPONSIVE VIDEO EMBEDS
+   ================================================================ */
+.embed-responsive {
+  position: relative !important;
+  padding-bottom: 56.25% !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+.embed-responsive iframe,
+.embed-responsive video {
+  position: absolute !important;
+  top: 0 !important; left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Make ALL iframes responsive */
+iframe {
+  max-width: 100% !important;
+}
+
+/* ================================================================
+   31. PRINT — Hide Navigation
+   ================================================================ */
+@media print {
+  .bu-header-wrapper,
+  .bu-main-footer,
+  .bu-topbar,
+  .bu-ticker-wrapper,
+  .bu-search-overlay,
+  .bu-nav-backdrop { display: none !important; }
+  body { font-size: 12pt !important; }
+}
+
+/* ================================================================
+   32. RESEARCH, GALLERY, CTA SECTION
+   ================================================================ */
+@media (max-width: 991px) {
+  .bu-research-section,
+  .bu-cta-section { padding: 60px 16px !important; }
+}
+@media (max-width: 575px) {
+  .bu-research-section,
+  .bu-cta-section { padding: 44px 14px !important; }
+}
+
+/* ================================================================
+   33. SPECIFIC LEGACY INNER PAGES — event layout fix
+   ================================================================ */
+@media (max-width: 991px) {
+  .edu2_event_wrap { padding: 20px !important; }
+  .edu2_event_wrap figure { position: relative !important; float: none !important; width: 100% !important; margin: 0 0 16px 0 !important; }
+  .edu2_event_wrap .edu2_event_des { width: 100% !important; }
+  .edu2_event_wrap.side_change { padding: 20px !important; }
+}
+@media (max-width: 575px) {
+  .edu2_event_des span { font-size: 40px !important; }
+}
+
+/* ================================================================
+   34. TESTIMONIALS (old style)
+   ================================================================ */
+@media (max-width: 767px) {
+  .edu2_testemonial_des { padding: 24px 20px !important; }
+  .student_slider_thumb { display: none !important; }
+  .edu_testemonial_wrap figure { float: none !important; width: 100% !important; position: static !important; height: auto !important; }
+  .edu_testemonial_wrap .kode-text { padding: 16px 0 0 0 !important; float: none !important; width: 100% !important; }
+  .edu_testemonial_wrap { padding: 20px !important; }
+}
+
+/* ================================================================
+   35. HORIZONTAL OVERFLOW PREVENTION (Global Safety Net)
+   ================================================================ */
+section, footer, header, main, article, aside, div {
+  max-width: 100% !important;
+}
+
+/* Prevent tables from blowing out layout */
+.bu-content-body table,
+.bu-content-body td,
+.bu-content-body th {
+  word-break: break-word !important;
+}
+
+/* ================================================================
+   36. NIRF / PUBLIC DISCLOSURE TABLES
+   ================================================================ */
+@media (max-width: 991px) {
+  .inr_pg_search_wrap { padding: 12px 16px !important; }
+  .search_bar_des { flex-wrap: wrap !important; gap: 10px !important; }
+}
+@media (max-width: 767px) {
+  .inr_pg_search_wrap form { flex-direction: column !important; }
+  .inr_pg_search_wrap form > * { width: 100% !important; }
+  .filterable_heading { flex-direction: column !important; gap: 10px !important; }
+}
+
+/* ================================================================
+   37. ADMISSION / ENQUIRY FORM PAGE (online-admission.php)
+   ================================================================ */
+@media (max-width: 767px) {
+  .form-group,
+  .form-row { margin-bottom: 14px !important; }
+  .form-control {
+    font-size: 14px !important;
+    padding: 10px 12px !important;
+  }
+  .btn, .btn-primary, .btn-success {
+    width: 100% !important;
+    font-size: 14px !important;
+  }
+}
+
+/* ================================================================
+   38. DEPT / SCHOOLS PAGE CARDS
+   ================================================================ */
+@media (max-width: 767px) {
+  .kf_cur_catg_des { padding: 20px 16px !important; }
+}
+@media (max-width: 575px) {
+  .kf_cur_catg_des span i { font-size: 28px !important; }
+  .kf_cur_catg_capstion h5 { font-size: 13px !important; }
+}
+
+/* ================================================================
+   39. GLOBAL SECTION PADDING MOBILE SAFETY
+   ================================================================ */
+@media (max-width: 575px) {
+  /* Ensure all custom sections have reasonable horizontal padding */
+  .bu-chancellor-section,
+  .bu-why-section,
+  .bu-placements-section,
+  .bu-events-section,
+  .bu-faculties-section {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    box-sizing: border-box !important;
+  }
+  .bu-voices-section {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+}
+
+/* ================================================================
+   40. PHONE & VERY SMALL SCREENS (320px — iPhone SE)
+   ================================================================ */
+@media (max-width: 360px) {
+  .bu-brand-logo { height: 30px !important; }
+  .bu-brand-title { font-size: 13px !important; max-width: 160px !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+  .bu-mobile-toggle { font-size: 18px !important; }
+  .bu-inner-hero-title { font-size: 20px !important; }
+  .bu-fwslide-heading { font-size: 20px !important; }
+  .bu-why-title { font-size: 17px !important; }
+  .bu-chancellor-heading { font-size: 26px !important; }
+  .bu-place-number { font-size: 20px !important; }
+  .bu-faculties-heading { font-size: 26px !important; }
+  .bu-voices-card { padding: 14px 10px !important; }
+  .bu-voices-text { font-size: 14px !important; }
+  .bu-events-section { padding: 36px 12px !important; }
+  .bu-voices-section { padding: 36px 12px 44px !important; }
+}

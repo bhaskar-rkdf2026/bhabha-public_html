@@ -25,8 +25,8 @@ awards.phponline-admission.php<?php
       if(is_array($department) && count($department) > 0) {
         $count = 1;
         $images = [
-          'new-media/image/school-of-engineering.jpg',
-          'new-media/image/school-of-medical.jpg'
+          URL_ROOT . 'new-media/image/school-of-engineering.jpg',
+          URL_ROOT . 'new-media/image/school-of-medical.jpg'
         ];
         
         $main_schools = array_slice($department, 0, 6);
@@ -229,7 +229,7 @@ awards.phponline-admission.php<?php
 /* Footer Tag Links Grid */
 .bu-faculties-footer-links {
   display: flex !important;
-  flex-wrap: nowrap !important;
+  flex-wrap: wrap !important;
   justify-content: space-between !important;
   gap: 8px !important;
   width: 100% !important;
