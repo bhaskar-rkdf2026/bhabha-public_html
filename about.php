@@ -1201,42 +1201,42 @@
       <h2 class="bu-section-title">Recognised by <em>leading bodies.</em></h2>
       <div class="bu-accred-grid">
         <div class="bu-accred-badge">
-          <img src="images/ugc.png" alt="UGC" class="bu-accred-logo" onerror="this.style.display='none';">
+          <img src="<?php echo URL_IMG;?>ugc.png" alt="UGC" class="bu-accred-logo" onerror="this.style.display='none';">
           <span class="bu-accred-badge-name">UGC</span>
           <span class="bu-accred-badge-desc">2(f) &amp; 12(B)</span>
         </div>
         <div class="bu-accred-badge">
-          <img src="images/naac.png" alt="NAAC" class="bu-accred-logo" onerror="this.style.display='none';">
+          <img src="<?php echo URL_IMG;?>naac.png" alt="NAAC" class="bu-accred-logo" onerror="this.style.display='none';">
           <span class="bu-accred-badge-name">NAAC</span>
           <span class="bu-accred-badge-desc">Accredited</span>
         </div>
         <div class="bu-accred-badge">
-          <img src="images/AICT.png" alt="AICTE" class="bu-accred-logo">
+          <img src="<?php echo URL_IMG;?>AICT.png" alt="AICTE" class="bu-accred-logo">
           <span class="bu-accred-badge-name">AICTE</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
-          <img src="images/PCI.png" alt="PCI" class="bu-accred-logo">
+          <img src="<?php echo URL_IMG;?>PCI.png" alt="PCI" class="bu-accred-logo">
           <span class="bu-accred-badge-name">PCI</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
-          <img src="images/bci.png" alt="BCI" class="bu-accred-logo">
+          <img src="<?php echo URL_IMG;?>bci.png" alt="BCI" class="bu-accred-logo">
           <span class="bu-accred-badge-name">BCI</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
-          <img src="images/dci.png" alt="DCI" class="bu-accred-logo">
+          <img src="<?php echo URL_IMG;?>dci.png" alt="DCI" class="bu-accred-logo">
           <span class="bu-accred-badge-name">DCI</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
-          <img src="images/nci.png" alt="NCTE" class="bu-accred-logo">
+          <img src="<?php echo URL_IMG;?>nci.png" alt="NCTE" class="bu-accred-logo">
           <span class="bu-accred-badge-name">NCTE</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
-          <img src="images/MPNRC.png" alt="MPNRC" class="bu-accred-logo">
+          <img src="<?php echo URL_IMG;?>MPNRC.png" alt="MPNRC" class="bu-accred-logo">
           <span class="bu-accred-badge-name">MPNRC</span>
           <span class="bu-accred-badge-desc">Recognized</span>
         </div>
