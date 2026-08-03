@@ -1,4 +1,4 @@
-awards.phponline-admission.php<?php
+<?php
 // Bhabha University – Redesigned Schools & Faculties Section
 ?>
 <section class="bu-faculties-section">
@@ -12,6 +12,7 @@ awards.phponline-admission.php<?php
           15 schools. One <em>global</em><br>university.
         </h2>
       </div>
+      
       <div class="bu-header-right">
         <a href="<?php echo href("institutes.php"); ?>" class="bu-view-all">VIEW ALL SCHOOLS &nbsp;→</a>
       </div>
