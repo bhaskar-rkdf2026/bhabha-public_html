@@ -125,42 +125,90 @@
   color: #FFC107;
   text-decoration: none;
 }
+/* Native Select Control Styling */
+select.bu-form-control {
+  display: block !important;
+  width: 100% !important;
+  height: 46px !important;
+  padding: 10px 14px !important;
+  border: 1px solid #D1D5DB !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
+  color: #1F2937 !important;
+  background-color: #F9FAFB !important;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+  cursor: pointer;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+select.bu-form-control:focus {
+  outline: none;
+  border-color: #0A1B54;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(10,27,84,0.1);
+}
 </style>
 <script type="text/javascript">
+   function fixSelects() {
+       if (window.jQuery) {
+           $('select.bu-form-control').each(function() {
+               var $sel = $(this);
+               var $wrap = $sel.closest('.selectric-wrapper');
+               if ($wrap.length) {
+                   $wrap.replaceWith($sel);
+               } else if ($sel.parent().hasClass('selectric-hide-select')) {
+                   $sel.unwrap();
+               }
+               $sel.css({ display: 'block', visibility: 'visible', opacity: 1, position: 'static' });
+           });
+       }
+   }
+
    $(document).ready(function(){
+       fixSelects();
+       setTimeout(fixSelects, 50);
+       setTimeout(fixSelects, 300);
+
 	   $("#course").change(function(){					 
-			 var course = $("#course").val();
+			 var course = $(this).val();
 			 if(!course) {
 				 $("#branch").html('<option value="">-- Select Branch --</option>');
 				 $("#year").html('<option value="">-- Select Sem / Year --</option>');
 				 return;
 			 }
 			 $.ajax({
-				type:"post",
-				url:"<?php echo URL_ROOT;?>getBranch.php",
-				data:"course="+course,
-				success:function(data){
+				type: "post",
+				url: "<?php echo URL_ROOT;?>getBranch.php",
+				data: { course: course },
+				success: function(data){
 					  $("#branch").html(data);
 					  $("#year").html('<option value="">-- Select Sem / Year --</option>');
+					  fixSelects();
 				}
 			 });
 	   });
 
 	   $("#branch").change(function(){					 
-			 var branch = $("#branch").val();
+			 var branch = $(this).val();
 			 if(!branch) {
 				 $("#year").html('<option value="">-- Select Sem / Year --</option>');
 				 return;
 			 }
 			 $.ajax({
-				type:"post",
-				url:"<?php echo URL_ROOT;?>getYear.php",
-				data:"branch="+branch,
-				success:function(data){
+				type: "post",
+				url: "<?php echo URL_ROOT;?>getYear.php",
+				data: { branch: branch },
+				success: function(data){
 					  $("#year").html(data);
+					  fixSelects();
 				}
 			 });
 	   });
+   });
+
+   $(window).on('load', function(){
+       fixSelects();
    });
 </script>
 </head>
@@ -318,5 +366,12 @@
 </div>
 
 <?php include('inc.footer.js.php');?>
+<script>
+$(document).ready(function() {
+    if (typeof fixSelects === 'function') {
+        fixSelects();
+    }
+});
+</script>
 </body>
 </html>

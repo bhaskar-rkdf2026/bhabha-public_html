@@ -44,7 +44,7 @@ $( ".datepicker" ).datepicker({
 <!--Side Menu--> 
 <script src="<?php echo URL_JS;?>jquery.sidr.min.js"></script> 
 <!--Custom JavaScript--> 
-<script src="<?php echo URL_JS;?>custom.js"></script>
+<script src="<?php echo URL_JS;?>custom.js?v=<?php echo time();?>"></script>
 
 
 

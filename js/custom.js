@@ -166,8 +166,8 @@ jQuery(document).ready(function($){
     ==============================================================
        Select Script Start
     ============================================================== */
-	if($("select").length){
-		$('select').selectric();
+	if($("select:not(.bu-form-control, .no-selectric)").length){
+		$('select:not(.bu-form-control, .no-selectric)').selectric();
 	}
 
 	/*
