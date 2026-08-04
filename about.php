@@ -20,12 +20,13 @@
 /* ---- PAGE HERO BANNER ---- */
 .bu-about-hero {
   background: linear-gradient(135deg, #051235 0%, #0A1B54 55%, #061D7C 100%);
-  padding: 90px 20px 70px;
+  padding: 90px 48px 70px;
   position: relative;
   overflow: hidden;
   width: 100%;
   float: left;
   clear: both;
+  box-sizing: border-box;
 }
 .bu-about-hero::before {
   content: '';
@@ -46,10 +47,12 @@
   pointer-events: none;
 }
 .bu-about-hero-inner {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
+  padding: 0 24px;
   position: relative;
   z-index: 2;
+  box-sizing: border-box;
 }
 .bu-about-breadcrumb {
   display: flex;
@@ -121,12 +124,13 @@
   width: 100%;
   float: left;
   clear: both;
-  padding: 80px 20px;
+  padding: 85px 48px;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  box-sizing: border-box;
 }
 .bu-about-section-alt { background: #FAF9F6; }
 .bu-about-section-dark { background: linear-gradient(135deg, #051235, #0A1B54); }
-.bu-about-container { max-width: 1200px; margin: 0 auto; }
+.bu-about-container { max-width: 1240px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
 .bu-section-label {
   font-size: 11px;
   font-weight: 800;
@@ -756,10 +760,16 @@
 .bu-cta-btn-secondary:hover { border-color: #FFC107; color: #FFC107; text-decoration: none; }
 
 /* ---- RESPONSIVE ---- */
+@media (max-width: 1400px) {
+  .bu-about-section { padding: 75px 36px !important; }
+  .bu-about-hero { padding: 80px 36px 60px !important; }
+}
 @media (max-width: 991px) {
-  .bu-about-hero { padding: 60px 16px 50px; }
+  .bu-about-hero { padding: 60px 24px 50px !important; }
+  .bu-about-section { padding: 60px 24px !important; }
+  .bu-about-cta { padding: 60px 24px !important; }
   .bu-about-hero-stats { gap: 28px; }
-  .bu-overview-grid { grid-template-columns: 1fr; gap: 50px; }
+  .bu-overview-grid { grid-template-columns: 1fr; gap: 40px; }
   .bu-overview-img { height: 340px; }
   .bu-overview-badge { left: 0; bottom: -16px; }
   .bu-timeline::before { left: 20px; transform: none; }
@@ -767,16 +777,292 @@
   .bu-timeline-item:nth-child(odd) .bu-timeline-dot, .bu-timeline-item:nth-child(even) .bu-timeline-dot { left: 13px !important; right: auto !important; }
   .bu-vm-grid { grid-template-columns: 1fr; }
   .bu-campus-grid { grid-template-columns: repeat(2, 1fr); }
-  .bu-stats-strip { grid-template-columns: repeat(2, 1fr); }
+  .bu-stats-strip { grid-template-columns: repeat(2, 1fr); max-width: 100% !important; margin: 30px 0 !important; border-radius: 8px !important; }
   .bu-subpages-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 575px) {
-  .bu-about-section { padding: 50px 16px; }
+  .bu-about-section { padding: 45px 16px !important; }
+  .bu-about-hero { padding: 45px 16px 40px !important; }
+  .bu-about-cta { padding: 45px 16px !important; }
   .bu-about-hero-stats { flex-direction: column; gap: 18px; }
   .bu-campus-grid { grid-template-columns: 1fr; }
   .bu-stats-strip { grid-template-columns: 1fr 1fr; }
   .bu-subpages-grid { grid-template-columns: 1fr; }
   .bu-accred-grid { gap: 12px; }
+}
+
+/* =================== VIRTUAL TOUR SECTION =================== */
+.bu-vt-section {
+  background: linear-gradient(135deg, #040F4A 0%, #061D7C 60%, #02092E 100%);
+  padding: 90px 20px 80px;
+  position: relative;
+  overflow: hidden;
+  color: #FFFFFF;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  width: 100%;
+  float: left;
+  clear: both;
+  box-sizing: border-box;
+}
+.bu-vt-section::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -80px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255, 193, 7, 0.10) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.bu-vt-section::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(6, 29, 124, 0.5) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.bu-vt-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- Header --- */
+.bu-vt-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.bu-vt-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: #FFC107;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.bu-vt-label-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #E63946;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(230, 57, 70, 0.8);
+  animation: buVtPulse 1.5s infinite;
+}
+@keyframes buVtPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+}
+.bu-vt-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+.bu-vt-title em {
+  font-style: italic;
+  color: #FFC107;
+}
+.bu-vt-desc {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* --- Grid Layout --- */
+.bu-vt-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* --- Video Player --- */
+.bu-vt-player-wrap {
+  position: relative;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.1);
+}
+.bu-vt-video {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  display: block;
+}
+.bu-vt-player-overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 5;
+}
+.bu-vt-badge {
+  background: rgba(4, 15, 74, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 7px 16px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  letter-spacing: 0.5px;
+}
+.bu-vt-badge i { color: #FFC107; }
+
+/* --- Controls Bar --- */
+.bu-vt-controls-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(4,15,74,0.95) 0%, rgba(4,15,74,0.5) 60%, transparent 100%);
+  padding: 30px 20px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 6;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.bu-vt-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bu-vt-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  outline: none;
+  font-size: 13px;
+}
+.bu-vt-btn:hover {
+  background: #FFC107;
+  border-color: #FFC107;
+  color: #040F4A;
+  transform: scale(1.1);
+}
+
+/* --- Video Selector Tabs --- */
+.bu-vt-tabs {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.bu-vt-tab-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255,255,255,0.85);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.3px;
+}
+.bu-vt-tab-btn.active,
+.bu-vt-tab-btn:hover {
+  background: #FFC107;
+  border-color: #FFC107;
+  color: #040F4A;
+}
+
+/* --- Side Info Cards --- */
+.bu-vt-side-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.bu-vt-info-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+.bu-vt-info-card:hover {
+  background: rgba(255, 255, 255, 0.11);
+  border-color: rgba(255, 193, 7, 0.45);
+  transform: translateX(4px);
+}
+.bu-vt-icon-box {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #FFC107 0%, #D99B00 100%);
+  color: #040F4A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  box-shadow: 0 4px 14px rgba(255, 193, 7, 0.35);
+}
+.bu-vt-card-content h4 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 5px 0;
+  line-height: 1.3;
+}
+.bu-vt-card-content p {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* --- Responsive Virtual Tour --- */
+@media (max-width: 991px) {
+  .bu-vt-grid { grid-template-columns: 1fr; }
+  .bu-vt-video { height: 380px; }
+  .bu-vt-side-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+@media (max-width: 575px) {
+  .bu-vt-section { padding: 60px 16px 50px; }
+  .bu-vt-video { height: 260px; }
+  .bu-vt-side-cards { grid-template-columns: 1fr; }
+  .bu-vt-tabs { gap: 5px; }
+  .bu-vt-tab-btn { font-size: 10px; padding: 5px 10px; }
+  .bu-vt-controls-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
 </style>
 </head>
@@ -881,24 +1167,27 @@
   </section>
 
   <!-- =================== STATS STRIP =================== -->
-  <div class="bu-stats-strip" style="max-width:100%; border-radius:0; margin:0;">
-    <div class="bu-stat-cell">
-      <span class="bu-stat-number">98%</span>
-      <span class="bu-stat-label">Placement Rate</span>
-    </div>
-    <div class="bu-stat-cell">
-      <span class="bu-stat-number">120+</span>
-      <span class="bu-stat-label">Research Labs</span>
-    </div>
-    <div class="bu-stat-cell">
-      <span class="bu-stat-number">60+</span>
-      <span class="bu-stat-label">Global MoUs</span>
-    </div>
-    <div class="bu-stat-cell">
-      <span class="bu-stat-number">₹52L</span>
-      <span class="bu-stat-label">Highest Package</span>
+  <div class="bu-about-container" style="padding-top: 10px; padding-bottom: 10px;">
+    <div class="bu-stats-strip" style="max-width:1240px; border-radius:12px; margin:0 auto;">
+      <div class="bu-stat-cell">
+        <span class="bu-stat-number">98%</span>
+        <span class="bu-stat-label">Placement Rate</span>
+      </div>
+      <div class="bu-stat-cell">
+        <span class="bu-stat-number">120+</span>
+        <span class="bu-stat-label">Research Labs</span>
+      </div>
+      <div class="bu-stat-cell">
+        <span class="bu-stat-number">60+</span>
+        <span class="bu-stat-label">Global MoUs</span>
+      </div>
+      <div class="bu-stat-cell">
+        <span class="bu-stat-number">₹52L</span>
+        <span class="bu-stat-label">Highest Package</span>
+      </div>
     </div>
   </div>
+
 
   <!-- =================== VISION & MISSION =================== -->
   <section class="bu-about-section bu-about-section-dark">
@@ -1006,6 +1295,158 @@
       </div>
     </div>
   </section>
+
+  <!-- =================== VIRTUAL TOUR OF CAMPUS =================== -->
+  <section class="bu-vt-section" id="virtualTour">
+    <div class="bu-vt-container">
+      
+      <!-- Section Header -->
+      <div class="bu-vt-header">
+        <span class="bu-vt-label">
+          <span class="bu-vt-label-dot"></span>
+          Immersive Experience &nbsp;·&nbsp; 360° Drone View
+        </span>
+        <h2 class="bu-vt-title">Virtual Tour of <em>Bhabha Campus</em></h2>
+        <p class="bu-vt-desc">
+          Take a visual journey through our 150-acre lush green campus in Bhopal. Explore modern academic blocks, research facilities, sports arenas, and vibrant student life.
+        </p>
+      </div>
+
+      <!-- Player & Info Grid -->
+      <div class="bu-vt-grid">
+        
+        <!-- Video Player -->
+        <div class="bu-vt-player-wrap">
+          
+          <!-- Floating Badges -->
+          <div class="bu-vt-player-overlay">
+            <span class="bu-vt-badge">
+              <i class="fa fa-video-camera"></i> Live Campus Video
+            </span>
+            <span class="bu-vt-badge">
+              <i class="fa fa-map-marker"></i> Bhopal, MP
+            </span>
+          </div>
+
+          <video id="buVtVideo" class="bu-vt-video" autoplay loop muted playsinline poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
+            <source id="buVtSource" src="<?php echo URL_ROOT;?>new-media/image/hero/about.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+
+          <!-- Custom Player Controls & Selector -->
+          <div class="bu-vt-controls-bar">
+            <div class="bu-vt-controls-left">
+              <button id="buVtPlayBtn" class="bu-vt-btn" title="Play / Pause">
+                <i class="fa fa-pause"></i>
+              </button>
+              <button id="buVtMuteBtn" class="bu-vt-btn" title="Mute / Unmute Sound">
+                <i class="fa fa-volume-off"></i>
+              </button>
+            </div>
+            
+            <div class="bu-vt-tabs">
+              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/drone-campus.mp4', this)">
+                <i class="fa fa-plane"></i> Aerial Drone
+              </button>
+              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/hero2.mp4', this)">
+                <i class="fa fa-building"></i> Campus Walk
+              </button>
+              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/hero3.mp4', this)">
+                <i class="fa fa-flask"></i> Labs &amp; Quad
+              </button>
+              <button class="bu-vt-tab-btn active" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/about.mp4', this)">
+                <i class="fa fa-graduation-cap"></i> Student Life
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Highlights Cards -->
+        <div class="bu-vt-side-cards">
+          
+          <div class="bu-vt-info-card">
+            <div class="bu-vt-icon-box"><i class="fa fa-tree"></i></div>
+            <div class="bu-vt-card-content">
+              <h4>150-Acre Green Campus</h4>
+              <p>Eco-friendly campus with solar energy, botanical gardens, and spacious plazas.</p>
+            </div>
+          </div>
+
+          <div class="bu-vt-info-card">
+            <div class="bu-vt-icon-box"><i class="fa fa-university"></i></div>
+            <div class="bu-vt-card-content">
+              <h4>15 Schools &amp; Institutes</h4>
+              <p>Engineering, Medical, Dental, Pharmacy, Law, Agriculture &amp; Management blocks.</p>
+            </div>
+          </div>
+
+          <div class="bu-vt-info-card">
+            <div class="bu-vt-icon-box"><i class="fa fa-flask"></i></div>
+            <div class="bu-vt-card-content">
+              <h4>120+ Modern Labs</h4>
+              <p>Hi-tech practical skill labs, research wings, and computing centers.</p>
+            </div>
+          </div>
+
+          <div class="bu-vt-info-card">
+            <div class="bu-vt-icon-box"><i class="fa fa-hospital-o"></i></div>
+            <div class="bu-vt-card-content">
+              <h4>500-Bed Hospital</h4>
+              <p>Full-fledged multi-speciality teaching hospital &amp; clinical facility.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+  function switchVtVideo(src, btn) {
+    var video = document.getElementById('buVtVideo');
+    var source = document.getElementById('buVtSource');
+    if (!video || !source) return;
+    
+    source.src = src;
+    video.load();
+    video.play();
+
+    var buttons = document.querySelectorAll('.bu-vt-tab-btn');
+    buttons.forEach(function(b) { b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var video = document.getElementById('buVtVideo');
+    var playBtn = document.getElementById('buVtPlayBtn');
+    var muteBtn = document.getElementById('buVtMuteBtn');
+
+    if (playBtn && video) {
+      playBtn.addEventListener('click', function() {
+        if (video.paused) {
+          video.play();
+          playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        } else {
+          video.pause();
+          playBtn.innerHTML = '<i class="fa fa-play"></i>';
+        }
+      });
+    }
+
+    if (muteBtn && video) {
+      muteBtn.addEventListener('click', function() {
+        video.muted = !video.muted;
+        if (video.muted) {
+          muteBtn.innerHTML = '<i class="fa fa-volume-off"></i>';
+        } else {
+          muteBtn.innerHTML = '<i class="fa fa-volume-up"></i>';
+        }
+      });
+    }
+  });
+  </script>
 
   <!-- =================== CAMPUS HIGHLIGHTS / FACILITIES =================== -->
   <section class="bu-about-section">

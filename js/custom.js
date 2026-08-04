@@ -71,12 +71,13 @@ jQuery(document).ready(function($){
 	if($('#owl-demo-87').length){		
 		$("#owl-demo-87").owlCarousel({
 			items : 6,
-			autoPlay : 2000, //10 items above 1000px browser width
-			itemsDesktop : [1000,3], //5 items between 1000px and 901px
-			itemsDesktopSmall : [900,3], // betweem 900px and 601px
-			itemsTablet: [600,2], //2 items between 600 and 0
-			itemsMobile : [600,2], // itemsMobile disabled - inherit from itemsTablet option
-			navigation : false
+			autoPlay : 3000,
+			itemsDesktop : [1199,6],
+			itemsDesktopSmall : [979,6],
+			itemsTablet: [768,6],
+			itemsMobile : [479,6],
+			navigation : false,
+			pagination : false
 		});
 	}
 	/*

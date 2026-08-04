@@ -4,10 +4,10 @@
 <!-- ============ HERO VIDEO SECTION ============ -->
 <section class="bu-hero-fw" id="buHeroSection">
 
-  <!-- Background Video (Infinite Autoplay Loop) -->
-  <video class="bu-hero-video" id="buHeroVideo" autoplay loop muted playsinline preload="auto" poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
+  <!-- Background Video (Infinite Autoplay Loop with Deferred Fast Preloading) -->
+  <video class="bu-hero-video" id="buHeroVideo" autoplay loop muted playsinline preload="metadata" poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
+    <source src="<?php echo URL_ROOT;?>new-media/image/hero/hero2.mp4" type="video/mp4">
     <source src="<?php echo URL_ROOT;?>new-media/image/hero/drone-campus.mp4" type="video/mp4">
-    <source src="<?php echo URL_ROOT;?>new-media/hero/drone-campus.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
@@ -101,6 +101,7 @@
   object-fit: cover !important;
   object-position: center center !important;
   z-index: 0 !important;
+  transition: opacity 0.5s ease-in-out !important;
 }
 
 /* Gradient Overlay (Dark Navy) */
@@ -345,23 +346,36 @@
   function initHeroVideo() {
     var heroVideo = document.getElementById('buHeroVideo');
     if (!heroVideo) return;
+
+    var videoSources = [
+      '<?php echo URL_ROOT;?>new-media/image/hero/hero2.mp4',
+      '<?php echo URL_ROOT;?>new-media/image/hero/drone-campus.mp4',
+      '<?php echo URL_ROOT;?>new-media/image/hero/hero3.mp4',
+      '<?php echo URL_ROOT;?>new-media/image/hero/about.mp4'
+    ];
+    var currentTrack = 0;
     heroVideo.muted = true;
 
     var playVideo = function() {
       var promise = heroVideo.play();
       if (promise !== undefined) {
-        promise.catch(function() {
+        promise.then(function() {
+          heroVideo.style.opacity = '1';
+        }).catch(function() {
           document.addEventListener('click', function playOnClick() {
-            heroVideo.play();
+            heroVideo.play().then(function() {
+              heroVideo.style.opacity = '1';
+            });
           }, { once: true });
         });
       }
     };
 
-    playVideo();
-
+    // Cycle through campus hero videos for a dynamic background visual
     heroVideo.addEventListener('ended', function () {
-      heroVideo.currentTime = 0;
+      currentTrack = (currentTrack + 1) % videoSources.length;
+      heroVideo.src = videoSources[currentTrack];
+      heroVideo.load();
       playVideo();
     });
 
@@ -370,6 +384,9 @@
         playVideo();
       }
     });
+
+    // Deferred start after DOM load for maximum page speed performance
+    setTimeout(playVideo, 100);
   }
 
   function initAll() {

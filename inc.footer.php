@@ -131,10 +131,10 @@
       </iframe>
     </div>
 
+    <!-- Include legacy affiliates logos dynamically inside container for proper layout and spacing -->
+    <?php include('inc.affiliate.php');?>
+
   </div>
-  
-  <!-- Include legacy affiliates logos dynamically inside to keep functions working -->
-  <?php include('inc.affiliate.php');?>
 </footer>
 
 <div class="bu-footer-copyright">
@@ -370,7 +370,10 @@
 /* Footer Map Row */
 .bu-footer-map-row {
   width: 100% !important;
-  margin-bottom: 30px !important;
+  margin-bottom: 60px !important;
+  padding-bottom: 20px !important;
+  display: block !important;
+  clear: both !important;
 }
 
 /* Copyright Row */

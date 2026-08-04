@@ -46,7 +46,7 @@ if(isset($_POST['submit']))
 						{
 							$data['image'] = $newfile;
 						}
-					resizeBySize($newfile,600,350,UPLOAD,false);
+					resizeBySize($newfile,1200,800,UPLOAD,true);
 					}
 					$id = $db->insert(DBTAB,$data);
 					unset($_POST);
@@ -73,7 +73,7 @@ if(isset($_POST['submit']))
 				{
 					$data['image'] = $newfile;
 				}
-				resizeBySize($newfile,600,350,UPLOAD,false);
+				resizeBySize($newfile,1200,800,UPLOAD,true);
 					}
 					$db->where('id',$_REQUEST['id']);
 					$aryData = $db->update(DBTAB,$data);

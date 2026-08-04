@@ -17,13 +17,13 @@
         <span>APPLY NOW</span>
         <i class="fa fa-arrow-right"></i>
       </a>
-      <a href="<?php echo href("contact.php"); ?>" class="bu-journey-btn bu-btn-white">
+      <a href="https://drive.google.com/file/d/1jhIfUzZbjtOWSCnYu77C0MM5C8U5vumt/view" target="_blank" class="bu-journey-btn bu-btn-white">
         <span>DOWNLOAD PROSPECTUS</span>
-        <i class="fa fa-download"></i>
+        <i class="fa fa-file-pdf-o"></i>
       </a>
-      <a href="<?php echo href("contact.php"); ?>" class="bu-journey-btn bu-btn-outline">
-        <span>SCHEDULE VISIT</span>
-        <i class="fa fa-arrow-right"></i>
+      <a href="tel:07554246498" class="bu-journey-btn bu-btn-outline">
+        <span>SCHEDULE CALL</span>
+        <i class="fa fa-phone"></i>
       </a>
     </div>
 

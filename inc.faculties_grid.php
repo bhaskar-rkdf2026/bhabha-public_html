@@ -39,12 +39,14 @@
           $count++;
       ?>
       <div class="bu-faculty-card">
-        <div class="bu-card-img-wrapper">
+        <a href="<?php echo href("department.php","id=".$idepartment['id']); ?>" class="bu-card-img-wrapper" title="<?php echo htmlspecialchars($idepartment['title']); ?>">
           <span class="bu-card-number"><?php echo $num_str; ?></span>
           <img src="<?php echo $img_src; ?>" alt="<?php echo htmlspecialchars($idepartment['title']); ?>" class="bu-card-img">
-        </div>
+        </a>
         <div class="bu-card-body">
-          <h3 class="bu-card-title"><?php echo htmlspecialchars($idepartment['title']); ?></h3>
+          <h3 class="bu-card-title">
+            <a href="<?php echo href("department.php","id=".$idepartment['id']); ?>" class="bu-card-title-link"><?php echo htmlspecialchars($idepartment['title']); ?></a>
+          </h3>
           <p class="bu-card-desc"><?php echo !empty($idepartment['short_description']) ? htmlspecialchars($idepartment['short_description']) : 'Industry-aligned curriculum, research labs and expert faculty.'; ?></p>
           <a href="<?php echo href("department.php","id=".$idepartment['id']); ?>" class="bu-card-explore">EXPLORE FACULTY &nbsp;›</a>
         </div>
@@ -154,6 +156,8 @@
   border-radius: 4px !important;
   overflow: hidden !important;
   margin-bottom: 20px !important;
+  display: block !important;
+  cursor: pointer !important;
 }
 .bu-card-img {
   width: 100% !important;
@@ -161,7 +165,8 @@
   object-fit: cover !important;
   transition: transform 0.4s ease !important;
 }
-.bu-faculty-card:hover .bu-card-img {
+.bu-faculty-card:hover .bu-card-img,
+.bu-card-img-wrapper:hover .bu-card-img {
   transform: scale(1.05) !important;
 }
 .bu-card-number {
@@ -190,6 +195,15 @@
   color: #061D7C !important;
   margin: 0 0 8px 0 !important;
   line-height: 1.35 !important;
+}
+.bu-card-title-link {
+  color: inherit !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+.bu-card-title-link:hover,
+.bu-faculty-card:hover .bu-card-title-link {
+  color: #D99B00 !important;
 }
 .bu-card-desc {
   font-size: 13.5px !important;
