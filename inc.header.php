@@ -188,30 +188,6 @@
     </div>
   </div>
 
-  <!-- 3. Dynamic News Ticker -->
-  <div class="bu-ticker-wrapper">
-    <div class="bu-ticker-label">
-      <i class="fa fa-bullhorn"></i> Latest News
-    </div>
-    <div class="bu-ticker-content">
-      <ul class="bu-ticker-list" id="buNewsTicker">
-        <?php
-        $db->where('is_news', 1);
-        $news_and_announcement = $db->get('news_and_announcement');
-        if(is_array($news_and_announcement) && count($news_and_announcement) > 0) {
-          foreach($news_and_announcement as $inews_and_announcement) { ?>
-            <li>
-              <a href="<?php echo href("announcements.php","id=".$inews_and_announcement['id']."");?>">
-                <?php echo $inews_and_announcement['title']?>
-              </a>
-            </li>
-          <?php }
-        } else { ?>
-          <li><a href="<?php echo href("news.php");?>">Welcome to Bhabha University - Admissions Open 2026</a></li>
-        <?php } ?>
-      </ul>
-    </div>
-  </div>
 </header>
 
 <!-- Search Overlay Modal -->

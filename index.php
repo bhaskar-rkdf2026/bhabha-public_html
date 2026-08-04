@@ -250,7 +250,147 @@ src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
   
   <?php include('inc.hero.php');?>
 
-  <div class="kf_content_wrap"> 
+  <!-- ===== NEWS TICKER — Home Page Only ===== -->
+  <div class="bu-home-ticker-wrap">
+    <div class="bu-home-ticker-label">
+      <span class="bu-home-ticker-pulse"></span>
+      <i class="fa fa-bullhorn"></i> Latest News
+    </div>
+    <div class="bu-home-ticker-scroll">
+      <ul class="bu-home-ticker-list" id="buHomeNewsTicker">
+        <?php
+        $db->where('is_news', 1);
+        $home_news = $db->get('news_and_announcement');
+        if(is_array($home_news) && count($home_news) > 0) {
+          foreach($home_news as $hn) { ?>
+            <li>
+              <a href="<?php echo href("announcements.php","id=".$hn['id']."");?>">
+                <?php echo $hn['title']?>
+              </a>
+            </li>
+          <?php }
+        } else { ?>
+          <li><a href="<?php echo href("news.php");?>">Welcome to Bhabha University &mdash; Admissions Open 2026</a></li>
+        <?php } ?>
+      </ul>
+    </div>
+    <a href="<?php echo href('news.php'); ?>" class="bu-home-ticker-all">
+      View All <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+  <style>
+  .bu-home-ticker-wrap {
+    width: 100%;
+    background: #040F4A;
+    display: flex;
+    align-items: center;
+    height: 44px;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 4px 20px rgba(4,15,74,0.25);
+    float: left;
+    clear: both;
+  }
+  .bu-home-ticker-label {
+    background: #E8B200;
+    color: #040F4A;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .bu-home-ticker-pulse {
+    width: 7px;
+    height: 7px;
+    background: #040F4A;
+    border-radius: 50%;
+    display: inline-block;
+    animation: htPulse 1.4s infinite;
+  }
+  @keyframes htPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.6); opacity: 0.5; }
+  }
+  .bu-home-ticker-scroll {
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+  .bu-home-ticker-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    animation: htScroll 35s linear infinite;
+  }
+  .bu-home-ticker-list:hover { animation-play-state: paused; }
+  .bu-home-ticker-list li {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 28px 0 0;
+  }
+  .bu-home-ticker-list li::after {
+    content: '·';
+    color: #E8B200;
+    margin-left: 28px;
+    font-size: 16px;
+  }
+  .bu-home-ticker-list li:last-child::after { content: ''; }
+  .bu-home-ticker-list li a {
+    color: rgba(255,255,255,0.88);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+    letter-spacing: 0.2px;
+  }
+  .bu-home-ticker-list li a:hover { color: #E8B200; }
+  .bu-home-ticker-all {
+    background: transparent;
+    border-left: 1px solid rgba(255,255,255,0.15);
+    color: #E8B200;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .bu-home-ticker-all:hover { background: rgba(232,178,0,0.12); color: #E8B200; }
+  @keyframes htScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @media (max-width: 575px) {
+    .bu-home-ticker-label { padding: 0 12px; font-size: 9px; gap: 5px; }
+    .bu-home-ticker-all { padding: 0 12px; }
+    .bu-home-ticker-list li a { font-size: 11.5px; }
+  }
+  </style>
+
+  <div class="kf_content_wrap">
+
     <?php include('inc.chancellor.php');?>
 
 
