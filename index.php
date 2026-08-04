@@ -396,6 +396,7 @@ src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
 
     <?php include('inc.whybhabha.php');?>
     <?php include('inc.faculties_grid.php');?>
+    <?php include('inc.virtual_tour.php');?>
     <?php include('inc.degree_programs.php');?>
     <?php include('inc.infrastructure.php');?>
     <?php include('inc.placements.php');?>
