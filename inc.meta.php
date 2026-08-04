@@ -276,7 +276,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   display: flex !important;
   align-items: center !important;
   background: #fff !important;
-  border-bottom: 1px solid #E2E8F0 !important;
+  /* border-bottom: 1px solid #E2E8F0 !important; */
   height: 38px !important;
   overflow: hidden !important;
 }
