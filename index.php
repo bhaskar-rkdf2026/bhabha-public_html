@@ -219,6 +219,9 @@
 
 <!-- Meta Pixel Code -->
 <script>
+if (typeof window.__chromium_devtools_metrics_reporter !== 'function') {
+  window.__chromium_devtools_metrics_reporter = function() {};
+}
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};

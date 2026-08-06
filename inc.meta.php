@@ -1,3 +1,8 @@
+<script>
+if (typeof window.__chromium_devtools_metrics_reporter !== 'function') {
+  window.__chromium_devtools_metrics_reporter = function() {};
+}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  <link rel="icon" href="<?php echo URL_IMG;?>favicon.png" type="image/gif" sizes="16x16"> 
 <!-- Modern Google Fonts -->

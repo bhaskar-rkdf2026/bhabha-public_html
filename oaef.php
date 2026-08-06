@@ -69,7 +69,7 @@
               </div>
               <!-- HEADING 1 END-->
               <div class="abt_univ_des" id="validation">
-                <div style="margin-left:10px; margin-right:10px;"> <?php echo msg($stat);?></div>
+                <div style="margin-left:10px; margin-right:10px;"> <?php if(!empty($stat)) echo msg($stat);?></div>
                 <form action="" method="post" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-sm-4">

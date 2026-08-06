@@ -399,10 +399,10 @@ function change_date_format_ymd($date){
 
 function msg($msg)
 {
-	if(count($msg))
+	if(!empty($msg) && is_array($msg) && count($msg) > 0)
 	foreach($msg as $type => $content)
 
-	if($msg[$type]!='')
+	if(isset($msg[$type]) && $msg[$type]!='')
 	{
 	 return '<div class="status '.$type.'">
         	<p class="closestatus"><a href="javascript:void(0);" onclick="$(\'.status\').remove()" title="Close">x</a></p>

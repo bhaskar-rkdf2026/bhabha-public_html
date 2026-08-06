@@ -7,15 +7,13 @@
     <div class="bu-topbar-container">
       <div class="bu-topbar-left">
         <ul class="bu-topbar-links">
-          <li><a href="<?php echo href('hbkportal.php'); ?>">Student Portal</a></li>
-          <li><a href="<?php echo href('hbkportal.php'); ?>">Faculty Portal</a></li>
-          <li><a href="<?php echo href('hbkportal.php'); ?>"><span class="bu-blink">ERP Login</span></a></li>
-          <li><a href="<?php echo href('nirf.php'); ?>">Verification</a></li>
+          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Portal</a></li>
+          <li><a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank">Faculty Portal</a></li>
+          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><span class="bu-blink">ERP Login</span></a></li>
+          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Verification</a></li>
           <li><a href="<?php echo href('page.php','id=25'); ?>">NAD</a></li>
-          <li><a href="<?php echo href('hbkportal.php'); ?>">OAP Login</a></li>
-          <?php if(!empty($aryForm['webmail_link'])): ?>
-            <li><a href="<?php echo $aryForm['webmail_link']?>" target="_blank">Web Mail</a></li>
-          <?php endif; ?>
+          <li><a href="https://bhabha.accsofterp.com/OAP/AdminLogin.aspx" target="_blank">OAP Login</a></li>
+          <li><a href="https://webmail.bhabhauniversity.edu.in/" target="_blank">Web Mail</a></li>
           <li><a href="<?php echo href('nirf.php'); ?>">NIRF</a></li>
           <li><a href="<?php echo href("news.php")?>">News</a></li>
           <li><a href="<?php echo href("placements.php")?>">T & P Cell</a></li>

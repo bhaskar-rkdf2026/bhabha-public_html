@@ -115,15 +115,33 @@ if(!$pageData) {
   width: 100% !important;
   border-collapse: collapse !important;
   margin: 24px 0 !important;
-  font-size: 14px !important;
+  font-size: 14.5px !important;
   border-radius: 8px !important;
   overflow: hidden !important;
   box-shadow: 0 4px 16px rgba(6,29,124,0.06) !important;
 }
 
+/* Reset cell children vertical alignment and margins */
+.bu-content-body table th,
+.bu-content-body table td {
+  vertical-align: middle !important;
+}
+
+.bu-content-body table th p,
+.bu-content-body table td p,
+.bu-content-body table th div,
+.bu-content-body table td div,
+.bu-content-body table th span,
+.bu-content-body table td span {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+}
+
 /* Primary Header Row & Title Banner */
 .bu-content-body table th,
-.bu-content-body table tr:first-child td {
+.bu-content-body table tr:first-child td,
+.bu-content-body table tr:first-child th {
   background: #0A1B54 !important;
   color: #ffffff !important;
   font-weight: 700 !important;
@@ -142,26 +160,30 @@ if(!$pageData) {
   color: #FFC107 !important; /* Gold highlight for main title line */
 }
 
-/* Sub-header row styling when 2nd row contains column labels (e.g. S.No, Name of Institute, etc.) */
-.bu-content-body table tr:nth-child(2) td {
-  background: #F8FAFC !important;
-  color: #0A1B54 !important;
-  font-weight: 700 !important;
-  padding: 12px 14px !important;
-  border-bottom: 2px solid #E2E8F0 !important;
-  text-align: center !important;
-}
-.bu-content-body table tr:nth-child(2) td * {
-  color: #0A1B54 !important;
-  font-weight: 700 !important;
-}
-
+/* All Data Rows (cell padding & uniform alignment) */
 .bu-content-body table td {
-  padding: 12px 16px !important;
+  padding: 14px 18px !important;
   border-bottom: 1px solid #E5E7EB !important;
   color: #374151 !important;
   line-height: 1.6 !important;
+  text-align: left !important;
 }
+
+.bu-content-body table tr:not(:first-child) td p,
+.bu-content-body table tr:not(:first-child) td span,
+.bu-content-body table tr:not(:first-child) td div {
+  text-align: left !important;
+}
+
+/* Align bullet/icon/number cells in first column of multi-column tables */
+.bu-content-body table tr:not(:first-child) td:first-child:not(:last-child) {
+  width: 50px !important;
+  text-align: center !important;
+}
+.bu-content-body table tr:not(:first-child) td:first-child:not(:last-child) * {
+  text-align: center !important;
+}
+
 .bu-content-body table tr:nth-child(even) {
   background: #F8FAFC !important;
 }

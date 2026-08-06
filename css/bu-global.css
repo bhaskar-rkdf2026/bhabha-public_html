@@ -798,10 +798,43 @@ footer .row:last-child {
   box-shadow: 0 4px 16px rgba(6,29,124,0.06) !important;
 }
 
+/* Reset cell children vertical alignment and margins */
+.bu-content-body table th,
+.bu-content-body table td {
+  vertical-align: middle !important;
+}
+
+.bu-content-body table th p,
+.bu-content-body table td p,
+.bu-content-body table th div,
+.bu-content-body table td div,
+.bu-content-body table th span,
+.bu-content-body table td span {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+}
+
 /* Default body cells */
 .bu-content-body table td {
-  padding: 12px 16px !important;
+  padding: 14px 18px !important;
   border-bottom: 1px solid var(--border) !important;
+  text-align: left !important;
+}
+
+.bu-content-body table tr:not(:first-child) td p,
+.bu-content-body table tr:not(:first-child) td span,
+.bu-content-body table tr:not(:first-child) td div {
+  text-align: left !important;
+}
+
+/* Align bullet/icon/number cells in first column of multi-column tables */
+.bu-content-body table tr:not(:first-child) td:first-child:not(:last-child) {
+  width: 50px !important;
+  text-align: center !important;
+}
+.bu-content-body table tr:not(:first-child) td:first-child:not(:last-child) * {
+  text-align: center !important;
 }
 
 /* Override all CMS inline colors in table cells (except links) */
@@ -821,8 +854,8 @@ footer .row:last-child {
 .bu-content-body table th,
 .bu-content-body table tr:first-child td {
   background: var(--navy) !important;
-  padding: 14px 16px !important;
-  text-align: left !important;
+  padding: 16px 18px !important;
+  text-align: center !important;
   border-bottom: none !important;
 }
 
