@@ -6,7 +6,7 @@
 
   <!-- Background Video (Infinite Autoplay Loop with Deferred Fast Preloading) -->
   <video class="bu-hero-video" id="buHeroVideo" autoplay loop muted playsinline preload="metadata" poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
-    <source src="<?php echo URL_ROOT;?>new-media/image/hero/hero2.mp4" type="video/mp4">
+    <source src="<?php echo URL_ROOT;?>new-media/image/hero/hero-final.mp4" type="video/mp4">
     <source src="<?php echo URL_ROOT;?>new-media/image/hero/drone-campus.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
@@ -348,7 +348,7 @@
     if (!heroVideo) return;
 
     var videoSources = [
-      '<?php echo URL_ROOT;?>new-media/image/hero/hero2.mp4',
+      '<?php echo URL_ROOT;?>new-media/image/hero/hero-final.mp4',
       '<?php echo URL_ROOT;?>new-media/image/hero/drone-campus.mp4',
       '<?php echo URL_ROOT;?>new-media/image/hero/hero3.mp4',
       '<?php echo URL_ROOT;?>new-media/image/hero/about.mp4'

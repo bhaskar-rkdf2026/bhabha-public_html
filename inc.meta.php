@@ -203,23 +203,24 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 .bu-nav-link i.fa-angle-down { font-size: 10px !important; transition: transform 0.2s !important; }
 .bu-nav-item:hover > .bu-nav-link i.fa-angle-down { transform: rotate(180deg) !important; }
 
-/* ---- DROPDOWN ---- */
+/* ---- DROPDOWN MENU STYLING ---- */
 .bu-dropdown {
   position: absolute !important;
   top: 100% !important;
   left: 0 !important;
   min-width: 240px !important;
   background: #fff !important;
-  border-radius: 6px !important;
-  box-shadow: 0 12px 35px rgba(10,27,84,0.13) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 16px 40px rgba(10,27,84,0.15) !important;
   border: 1px solid #E2E8F0 !important;
-  padding: 6px 0 !important;
+  border-top: 3px solid var(--bu-gold) !important;
+  padding: 6px !important;
   list-style: none !important;
   margin: 0 !important;
   opacity: 0 !important;
   visibility: hidden !important;
   transform: translateY(8px) !important;
-  transition: all 0.22s ease !important;
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease !important;
   z-index: 9999 !important;
 }
 .bu-nav-item:hover > .bu-dropdown {
@@ -227,22 +228,51 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   visibility: visible !important;
   transform: translateY(0) !important;
 }
-.bu-dropdown li { list-style: none !important; }
+.bu-dropdown li { list-style: none !important; margin: 0 !important; }
 .bu-dropdown li a {
-  display: block !important;
-  padding: 9px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 6.5px 14px !important;
   color: #334155 !important;
-  font-size: 12.5px !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
   text-decoration: none !important;
-  transition: all 0.18s ease !important;
+  border-radius: 6px !important;
   border-left: 3px solid transparent !important;
+  transition: all 0.18s ease !important;
+  line-height: 1.35 !important;
 }
 .bu-dropdown li a:hover {
-  background: #F8FAFC !important;
+  background: #F0F4FF !important;
   color: var(--bu-navy) !important;
   border-left-color: var(--bu-gold-dark) !important;
+  padding-left: 17px !important;
   text-decoration: none !important;
+}
+
+/* 2-COLUMN MEGA DROPDOWN LAYOUT */
+@media (min-width: 992px) {
+  .bu-dropdown-2col {
+    min-width: 490px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 3px 6px !important;
+    padding: 10px 10px !important;
+  }
+  .bu-dropdown-2col li a {
+    padding: 6px 12px !important;
+    font-size: 11.5px !important;
+    border-radius: 6px !important;
+  }
+  .bu-dropdown-2col li a:hover {
+    padding-left: 15px !important;
+  }
+  /* Right-align dropdowns near right side of navbar to prevent viewport clipping */
+  .bu-nav-item:nth-child(n+5) > .bu-dropdown-2col {
+    left: auto !important;
+    right: 0 !important;
+  }
 }
 
 /* ---- HEADER ACTIONS ---- */

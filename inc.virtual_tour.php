@@ -338,7 +338,7 @@
             <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/hero2.mp4', this)">
               <i class="fa fa-building"></i> Campus Walk
             </button>
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/hero3.mp4', this)">
+            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/hero2.mp4', this)">
               <i class="fa fa-flask"></i> Labs &amp; Quad
             </button>
             <button class="bu-hvt-tab-btn active" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/about.mp4', this)">

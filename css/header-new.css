@@ -276,22 +276,36 @@ body {
   position: absolute;
   top: 100%;
   left: 0;
-  min-width: 250px;
+  min-width: 240px;
   background-color: #FFFFFF;
-  border-radius: 8px;
-  box-shadow: 0 14px 35px rgba(9, 30, 96, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 16px 40px rgba(9, 30, 96, 0.14);
   border: 1px solid var(--bu-border);
-  padding: 8px 0;
+  border-top: 3px solid var(--bu-gold);
+  padding: 6px;
   margin: 0;
   list-style: none;
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
   z-index: 1050;
 }
 
-.bu-nav-item:hover>.bu-dropdown {
+/* Custom Scrollbar for Dropdown */
+.bu-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+.bu-dropdown::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 4px;
+}
+.bu-dropdown::-webkit-scrollbar-thumb {
+  background: var(--bu-gold-dark);
+  border-radius: 4px;
+}
+
+.bu-nav-item:hover > .bu-dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -305,19 +319,49 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 9px 18px;
+  padding: 7px 14px;
   color: #334155;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
+  border-radius: 6px;
   text-decoration: none;
   transition: all 0.2s ease;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .bu-dropdown li a:hover {
-  background-color: #F8FAFC;
+  background-color: #F0F4FF;
   color: var(--bu-navy);
-  padding-left: 22px;
+  padding-left: 18px;
+}
+
+/* 2-Column Mega-Dropdown Layout for Large Navigation Menus */
+@media (min-width: 992px) {
+  .bu-dropdown-2col {
+    min-width: 490px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 3px 6px !important;
+    padding: 10px 10px !important;
+  }
+
+  .bu-dropdown-2col li a {
+    padding: 6.5px 12px !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+  }
+
+  .bu-dropdown-2col li a:hover {
+    background-color: #F0F4FF !important;
+    color: var(--bu-navy) !important;
+    padding-left: 16px !important;
+  }
+
+  /* Right-align dropdown for items near the right side of navbar to prevent viewport clipping */
+  .bu-nav-item:nth-child(n+5) > .bu-dropdown-2col {
+    left: auto !important;
+    right: 0 !important;
+  }
 }
 
 /* Nested Sub-dropdown */

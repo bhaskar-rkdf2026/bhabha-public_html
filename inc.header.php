@@ -66,7 +66,7 @@
           <!-- About Dropdown -->
           <li class="bu-nav-item">
             <a href="<?php echo href('about.php');?>" class="bu-nav-link">About <i class="fa fa-angle-down"></i></a>
-            <ul class="bu-dropdown">
+            <ul class="bu-dropdown bu-dropdown-2col">
               <li><a href="<?php echo href('about.php');?>">About Us</a></li>
               <li><a href="<?php echo href("page.php","id=20");?>">University Overview</a></li>
               <li><a href="<?php echo href("mission-vision.php");?>">Vision &amp; Mission</a></li>
@@ -87,7 +87,7 @@
           <!-- Schools / Institutes Dynamic Dropdown -->
           <li class="bu-nav-item">
             <a href="<?php echo href("institutes.php")?>" class="bu-nav-link">Schools <i class="fa fa-angle-down"></i></a>
-            <ul class="bu-dropdown">
+            <ul class="bu-dropdown bu-dropdown-2col">
               <?php
               $institutes = $db->get('department');
               if(is_array($institutes) && count($institutes) > 0) {
@@ -129,7 +129,7 @@
           <!-- Research Dropdown -->
           <li class="bu-nav-item">
             <a href="#" class="bu-nav-link">Research <i class="fa fa-angle-down"></i></a>
-            <ul class="bu-dropdown">
+            <ul class="bu-dropdown bu-dropdown-2col">
               <li><a target="_blank" href="<?php echo URL_UPLOAD;?>research/overview.pdf">Research Overview</a></li>
               <li><a href="<?php echo href("page.php","id=3");?>">Research at a Glance</a></li>
               <li><a target="_blank" href="<?php echo href("page.php","id=14");?>">PhD Scholars List</a></li>
@@ -144,7 +144,7 @@
           <!-- Admissions Dropdown -->
           <li class="bu-nav-item">
             <a href="#" class="bu-nav-link">Admissions <i class="fa fa-angle-down"></i></a>
-            <ul class="bu-dropdown">
+            <ul class="bu-dropdown bu-dropdown-2col">
               <li><a href="<?php echo href("enquiry.php")?>">Admission Enquiry & Eligibility</a></li>
               <li><a href="<?php echo href("page.php","id=12");?>">Admission Process</a></li>
               <li><a href="<?php echo href("course.php")?>">Courses, Intake & Eligibility</a></li>
