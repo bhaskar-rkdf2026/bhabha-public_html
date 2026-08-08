@@ -69,12 +69,12 @@
 
       <!-- Core Philosophy -->
       <div class="bu-content-card" style="background:linear-gradient(135deg,#0A1B54,#061D7C); border-color:#0A1B54;">
-        <span class="bu-content-label" style="color:#FFC107;">Philosophy</span>
-        <h2 class="bu-content-h2" style="color:#fff;">Our <em style="color:#FFC107;">Core Philosophy</em></h2>
-        <div class="bu-content-divider"></div>
+        <span class="bu-content-label" style="color:#FFC107 !important;">Philosophy</span>
+        <h2 class="bu-content-h2" style="color:#ffffff !important;">Our <em style="color:#FFC107 !important;">Core Philosophy</em></h2>
+        <div class="bu-content-divider" style="background:rgba(255,255,255,0.15) !important;"></div>
         <div class="bu-content-body">
-          <p style="color:rgba(255,255,255,0.75);">
-            At Bhabha University, we believe that <strong style="color:#fff;">education is transformation</strong>. 
+          <p style="color:#FFFFFF !important; font-size:15.5px !important; line-height:1.75 !important;">
+            At Bhabha University, we believe that <strong style="color:#FFC107 !important;">education is transformation</strong>. 
             Every student who walks through our doors carries with them the potential to change their family, 
             their community, and the world. Our role is to unlock that potential through rigorous academics, 
             mentorship, and an environment that celebrates both excellence and compassion.

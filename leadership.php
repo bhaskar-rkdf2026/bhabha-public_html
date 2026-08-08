@@ -42,15 +42,15 @@
         ?>
         <div style="display:flex; gap:28px; align-items:flex-start; padding:28px 0; border-bottom:1px solid #F3F4F6; flex-wrap:wrap;">
           <?php if($ileadership['image'] != ''): ?>
-          <div style="flex-shrink:0;width:140px;height:160px;background:linear-gradient(135deg,#0A1B54,#061D7C);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 24px rgba(6,29,124,0.15);">
+          <div style="flex-shrink:0; width:150px; height:auto; background:#F8FAFC; border:1px solid #E5E7EB; border-radius:8px; overflow:hidden; box-shadow:0 4px 14px rgba(6,29,124,0.1); padding:4px;">
             <img src="<?php echo URL_UPLOAD;?>leadership/<?php echo $ileadership['image']?>" 
                  alt="<?php echo $ileadership['name']?>"
-                 onerror="this.outerHTML='<i class=\'fa fa-user\' style=\'font-size:56px;color:rgba(255,193,7,0.7);\'></i>'"
-                 style="width:100%;height:100%;object-fit:cover;">
+                 onerror="this.outerHTML='<div style=\'width:142px;height:160px;background:linear-gradient(135deg,#0A1B54,#061D7C);display:flex;align-items:center;justify-content:center;border-radius:6px;\'><i class=\'fa fa-user\' style=\'font-size:56px;color:rgba(255,193,7,0.7);\'></i></div>'"
+                 style="width:100%; height:auto !important; max-height:none !important; object-fit:contain; display:block; border-radius:6px;">
           </div>
           <?php else: ?>
-          <div style="flex-shrink:0;width:140px;height:160px;background:linear-gradient(135deg,#0A1B54,#061D7C);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 24px rgba(6,29,124,0.15);">
-            <i class="fa fa-user" style="font-size:56px;color:rgba(255,193,7,0.7);"></i>
+          <div style="flex-shrink:0; width:150px; height:170px; background:linear-gradient(135deg,#0A1B54,#061D7C); border-radius:8px; display:flex; align-items:center; justify-content:center; overflow:hidden; box-shadow:0 4px 14px rgba(6,29,124,0.15);">
+            <i class="fa fa-user" style="font-size:56px; color:rgba(255,193,7,0.7);"></i>
           </div>
           <?php endif; ?>
           <div style="flex:1; min-width:200px;">
@@ -75,11 +75,13 @@
           ];
           foreach($leaders as $leader): ?>
           <div style="display:flex;gap:24px;align-items:flex-start;padding:24px;background:#F8FAFC;border-radius:8px;border:1px solid #E5E7EB;flex-wrap:wrap;">
-            <div style="flex-shrink:0;width:100px;height:120px;background:linear-gradient(135deg,#0A1B54,#061D7C);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <div style="flex-shrink:0;width:140px;height:auto;background:#FFF;border-radius:8px;border:1px solid #E5E7EB;padding:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
               <?php if($leader['img']): ?>
-                <img src="<?php echo $leader['img'];?>" alt="<?php echo $leader['name'];?>" style="width:100%;height:100%;object-fit:cover;">
+                <img src="<?php echo $leader['img'];?>" alt="<?php echo $leader['name'];?>" style="width:100%;height:auto !important;object-fit:contain;display:block;border-radius:6px;">
               <?php else: ?>
-                <i class="fa fa-user" style="font-size:32px;color:rgba(255,193,7,0.7);"></i>
+                <div style="width:130px;height:150px;background:linear-gradient(135deg,#0A1B54,#061D7C);display:flex;align-items:center;justify-content:center;border-radius:6px;">
+                  <i class="fa fa-user" style="font-size:36px;color:rgba(255,193,7,0.7);"></i>
+                </div>
               <?php endif; ?>
             </div>
             <div style="flex:1;min-width:200px;">

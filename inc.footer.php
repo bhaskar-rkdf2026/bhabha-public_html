@@ -131,9 +131,6 @@
       </iframe>
     </div>
 
-    <!-- Include legacy affiliates logos dynamically inside container for proper layout and spacing -->
-    <?php include('inc.affiliate.php');?>
-
   </div>
 </footer>
 

@@ -222,25 +222,9 @@ if(is_array($course) && count($course)>0)
   </div>
   
   <!--EDU2 FOOTER WRAP START--> 
-  <!--NEWS LETTERS START-->
-  <div class="edu2_ft_topbar_wrap">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="edu2_ft_topbar_des">
-            <h5>Our Achievements : </h5>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="edu2_ft_topbar_des">
-           <marquee>
-           1.Bhabha University has been consistently ranked as top university in Madhya Pradesh. || 2.Bhabha University is a top private university in Bhopal as well as Madhya Pradesh</marquee>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--NEWS LETTERS END--> 
+  <!--ACHIEVEMENTS TICKER START-->
+  <?php include('inc.achievements_ticker.php');?>
+  <!--ACHIEVEMENTS TICKER END--> 
   <!--FOOTER START-->
   <p>Affilation/Approvals</p>
  <?php include('inc.affiliate.php');?>

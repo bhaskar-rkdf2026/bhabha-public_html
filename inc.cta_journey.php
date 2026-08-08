@@ -105,38 +105,70 @@
 }
 
 /* Button 1: Navy */
-.bu-btn-navy {
+.bu-journey-btn.bu-btn-navy {
   background-color: #040F4A !important;
   color: #FFFFFF !important;
+  border: none !important;
 }
-.bu-btn-navy:hover {
-  background-color: #061D7C !important;
+.bu-journey-btn.bu-btn-navy span,
+.bu-journey-btn.bu-btn-navy i {
+  border: none !important;
+  outline: none !important;
+  color: #FFFFFF !important;
+}
+.bu-journey-btn.bu-btn-navy:hover {
+  background-color: #0A1B54 !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px rgba(4, 15, 74, 0.25) !important;
+  box-shadow: 0 8px 20px rgba(4, 15, 74, 0.35) !important;
+}
+.bu-journey-btn.bu-btn-navy:hover span,
+.bu-journey-btn.bu-btn-navy:hover i {
+  color: #FFFFFF !important;
 }
 
 /* Button 2: White */
-.bu-btn-white {
+.bu-journey-btn.bu-btn-white {
   background-color: #FFFFFF !important;
   color: #040F4A !important;
+  border: none !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
 }
-.bu-btn-white:hover {
+.bu-journey-btn.bu-btn-white span,
+.bu-journey-btn.bu-btn-white i {
+  border: none !important;
+  outline: none !important;
+  color: #040F4A !important;
+}
+.bu-journey-btn.bu-btn-white:hover {
   background-color: #F8F7F4 !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+}
+.bu-journey-btn.bu-btn-white:hover span,
+.bu-journey-btn.bu-btn-white:hover i {
+  color: #040F4A !important;
 }
 
 /* Button 3: Outline */
-.bu-btn-outline {
+.bu-journey-btn.bu-btn-outline {
   background-color: transparent !important;
   border: 1.5px solid #040F4A !important;
   color: #040F4A !important;
-  padding: 16.5px 24px !important; /* adjust for border thickness */
+  padding: 16.5px 24px !important;
 }
-.bu-btn-outline:hover {
-  background-color: rgba(4, 15, 74, 0.05) !important;
+.bu-journey-btn.bu-btn-outline span,
+.bu-journey-btn.bu-btn-outline i {
+  border: none !important;
+  outline: none !important;
+  color: #040F4A !important;
+}
+.bu-journey-btn.bu-btn-outline:hover {
+  background-color: rgba(4, 15, 74, 0.06) !important;
   transform: translateY(-2px) !important;
+}
+.bu-journey-btn.bu-btn-outline:hover span,
+.bu-journey-btn.bu-btn-outline:hover i {
+  color: #040F4A !important;
 }
 
 /* ---- RESPONSIVE ---- */

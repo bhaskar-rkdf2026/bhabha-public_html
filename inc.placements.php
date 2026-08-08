@@ -1,5 +1,30 @@
 <?php
-// Bhabha University – Industry & Placements section (Exact Design Match)
+// Bhabha University – Industry & Placements section (Recruiter Logos Integration)
+$recruiterList = [];
+if (isset($db) && is_object($db)) {
+    $dbRecs = $db->get('recruiters');
+    if (is_array($dbRecs) && count($dbRecs) > 0) {
+        $recruiterList = $dbRecs;
+    }
+}
+if (empty($recruiterList)) {
+    $recruiterList = [
+        ['name'=>'TCS', 'image'=>'d3caeae9e816d5fc99453d507f514203.png'],
+        ['name'=>'Tech Mahindra', 'image'=>'287bce7543bd9523612115973d1823e9.png'],
+        ['name'=>'Wipro', 'image'=>'267602a126ca0fa3237b5689caf35b42.png'],
+        ['name'=>'HDFC Bank', 'image'=>'fcd40ef53870b5e70f69092351dd732c.png'],
+        ['name'=>'Syntel', 'image'=>'1f17da56f6e681107ce8fd4e40472e10.png'],
+        ['name'=>'IBM', 'image'=>'36720c47d7ec81cd036be1bf86cad756.png'],
+        ['name'=>'Cognizant', 'image'=>'bbffe2a8fa53d9c33316523169719bdd.png'],
+        ['name'=>'Infosys', 'image'=>'fc5f88c2e5e86434c8cf00d207207846.jpg'],
+        ['name'=>'Zensar', 'image'=>'be6dce6b467138ed5da63bca53af7c79.jpg'],
+        ['name'=>'Mahindra', 'image'=>'fcc7063ae19568816bb5ca014c29437d.jpg'],
+        ['name'=>'L&T', 'image'=>'b00170d10909ec0620948ef6ff111be0.jpg'],
+        ['name'=>'Eicher', 'image'=>'46105367aa015578e7975c6bc5693693.jpg'],
+        ['name'=>'Dell', 'image'=>'bc6e50436615f8493dd4f92cc620be75.png']
+    ];
+}
+$loopRecruiters = array_merge($recruiterList, $recruiterList);
 ?>
 <section class="bu-placements-section">
   <div class="bu-placements-container">
@@ -30,30 +55,16 @@
     
     <div class="bu-place-divider"></div>
     
-    <!-- Bottom Row: Infinite Scrolling Brand Names -->
-    <div class="bu-place-ticker">
+    <!-- Bottom Row: Recruiter Logo Infinite Marquee Track -->
+    <div class="bu-place-ticker" onmouseover="this.querySelector('.bu-place-ticker-track').style.animationPlayState='paused'" onmouseout="this.querySelector('.bu-place-ticker-track').style.animationPlayState='running'">
       <div class="bu-place-ticker-track">
-        <span class="bu-company">Amazon</span>
-        <span class="bu-company">TCS</span>
-        <span class="bu-company">Infosys</span>
-        <span class="bu-company">Wipro</span>
-        <span class="bu-company">Deloitte</span>
-        <span class="bu-company">Accenture</span>
-        <span class="bu-company">Cognizant</span>
-        <span class="bu-company">Capgemini</span>
-        <span class="bu-company">Tech Mahindra</span>
-        <span class="bu-company">HCL Technologies</span>
-        <!-- Duplicate elements for continuous scrolling loop -->
-        <span class="bu-company">Amazon</span>
-        <span class="bu-company">TCS</span>
-        <span class="bu-company">Infosys</span>
-        <span class="bu-company">Wipro</span>
-        <span class="bu-company">Deloitte</span>
-        <span class="bu-company">Accenture</span>
-        <span class="bu-company">Cognizant</span>
-        <span class="bu-company">Capgemini</span>
-        <span class="bu-company">Tech Mahindra</span>
-        <span class="bu-company">HCL Technologies</span>
+        <?php foreach($loopRecruiters as $irec): ?>
+        <div class="bu-logo-pill" title="<?php echo htmlspecialchars($irec['name']); ?>">
+          <img src="<?php echo URL_UPLOAD;?>recruiters/<?php echo $irec['image'];?>" 
+               alt="<?php echo htmlspecialchars($irec['name']);?>" 
+               loading="lazy">
+        </div>
+        <?php endforeach; ?>
       </div>
     </div>
 
@@ -146,36 +157,54 @@
   margin-bottom: 40px !important;
 }
 
-/* Infinite Ticker Row */
+/* Infinite Ticker Row - Recruiter Logos */
 .bu-place-ticker {
   width: 100% !important;
   overflow: hidden !important;
   position: relative !important;
-  padding: 10px 0 !important;
+  padding: 16px 0 !important;
 }
 .bu-place-ticker-track {
   display: flex !important;
-  gap: 80px !important;
+  gap: 24px !important;
   width: max-content !important;
-  animation: buPlaceTickerScroll 28s linear infinite !important;
+  align-items: center !important;
+  animation: buPlaceTickerScroll 35s linear infinite !important;
 }
 @keyframes buPlaceTickerScroll {
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-50%, 0, 0); }
 }
-.bu-company {
-  font-family: 'Playfair Display', Georgia, serif !important;
-  font-size: 26px !important;
-  font-style: italic !important;
-  font-weight: 700 !important;
-  color: rgba(255, 255, 255, 0.35) !important;
-  white-space: nowrap !important;
-  letter-spacing: 0.5px !important;
-  transition: color 0.3s ease !important;
-  cursor: default !important;
+
+.bu-logo-pill {
+  background: #FFFFFF !important;
+  border-radius: 12px !important;
+  padding: 6px 16px !important;
+  height: 88px !important;
+  min-width: 175px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+  overflow: hidden !important;
 }
-.bu-company:hover {
-  color: #FFC107 !important;
+.bu-logo-pill:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 10px 28px rgba(255, 193, 7, 0.45) !important;
+}
+.bu-logo-pill img {
+  height: 72px !important;
+  max-height: 72px !important;
+  max-width: 190px !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  mix-blend-mode: multiply !important;
+  filter: contrast(1.18) brightness(0.98) !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  transform: scale(1.14) !important;
 }
 
 /* ---- RESPONSIVE ---- */

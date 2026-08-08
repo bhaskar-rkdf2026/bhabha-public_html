@@ -56,6 +56,69 @@
       </div>
 
       <!-- Documents List -->
+      <style>
+      .bu-approval-card {
+        display: flex !important;
+        align-items: center !important;
+        gap: 14px !important;
+        padding: 16px 20px !important;
+        background: #F8FAFC !important;
+        border: 1px solid #E5E7EB !important;
+        border-radius: 7px !important;
+        border-left: 3.5px solid #FFC107 !important;
+        text-decoration: none !important;
+        transition: all 0.25s ease !important;
+      }
+      .bu-approval-card .bu-app-title {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        color: #1E293B !important;
+        display: block !important;
+        line-height: 1.4 !important;
+        transition: color 0.25s ease !important;
+      }
+      .bu-approval-card .bu-app-sub {
+        font-size: 11px !important;
+        color: #64748B !important;
+        display: block !important;
+        line-height: 1.3 !important;
+        margin-top: 2px !important;
+        transition: color 0.25s ease !important;
+      }
+      .bu-approval-card .bu-app-icon {
+        font-size: 22px !important;
+        color: #D99B00 !important;
+        flex-shrink: 0 !important;
+        transition: color 0.25s ease !important;
+      }
+      .bu-approval-card .bu-app-link-icon {
+        font-size: 14px !important;
+        color: #D99B00 !important;
+        flex-shrink: 0 !important;
+        transition: color 0.25s ease !important;
+      }
+
+      /* Hover State - White Title, Gold Icons & Subtitle on Dark Navy Card */
+      .bu-approval-card:hover {
+        background: #0A1B54 !important;
+        border-color: #0A1B54 !important;
+        border-left-color: #FFC107 !important;
+        transform: translateX(4px) !important;
+        box-shadow: 0 6px 18px rgba(10, 27, 84, 0.25) !important;
+      }
+      .bu-approval-card:hover .bu-app-title {
+        color: #FFFFFF !important;
+      }
+      .bu-approval-card:hover .bu-app-sub {
+        color: #FFC107 !important;
+        opacity: 0.9 !important;
+      }
+      .bu-approval-card:hover .bu-app-icon,
+      .bu-approval-card:hover .bu-app-link-icon {
+        color: #FFC107 !important;
+      }
+      </style>
+
       <div class="bu-content-card">
         <span class="bu-content-label">Official Documents</span>
         <h2 class="bu-content-h2">Approvals & <em>Recognitions</em></h2>
@@ -69,15 +132,13 @@
           foreach($approvals as $iapprovals) { ?>
           <a target="_blank" 
              href="<?php echo URL_UPLOAD;?>approvals/<?php echo $iapprovals['image']?>"
-             style="display:flex;align-items:center;gap:14px;padding:16px 20px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:7px;border-left:3px solid #FFC107;text-decoration:none;transition:all 0.25s;"
-             onmouseover="this.style.background='#0A1B54'; this.style.color='#ffffff';"
-             onmouseout="this.style.background='#F8FAFC'; this.style.color='';">
-            <i class="fa fa-file-pdf-o" style="font-size:22px;color:#D99B00;flex-shrink:0;"></i>
+             class="bu-approval-card">
+            <i class="fa fa-file-pdf-o bu-app-icon"></i>
             <div style="flex:1;">
-              <span style="font-size:14px;font-weight:600;color:inherit;display:block;line-height:1.4;"><?php echo $iapprovals['title']?></span>
-              <span style="font-size:11px;color:inherit;opacity:0.6;">Click to view PDF document</span>
+              <span class="bu-app-title"><?php echo $iapprovals['title']?></span>
+              <span class="bu-app-sub">Click to view PDF document</span>
             </div>
-            <i class="fa fa-external-link" style="font-size:14px;color:#D99B00;flex-shrink:0;"></i>
+            <i class="fa fa-external-link bu-app-link-icon"></i>
           </a>
           <?php }
           echo '</div>';
@@ -99,9 +160,9 @@
           ];
           echo '<div style="display:grid;gap:10px;">';
           foreach($approvals_list as $ap): ?>
-          <div style="display:flex;align-items:center;gap:14px;padding:16px 20px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:7px;border-left:3px solid #FFC107;">
-            <i class="fa <?php echo $ap['icon'];?>" style="font-size:18px;color:#D99B00;flex-shrink:0;width:20px;text-align:center;"></i>
-            <span style="font-size:14px;font-weight:600;color:#374151;"><?php echo $ap['title'];?></span>
+          <div class="bu-approval-card">
+            <i class="fa <?php echo $ap['icon'];?> bu-app-icon"></i>
+            <span class="bu-app-title"><?php echo $ap['title'];?></span>
           </div>
           <?php endforeach;
           echo '</div>';

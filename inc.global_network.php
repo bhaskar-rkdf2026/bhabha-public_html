@@ -33,7 +33,7 @@
     
     <!-- Bottom Button -->
     <div class="bu-network-btn-wrap">
-      <a href="<?php echo href("gallery.php"); ?>" class="bu-btn-gold">GLOBAL PARTNERSHIPS &nbsp;→</a>
+      <a href="<?php echo href("enquiry.php"); ?>" class="bu-btn-gold">APPLY NOW &nbsp;→</a>
     </div>
 
   </div>

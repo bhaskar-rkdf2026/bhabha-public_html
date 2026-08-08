@@ -419,24 +419,81 @@ section[style*="background-color: #F9F9F9"] {
    8. ACHIEVEMENTS TICKER
    ================================================================ */
 .edu2_ft_topbar_wrap {
-  background: var(--navy-dk) !important;
-  padding: 14px 0 !important;
-  border-top: 2px solid var(--gold) !important;
+  background: #051235 !important;
+  border-top: 2px solid #ffc107 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 12px 0 !important;
+  width: 100% !important;
+  float: left !important;
+  clear: both !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
-.edu2_ft_topbar_des h5 {
-  color: var(--gold) !important;
-  font-size: 12px !important;
-  font-weight: 800 !important;
+
+.bu-ticker-align-row {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.bu-achievements-title h5 {
+  color: #ffc107 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
   letter-spacing: 1px !important;
   text-transform: uppercase !important;
   margin: 0 !important;
-  line-height: 36px !important;
+  padding: 0 !important;
+  line-height: 26px !important;
+  font-family: 'Open Sans', 'Plus Jakarta Sans', sans-serif !important;
+  white-space: nowrap !important;
 }
-.edu2_ft_topbar_des marquee {
-  color: rgba(255,255,255,0.85) !important;
+
+.bu-achievements-title h5 i {
+  color: #ffc107 !important;
+  margin-right: 6px !important;
   font-size: 13px !important;
-  font-weight: 500 !important;
-  line-height: 36px !important;
+}
+
+.bu-achievements-marquee {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.bu-achievements-marquee marquee {
+  color: #ffffff !important;
+  font-size: 13.5px !important;
+  font-weight: 400 !important;
+  font-family: 'Open Sans', 'Plus Jakarta Sans', sans-serif !important;
+  line-height: 26px !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.bu-achievements-marquee .ticker-item {
+  color: #ffffff !important;
+  font-size: 13.5px !important;
+  font-weight: 400 !important;
+  font-family: 'Open Sans', 'Plus Jakarta Sans', sans-serif !important;
+  letter-spacing: 0.3px !important;
+}
+
+.bu-achievements-marquee .ticker-sep {
+  color: #ffc107 !important;
+  font-size: 12px !important;
+  margin: 0 14px !important;
+  opacity: 0.75;
+}
+
+@media (max-width: 767px) {
+  .bu-ticker-align-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .bu-achievements-title {
+    margin-bottom: 8px !important;
+  }
 }
 
 /* ================================================================
