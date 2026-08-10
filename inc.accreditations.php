@@ -4,7 +4,7 @@
 <!-- =================== STATUTORY APPROVALS SECTION =================== -->
 <section class="bu-statutory-section">
   <div class="container" style="max-width:1170px; margin:0 auto; padding:0 15px; text-align:center;">
-    <span class="bu-stat-label">Statutory Approvals</span>
+    <span class="bu-accred-section-label">Statutory Approvals</span>
     <h2 class="bu-stat-title">Recognised by <em>leading bodies.</em></h2>
     <div class="bu-accred-grid">
       <div class="bu-accred-badge">
@@ -62,7 +62,7 @@
   box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
-.bu-stat-label {
+.bu-accred-section-label {
   display: inline-block;
   font-size: 11px;
   font-weight: 800;

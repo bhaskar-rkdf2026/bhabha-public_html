@@ -41,35 +41,35 @@
 <div class="bu-stats-bar">
   <div class="bu-stats-container">
     <div class="bu-stat-item">
-      <span class="bu-stat-number" data-target="15000" data-suffix="+" data-commas="true">0</span>
+      <span class="bu-stat-number" data-target="15000" data-suffix="+" data-commas="true">15,000<sup>+</sup></span>
       <span class="bu-stat-label">STUDENTS</span>
     </div>
     <div class="bu-stat-item">
-      <span class="bu-stat-number" data-target="850" data-suffix="+">0</span>
+      <span class="bu-stat-number" data-target="850" data-suffix="+">850<sup>+</sup></span>
       <span class="bu-stat-label">FACULTY</span>
     </div>
     <div class="bu-stat-item">
-      <span class="bu-stat-number" data-target="200" data-suffix="+">0</span>
+      <span class="bu-stat-number" data-target="200" data-suffix="+">200<sup>+</sup></span>
       <span class="bu-stat-label">PROGRAMS</span>
     </div>
     <div class="bu-stat-item">
-      <span class="bu-stat-number" data-target="15" data-suffix="">0</span>
+      <span class="bu-stat-number" data-target="15" data-suffix="">15</span>
       <span class="bu-stat-label">SCHOOLS</span>
     </div>
     <div class="bu-stat-item">
-      <span class="bu-stat-number" data-target="500" data-suffix="+">0</span>
+      <span class="bu-stat-number" data-target="500" data-suffix="+">500<sup>+</sup></span>
       <span class="bu-stat-label">RECRUITERS</span>
     </div>
     <div class="bu-stat-item">
-      <span class="bu-stat-number" data-target="75" data-suffix="k+">0</span>
+      <span class="bu-stat-number" data-target="75" data-suffix="k+">75k<sup>+</sup></span>
       <span class="bu-stat-label">ALUMNI</span>
     </div>
     <div class="bu-stat-item">
-      <span class="bu-stat-number" data-target="1200" data-suffix="+" data-commas="true">0</span>
+      <span class="bu-stat-number" data-target="1200" data-suffix="+" data-commas="true">1,200<sup>+</sup></span>
       <span class="bu-stat-label">PUBLICATIONS</span>
     </div>
     <div class="bu-stat-item">
-      <span class="bu-stat-number" data-target="150" data-suffix=" ac">0</span>
+      <span class="bu-stat-number" data-target="150" data-suffix=" ac">150 ac</span>
       <span class="bu-stat-label">CAMPUS</span>
     </div>
   </div>
@@ -224,14 +224,13 @@
 
 /* ---- STATS COUNTER BAR ---- */
 .bu-stats-bar {
-  background-color: #F8F5EE !important; /* Cream background matching design */
-  border-top: 4px solid #061D7C !important;
-  border-bottom: 1px solid #E5E0D5 !important;
-  padding: 24px 20px !important;
+  background-color: #FAF7F2 !important; /* Soft cream background matching design */
+  border-top: none !important;
+  border-bottom: 1px solid #EBE6DC !important;
+  padding: 32px 20px 28px !important;
   width: 100% !important;
   position: relative !important;
   z-index: 10 !important;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.04) !important;
   float: left !important;
   clear: both !important;
   display: block !important;
@@ -256,19 +255,33 @@
 }
 .bu-stat-number {
   font-family: 'Playfair Display', Georgia, serif !important;
-  font-size: 28px !important;
+  font-size: 34px !important;
   font-weight: 700 !important;
-  color: #061D7C !important;
-  line-height: 1.1 !important;
+  color: #08184E !important;
+  line-height: 1 !important;
   letter-spacing: -0.5px !important;
-  margin-bottom: 4px !important;
+  margin-bottom: 6px !important;
+}
+.bu-stat-number sup {
+  font-size: 22px !important;
+  font-weight: 400 !important;
+  color: #3867D6 !important;
+  position: relative !important;
+  top: -0.2em !important;
 }
 .bu-stat-label {
-  font-size: 10px !important;
+  display: block !important;
+  font-size: 11px !important;
   font-weight: 800 !important;
   letter-spacing: 1.8px !important;
   text-transform: uppercase !important;
-  color: #6B7280 !important;
+  color: #6C757D !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
 }
 
 /* ---- Responsive ---- */
@@ -332,7 +345,11 @@
         if (useCommas) {
           formattedVal = currentVal.toLocaleString('en-IN');
         }
-        counter.textContent = prefix + formattedVal + suffix;
+        if (suffix === '+' || suffix === 'k+') {
+          counter.innerHTML = prefix + formattedVal + '<sup>' + suffix + '</sup>';
+        } else {
+          counter.innerHTML = prefix + formattedVal + suffix;
+        }
       });
 
       if (progress < 1) {

@@ -25,16 +25,39 @@
       $other_schools = [];
       if(is_array($department) && count($department) > 0) {
         $count = 1;
-        $images = [
-          URL_ROOT . 'new-media/image/school-of-engineering.jpg',
-          URL_ROOT . 'new-media/image/school-of-medical.jpg'
+        $dept_images = [
+          'ENGINEERING'          => URL_ROOT . 'new-media/image/ENGINEERING.jpg',
+          'PHARMACY'             => URL_ROOT . 'new-media/image/PHARMACY.jpg',
+          'DENTAL'               => URL_ROOT . 'new-media/image/DENTAL_11.jpg',
+          'MANAGEMENT'           => URL_ROOT . 'new-media/image/MANAGEMENT.jpg',
+          'COMPUTER'             => URL_ROOT . 'new-media/image/COMPUTER APPLICATION.jpg',
+          'EDUCATION'            => URL_ROOT . 'new-media/image/EDUCATION_11.jpg',
+        ];
+
+        $fallback_images = [
+          URL_ROOT . 'new-media/image/ENGINEERING.jpg',
+          URL_ROOT . 'new-media/image/PHARMACY.jpg',
+          URL_ROOT . 'new-media/image/DENTAL_11.jpg',
+          URL_ROOT . 'new-media/image/MANAGEMENT.jpg',
+          URL_ROOT . 'new-media/image/COMPUTER APPLICATION.jpg',
+          URL_ROOT . 'new-media/image/EDUCATION_11.jpg'
         ];
         
         $main_schools = array_slice($department, 0, 6);
         $other_schools = array_slice($department, 6);
 
         foreach($main_schools as $index => $idepartment) {
-          $img_src = $images[$index % 2];
+          $title_upper = strtoupper(trim($idepartment['title']));
+          $img_src = '';
+          foreach($dept_images as $key => $src) {
+            if(strpos($title_upper, $key) !== false) {
+              $img_src = $src;
+              break;
+            }
+          }
+          if(empty($img_src)) {
+            $img_src = $fallback_images[$index % count($fallback_images)];
+          }
           $num_str = str_pad($count, 2, '0', STR_PAD_LEFT);
           $count++;
       ?>

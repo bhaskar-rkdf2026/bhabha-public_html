@@ -61,6 +61,15 @@ $reelsData = [
           allowtransparency="true"
           allow="encrypted-media; autoplay; clipboard-write; picture-in-picture">
         </iframe>
+        <div class="bu-reel-card-footer">
+          <a href="<?php echo $reel['insta_url']; ?>" target="_blank" class="bu-reel-ig-link" title="Watch full video on Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram Reel
+          </a>
+          <a href="<?php echo href('enquiry.php'); ?>" class="bu-reel-apply-btn" title="Enquire Now for Admissions">
+            APPLY NOW &nbsp;→
+          </a>
+        </div>
       </div>
       <?php endforeach; ?>
     </div>
@@ -81,7 +90,7 @@ $reelsData = [
 /* ── Section Wrapper ── */
 .bu-reels-section {
   background: #FAF8F5;
-  padding: 80px 24px 90px;
+  padding: 80px 24px 30px !important;
   width: 100%;
   float: left;
   clear: both;
@@ -144,7 +153,8 @@ $reelsData = [
   overflow: hidden;
   box-shadow: 0 10px 32px rgba(10, 27, 84, 0.12);
   border: 1px solid rgba(0, 0, 0, 0.08);
-  height: 400px !important;
+  display: flex;
+  flex-direction: column;
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 .bu-reel-embed-card:hover {
@@ -153,9 +163,48 @@ $reelsData = [
 }
 .bu-reel-embed-iframe {
   width: 100%;
-  height: 510px !important;
+  height: 480px !important;
   border: none;
   display: block;
+}
+.bu-reel-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #FAF9F6;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+.bu-reel-ig-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #040F4A !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+}
+.bu-reel-ig-link:hover {
+  color: #3897F0 !important;
+}
+.bu-reel-apply-btn {
+  display: inline-flex;
+  align-items: center;
+  background: #FFC107 !important;
+  color: #040F4A !important;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 5px 14px;
+  border-radius: 6px;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease;
+}
+.bu-reel-apply-btn:hover {
+  background: #040F4A !important;
+  color: #FFC107 !important;
 }
 
 /* ── Footer CTA ── */

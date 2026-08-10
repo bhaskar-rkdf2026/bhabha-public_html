@@ -412,9 +412,9 @@ src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
     
     <?php include('inc.global_network.php');?>
     <?php include('inc.insta_reels.php');?>
-    <?php include('inc.accreditations.php');?>
     <?php include('inc.gallery.php');?>
     <?php include('inc.community_says.php');?>
+    <?php include('inc.accreditations.php');?>
     <?php include('inc.cta_journey.php');?>
   </div>
   

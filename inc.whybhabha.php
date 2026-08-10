@@ -134,7 +134,7 @@
 .bu-why-grid {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
-  gap: 60px 48px !important;
+  gap: 0 !important;
   position: relative !important;
 }
 .bu-why-item {
@@ -142,20 +142,27 @@
   flex-direction: column !important;
   align-items: flex-start !important;
   position: relative !important;
-  padding: 10px 0 !important;
+  padding: 40px 36px !important;
   border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-  padding-right: 30px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: transparent !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer;
+  box-sizing: border-box !important;
 }
 .bu-why-item:nth-child(3n) {
   border-right: none !important;
-  padding-right: 0 !important;
-}
-.bu-why-item:nth-child(-n+3) {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  padding-bottom: 40px !important;
 }
 .bu-why-item:nth-child(n+4) {
-  padding-top: 20px !important;
+  border-bottom: none !important;
+}
+.bu-why-item:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 0 !important;
+  z-index: 2 !important;
 }
 .bu-why-icon {
   font-size: 24px !important;
@@ -164,6 +171,10 @@
   height: 32px !important;
   display: flex !important;
   align-items: center !important;
+  transition: transform 0.3s ease !important;
+}
+.bu-why-item:hover .bu-why-icon {
+  transform: scale(1.15) !important;
 }
 .bu-why-title {
   font-family: 'Playfair Display', Georgia, serif !important;

@@ -419,3 +419,95 @@
   }
 }
 </style>
+
+<!-- ===== FLOATING WHATSAPP BUTTON (Bottom Left) ===== -->
+<a href="https://wa.me/919165025500?text=Hello%20Bhabha%20University,%20I%20have%20an%20admission%20query." target="_blank" class="bu-whatsapp-float" title="Chat with Bhabha University on WhatsApp" rel="noopener noreferrer">
+  <div class="bu-wa-pulse"></div>
+  <svg class="bu-wa-icon" viewBox="0 0 32 32" fill="currentColor">
+    <path d="M16 2a13.9 13.9 0 0 0-11.9 21.2L2 30l7-1.8A13.9 13.9 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.9-1.6l-.4-.2-4.4 1.1 1.2-4.3-.3-.4A11.5 11.5 0 1 1 16 27.5zm6.3-8.6c-.3-.2-2-.9-2.3-1s-.6-.2-.8.2-.9 1.1-1.1 1.3-.4.2-.7.1a9.2 9.2 0 0 1-2.7-1.7 10.1 10.1 0 0 1-1.9-2.3c-.2-.3 0-.5.1-.7l.5-.6c.1-.2.2-.4.3-.5.1-.2 0-.4 0-.5s-.8-2-1.1-2.7c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.7.1-1.1.5-.4.4-1.5 1.5-1.5 3.6s1.5 4.2 1.7 4.5c.2.3 3 4.6 7.3 6.4 1 .4 1.8.7 2.4.9 1 .3 2 .3 2.7.2.8-.1 2.5-1 2.8-2s.3-1.8.2-2c-.1-.1-.3-.2-.6-.3z"/>
+  </svg>
+  <span class="bu-wa-tooltip">Chat on WhatsApp</span>
+</a>
+
+<style>
+.bu-whatsapp-float {
+  position: fixed !important;
+  bottom: 24px !important;
+  left: 24px !important;
+  width: 58px !important;
+  height: 58px !important;
+  background-color: #25D366 !important;
+  color: #FFFFFF !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 99999 !important;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45) !important;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease !important;
+  text-decoration: none !important;
+}
+.bu-whatsapp-float:hover {
+  transform: scale(1.12) translateY(-4px) !important;
+  box-shadow: 0 14px 32px rgba(37, 211, 102, 0.6) !important;
+  color: #FFFFFF !important;
+}
+.bu-wa-icon {
+  width: 32px !important;
+  height: 32px !important;
+  fill: #FFFFFF !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+.bu-wa-pulse {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  background-color: rgba(37, 211, 102, 0.6) !important;
+  z-index: 1 !important;
+  animation: waPulse 2s infinite !important;
+}
+@keyframes waPulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.bu-wa-tooltip {
+  position: absolute !important;
+  left: 70px !important;
+  background: #040F4A !important;
+  color: #FFFFFF !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  white-space: nowrap !important;
+  box-shadow: 0 6px 18px rgba(4, 15, 74, 0.25) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateX(-8px) !important;
+  transition: opacity 0.3s ease, transform 0.3s ease !important;
+}
+.bu-whatsapp-float:hover .bu-wa-tooltip {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+@media (max-width: 575px) {
+  .bu-whatsapp-float {
+    bottom: 18px !important;
+    left: 18px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+  .bu-wa-icon {
+    width: 26px !important;
+    height: 26px !important;
+  }
+  .bu-wa-tooltip {
+    display: none !important;
+  }
+}
+</style>
