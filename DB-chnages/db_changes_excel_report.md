@@ -1,0 +1,64 @@
+# Database Changes & Admin Mapping Report (Excel / CSV Export)
+
+The database changes report has been exported as an Excel-compatible CSV file:
+- **Export File Path**: [db_changes_export.csv](file:///d:/xampp/htdocs/bhabha/bhabha-public_html/db_changes_export.csv)
+
+You can double-click or open [db_changes_export.csv](file:///d:/xampp/htdocs/bhabha/bhabha-public_html/db_changes_export.csv) in **Microsoft Excel**, **Google Sheets**, or any spreadsheet viewer.
+
+---
+
+## 1. Database Migration Summary
+
+| Change Type | Target Table | Column / Key Name | Data Type / Default Value | Homepage Section / Purpose |
+| :--- | :--- | :--- | :--- | :--- |
+| `ALTER TABLE` | `course` | `duration` | `VARCHAR(50) DEFAULT "4 yrs"` | Degree Programs Cards - Course Duration |
+| `ALTER TABLE` | `course` | `eligibility` | `VARCHAR(100) DEFAULT "10+2 PCM 60%"` | Degree Programs Cards - Eligibility Criteria |
+| `ALTER TABLE` | `course` | `seats` | `VARCHAR(50) DEFAULT "120"` | Degree Programs Cards - Total Seats |
+| `ALTER TABLE` | `course` | `is_featured` | `TINYINT(1) DEFAULT 0` | Degree Programs Cards - Highlight as Featured |
+| `ALTER TABLE` | `events` | `event_date` | `DATE NULL` | News & Events - Event Date (Date Picker) |
+| `ALTER TABLE` | `events` | `category` | `VARCHAR(50) DEFAULT "EVENTS"` | News & Events - Category (ADMISSIONS, RESEARCH, etc.) |
+| `ALTER TABLE` | `leadership` | `quote` | `VARCHAR(500) NULL` | Chancellor / Leader Highlight Quote |
+| `INSERT ROW` | `settings` | `placement_rate` | `98%` | Industry & Placements Counter Rate |
+| `INSERT ROW` | `settings` | `placement_highest_pkg` | `₹52 LPA` | Industry & Placements Highest Package |
+| `INSERT ROW` | `settings` | `placement_total_recruiters` | `500+` | Industry & Placements Total Recruiters |
+| `INSERT ROW` | `settings` | `research_patents` | `250+` | Research & Innovation Patents Filed Counter |
+| `INSERT ROW` | `settings` | `research_publications` | `1200+` | Research & Innovation Publications Counter |
+| `INSERT ROW` | `settings` | `research_grants` | `₹85 Cr` | Research & Innovation Active Grants Counter |
+| `INSERT ROW` | `settings` | `research_mous` | `60+` | Research & Innovation Global MoUs Counter |
+| `INSERT ROW` | `settings` | `research_featured_card` | `Featured: DST-funded sustainable...` | Research Featured Highlight Card Text |
+| `INSERT ROW` | `settings` | `achievements_ticker` | `1. Bhabha University has... || 2. ...` | Achievements Top Marquee Ticker Items |
+| `INSERT ROW` | `settings` | `global_network_partners` | `University of Toronto, TU Munich...` | International MoUs University Tags |
+| `INSERT ROW` | `settings` | `insta_reels_codes` | `Dbr0ycHAi-x,DanDix7AeZq,Dacmhdnj...` | Instagram Reels Video Embed Codes |
+| `INSERT ROW` | `settings` | `chancellor_quote` | `“We bridge academic brilliance...”` | Chancellor Message Quote Text |
+| `INSERT ROW` | `settings` | `chancellor_recog1_title` | `UGC` | Chancellor Badge 1 Title |
+| `INSERT ROW` | `settings` | `chancellor_recog1_sub` | `RECOGNISED` | Chancellor Badge 1 Subtitle |
+| `INSERT ROW` | `settings` | `chancellor_recog2_title` | `NAAC` | Chancellor Badge 2 Title |
+| `INSERT ROW` | `settings` | `chancellor_recog2_sub` | `A+ GRADE` | Chancellor Badge 2 Subtitle |
+| `INSERT ROW` | `settings` | `chancellor_recog3_title` | `AICTE` | Chancellor Badge 3 Title |
+| `INSERT ROW` | `settings` | `chancellor_recog3_sub` | `APPROVED` | Chancellor Badge 3 Subtitle |
+
+---
+
+## 2. Complete Homepage Section to Admin & DB Mapping
+
+| S.No. | Homepage Section | Frontend Partial File | Admin Page | Database Table | Key Fields / Columns Used |
+| :---: | :--- | :--- | :--- | :--- | :--- |
+| **1** | Header & Navigation | `inc.header.php` | `admin/settings.php` | `settings` | `phone_one`, `phone_two`, `email`, `address`, `erp_login` |
+| **2** | Hero Slider / Banners | `inc.hero.php` | `admin/slider.php` | `slider` | `title`, `top_heading`, `description`, `image` |
+| **3** | Latest News Ticker | `index.php` (`buHomeNewsTicker`) | `admin/news.php` | `news_and_announcement` | `title`, `is_news`, `status` |
+| **4** | Chancellor's Message | `inc.chancellor.php` | `admin/leadership.php` & `admin/settings.php` | `leadership`, `settings` | `name`, `designation`, `quote`, `image`, `about`, `chancellor_quote` |
+| **5** | Why Bhabha Highlights | `inc.whybhabha.php` | `admin/settings.php` | `settings` | `siteSettings` |
+| **6** | Schools & Faculties Grid | `inc.faculties_grid.php` | `admin/department.php` | `department` | `title`, `description`, `icon`, `image`, `status` |
+| **7** | Virtual Campus Tour | `inc.virtual_tour.php` | `admin/settings.php` | `settings` | `youtube_id`, `virtual_tour_video` |
+| **8** | Degree Programs / Courses | `inc.degree_programs.php` | `admin/course.php` | `course`, `program` | `course`, `program`, `duration`, `eligibility`, `seats`, `is_featured` |
+| **9** | Campus & Infrastructure | `inc.infrastructure.php` | `admin/infrastructure.php` | `infrastructure` | `title`, `description`, `image` |
+| **10** | Industry & Placements | `inc.placements.php` | `admin/recruiters.php` & `admin/settings.php` | `recruiters`, `settings` | `name`, `image`, `placement_rate`, `placement_highest_pkg`, `placement_total_recruiters` |
+| **11** | Research & Innovation | `inc.research.php` | `admin/settings.php` | `settings` | `research_patents`, `research_publications`, `research_grants`, `research_mous`, `research_featured_card` |
+| **12** | News & Events | `inc.events.php` | `admin/events.php` | `events` | `title`, `description`, `event_date`, `category`, `image` |
+| **13** | Global Network Partners | `inc.global_network.php` | `admin/settings.php` | `settings` | `global_network_partners` |
+| **14** | Instagram Reels Feed | `inc.insta_reels.php` | `admin/settings.php` | `settings` | `insta_reels_codes` |
+| **15** | Campus Photo Gallery | `inc.gallery.php` | `admin/gallery.php` | `gallery` | `title`, `image`, `category` |
+| **16** | Voices of Bhabha (Testimonials) | `inc.community_says.php` | `admin/testimonial.php` | `testimonial` | `name`, `designation`, `testimonial`, `image` |
+| **17** | Statutory Approvals | `inc.accreditations.php` | `admin/approvals.php` | `approvals` | `title`, `description`, `image` |
+| **18** | Achievements Marquee Ticker | `inc.achievements_ticker.php` | `admin/settings.php` | `settings` | `achievements_ticker` |
+| **19** | Footer & Contact Info | `inc.footer.php` | `admin/settings.php` | `settings` | `address`, `phone_one`, `email`, `facebook`, `twitter`, `youtube_id` |
