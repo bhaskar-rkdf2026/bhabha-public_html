@@ -299,9 +299,16 @@
 
       <!-- Placed Students Grid Card -->
       <div class="bu-content-card">
-        <span class="bu-content-label">Student Success Stories</span>
-        <h2 class="bu-content-h2">Recent <em>Placed Students</em></h2>
-        <div class="bu-content-divider"></div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+          <div>
+            <span class="bu-content-label">Student Success Stories</span>
+            <h2 class="bu-content-h2" style="margin-bottom:0;">Recent <em>Placed Students</em></h2>
+          </div>
+          <a href="<?php echo URL_ROOT;?>upload/media/9018b4daec2ac10a45dfd539260998f5.pdf" target="_blank" style="background:#0A1B54; color:#FFC107; font-weight:800; font-size:13px; letter-spacing:1px; text-transform:uppercase; padding:12px 24px; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; box-shadow:0 4px 16px rgba(10,27,84,0.2); transition:transform 0.25s ease;">
+             <i class="fa fa-download" style="margin-right:8px; font-size:16px;"></i> Placement Record
+          </a>
+        </div>
+        <div class="bu-content-divider" style="margin-top:20px;"></div>
 
         <div class="bu-placed-grid">
           <?php
@@ -338,9 +345,16 @@
       $recruiters = $db->get('recruiters');
       if(is_array($recruiters) && count($recruiters) > 0): ?>
       <div class="bu-content-card">
-        <span class="bu-content-label">Corporate Partners</span>
-        <h2 class="bu-content-h2">Our Major <em>Recruiters</em></h2>
-        <div class="bu-content-divider"></div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+          <div>
+            <span class="bu-content-label">Corporate Partners</span>
+            <h2 class="bu-content-h2" style="margin-bottom:0;">Our Major <em>Recruiters</em></h2>
+          </div>
+          <a href="<?php echo URL_ROOT;?>upload/media/f27e76c6a5c21432282101555c225b35.jpg" target="_blank" style="background:#0A1B54; color:#FFC107; font-weight:800; font-size:13px; letter-spacing:1px; text-transform:uppercase; padding:12px 24px; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; box-shadow:0 4px 16px rgba(10,27,84,0.2); transition:transform 0.25s ease;">
+             <i class="fa fa-picture-o" style="margin-right:8px; font-size:16px;"></i> View All Recruiters
+          </a>
+        </div>
+        <div class="bu-content-divider" style="margin-top:20px;"></div>
         <div class="bu-recruiter-grid">
           <?php foreach($recruiters as $irecruiters): ?>
           <div class="bu-recruiter-item">
@@ -351,6 +365,7 @@
           </div>
           <?php endforeach; ?>
         </div>
+
       </div>
       <?php endif; ?>
 

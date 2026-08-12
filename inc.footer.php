@@ -105,6 +105,8 @@
           <a href="https://twitter.com/bhabhaUniversty" target="_blank" class="bu-social-badge" title="Twitter"><i class="fa fa-twitter"></i></a>
           <a href="https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g" target="_blank" class="bu-social-badge" title="YouTube"><i class="fa fa-youtube-play"></i></a>
           <a href="https://in.linkedin.com/company/bhabha-university" target="_blank" class="bu-social-badge" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+          <a href="https://in.pinterest.com/buwebsite2020/" target="_blank" class="bu-social-badge" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+          <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" class="bu-social-badge" title="Google Mail"><i class="fa fa-google"></i></a>
         </div>
       </div>
 

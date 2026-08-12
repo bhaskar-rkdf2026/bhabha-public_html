@@ -55,193 +55,153 @@ if(isset($_POST['submit']))
       <!--HEADER START-->
       <?php include('inc.header.php');?>
       <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>Alumni</h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#">Alumni</a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
+      <?php
+      $page_title    = 'Alumni <em>Registration</em>';
+      $page_subtitle = 'Stay connected with the Bhabha University family and join our growing network of successful alumni.';
+      $page_icon     = 'fa-graduation-cap';
+      $breadcrumbs   = [
+        ['label' => 'Home',     'url' => URL_ROOT],
+        ['label' => 'Alumni',   'url' => '#'],
+      ];
+      include('inc.page-banner.php');
+      ?>
+<style>
+.bu-full-width-container { max-width: 1200px; margin: 0 auto; padding: 50px 20px 80px; font-family: 'Plus Jakarta Sans', sans-serif; }
+.bu-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 20px; }
+.bu-form-group { margin-bottom: 16px; }
+.bu-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: #061D7C; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.bu-form-control { width: 100%; padding: 12px 16px; border: 1px solid #D1D5DB !important; border-radius: 6px; font-size: 14px; color: #1F2937; background: #F9FAFB; transition: all 0.25s ease; box-sizing: border-box; }
+.bu-form-control:focus { outline: none; border-color: #0A1B54; background: #ffffff; box-shadow: 0 0 0 3px rgba(10,27,84,0.1); }
+.bu-btn-submit { background: #0A1B54; color: #FFC107; font-weight: 800; font-size: 14px; letter-spacing: 1.2px; text-transform: uppercase; padding: 14px 36px; border: none; border-radius: 6px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 16px rgba(10,27,84,0.2); }
+.bu-btn-submit:hover { background: #061D7C; color: #ffffff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,27,84,0.3); }
+</style>
+
+<div class="bu-full-width-container" id="validation">
+  <div style="margin-bottom:20px;"> <?php echo msg($stat);?></div>
+  
+  <div style="background:#fff; border:1px solid #E5E7EB; border-radius:12px; padding:40px; box-shadow:0 8px 24px rgba(6,29,124,0.04);">
+    <h2 style="font-size:26px; font-weight:800; color:#061D7C; margin-bottom:30px; font-family:'Playfair Display', serif;">Alumni Registration</h2>
+    <form action="" method="post">
+      
+      <div class="bu-form-grid">
+        <div class="bu-form-group">
+          <label>Name</label>
+          <input type="text" name="name" class="bu-form-control" value="<?php echo $_POST['name'];?>">
         </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>Alumni Registration </h3>
-              </div>
-                  <!-- HEADING 1 END-->
-                  <div class="abt_univ_des" id="validation">
-                        
-          <div style="margin-left:10px; margin-right:10px;"> <?php echo msg($stat);?></div>
-                <form action="" method="post">
-                <div class="row">
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Name</span>
-                          <input type="text" name="name" value="<?php echo $_POST['name'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Father's Name</span>
-                          <input type="text" name="fname" value="<?php echo $_POST['fname'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Nick Name (During College)</span>
-                          <input type="text" name="nick_name" value="<?php echo $_POST['nick_name'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Gender</span>
-                          <select name="gender">
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                      </select>
-                        </div>
-                  </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>College </span>
-                          <input type="text" name="college" value="<?php echo $_POST['college'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Course </span>
-                          <input type="text" name="course" value="<?php echo $_POST['course'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Branch </span>
-                          <input type="text" name="branch" value="<?php echo $_POST['branch'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Admission Year </span>
-                          <input type="text" name="admission_year" value="<?php echo $_POST['admission_year'];?>" >
-                        </div>
-                  </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Further Study</span>
-                          <input type="text" name="further_study" value="<?php echo $_POST['further_study'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Date of Birth</span>
-                          <input type="text" class="datepicker" name="dob" value="<?php echo $_POST['dob'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Mobile No.</span>
-                          <input type="text" name="mobile" value="<?php echo $_POST['mobile'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Email ID</span>
-                          <input type="text" name="email" value="<?php echo $_POST['email'];?>" >
-                        </div>
-                  </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-sm-12">
-                    <div class="inputs_des"> <span>Permanent Address</span>
-                          <input type="text" name="address" value="<?php echo $_POST['address'];?>" >
-                        </div>
-                  </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Occupation</span>
-                          <select name="occupation">
-                        <option value="">Select Occupation</option>
-                        <option value="Private Job">Private Job</option>
-                        <option value="Government Job">Government Job</option>
-                        <option value="Self Employed">Self Employed</option>
-                      </select>
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Company</span>
-                          <input type="text" name="company" value="<?php echo $_POST['company'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Job Title</span>
-                          <input type="text" name="job_title" value="<?php echo $_POST['job_title'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Current City</span>
-                          <input type="text" name="city" value="<?php echo $_POST['city'];?>" >
-                        </div>
-                  </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Marital Status</span>
-                          <select name="marital">
-                        <option value="">Select Marital Status</option>
-                        <option value="Married">Married</option>
-                        <option value="Unmarried">Unmarried</option>
-                      </select>
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>If married, Date of Marriage</span>
-                          <input type="text" class="datepicker" name="dom" value="<?php echo $_POST['dom'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>LinkedIn profile link</span>
-                          <input type="text" name="linkedin" value="<?php echo $_POST['linkedin'];?>" >
-                        </div>
-                  </div>
-                      <div class="col-sm-3">
-                    <div class="inputs_des"> <span>Facebook profile link</span>
-                          <input type="text" name="facebook" value="<?php echo $_POST['facebook'];?>" >
-                        </div>
-                  </div>
-                  </div>
-                  
-                  <div class="row">
-                  <div class="col-sm-12">
-                      <div class="contact_des">
-                    <button type="submit" name="submit">Submit</button>
-                  </div></div>
-                  </div>
-                    </form>
-              </div>
-                </div>
-          </div>
-            </div>
+        <div class="bu-form-group">
+          <label>Father's Name</label>
+          <input type="text" name="fname" class="bu-form-control" value="<?php echo $_POST['fname'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Nick Name (During College)</label>
+          <input type="text" name="nick_name" class="bu-form-control" value="<?php echo $_POST['nick_name'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Gender</label>
+          <select name="gender" class="bu-form-control no-selectric">
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
       </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
+      
+      <div class="bu-form-grid">
+        <div class="bu-form-group">
+          <label>College</label>
+          <input type="text" name="college" class="bu-form-control" value="<?php echo $_POST['college'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Course</label>
+          <input type="text" name="course" class="bu-form-control" value="<?php echo $_POST['course'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Branch</label>
+          <input type="text" name="branch" class="bu-form-control" value="<?php echo $_POST['branch'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Admission Year</label>
+          <input type="text" name="admission_year" class="bu-form-control" value="<?php echo $_POST['admission_year'];?>">
+        </div>
+      </div>
+      
+      <div class="bu-form-grid">
+        <div class="bu-form-group">
+          <label>Further Study</label>
+          <input type="text" name="further_study" class="bu-form-control" value="<?php echo $_POST['further_study'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Date of Birth</label>
+          <input type="text" name="dob" class="bu-form-control datepicker" value="<?php echo $_POST['dob'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Mobile No.</label>
+          <input type="tel" name="mobile" class="bu-form-control" value="<?php echo $_POST['mobile'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Email ID</label>
+          <input type="email" name="email" class="bu-form-control" value="<?php echo $_POST['email'];?>">
+        </div>
+      </div>
+      
+      <div class="bu-form-group" style="margin-bottom:20px;">
+        <label>Permanent Address</label>
+        <input type="text" name="address" class="bu-form-control" value="<?php echo $_POST['address'];?>">
+      </div>
+      
+      <div class="bu-form-grid">
+        <div class="bu-form-group">
+          <label>Occupation</label>
+          <select name="occupation" class="bu-form-control no-selectric">
+            <option value="">Select Occupation</option>
+            <option value="Private Job">Private Job</option>
+            <option value="Government Job">Government Job</option>
+            <option value="Self Employed">Self Employed</option>
+          </select>
+        </div>
+        <div class="bu-form-group">
+          <label>Company</label>
+          <input type="text" name="company" class="bu-form-control" value="<?php echo $_POST['company'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Job Title</label>
+          <input type="text" name="job_title" class="bu-form-control" value="<?php echo $_POST['job_title'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Current City</label>
+          <input type="text" name="city" class="bu-form-control" value="<?php echo $_POST['city'];?>">
+        </div>
+      </div>
+      
+      <div class="bu-form-grid">
+        <div class="bu-form-group">
+          <label>Marital Status</label>
+          <select name="marital" class="bu-form-control no-selectric">
+            <option value="">Select Marital Status</option>
+            <option value="Married">Married</option>
+            <option value="Unmarried">Unmarried</option>
+          </select>
+        </div>
+        <div class="bu-form-group">
+          <label>If married, Date of Marriage</label>
+          <input type="text" name="dom" class="bu-form-control datepicker" value="<?php echo $_POST['dom'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>LinkedIn profile link</label>
+          <input type="text" name="linkedin" class="bu-form-control" value="<?php echo $_POST['linkedin'];?>">
+        </div>
+        <div class="bu-form-group">
+          <label>Facebook profile link</label>
+          <input type="text" name="facebook" class="bu-form-control" value="<?php echo $_POST['facebook'];?>">
+        </div>
+      </div>
+      
+      <div style="margin-top:20px;">
+        <button type="submit" name="submit" class="bu-btn-submit">Submit Registration <i class="fa fa-paper-plane" style="margin-left:6px;"></i></button>
+      </div>
+    </form>
   </div>
+</div>
       <!--FOOTER START-->
       <?php include('inc.footer.php');?>
       

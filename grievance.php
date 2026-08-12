@@ -41,116 +41,84 @@ if(isset($_POST['submit']))
       <!--HEADER START-->
       <?php include('inc.header.php');?>
       <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>Grievance</h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#">Grievance</a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
+      <?php
+      $page_title    = 'Grievance <em>Redressal</em>';
+      $page_subtitle = 'We are committed to providing a safe, transparent, and fair environment for our students and staff.';
+      $page_icon     = 'fa-balance-scale';
+      $breadcrumbs   = [
+        ['label' => 'Home',     'url' => URL_ROOT],
+        ['label' => 'Grievance','url' => '#'],
+      ];
+      include('inc.page-banner.php');
+      ?>
+<style>
+.bu-full-width-container { max-width: 1000px; margin: 0 auto; padding: 50px 20px 80px; font-family: 'Plus Jakarta Sans', sans-serif; }
+.bu-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 20px; }
+.bu-form-group { margin-bottom: 16px; }
+.bu-form-group label { display: block; font-size: 12.5px; font-weight: 700; color: #061D7C; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.bu-form-control { width: 100%; padding: 12px 16px; border: 1px solid #D1D5DB !important; border-radius: 6px; font-size: 14px; color: #1F2937; background: #F9FAFB; transition: all 0.25s ease; box-sizing: border-box; }
+.bu-form-control:focus { outline: none; border-color: #0A1B54; background: #ffffff; box-shadow: 0 0 0 3px rgba(10,27,84,0.1); }
+.bu-btn-submit { background: #0A1B54; color: #FFC107; font-weight: 800; font-size: 14px; letter-spacing: 1.2px; text-transform: uppercase; padding: 14px 36px; border: none; border-radius: 6px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 16px rgba(10,27,84,0.2); }
+.bu-btn-submit:hover { background: #061D7C; color: #ffffff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,27,84,0.3); }
+</style>
+
+<div class="bu-full-width-container" id="validation">
+  <div style="margin-bottom:20px;"> <?php echo msg($stat);?></div>
+  
+  <div style="background:#fff; border:1px solid #E5E7EB; border-radius:12px; padding:40px; box-shadow:0 8px 24px rgba(6,29,124,0.04);">
+    <h2 style="font-size:26px; font-weight:800; color:#061D7C; margin-bottom:30px; font-family:'Playfair Display', serif;">Submit your Grievance</h2>
+    <form action="" method="post">
+      <div class="bu-form-grid">
+        <div class="bu-form-group">
+          <label>Full Name</label>
+          <input type="text" name="name" class="bu-form-control" value="<?php echo $_POST['name'];?>" required>
         </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>Grievance </h3>
-              </div>
-                  <!-- HEADING 1 END-->
-                  <div class="abt_univ_des" id="validation">
-                <div style="margin-left:10px; margin-right:10px;"> <?php echo msg($stat);?></div>
-                <form action="" method="post">
-                      <div class="row">
-                    <div class="col-sm-4">
-                          <div class="inputs_des"> <span>Full Name</span>
-                        <input type="text" name="name" value="<?php echo $_POST['name'];?>" >
-                      </div>
-                        </div>
-                    <div class="col-sm-4">
-                          <div class="inputs_des"> <span>Course</span>
-                        <select name="course" id="course" required>
-                              <option value=""> Select Course</option>
-                              <?php
-$course = $db->get('course');
-if(is_array($course) && count($course)>0)
-          {
-              foreach($course as $icourse)
-              { 
-?>
-                              <option value="<?php echo $icourse['id']?>"> <?php echo $icourse['course']?></option>
-                              <?php 
-			  }
-		  }?>
-                            </select>
-                      </div>
-                        </div>
-                    <div class="col-sm-4">
-                          <div class="inputs_des"> <span>Year</span>
-                        <input required type="number" name="year" value="<?php echo $_POST['year'];?>" >
-                      </div>
-                        </div>
-                  </div>
-                      <div class="row">
-                    <div class="col-sm-4">
-                          <div class="inputs_des"> <span>Enrollment Number</span>
-                        <input required type="text" name="enrollment" value="<?php echo $_POST['enrollment'];?>" >
-                      </div>
-                        </div>
-                    <div class="col-sm-4">
-                          <div class="inputs_des"> <span>Mobile No.</span>
-                        <input required type="tel" name="mobile" value="<?php echo $_POST['mobile'];?>" >
-                      </div>
-                        </div>
-                    <div class="col-sm-4">
-                          <div class="inputs_des"> <span>Email ID</span>
-                        <input required type="text" name="email" value="<?php echo $_POST['email'];?>" >
-                      </div>
-                        </div>
-                  </div>
-                      <div class="row">
-                    <div class="col-sm-12">
-                          <div class="inputs_des"> <span>Grievance Details</span>
-                        <input required type="text" name="grievance" value="<?php echo $_POST['grievance'];?>" >
-                      </div>
-                        </div>
-                  </div>
-                      <div class="row" style="margin-top:20px;">
-                    <div class="col-sm-12">
-                          <div class="contact_des">
-                        <button type="submit" name="submit">Submit</button>
-                      </div>
-                        </div>
-                  </div>
-                    </form>
-              </div>
-                </div>
-          </div>
-            </div>
+        <div class="bu-form-group">
+          <label>Course</label>
+          <select name="course" id="course" class="bu-form-control no-selectric" required>
+            <option value=""> Select Course</option>
+            <?php
+            $course = $db->get('course');
+            if(is_array($course) && count($course)>0) {
+              foreach($course as $icourse) { 
+            ?>
+            <option value="<?php echo $icourse['id']?>"> <?php echo $icourse['course']?></option>
+            <?php 
+              }
+            }
+            ?>
+          </select>
+        </div>
+        <div class="bu-form-group">
+          <label>Year</label>
+          <input type="number" name="year" class="bu-form-control" value="<?php echo $_POST['year'];?>" required>
+        </div>
       </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
+      
+      <div class="bu-form-grid">
+        <div class="bu-form-group">
+          <label>Enrollment Number</label>
+          <input type="text" name="enrollment" class="bu-form-control" value="<?php echo $_POST['enrollment'];?>" required>
+        </div>
+        <div class="bu-form-group">
+          <label>Mobile No.</label>
+          <input type="tel" name="mobile" class="bu-form-control" value="<?php echo $_POST['mobile'];?>" required>
+        </div>
+        <div class="bu-form-group">
+          <label>Email ID</label>
+          <input type="email" name="email" class="bu-form-control" value="<?php echo $_POST['email'];?>" required>
+        </div>
+      </div>
+      
+      <div class="bu-form-group" style="margin-bottom:30px;">
+        <label>Grievance Details</label>
+        <textarea name="grievance" class="bu-form-control" rows="5" required><?php echo $_POST['grievance'];?></textarea>
+      </div>
+      
+      <button type="submit" name="submit" class="bu-btn-submit">Submit Grievance <i class="fa fa-paper-plane" style="margin-left:6px;"></i></button>
+    </form>
   </div>
+</div>
       <!--FOOTER START-->
       <?php include('inc.footer.php');?>
       
