@@ -234,31 +234,19 @@ $breadcrumbs   = $breadcrumbs   ?? [['label' => 'Home', 'url' => URL_ROOT], ['la
   clear: both;
 }
 .bu-content-body ul {
-  list-style: none;
-  padding: 0;
+  list-style-type: disc;
+  padding-left: 24px;
   margin: 0 0 16px 0;
 }
 .bu-content-body ul li {
-  position: relative;
-  padding-left: 24px;
   font-size: 14.5px;
   line-height: 1.7;
   color: #4B5563;
   padding-top: 4px;
   padding-bottom: 8px;
   border-bottom: 1px solid #F3F4F6;
-  display: block;
 }
 .bu-content-body ul li:last-child { border-bottom: none; }
-.bu-content-body ul li::before {
-  content: '\f00c';
-  font-family: 'FontAwesome';
-  color: #D99B00;
-  font-size: 11px;
-  position: absolute;
-  left: 0;
-  top: 7px;
-}
 .bu-content-body a {
   color: #0A1B54;
   font-weight: 600;

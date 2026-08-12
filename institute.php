@@ -72,7 +72,7 @@ $sub_department = $db->get('sub_department');
   gap: 0;
   list-style: none;
   margin: 0 0 24px 0;
-  padding: 0;
+  padding: 0 0 0 20px;
   flex-wrap: wrap;
 }
 .bu-inst-breadcrumb li {
@@ -100,17 +100,9 @@ $sub_department = $db->get('sub_department');
   display: flex;
   align-items: flex-start;
   gap: 28px;
+  padding-left: 20px;
 }
-.bu-inst-hero-icon {
-  flex-shrink: 0;
-  width: 80px; height: 80px;
-  background: rgba(255,193,7,0.12);
-  border: 2px solid rgba(255,193,7,0.35);
-  border-radius: 16px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 32px;
-  color: #FFC107;
-}
+
 .bu-inst-hero-text { flex: 1; }
 .bu-inst-hero-badge {
   display: inline-block;
@@ -146,7 +138,7 @@ $sub_department = $db->get('sub_department');
   display: flex;
   gap: 40px;
   margin-top: 36px;
-  padding-top: 28px;
+  padding: 28px 0 0 20px;
   border-top: 1px solid rgba(255,255,255,0.1);
   flex-wrap: wrap;
 }
@@ -607,9 +599,7 @@ $sub_department = $db->get('sub_department');
       </ul>
 
       <div class="bu-inst-hero-top">
-        <div class="bu-inst-hero-icon">
-          <i class="fa fa-university"></i>
-        </div>
+
         <div class="bu-inst-hero-text">
           <span class="bu-inst-hero-badge">Bhabha University · Institute</span>
           <h1 class="bu-inst-hero-title"><?php echo htmlspecialchars($aryData['institute_name']);?></h1>

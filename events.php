@@ -453,7 +453,7 @@ body {
             <?php 
             $evtImg = !empty($aryData['image']) ? URL_UPLOAD . 'events/' . $aryData['image'] : URL_ROOT . 'images/banner4.jpg';
             ?>
-            <img src="<?php echo $evtImg; ?>" alt="<?php echo htmlspecialchars($aryData['title']); ?>" class="bu-evt-banner-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/about-img.jpg';">
+            <img src="<?php echo $evtImg; ?>" alt="<?php echo htmlspecialchars($aryData['title']); ?>" class="bu-evt-banner-img" onerror="this.src='<?php echo URL_ROOT;?>images/banner4.jpg';">
             <span class="bu-evt-badge-overlay"><i class="fa fa-calendar-check-o"></i> Official Campus Event</span>
           </div>
 
@@ -537,7 +537,7 @@ body {
                 $thumb = !empty($oevt['image']) ? URL_UPLOAD . 'events/' . $oevt['image'] : URL_ROOT . 'images/banner4.jpg';
             ?>
             <a href="<?php echo href('events.php', 'id=' . $oevt['id']); ?>" class="bu-recent-event">
-              <img src="<?php echo $thumb; ?>" alt="<?php echo htmlspecialchars($oevt['title']); ?>" class="bu-recent-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/about-img.jpg';">
+              <img src="<?php echo $thumb; ?>" alt="<?php echo htmlspecialchars($oevt['title']); ?>" class="bu-recent-img" onerror="this.src='<?php echo URL_ROOT;?>images/banner4.jpg';">
               <div class="bu-recent-title"><?php echo htmlspecialchars($oevt['title']); ?></div>
             </a>
             <?php 
@@ -576,7 +576,7 @@ body {
         ?>
         <div class="bu-dir-card">
           <div class="bu-dir-img-wrap">
-            <img src="<?php echo $eImg; ?>" alt="<?php echo htmlspecialchars($evt['title']); ?>" class="bu-dir-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/about-img.jpg';">
+            <img src="<?php echo $eImg; ?>" alt="<?php echo htmlspecialchars($evt['title']); ?>" class="bu-dir-img" onerror="this.src='<?php echo URL_ROOT;?>images/banner4.jpg';">
           </div>
           <div class="bu-dir-body">
             <h3 class="bu-dir-title"><?php echo htmlspecialchars($evt['title']); ?></h3>

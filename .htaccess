@@ -62,6 +62,15 @@ RewriteRule program/(.*)/$			program.php?id=$1	[NC,L,QSA]
 RewriteRule syllabus/$				syllabus.php				[NC,L,QSA]
 RewriteRule virtual/$				virtual.php				[NC,L,QSA]
 RewriteRule departments/(.*)/$		departments.php?id=$1		[NC,L,QSA]
+RewriteRule nirf/$					nirf.php					[NC,L,QSA]
+RewriteRule auditreport/$			auditreport.php				[NC,L,QSA]
+RewriteRule ugc-proforma/$			ugc-proforma.php			[NC,L,QSA]
+RewriteRule BUquestionPapers_demo/$	BUQuestionPapers_demo.php	[NC,L,QSA]
+RewriteRule events/$				events.php					[NC,L,QSA]
+RewriteRule downlod1/$				downlod1.php				[NC,L,QSA]
+RewriteRule BUquestionPapers/$		BUQuestionPapers.php		[NC,L,QSA]
+RewriteRule mandatory-disclosure/$	mandatory-disclosure.php	[NC,L,QSA]
+RewriteRule public-md/$				public-md.php				[NC,L,QSA]
 
 # BEGIN cPanel-generated php ini directives, do not edit
 # Manual editing of this file may result in unexpected behavior.

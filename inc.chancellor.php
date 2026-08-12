@@ -1,5 +1,6 @@
 <?php
 // Bhabha University – Redesigned Chancellor's Message Section
+$chancellor_video_url = "new-media/image/hero/sadhna-mam.mp4"; // E.g., "uploads/chancellor_video.mp4". Leave empty to show image.
 ?>
 <section class="bu-chancellor-section">
   <div class="bu-chancellor-container">
@@ -7,7 +8,14 @@
     <!-- LEFT: Image & Gold Quote Card -->
     <div class="bu-chancellor-img-col">
       <div class="bu-chancellor-img-wrapper">
-        <img src="<?php echo URL_IMG;?>vcpic.jpg" alt="Dr. Sadhna Kapoor, Chancellor Bhabha University" class="bu-chancellor-img" onerror="this.src='https://www.bhabhauniversity.edu.in/images/vcpic.jpg'">
+        <?php if(!empty($chancellor_video_url)): ?>
+          <video id="chancellor-video" src="<?php echo $chancellor_video_url; ?>" class="bu-chancellor-img" autoplay muted loop style="background:#000;"></video>
+          <button id="chancellor-mute-btn" class="bu-chancellor-mute-btn" onclick="toggleChancellorMute()">
+            <i class="fa fa-volume-off"></i>
+          </button>
+        <?php else: ?>
+          <img src="<?php echo URL_IMG;?>vcpic.jpg" alt="Dr. Sadhna Kapoor, Chancellor Bhabha University" class="bu-chancellor-img" onerror="this.src='https://www.bhabhauniversity.edu.in/images/vcpic.jpg'">
+        <?php endif; ?>
         <div class="bu-chancellor-quote-card">
           <p class="bu-quote-text">“We bridge academic brilliance with industrial pragmatism.”</p>
           <span class="bu-quote-author">DR. SADHNA KAPOOR · CHANCELLOR</span>
@@ -87,6 +95,36 @@
   image-rendering: crisp-edges !important;
   image-rendering: high-quality !important;
   filter: contrast(1.04) saturate(1.05) brightness(1.01) !important;
+}
+video.bu-chancellor-img {
+  width: 100% !important;
+  height: 450px !important;
+  max-height: 450px !important;
+  object-fit: contain !important;
+  background: #000 !important;
+  border-radius: 6px !important;
+}
+.bu-chancellor-mute-btn {
+  position: absolute !important;
+  top: 15px !important;
+  right: 15px !important;
+  background: rgba(0,0,0,0.6) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s !important;
+}
+.bu-chancellor-mute-btn:hover {
+  background: rgba(255,193,7,0.9) !important;
+  color: #000 !important;
 }
 .bu-chancellor-quote-card {
   position: absolute !important;
@@ -242,3 +280,19 @@
   }
 }
 </style>
+
+<script>
+function toggleChancellorMute() {
+  var video = document.getElementById("chancellor-video");
+  var btnIcon = document.querySelector("#chancellor-mute-btn i");
+  if (video.muted) {
+    video.muted = false;
+    btnIcon.classList.remove("fa-volume-off");
+    btnIcon.classList.add("fa-volume-up");
+  } else {
+    video.muted = true;
+    btnIcon.classList.remove("fa-volume-up");
+    btnIcon.classList.add("fa-volume-off");
+  }
+}
+</script>

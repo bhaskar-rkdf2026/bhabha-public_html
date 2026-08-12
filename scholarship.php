@@ -145,7 +145,7 @@
           <li><i class="fa fa-file-text-o"></i> Caste Certificate (Attested Photocopy)</li>
           <li><i class="fa fa-file-text-o"></i> MP Domicile Certificate</li>
           <li><i class="fa fa-file-text-o"></i> Income Certificate of Parents</li>
-          <li><i class="fa fa-id-card-o"></i> Aadhar Card &amp; Samagra ID</li>
+          <li><i class="fa fa-credit-card"></i> Aadhar Card &amp; Samagra ID</li>
           <li><i class="fa fa-graduation-cap"></i> 10th &amp; 12th Marksheet Photocopy</li>
           <li><i class="fa fa-picture-o"></i> Passport Size Photographs</li>
         </ul>

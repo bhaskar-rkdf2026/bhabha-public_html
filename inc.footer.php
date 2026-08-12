@@ -7,7 +7,62 @@
     <!-- TOP SECTION: 5 Columns -->
     <div class="bu-footer-grid">
       
-      <!-- Column 1: Bhabha University Logo & Info -->
+
+
+      <!-- Column 1: Quick Links 1 -->
+      <div class="bu-footer-col">
+        <h4 class="bu-footer-heading">QUICK LINKS</h4>
+        <ul class="bu-footer-links">
+          <li><a href="https://dte.mponline.gov.in/portal/services/onlinecounselling/counshomepage/home.aspx" target="_blank"><i class="fa fa-angle-right"></i> M.P. Online Counselling</a></li>
+          <li><a href="http://www.mptechedu.org/" target="_blank"><i class="fa fa-angle-right"></i> Directorate Technical Education M.P.</a></li>
+          <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> Anti Ragging</a></li>
+          <li><a href="http://governor.mp.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> Hon'ble Governor : Raj Bhavan MP</a></li>
+          <li><a href="<?php echo href("hbkportal.php"); ?>"><i class="fa fa-angle-right"></i> Dr Homi Bhabha Online Knowledge Portal</a></li>
+          <li><a href="<?php echo href("downlod1.php"); ?>"><i class="fa fa-angle-right"></i> Downloads</a></li>
+          <li><a href="<?php echo href("events.php"); ?>"><i class="fa fa-angle-right"></i> DETAILS OF ACTIVITIES/EVENTS</a></li>
+          <li><a href="https://ncte.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> NCTE</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 2: Quick Links 2 -->
+      <div class="bu-footer-col">
+        <h4 class="bu-footer-heading">IMPORTANT LINKS</h4>
+        <ul class="bu-footer-links">
+          <li><a href="https://voters.eci.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> Voter Portal</a></li>
+          <li><a href="https://scholarshipportal.mp.nic.in/Index.aspx" target="_blank"><i class="fa fa-angle-right"></i> MP Scholarship Portal 2.0</a></li>
+          <li><a href="https://scholarships.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> National Scholarship Portal</a></li>
+          <li><a href="https://drive.google.com/file/d/1jhIfUzZbjtOWSCnYu77C0MM5C8U5vumt/view" target="_blank"><i class="fa fa-angle-right"></i> Prospectus 2024-25</a></li>
+          <li><a href="<?php echo href("page.php", "id=staff-details"); ?>"><i class="fa fa-angle-right"></i> Staff Details</a></li>
+          <li><a href="<?php echo href("page.php", "id=income-expenditure-details"); ?>"><i class="fa fa-angle-right"></i> Income Expenditure Details</a></li>
+          <li><a href="http://www.mppurc.mp.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> MPPURC</a></li>
+          <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> NATIONAL RAGGING PREVENTION PROGRAMME</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Rules & Regulations + Socials -->
+      <div class="bu-footer-col">
+        <h4 class="bu-footer-heading">RULES AND REGULATIONS</h4>
+        <ul class="bu-footer-links">
+          <li><a href="<?php echo href("term-and-condition.php"); ?>"><i class="fa fa-angle-right"></i> Terms &amp; Conditions</a></li>
+          <li><a href="<?php echo href("privacy-policy.php"); ?>"><i class="fa fa-angle-right"></i> Privacy Policy</a></li>
+          <li><a href="<?php echo href("refund-policy.php"); ?>"><i class="fa fa-angle-right"></i> Refund And Cancellation Policy</a></li>
+          <li><a href="<?php echo URL_ROOT; ?>sitemap.xml" target="_blank"><i class="fa fa-angle-right"></i> Site Map</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Announcements -->
+      <div class="bu-footer-col">
+        <h4 class="bu-footer-heading">ANNOUNCEMENTS</h4>
+        <ul class="bu-footer-links">
+          <li><a href="<?php echo href("announcements.php"); ?>"><i class="fa fa-angle-right"></i> Admissions Open 2026-27</a></li>
+          <li><a href="<?php echo href("announcements.php"); ?>"><i class="fa fa-angle-right"></i> Counselling Schedule</a></li>
+          <li><a href="<?php echo href("announcements.php"); ?>"><i class="fa fa-angle-right"></i> Vice Chancellor (I/C) Appointment Notification (1/7/2026)</a></li>
+          <li><a href="<?php echo href("announcements.php"); ?>"><i class="fa fa-angle-right"></i> Rescheduling Of BSc Nursing 1st Sem (RE) Examination April 2026</a></li>
+          <li><a href="<?php echo href("notice.php"); ?>"><i class="fa fa-angle-right"></i> Notice : Academic Integration Of SWAYAM MOOCs; July Session 2026</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact -->
       <div class="bu-footer-col bu-footer-info-col">
         <div class="bu-footer-logo-wrap">
           <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Bhabha University Logo" class="bu-footer-logo" onerror="this.src='https://www.bhabhauniversity.edu.in/images/Bhabha university logo.png'">
@@ -24,83 +79,33 @@
         <div class="bu-footer-contact-details">
           <div class="bu-contact-row">
             <i class="fa fa-map-marker"></i>
-            <span>University Estate, Sector 12, Bhopal, MP 462001, India</span>
+            <span>Jatkhedi, NH-12, Hoshangabad Road, Bhopal, Madhya Pradesh Pin-462026</span>
           </div>
           <div class="bu-contact-row">
             <i class="fa fa-phone"></i>
-            <a href="tel:<?php echo !empty($aryForm['phone_one']) ? $aryForm['phone_one'] : '+919165025500'; ?>">
-              <?php echo !empty($aryForm['phone_one']) ? $aryForm['phone_one'] : '+91 91650 25500'; ?>
-            </a>
+            <span>
+              Phone: 0755-4246498<br>
+              For Admission: <a href="tel:9111105431">9111105431</a>, <a href="tel:9165025500">9165025500</a>
+            </span>
           </div>
           <div class="bu-contact-row">
             <i class="fa fa-envelope"></i>
-            <a href="mailto:<?php echo !empty($aryForm['email']) ? $aryForm['email'] : 'info@bhabhauniversity.edu.in'; ?>">
-              <?php echo !empty($aryForm['email']) ? $aryForm['email'] : 'info@bhabhauniversity.edu.in'; ?>
-            </a>
+            <span>
+              Email:<br>
+              <a href="mailto:info@bhabhauniversity.edu.in">info@bhabhauniversity.edu.in</a>,<br>
+              <a href="mailto:bhabhauniversitybpl@gmail.com">bhabhauniversitybpl@gmail.com</a>
+            </span>
           </div>
         </div>
 
-        <!-- Social Badges -->
-        <div class="bu-footer-socials">
+        <h4 class="bu-footer-heading" style="margin-top: 30px;">SOCIAL LINKS</h4>
+        <div class="bu-footer-socials" style="margin-top: 15px;">
           <a href="https://www.facebook.com/BhabhaUniversityIndia/" target="_blank" class="bu-social-badge" title="Facebook"><i class="fa fa-facebook"></i></a>
           <a href="https://www.instagram.com/bhabhauniversitybhopal/" target="_blank" class="bu-social-badge" title="Instagram"><i class="fa fa-instagram"></i></a>
-          <a href="https://in.linkedin.com/company/bhabha-university" target="_blank" class="bu-social-badge" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
           <a href="https://twitter.com/bhabhaUniversty" target="_blank" class="bu-social-badge" title="Twitter"><i class="fa fa-twitter"></i></a>
           <a href="https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g" target="_blank" class="bu-social-badge" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+          <a href="https://in.linkedin.com/company/bhabha-university" target="_blank" class="bu-social-badge" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
         </div>
-      </div>
-
-      <!-- Column 2: Academics -->
-      <div class="bu-footer-col">
-        <h4 class="bu-footer-heading">ACADEMICS</h4>
-        <ul class="bu-footer-links">
-          <li><a href="<?php echo href("course.php"); ?>">Undergraduate</a></li>
-          <li><a href="<?php echo href("course.php"); ?>">Postgraduate</a></li>
-          <li><a href="<?php echo href("faculties.php"); ?>">Faculties &amp; Institutes</a></li>
-          <li><a href="<?php echo href("syllabus.php"); ?>">Scheme &amp; Syllabus</a></li>
-          <li><a href="<?php echo href("academic.php"); ?>">Academic Calendar</a></li>
-        </ul>
-      </div>
-
-      <!-- Column 3: University -->
-      <div class="bu-footer-col">
-        <h4 class="bu-footer-heading">UNIVERSITY</h4>
-        <ul class="bu-footer-links">
-          <li><a href="<?php echo href("about.php"); ?>">About Us</a></li>
-          <li><a href="<?php echo href("leadership.php"); ?>">Leadership</a></li>
-          <li><a href="<?php echo href("mission-vision.php"); ?>">Vision &amp; Mission</a></li>
-          <li><a href="<?php echo href("infrastructure.php"); ?>">Campus Infrastructure</a></li>
-          <li><a href="<?php echo href("approvals.php"); ?>">Approvals &amp; Recognitions</a></li>
-          <li><a href="<?php echo href("nirf.php"); ?>">NIRF Rankings</a></li>
-          <li><a href="<?php echo href("auditreport.php"); ?>">Audit Report</a></li>
-        </ul>
-      </div>
-
-      <!-- Column 4: Resources -->
-      <div class="bu-footer-col">
-        <h4 class="bu-footer-heading">RESOURCES</h4>
-        <ul class="bu-footer-links">
-          <li><a href="<?php echo href("research.php"); ?>">Research &amp; Innovation</a></li>
-          <li><a href="<?php echo href("scholarship.php"); ?>">Scholarships &amp; Aid</a></li>
-          <li><a href="<?php echo href("downlod1.php"); ?>">Form Downloads</a></li>
-          <li><a href="<?php echo href("BUQuestionPapers.php"); ?>">Previous Question Papers</a></li>
-          <li><a href="<?php echo href("mandatory-disclosure.php"); ?>">Mandatory Disclosures</a></li>
-          <li><a href="<?php echo href("public-md.php"); ?>">Public Disclosure</a></li>
-          <li><a href="<?php echo href("ugc-proforma.php"); ?>">UGC Proforma</a></li>
-        </ul>
-      </div>
-
-      <!-- Column 5: Community -->
-      <div class="bu-footer-col">
-        <h4 class="bu-footer-heading">COMMUNITY &amp; SUPPORT</h4>
-        <ul class="bu-footer-links">
-          <li><a href="<?php echo href("contact.php"); ?>">Student Services</a></li>
-          <li><a href="<?php echo href("alumni.php"); ?>">Alumni Network</a></li>
-          <li><a href="<?php echo href("jobs.php"); ?>">Careers &amp; Jobs</a></li>
-          <li><a href="<?php echo href("placements.php"); ?>">Training &amp; Placements</a></li>
-          <li><a href="<?php echo href("grievance.php"); ?>">Grievance Redressal</a></li>
-          <li><a href="<?php echo href("news.php"); ?>">Media &amp; News</a></li>
-        </ul>
       </div>
 
     </div>
@@ -160,7 +165,7 @@
 /* 5 Columns Layout */
 .bu-footer-grid {
   display: grid !important;
-  grid-template-columns: 1.5fr repeat(4, 1fr) !important;
+  grid-template-columns: repeat(4, 1fr) 1.5fr !important;
   gap: 40px 30px !important;
   margin-bottom: 50px !important;
 }

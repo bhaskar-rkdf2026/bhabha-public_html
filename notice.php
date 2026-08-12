@@ -524,7 +524,7 @@
                 <h3 class="bu-notice-title"><?php echo htmlspecialchars($title); ?></h3>
 
                 <?php if(!empty($desc)): ?>
-                  <p class="bu-notice-desc"><?php echo nl2br(htmlspecialchars($desc)); ?></p>
+                  <p class="bu-notice-desc"><?php echo nl2br(htmlspecialchars(strip_tags($desc))); ?></p>
                 <?php endif; ?>
 
                 <div class="bu-notice-actions">
@@ -596,13 +596,6 @@
             </div>
           </div>
 
-          <!-- ALERT SUBSCRIBE WIDGET -->
-          <div class="bu-alert-box">
-            <i class="fa fa-bell-o" style="font-size:32px; color:#FFC107; margin-bottom:10px; display:inline-block;"></i>
-            <h4>Never Miss an Update</h4>
-            <p>Get instant email notifications for exam time-tables, result announcements, and campus news.</p>
-            <a href="<?php echo href('contact.php');?>" class="bu-alert-btn">Subscribe to Alerts</a>
-          </div>
 
           <!-- QUICK LINKS -->
           <div class="bu-sidebar-card">
@@ -610,7 +603,6 @@
             <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;">
               <li><a href="<?php echo href('course.php');?>" style="color:#0A1B54; font-size:13px; font-weight:700; text-decoration:none;"><i class="fa fa-angle-right" style="color:#FFC107; margin-right:6px;"></i> Academic Programs</a></li>
               <li><a href="<?php echo href('news.php');?>" style="color:#0A1B54; font-size:13px; font-weight:700; text-decoration:none;"><i class="fa fa-angle-right" style="color:#FFC107; margin-right:6px;"></i> Press Coverage &amp; Media</a></li>
-              <li><a href="<?php echo href('contact.php');?>" style="color:#0A1B54; font-size:13px; font-weight:700; text-decoration:none;"><i class="fa fa-angle-right" style="color:#FFC107; margin-right:6px;"></i> Student Support Cell</a></li>
             </ul>
           </div>
 

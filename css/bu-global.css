@@ -809,27 +809,15 @@ footer .row:last-child {
 
 /* CMS Unordered & Ordered Lists Styling */
 .bu-content-body ul {
-  list-style: none !important;
-  padding: 0 !important;
+  list-style-type: disc !important;
+  padding-left: 24px !important;
   margin: 0 0 20px 0 !important;
 }
 .bu-content-body ul li {
-  position: relative !important;
-  padding-left: 24px !important;
   font-size: 14.5px !important;
   line-height: 1.75 !important;
   color: var(--text-mid) !important;
   margin-bottom: 10px !important;
-  display: block !important;
-}
-.bu-content-body ul li::before {
-  content: '\f00c' !important;
-  font-family: 'FontAwesome' !important;
-  color: var(--gold-dk) !important;
-  font-size: 11px !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 4px !important;
 }
 
 .bu-content-body ol {

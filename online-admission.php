@@ -312,12 +312,12 @@ if(isset($_POST['submit']))
 /* ---- Form Controls ---- */
 .bu-fc {
   width: 100%;
-  padding: 10px 13px;
-  border: 1.5px solid #D1D5DB;
-  border-radius: 7px;
+  padding: 10px 13px !important;
+  border: 1.5px solid #D1D5DB !important;
+  border-radius: 7px !important;
   font-size: 13.5px;
   color: #1F2937;
-  background: #F9FAFB;
+  background: #F9FAFB !important;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.22s ease;
   box-sizing: border-box;
@@ -565,7 +565,7 @@ textarea.bu-fc { resize: vertical; min-height: 72px; }
   <div class="bu-adm-hero">
     <div class="bu-adm-hero-inner">
       <div class="bu-adm-hero-icon">
-        <i class="fa fa-wpforms"></i>
+        <i class="fa fa-list-alt"></i>
       </div>
       <div class="bu-adm-hero-text">
         <ul class="bu-adm-breadcrumb">
@@ -628,7 +628,7 @@ textarea.bu-fc { resize: vertical; min-height: 72px; }
             </div>
             <div class="bu-fg">
               <label>Gender <span class="req">*</span></label>
-              <select name="gender" class="bu-fc" required>
+              <select name="gender" class="bu-fc no-selectric" required>
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -697,7 +697,7 @@ textarea.bu-fc { resize: vertical; min-height: 72px; }
             </div>
             <div class="bu-fg">
               <label>Select Category <span class="req">*</span></label>
-              <select name="category" class="bu-fc" required>
+              <select name="category" class="bu-fc no-selectric" required>
                 <option value="">Select Category</option>
                 <option value="GEN">GEN</option>
                 <option value="OBC">OBC</option>
@@ -709,7 +709,7 @@ textarea.bu-fc { resize: vertical; min-height: 72px; }
           <div class="bu-fg-3" style="margin-bottom:20px;">
             <div class="bu-fg">
               <label>Domicile Certificate <span class="req">*</span></label>
-              <select name="domicile_c" class="bu-fc" required>
+              <select name="domicile_c" class="bu-fc no-selectric" required>
                 <option value="">Select Domicile</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -717,7 +717,7 @@ textarea.bu-fc { resize: vertical; min-height: 72px; }
             </div>
             <div class="bu-fg">
               <label>Income Certificate <span class="req">*</span></label>
-              <select name="income_c" class="bu-fc" required>
+              <select name="income_c" class="bu-fc no-selectric" required>
                 <option value="">Select Income</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -725,7 +725,7 @@ textarea.bu-fc { resize: vertical; min-height: 72px; }
             </div>
             <div class="bu-fg">
               <label>Category Certificate <span class="req">*</span></label>
-              <select name="category_c" class="bu-fc" required>
+              <select name="category_c" class="bu-fc no-selectric" required>
                 <option value="">Select Category</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -738,7 +738,7 @@ textarea.bu-fc { resize: vertical; min-height: 72px; }
           <div class="bu-fg-2" style="margin-bottom:20px;">
             <div class="bu-fg">
               <label>Course <span class="req">*</span></label>
-              <select name="course" id="course" class="bu-fc" required>
+              <select name="course" id="course" class="bu-fc no-selectric" required>
                 <option value="">Select Course</option>
                 <?php
                 $courses = $db->get('course');
@@ -752,7 +752,7 @@ textarea.bu-fc { resize: vertical; min-height: 72px; }
             </div>
             <div class="bu-fg">
               <label>Branch</label>
-              <select name="branch" id="branch" class="bu-fc">
+              <select name="branch" id="branch" class="bu-fc no-selectric">
                 <option value="">Select Branch</option>
               </select>
             </div>
@@ -927,7 +927,7 @@ textarea.bu-fc { resize: vertical; min-height: 72px; }
             </div>
             <div class="bu-fg">
               <label>Know About Us</label>
-              <select name="know-about" class="bu-fc">
+              <select name="know-about" class="bu-fc no-selectric">
                 <option value="">Select Know About Us</option>
                 <option value="Advertisement">Advertisement</option>
                 <option value="Newspaper">Newspaper</option>

@@ -13,7 +13,7 @@ if (typeof window.__chromium_devtools_metrics_reporter !== 'function') {
 <link rel="stylesheet" href="<?php echo URL_CSS;?>font-awesome.min.css">
 <link href="<?php echo URL_CSS;?>bootstrap.min.css" rel="stylesheet">
 <!-- BU Global Page Redesign CSS -->
-<link href="<?php echo URL_CSS;?>bu-global.css" rel="stylesheet">
+<link href="<?php echo URL_CSS;?>bu-global.css?v=<?php echo time(); ?>" rel="stylesheet">
 
 <style>
 /* ============================================================

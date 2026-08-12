@@ -59,6 +59,18 @@ $department = $db->getOne('department');
 .bu-content-body table tr:hover {
   background: #F1F5F9 !important;
 }
+.bu-content-body table th,
+.bu-content-body table td {
+  word-break: normal !important;
+}
+.bu-content-body table th:nth-child(1),
+.bu-content-body table td:nth-child(1) {
+  min-width: 150px !important;
+}
+.bu-content-body table th:nth-child(2),
+.bu-content-body table td:nth-child(2) {
+  min-width: 200px !important;
+}
 
 .bu-cta-box {
   background: linear-gradient(135deg, #0A1B54 0%, #061D7C 100%);

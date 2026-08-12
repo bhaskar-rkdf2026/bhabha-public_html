@@ -86,7 +86,7 @@
           $pillars = [
             ['title'=>'People','sub'=>'Success & Diversity','icon'=>'fa-user'],
             ['title'=>'Learning','sub'=>'Discovery, Innovation & Scholarship','icon'=>'fa-book'],
-            ['title'=>'Partnerships','sub'=>'Regional, Entrepreneurial & Global','icon'=>'fa-handshake-o'],
+            ['title'=>'Partnerships','sub'=>'Regional, Entrepreneurial & Global','icon'=>'fa-briefcase'],
             ['title'=>'Relationships','sub'=>'Collegial, Professional & Ethical','icon'=>'fa-heart'],
             ['title'=>'Sustainability','sub'=>'Social Justice, Economic & Environmental','icon'=>'fa-leaf'],
           ];
