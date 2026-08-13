@@ -1,6 +1,6 @@
 <?php
 // Bhabha University – Redesigned Chancellor's Message Section
-$chancellor_video_url = "new-media/image/hero/sadhna-mam.mp4"; // E.g., "uploads/chancellor_video.mp4". Leave empty to show image.
+$chancellor_video_url = URL_ROOT . "new-media/image/hero/sadhna-mam.mp4"; // E.g., "uploads/chancellor_video.mp4". Leave empty to show image.
 ?>
 <section class="bu-chancellor-section">
   <div class="bu-chancellor-container">
@@ -9,12 +9,12 @@ $chancellor_video_url = "new-media/image/hero/sadhna-mam.mp4"; // E.g., "uploads
     <div class="bu-chancellor-img-col">
       <div class="bu-chancellor-img-wrapper">
         <?php if(!empty($chancellor_video_url)): ?>
-          <video id="chancellor-video" src="<?php echo $chancellor_video_url; ?>" class="bu-chancellor-img" autoplay muted loop style="background:#000;"></video>
+          <video id="chancellor-video" src="<?php echo $chancellor_video_url; ?>" class="bu-chancellor-img" autoplay playsinline muted loop style="background:#000;"></video>
           <button id="chancellor-mute-btn" class="bu-chancellor-mute-btn" onclick="toggleChancellorMute()">
             <i class="fa fa-volume-off"></i>
           </button>
         <?php else: ?>
-          <img src="<?php echo URL_IMG;?>vcpic.jpg" alt="Dr. Sadhna Kapoor, Chancellor Bhabha University" class="bu-chancellor-img" onerror="this.src='https://www.bhabhauniversity.edu.in/images/vcpic.jpg'">
+          <img loading="lazy" src="<?php echo URL_IMG;?>vcpic.jpg" alt="Dr. Sadhna Kapoor, Chancellor Bhabha University" class="bu-chancellor-img" onerror="this.src='https://www.bhabhauniversity.edu.in/images/vcpic.jpg'">
         <?php endif; ?>
         <div class="bu-chancellor-quote-card">
           <p class="bu-quote-text">“We bridge academic brilliance with industrial pragmatism.”</p>
@@ -296,3 +296,4 @@ function toggleChancellorMute() {
   }
 }
 </script>
+

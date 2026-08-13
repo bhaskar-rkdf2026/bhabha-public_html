@@ -30,7 +30,7 @@ $homeGallery = $db->get('gallery', 8);
       ?>
       <div class="bu-hg-card">
         <div class="bu-hg-card-inner">
-          <img src="<?php echo $thumbImg; ?>" alt="<?php echo $gTitle; ?>" class="bu-hg-img" loading="lazy" onerror="this.src='<?php echo URL_ROOT;?>new-media/image/school-of-engineering.jpg';">
+          <img loading="lazy" src="<?php echo $thumbImg; ?>" alt="<?php echo $gTitle; ?>" class="bu-hg-img" loading="lazy" onerror="this.src='<?php echo URL_ROOT;?>new-media/image/school-of-engineering.jpg';">
           <div class="bu-hg-overlay">
             <div class="bu-hg-info">
               <h4 class="bu-hg-item-title"><?php echo $gTitle; ?></h4>
@@ -64,7 +64,7 @@ $homeGallery = $db->get('gallery', 8);
   <div class="bu-hg-lightbox-bg"></div>
   <div class="bu-hg-lightbox-box">
     <button class="bu-hg-lightbox-close" id="buHgLightboxClose">&times;</button>
-    <img src="" alt="" id="buHgLightboxImg" class="bu-hg-lightbox-img">
+    <img loading="lazy" src="" alt="" id="buHgLightboxImg" class="bu-hg-lightbox-img">
     <div class="bu-hg-lightbox-caption" id="buHgLightboxCaption"></div>
   </div>
 </div>
@@ -343,3 +343,4 @@ $homeGallery = $db->get('gallery', 8);
   });
 })();
 </script>
+

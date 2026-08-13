@@ -318,7 +318,7 @@
 
         <video id="buHvtVideo" class="bu-hvt-video" autoplay loop muted playsinline
                poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
-          <source id="buHvtSource" src="<?php echo URL_ROOT;?>new-media/image/hero/BAHbha 1.mp4" type="video/mp4">
+          <source id="buHvtSource" src="<?php echo URL_ROOT;?>new-media/image/hero/bhabha_1.mp4" type="video/mp4">
           Your browser does not support HTML5 video.
         </video>
 
@@ -334,16 +334,16 @@
           </div>
 
           <div class="bu-hvt-tabs">
-            <button class="bu-hvt-tab-btn active" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/BAHbha 1.mp4', this)">
+            <button class="bu-hvt-tab-btn active" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_1.mp4', this)">
               <i class="fa fa-plane"></i> Aerial Drone
             </button>
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha 2.mp4', this)">
+            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_2.mp4', this)">
               <i class="fa fa-film"></i> Campus Tour Video
             </button>
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha 3.mp4', this)">
+            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_3.mp4', this)">
               <i class="fa fa-flask"></i> Academic &amp; Labs
             </button>
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/Bhabha 4.mp4', this)">
+            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_4.mp4', this)">
               <i class="fa fa-graduation-cap"></i> Student Life
             </button>
           </div>
