@@ -125,6 +125,8 @@ if(!$pageData) {
 .bu-content-body table th,
 .bu-content-body table td {
   vertical-align: middle !important;
+  word-break: normal !important;
+  min-width: 60px !important;
 }
 
 .bu-content-body table th p,
@@ -177,7 +179,6 @@ if(!$pageData) {
 
 /* Align bullet/icon/number cells in first column of multi-column tables */
 .bu-content-body table tr:not(:first-child) td:first-child:not(:last-child) {
-  width: 50px !important;
   text-align: center !important;
 }
 .bu-content-body table tr:not(:first-child) td:first-child:not(:last-child) * {

@@ -28,6 +28,7 @@
   padding: 10px 20px;
   border-radius: 6px;
   text-decoration: none;
+  margin-top: 30px;
   margin-bottom: 24px;
   transition: all 0.2s ease;
 }
@@ -328,3 +329,4 @@ function filterPapers() {
 </script>
 </body>
 </html>
+

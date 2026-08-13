@@ -155,11 +155,12 @@ $homeGallery = $db->get('gallery', 8);
   width: 100% !important;
   height: 240px !important;
   overflow: hidden !important;
+  background: #0B2545 !important; /* Dark background for letterboxing */
 }
 .bu-hg-img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   transition: transform 0.5s ease !important;
 }
 .bu-hg-card:hover .bu-hg-img {

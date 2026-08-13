@@ -560,7 +560,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: top center;
   display: block;
   transition: transform 0.45s ease;
   image-rendering: -webkit-optimize-contrast;
@@ -899,6 +899,7 @@
   height: 480px;
   object-fit: cover;
   display: block;
+  transform: scale(1.05); /* slightly zoom in to hide encoded black bars */
 }
 .bu-vt-player-overlay {
   position: absolute;
@@ -1329,7 +1330,7 @@
           </div>
 
           <video id="buVtVideo" class="bu-vt-video" autoplay loop muted playsinline poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
-            <source id="buVtSource" src="<?php echo URL_ROOT;?>new-media/image/hero/about.mp4" type="video/mp4">
+            <source id="buVtSource" src="<?php echo URL_ROOT;?>new-media/image/hero/BAHbha 1.mp4" type="video/mp4">
             Your browser does not support HTML5 video.
           </video>
 
@@ -1345,16 +1346,16 @@
             </div>
             
             <div class="bu-vt-tabs">
-              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/drone-campus.mp4', this)">
+              <button class="bu-vt-tab-btn active" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/BAHbha 1.mp4', this)">
                 <i class="fa fa-plane"></i> Aerial Drone
               </button>
-              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/hero2.mp4', this)">
+              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha 2.mp4', this)">
                 <i class="fa fa-building"></i> Campus Walk
               </button>
-              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/hero2.mp4', this)">
+              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha 3.mp4', this)">
                 <i class="fa fa-flask"></i> Labs &amp; Quad
               </button>
-              <button class="bu-vt-tab-btn active" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/about.mp4', this)">
+              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/Bhabha 4.mp4', this)">
                 <i class="fa fa-graduation-cap"></i> Student Life
               </button>
             </div>
@@ -1549,7 +1550,7 @@
 
         <a href="<?php echo href('page.php','id=18');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="<?php echo URL_ROOT;?>new-media/image/campus-students.jpg" alt="Core Values" class="bu-subpage-img">
+            <img src="<?php echo URL_ROOT;?>new-media/image/bhabha-core-values.jpeg" alt="Core Values" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-heart"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1563,7 +1564,7 @@
 
         <a href="<?php echo href('leadership.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="<?php echo URL_ROOT;?>images/vcpic.jpg" alt="Administration & Leadership" class="bu-subpage-img">
+            <img src="<?php echo URL_ROOT;?>new-media/image/bhabha-administration-and-leadership.jpeg" alt="Administration & Leadership" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-users"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1577,7 +1578,7 @@
 
         <a href="<?php echo href('page.php','id=19');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="<?php echo URL_ROOT;?>extra-images/student-3.jpg" alt="Why Choose Bhabha" class="bu-subpage-img">
+            <img src="<?php echo URL_ROOT;?>new-media/image/why-choose-bhabha.jpeg" alt="Why Choose Bhabha" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-star"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1591,7 +1592,7 @@
 
         <a href="<?php echo href('awards.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="<?php echo URL_ROOT;?>extra-images/filterable5.jpg" alt="Awards & Achievements" class="bu-subpage-img">
+            <img src="<?php echo URL_ROOT;?>new-media/image/bhabha-extrta.jpeg" alt="Awards & Achievements" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-trophy"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1605,7 +1606,7 @@
 
         <a href="<?php echo href('advisory.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img src="<?php echo URL_ROOT;?>extra-images/intro-3.jpg" alt="Cells & Committees" class="bu-subpage-img">
+            <img src="<?php echo URL_ROOT;?>new-media/image/campus-students.jpg" alt="Cells & Committees" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-sitemap"></i></div>
           </div>
           <div class="bu-subpage-body">

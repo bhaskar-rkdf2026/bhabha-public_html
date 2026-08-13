@@ -4,7 +4,7 @@
 /* ===== Virtual Campus Tour – Home Page ===== */
 .bu-hvt-section {
   background: linear-gradient(135deg, #040F4A 0%, #061D7C 60%, #02092E 100%);
-  padding: 90px 20px 80px;
+  padding: 40px 20px 80px;
   position: relative;
   overflow: hidden;
   color: #FFFFFF;
@@ -94,6 +94,7 @@
   gap: 28px;
   align-items: start;
 }
+.bu-hvt-side-cards { display: flex; flex-direction: column; gap: 14px; }
 
 /* Player */
 .bu-hvt-player-wrap {
@@ -108,6 +109,7 @@
   height: 480px;
   object-fit: cover;
   display: block;
+  transform: scale(1.05); /* slightly zoom in to hide encoded black bars */
 }
 .bu-hvt-player-overlay {
   position: absolute;
@@ -316,7 +318,7 @@
 
         <video id="buHvtVideo" class="bu-hvt-video" autoplay loop muted playsinline
                poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
-          <source id="buHvtSource" src="<?php echo URL_UPLOAD;?>video/bhabha_video.mp4" type="video/mp4">
+          <source id="buHvtSource" src="<?php echo URL_ROOT;?>new-media/image/hero/BAHbha 1.mp4" type="video/mp4">
           Your browser does not support HTML5 video.
         </video>
 
@@ -332,16 +334,16 @@
           </div>
 
           <div class="bu-hvt-tabs">
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/drone-campus.mp4', this)">
+            <button class="bu-hvt-tab-btn active" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/BAHbha 1.mp4', this)">
               <i class="fa fa-plane"></i> Aerial Drone
             </button>
-            <button class="bu-hvt-tab-btn active" onclick="switchHvtVideo('<?php echo URL_UPLOAD;?>video/bhabha_video.mp4', this)">
+            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha 2.mp4', this)">
               <i class="fa fa-film"></i> Campus Tour Video
             </button>
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/hero2.mp4', this)">
+            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha 3.mp4', this)">
               <i class="fa fa-flask"></i> Academic &amp; Labs
             </button>
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/about.mp4', this)">
+            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/Bhabha 4.mp4', this)">
               <i class="fa fa-graduation-cap"></i> Student Life
             </button>
           </div>
