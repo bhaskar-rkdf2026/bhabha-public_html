@@ -143,7 +143,7 @@
 
 <div class="bu-footer-copyright">
   <div class="bu-footer-container">
-    <span>&copy; <?php echo date('Y'); ?> Bhabha University. All Rights reserved. Maintained by Bhabha IT Cell.</span>
+    <span>&copy; <?php echo date('Y'); ?> Bhabha University. All Rights reserved. Designed & Developed by <a href="https://wecrescent.com/" target="_blank" style="color: #FFC107; text-decoration: none; font-weight: bold;">Crescent</a></span>
   </div>
 </div>
 
