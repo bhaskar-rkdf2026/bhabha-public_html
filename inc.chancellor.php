@@ -85,7 +85,7 @@ $chancellor_video_url = URL_ROOT . "new-media/image/hero/sadhna-mam.mp4"; // E.g
 }
 .bu-chancellor-img {
   width: 100% !important;
-  max-height: 450px !important;
+  max-height: 520px !important;
   object-fit: cover !important;
   object-position: center top !important;
   border-radius: 6px !important;
@@ -98,9 +98,10 @@ $chancellor_video_url = URL_ROOT . "new-media/image/hero/sadhna-mam.mp4"; // E.g
 }
 video.bu-chancellor-img {
   width: 100% !important;
-  height: 450px !important;
-  max-height: 450px !important;
-  object-fit: contain !important;
+  height: 520px !important;
+  max-height: 520px !important;
+  object-fit: cover !important;
+  object-position: center top !important;
   background: #000 !important;
   border-radius: 6px !important;
 }
@@ -128,7 +129,7 @@ video.bu-chancellor-img {
 }
 .bu-chancellor-quote-card {
   position: absolute !important;
-  bottom: -25px !important;
+  bottom: -45px !important;
   right: -30px !important;
   background-color: #FFC107 !important;
   padding: 24px 28px !important;
