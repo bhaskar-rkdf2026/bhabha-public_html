@@ -39,7 +39,7 @@
           <p>
             Bhabha University is spread across a vast <strong>150-acre green campus</strong> on NH-12, 
             Narmadapuram Road, Bhopal, Madhya Pradesh. The remarkable aspect of the campus is its 
-            avant-grade infrastructure provided for both students and faculty. Fully furnished and 
+            avant-garde infrastructure provided for both students and faculty. Fully furnished and 
             well-equipped laboratories grace every school building in the university.
           </p>
           <p>

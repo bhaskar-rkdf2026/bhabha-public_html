@@ -14,8 +14,8 @@
         <h4 class="bu-footer-heading">QUICK LINKS</h4>
         <ul class="bu-footer-links">
           <li><a href="https://dte.mponline.gov.in/portal/services/onlinecounselling/counshomepage/home.aspx" target="_blank"><i class="fa fa-angle-right"></i> M.P. Online Counselling</a></li>
-          <li><a href="http://www.mptechedu.org/" target="_blank"><i class="fa fa-angle-right"></i> Directorate Technical Education M.P.</a></li>
-          <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> Anti Ragging</a></li>
+          <li><a href="http://www.mptechedu.org/" target="_blank"><i class="fa fa-angle-right"></i> Directorate of Technical Education M.P.</a></li>
+          <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> Anti-Ragging</a></li>
           <li><a href="http://governor.mp.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> Hon'ble Governor : Raj Bhavan MP</a></li>
           <li><a href="<?php echo href("hbkportal.php"); ?>"><i class="fa fa-angle-right"></i> Dr Homi Bhabha Online Knowledge Portal</a></li>
           <li><a href="<?php echo href("downlod1.php"); ?>"><i class="fa fa-angle-right"></i> Downloads</a></li>
@@ -143,7 +143,7 @@
 
 <div class="bu-footer-copyright">
   <div class="bu-footer-container">
-    <span>&copy; <?php echo date('Y'); ?> Bhabha University. All Rights reserved. Designed & Developed by <a href="https://wecrescent.com/" target="_blank" style="color: #FFC107; text-decoration: none; font-weight: bold;">Crescent</a></span>
+    <span>&copy; <?php echo date('Y'); ?> Bhabha University. All Rights Reserved. Designed & Developed by <a href="https://wecrescent.com/" target="_blank" style="color: #FFC107; text-decoration: none; font-weight: bold;">Crescent</a></span>
   </div>
 </div>
 

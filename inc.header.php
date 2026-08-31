@@ -120,7 +120,7 @@
               <li><a href="<?php echo href("page.php","id=16");?>">Online Examination Process</a></li>
               <li><a href="<?php echo href("examination.php")?>">Examination Notices</a></li>
               <li><a href="<?php echo href("time-table.php")?>">Exam Time Table</a></li>
-              <li><a href="<?php echo href('examination.php'); ?>">Examination Results</a></li>
+              <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Examination Results</a></li>
               <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Login</a></li>
               <li><a href="<?php echo href('BUQuestionPapers_demo.php'); ?>">Previous Question Papers</a></li>
             </ul>
