@@ -16,7 +16,9 @@
           <li><a href="https://dte.mponline.gov.in/portal/services/onlinecounselling/counshomepage/home.aspx" target="_blank"><i class="fa fa-angle-right"></i> M.P. Online Counselling</a></li>
           <li><a href="http://www.mptechedu.org/" target="_blank"><i class="fa fa-angle-right"></i> Directorate of Technical Education M.P.</a></li>
           <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> Anti-Ragging</a></li>
-          <li><a href="http://governor.mp.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> Hon'ble Governor : Raj Bhavan MP</a></li>
+          <li><a href="<?php echo href("research.php"); ?>"><i class="fa fa-angle-right"></i> Research &amp; Innovation</a></li>
+          <li><a href="<?php echo href("iqac.php"); ?>"><i class="fa fa-angle-right"></i> IQAC Cell</a></li>
+          <li><a href="<?php echo href("alumni.php"); ?>"><i class="fa fa-angle-right"></i> BUAA Alumni Portal</a></li>
           <li><a href="<?php echo href("hbkportal.php"); ?>"><i class="fa fa-angle-right"></i> Dr Homi Bhabha Online Knowledge Portal</a></li>
           <li><a href="<?php echo href("downlod1.php"); ?>"><i class="fa fa-angle-right"></i> Downloads</a></li>
           <li><a href="<?php echo href("events.php"); ?>"><i class="fa fa-angle-right"></i> DETAILS OF ACTIVITIES/EVENTS</a></li>

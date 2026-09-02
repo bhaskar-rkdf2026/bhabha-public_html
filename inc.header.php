@@ -9,6 +9,8 @@
         <ul class="bu-topbar-links">
           <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Portal</a></li>
           <li><a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank">Faculty Portal</a></li>
+          <li><a href="<?php echo href('alumni.php'); ?>">Alumni Portal</a></li>
+          <li><a href="<?php echo href('iqac.php'); ?>">IQAC</a></li>
           <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><span class="bu-blink">ERP Login</span></a></li>
           <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Verification</a></li>
           <li><a href="<?php echo href('page.php','id=25'); ?>">NAD</a></li>
@@ -76,6 +78,7 @@
               <li><a href="<?php echo href('why-us.php'); ?>">Why Choose Bhabha University</a></li>
               <li><a href="<?php echo href("awards.php")?>">Awards & Achievements</a></li>
               <li><a href="<?php echo href("advisory.php")?>">Cells & Committees</a></li>
+              <li><a href="<?php echo href('iqac.php'); ?>">IQAC (Internal Quality Assurance)</a></li>
               <li><a href="<?php echo href("approvals.php")?>">Approvals & Recognitions</a></li>
               <li><a href="<?php echo URL_UPLOAD; ?>media/ffe90b0c7e9e55b00b1207aee3ce3971.pdf" target="_blank">Sponsoring Detail</a></li>
               <li><a href="<?php echo href('auditreport.php'); ?>">Finance Officer &gt; Audit Report</a></li>
@@ -128,15 +131,19 @@
 
           <!-- Research Dropdown -->
           <li class="bu-nav-item">
-            <a href="#" class="bu-nav-link">Research <i class="fa fa-angle-down"></i></a>
+            <a href="<?php echo href('research.php');?>" class="bu-nav-link">Research <i class="fa fa-angle-down"></i></a>
             <ul class="bu-dropdown bu-dropdown-2col">
-              <li><a target="_blank" href="<?php echo URL_UPLOAD;?>research/overview.pdf">Research Overview</a></li>
+              <li><a href="<?php echo href("research.php");?>"><strong>Research &amp; Innovation Portal</strong></a></li>
+              <li><a href="<?php echo href("research.php#pharmacy-labs");?>">Pharmacy Research Labs</a></li>
+              <li><a href="<?php echo href("research.php#launched-products");?>">Commercial Products (15 Aug)</a></li>
+              <li><a href="<?php echo href("research.php#incubation-edc");?>">Incubation Centre &amp; EDC</a></li>
+              <li><a href="<?php echo href("research.php#patents-publications");?>">Patents &amp; Research Papers</a></li>
+              <li><a href="<?php echo href("research.php#media-publications");?>">E-Newsletter, Magazine &amp; Blogs</a></li>
               <li><a href="<?php echo href("page.php","id=3");?>">Research at a Glance</a></li>
               <li><a target="_blank" href="<?php echo href("page.php","id=14");?>">PhD Scholars List</a></li>
               <li><a href="<?php echo href("page.php","id=15");?>">Research Journals</a></li>
               <li><a href="<?php echo href("page.php","id=4");?>">Funding Agencies</a></li>
-              <li><a href="<?php echo href("page.php","id=5");?>">Publications</a></li>
-              <li><a href="<?php echo href("page.php","id=10");?>">Conferences & Seminars</a></li>
+              <li><a href="<?php echo href("page.php","id=10");?>">Conferences &amp; Seminars</a></li>
               <li><a href="<?php echo href("page.php","id=11");?>">Industrial Visits</a></li>
             </ul>
           </li>
