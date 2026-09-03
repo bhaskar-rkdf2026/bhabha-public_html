@@ -1352,8 +1352,8 @@
               <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_2.mp4', this)">
                 <i class="fa fa-building"></i> Campus Walk
               </button>
-              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_3.mp4', this)">
-                <i class="fa fa-flask"></i> Labs &amp; Quad
+              <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/academic-lab.mp4', this)">
+                <i class="fa fa-flask"></i> Academic &amp; Labs
               </button>
               <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_4.mp4', this)">
                 <i class="fa fa-graduation-cap"></i> Student Life
@@ -1408,15 +1408,31 @@
   function switchVtVideo(src, btn) {
     var video = document.getElementById('buVtVideo');
     var source = document.getElementById('buVtSource');
-    if (!video || !source) return;
-    
-    source.src = src;
-    video.load();
-    video.play();
+    if (!video) return;
 
     var buttons = document.querySelectorAll('.bu-vt-tab-btn');
     buttons.forEach(function(b) { b.classList.remove('active'); });
     if (btn) btn.classList.add('active');
+
+    if (source) {
+      source.src = src;
+    }
+    video.src = src;
+    video.load();
+
+    var playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.then(function() {
+        var playBtn = document.getElementById('buVtPlayBtn');
+        if (playBtn) playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+      }).catch(function() {
+        video.muted = true;
+        video.play().then(function() {
+          var playBtn = document.getElementById('buVtPlayBtn');
+          if (playBtn) playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        });
+      });
+    }
   }
 
   document.addEventListener('DOMContentLoaded', function() {

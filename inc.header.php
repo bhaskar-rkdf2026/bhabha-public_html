@@ -104,48 +104,79 @@
             </ul>
           </li>
 
-          <!-- Academics Dropdown -->
+          <!-- Academics + Examinations Dropdown (2-Column) -->
           <li class="bu-nav-item">
             <a href="#" class="bu-nav-link">Academics <i class="fa fa-angle-down"></i></a>
-            <ul class="bu-dropdown">
-              <li><a href="<?php echo href("faculties.php")?>">Faculties & Institutes</a></li>
-              <li><a href="<?php echo href("syllabus.php")?>">Scheme & Syllabus</a></li>
-              <li><a href="<?php echo href("academic.php")?>">Academic Calendar</a></li>
-              <li><a href="<?php echo href("page.php","id=9");?>">MOU & Collaborations</a></li>
-              <li><a href="<?php echo href("page.php","id=8");?>">Online Video Resources</a></li>
-            </ul>
+            <div class="bu-dropdown bu-acad-dropdown">
+
+              <!-- Column 1: Academics -->
+              <div class="bu-acad-col">
+                <div class="bu-acad-col-heading"><i class="fa fa-book"></i> Academics</div>
+                <ul>
+                  <li><a href="<?php echo href("faculties.php")?>">Faculties &amp; Institutes</a></li>
+                  <li><a href="<?php echo href("syllabus.php")?>">Scheme &amp; Syllabus</a></li>
+                  <li><a href="<?php echo href("academic.php")?>">Academic Calendar</a></li>
+                  <li><a href="<?php echo href("page.php","id=9");?>">MOU &amp; Collaborations</a></li>
+                  <li><a href="<?php echo href("page.php","id=8");?>">Online Video Resources</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 2: Examinations -->
+              <div class="bu-acad-col">
+                <div class="bu-acad-col-heading"><i class="fa fa-pencil-square-o"></i> Examinations</div>
+                <ul>
+                  <li><a href="<?php echo href("page.php","id=16");?>">Online Examination Process</a></li>
+                  <li><a href="<?php echo href("examination.php")?>">Examination Notices</a></li>
+                  <li><a href="<?php echo href("time-table.php")?>">Exam Time Table</a></li>
+                  <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Examination Results</a></li>
+                  <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Login</a></li>
+                  <li><a href="<?php echo href('BUQuestionPapers_demo.php'); ?>">Previous Question Papers</a></li>
+                </ul>
+              </div>
+
+            </div>
           </li>
 
-          <!-- Examinations Dropdown -->
-          <li class="bu-nav-item">
-            <a href="#" class="bu-nav-link">Examinations <i class="fa fa-angle-down"></i></a>
-            <ul class="bu-dropdown">
-              <li><a href="<?php echo href("page.php","id=16");?>">Online Examination Process</a></li>
-              <li><a href="<?php echo href("examination.php")?>">Examination Notices</a></li>
-              <li><a href="<?php echo href("time-table.php")?>">Exam Time Table</a></li>
-              <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Examination Results</a></li>
-              <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Login</a></li>
-              <li><a href="<?php echo href('BUQuestionPapers_demo.php'); ?>">Previous Question Papers</a></li>
-            </ul>
-          </li>
 
-          <!-- Research Dropdown -->
+          <!-- Research Dropdown (2-Column: Academic Research + New Innovations & Labs) -->
           <li class="bu-nav-item">
             <a href="<?php echo href('research.php');?>" class="bu-nav-link">Research <i class="fa fa-angle-down"></i></a>
-            <ul class="bu-dropdown bu-dropdown-2col">
-              <li><a href="<?php echo href("research.php");?>"><strong>Research &amp; Innovation Portal</strong></a></li>
-              <li><a href="<?php echo href("research.php#pharmacy-labs");?>">Pharmacy Research Labs</a></li>
-              <li><a href="<?php echo href("research.php#launched-products");?>">Commercial Products (15 Aug)</a></li>
-              <li><a href="<?php echo href("research.php#incubation-edc");?>">Incubation Centre &amp; EDC</a></li>
-              <li><a href="<?php echo href("research.php#patents-publications");?>">Patents &amp; Research Papers</a></li>
-              <li><a href="<?php echo href("research.php#media-publications");?>">E-Newsletter, Magazine &amp; Blogs</a></li>
-              <li><a href="<?php echo href("page.php","id=3");?>">Research at a Glance</a></li>
-              <li><a target="_blank" href="<?php echo href("page.php","id=14");?>">PhD Scholars List</a></li>
-              <li><a href="<?php echo href("page.php","id=15");?>">Research Journals</a></li>
-              <li><a href="<?php echo href("page.php","id=4");?>">Funding Agencies</a></li>
-              <li><a href="<?php echo href("page.php","id=10");?>">Conferences &amp; Seminars</a></li>
-              <li><a href="<?php echo href("page.php","id=11");?>">Industrial Visits</a></li>
-            </ul>
+            <div class="bu-dropdown bu-res-dropdown">
+              
+              <!-- Column 1: Original Academic Research Tabs -->
+              <div class="bu-res-col">
+                <div class="bu-res-col-heading">
+                  <i class="fa fa-graduation-cap"></i> Academic Research
+                </div>
+                <ul>
+                  <li><a target="_blank" href="<?php echo URL_UPLOAD;?>research/overview.pdf">Overview</a></li>
+                  <li><a href="<?php echo href("page.php","id=3");?>">Research At Glance</a></li>
+                  <li><a target="_blank" href="<?php echo href("page.php","id=14");?>">PhD Student (List)</a></li>
+                  <li><a href="<?php echo href("page.php","id=15");?>">Journal</a></li>
+                  <li><a href="<?php echo href("page.php","id=4");?>">Funding Agency</a></li>
+                  <li><a href="<?php echo href("page.php","id=5");?>">Publication</a></li>
+                  <li><a href="<?php echo href("page.php","id=10");?>">Conference /Seminar</a></li>
+                  <li><a href="<?php echo href("page.php","id=11");?>">Industrial Visits</a></li>
+                </ul>
+              </div>
+
+              <!-- Column 2: New Commercial Innovations & Labs -->
+              <div class="bu-res-col">
+                <div class="bu-res-col-heading">
+                  <i class="fa fa-flask"></i> Innovations &amp; Labs
+                </div>
+                <ul>
+                  <li><a href="<?php echo href("research.php");?>"><strong>Research &amp; Innovation Portal</strong></a></li>
+                  <li><a href="<?php echo href("research.php#pharmacy-labs");?>">Pharmacy Research Labs</a></li>
+                  <li><a href="<?php echo href("research.php#launched-products");?>">Commercial Products (15 Aug)</a></li>
+                  <li><a href="<?php echo href("research.php#incubation-edc");?>">Incubation Centre &amp; EDC</a></li>
+                  <li><a href="<?php echo href("research.php#research-domains");?>">Research Pillars &amp; Domains</a></li>
+                  <li><a href="<?php echo href("research.php#patents-publications");?>">Patents &amp; Research Papers</a></li>
+                  <li><a href="<?php echo href("research.php#media-publications");?>">E-Newsletter &amp; Blogs</a></li>
+                </ul>
+              </div>
+
+            </div>
           </li>
 
           <!-- Admissions Dropdown -->
@@ -172,6 +203,19 @@
               <li><a href="<?php echo href("placements.php");?>">Training & Placement Cell</a></li>
               <li><a href="<?php echo URL_UPLOAD; ?>media/9018b4daec2ac10a45dfd539260998f5.pdf" target="_blank">Recent Placement List</a></li>
               <li><a href="<?php echo URL_UPLOAD; ?>media/f27e76c6a5c21432282101555c225b35.jpg" target="_blank">Our Major Recruiters</a></li>
+            </ul>
+          </li>
+
+          <!-- News & Media Dropdown -->
+          <li class="bu-nav-item">
+            <a href="<?php echo href("news.php")?>" class="bu-nav-link">News &amp; Media <i class="fa fa-angle-down"></i></a>
+            <ul class="bu-dropdown">
+              <li><a href="<?php echo href("news.php")?>"><i class="fa fa-newspaper-o"></i> Latest News &amp; Events</a></li>
+              <li><a href="<?php echo href("newsletter.php")?>"><i class="fa fa-envelope"></i> E-Newsletter</a></li>
+              <li><a href="<?php echo href("magazine.php")?>"><i class="fa fa-book"></i> University Magazine</a></li>
+              <li><a href="<?php echo href("blogs.php")?>"><i class="fa fa-rss"></i> Research &amp; Tech Blogs</a></li>
+              <li><a href="<?php echo href("gallery.php")?>"><i class="fa fa-picture-o"></i> Photo Gallery</a></li>
+              <li><a href="<?php echo href("notice.php")?>"><i class="fa fa-bullhorn"></i> Official Notices</a></li>
             </ul>
           </li>
 

@@ -8,40 +8,73 @@ if(!empty($_SESSION['success']))
 }
 if(isset($_POST['submit']))
 {
-	$data = Array(
-		"name"           => trim($_POST['name'] ?? ''),
-		"enrollment_no"  => trim($_POST['enrollment_no'] ?? ''),
-		"fname"          => trim($_POST['fname'] ?? ''),
-		"mname"          => trim($_POST['mname'] ?? ''),
-		"nick_name"      => trim($_POST['nick_name'] ?? ''),
-		"gender"         => trim($_POST['gender'] ?? ''),
-		"college"        => trim($_POST['college'] ?? ''),
-		"course"         => trim($_POST['course'] ?? ''),
-		"branch"         => trim($_POST['branch'] ?? ''),
-		"admission_year" => trim($_POST['admission_year'] ?? ''),
-		"passing_year"   => trim($_POST['passing_year'] ?? ''),
-		"further_study"  => trim($_POST['further_study'] ?? ''),
-		"dob"            => trim($_POST['dob'] ?? ''),
-		"mobile"         => trim($_POST['mobile'] ?? ''),
-		"whatsapp"       => trim($_POST['whatsapp'] ?? ''),
-		"email"          => trim($_POST['email'] ?? ''),
-		"address"        => trim($_POST['address'] ?? ''),
-		"perm_address"   => trim($_POST['perm_address'] ?? ''),
-		"occupation"     => trim($_POST['occupation'] ?? ''),
-		"company"        => trim($_POST['company'] ?? ''),
-		"job_title"      => trim($_POST['job_title'] ?? ''),
-		"city"           => trim($_POST['city'] ?? ''),
-		"marital"        => trim($_POST['marital'] ?? ''),
-		"dom"            => trim($_POST['dom'] ?? ''),
-		"linkedin"       => trim($_POST['linkedin'] ?? ''),
-		"facebook"       => trim($_POST['facebook'] ?? ''),
-		"twitter"        => trim($_POST['twitter'] ?? '')
-	);
-	$id = $db->insert('alumni',$data);
-	unset($_POST);
-	unset($_SESSION['form']);
-	$_SESSION["success"] = 'Thank you! Your BUAA Alumni Registration has been submitted successfully.';
-	redirect(href("alumni.php").'#validation');
+	// Anti-bot honeypot check
+	if(!empty($_POST['bu_website_hp']))
+	{
+		// Silently ignore bot submission
+		redirect(href("alumni.php").'#validation');
+		exit;
+	}
+
+	$name           = trim($_POST['name'] ?? '');
+	$enrollment_no  = trim($_POST['enrollment_no'] ?? '');
+	$course         = trim($_POST['course'] ?? '');
+	$passing_year   = trim($_POST['passing_year'] ?? '');
+	$mobile         = trim($_POST['mobile'] ?? '');
+	$email          = trim($_POST['email'] ?? '');
+
+	if(empty($name) || empty($enrollment_no) || empty($course) || empty($passing_year) || empty($mobile) || empty($email))
+	{
+		$stat['error'] = 'Please fill in all mandatory fields marked with an asterisk (*).';
+	}
+	else if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+	{
+		$stat['error'] = 'Please enter a valid email address.';
+	}
+	else
+	{
+		$data = Array(
+			"name"           => $name,
+			"enrollment_no"  => $enrollment_no,
+			"fname"          => trim($_POST['fname'] ?? ''),
+			"mname"          => trim($_POST['mname'] ?? ''),
+			"nick_name"      => trim($_POST['nick_name'] ?? ''),
+			"gender"         => trim($_POST['gender'] ?? ''),
+			"college"        => trim($_POST['college'] ?? ''),
+			"course"         => $course,
+			"branch"         => trim($_POST['branch'] ?? ''),
+			"admission_year" => trim($_POST['admission_year'] ?? ''),
+			"passing_year"   => $passing_year,
+			"further_study"  => trim($_POST['further_study'] ?? ''),
+			"dob"            => trim($_POST['dob'] ?? ''),
+			"mobile"         => $mobile,
+			"whatsapp"       => trim($_POST['whatsapp'] ?? ''),
+			"email"          => $email,
+			"address"        => trim($_POST['address'] ?? ''),
+			"perm_address"   => trim($_POST['perm_address'] ?? ''),
+			"occupation"     => trim($_POST['occupation'] ?? ''),
+			"company"        => trim($_POST['company'] ?? ''),
+			"job_title"      => trim($_POST['job_title'] ?? ''),
+			"city"           => trim($_POST['city'] ?? ''),
+			"marital"        => trim($_POST['marital'] ?? ''),
+			"dom"            => trim($_POST['dom'] ?? ''),
+			"linkedin"       => trim($_POST['linkedin'] ?? ''),
+			"facebook"       => trim($_POST['facebook'] ?? ''),
+			"twitter"        => trim($_POST['twitter'] ?? '')
+		);
+		$id = $db->insert('alumni',$data);
+		if($id)
+		{
+			unset($_POST);
+			unset($_SESSION['form']);
+			$_SESSION["success"] = 'Thank you! Your Alumni Registration has been submitted successfully.';
+			redirect(href("alumni.php").'#validation');
+		}
+		else
+		{
+			$stat['error'] = 'Failed to submit registration: ' . ($db->getLastError() ?: 'Please try again.');
+		}
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -50,8 +83,8 @@ if(isset($_POST['submit']))
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BUAA Alumni Portal &amp; Registration - Bhabha University</title>
-<meta name="description" content="Official Bhabha University Alumni Association (BUAA) portal and membership application form. Reconnect, share career achievements, and join our global network.">
+<title>Alumni Portal &amp; Registration - Bhabha University</title>
+<meta name="description" content="Official Bhabha University Alumni Association portal and membership application form. Reconnect, share career achievements, and join our global network.">
 <?php include('inc.meta.php');?>
 
 <style>
@@ -298,8 +331,8 @@ select.bu-input {
 
   <!-- INNER HERO BANNER -->
   <?php
-  $page_title    = 'Alumni <em>Portal &amp; Association (BUAA)</em>';
-  $page_subtitle = 'Bhabha University Alumni Association (BUAA) — Connect with fellow graduates, mentor current students, and expand your professional horizons.';
+  $page_title    = 'Alumni <em>Portal &amp; Association</em>';
+  $page_subtitle = 'Bhabha University Alumni Association — Connect with fellow graduates, mentor current students, and expand your professional horizons.';
   $page_icon     = 'fa-graduation-cap';
   $breadcrumbs   = [
     ['label' => 'Home', 'url' => URL_ROOT],
@@ -318,16 +351,22 @@ select.bu-input {
           <span><?php echo $stat['success']; ?></span>
         </div>
       <?php endif; ?>
+      <?php if(!empty($stat['error'])): ?>
+        <div class="bu-alert-error" style="background:#FEF2F2;border:1px solid #FCA5A5;color:#991B1B;padding:16px 20px;border-radius:8px;font-size:14.5px;font-weight:600;margin-bottom:25px;display:flex;align-items:center;gap:10px;">
+          <i class="fa fa-exclamation-triangle" style="font-size:20px;color:#EF4444;"></i>
+          <span><?php echo $stat['error']; ?></span>
+        </div>
+      <?php endif; ?>
 
-      <!-- BUAA Association Info Header -->
+      <!-- Alumni Association Info Header -->
       <div class="bu-buaa-card">
         <div class="bu-buaa-emblem">
-          <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="BUAA Emblem" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
+          <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Alumni Emblem" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
         </div>
         <div class="bu-buaa-info">
-          <h2>BHABHA UNIVERSITY ALUMNI ASSOCIATION (BUAA)</h2>
+          <h2>BHABHA UNIVERSITY ALUMNI ASSOCIATION</h2>
           <p>
-            Welcome to the official BUAA Network. Every student who graduates from Bhabha University becomes a lifelong member of our global alumni family. Please submit your application below to stay connected with campus reunions, mentorship opportunities, and international chapters.
+            Welcome to the official Bhabha University Alumni Network. Every student who graduates from Bhabha University becomes a lifelong member of our global alumni family. Please submit your application below to stay connected with campus reunions, mentorship opportunities, and international chapters.
           </p>
         </div>
       </div>
@@ -344,6 +383,9 @@ select.bu-input {
         </div>
 
         <form action="" method="post">
+          <div style="display:none !important; visibility:hidden; opacity:0; position:absolute; left:-9999px;">
+            <input type="text" name="bu_website_hp" tabindex="-1" autocomplete="off">
+          </div>
 
           <!-- 1. PERSONAL INFORMATION -->
           <div class="bu-form-sec-heading">
@@ -515,7 +557,7 @@ select.bu-input {
           <!-- SUBMIT BUTTON -->
           <div style="margin-top:35px;text-align:center;">
             <button type="submit" name="submit" class="bu-btn-submit">
-              Submit BUAA Membership Application <i class="fa fa-paper-plane"></i>
+              Submit Alumni Membership Application <i class="fa fa-paper-plane"></i>
             </button>
           </div>
 

@@ -340,7 +340,7 @@
             <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_2.mp4', this)">
               <i class="fa fa-film"></i> Campus Tour Video
             </button>
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_3.mp4', this)">
+            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/academic-lab.mp4', this)">
               <i class="fa fa-flask"></i> Academic &amp; Labs
             </button>
             <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_4.mp4', this)">
@@ -400,14 +400,37 @@
 
 <script>
 function switchHvtVideo(src, btn) {
-  var video = document.getElementById('buHvtVideo');
+  var video  = document.getElementById('buHvtVideo');
   var source = document.getElementById('buHvtSource');
-  if (!video || !source) return;
-  source.src = src;
-  video.load();
-  video.play();
-  document.querySelectorAll('.bu-hvt-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (!video) return;
+
+  /* Update active tab button */
+  document.querySelectorAll('.bu-hvt-tab-btn').forEach(function(b) {
+    b.classList.remove('active');
+  });
   if (btn) btn.classList.add('active');
+
+  /* Set source directly on video element for reliable playback */
+  if (source) {
+    source.src = src;
+  }
+  video.src = src;
+  video.load();
+
+  var playPromise = video.play();
+  if (playPromise !== undefined) {
+    playPromise.then(function() {
+      var playBtn = document.getElementById('buHvtPlayBtn');
+      if (playBtn) playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+    }).catch(function() {
+      /* Browser autoplay policy: ensure muted and retry */
+      video.muted = true;
+      video.play().then(function() {
+        var playBtn = document.getElementById('buHvtPlayBtn');
+        if (playBtn) playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+      });
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function() {

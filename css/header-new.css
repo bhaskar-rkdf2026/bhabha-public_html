@@ -318,7 +318,8 @@ body {
 .bu-dropdown li a {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 8px;
   padding: 7px 14px;
   color: #334155;
   font-size: 12px;
@@ -327,6 +328,7 @@ body {
   text-decoration: none;
   transition: all 0.2s ease;
   line-height: 1.35;
+  white-space: nowrap;
 }
 
 .bu-dropdown li a:hover {

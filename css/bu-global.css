@@ -29,29 +29,52 @@ body {
 
 /* ---- GLOBAL HD IMAGE QUALITY ENHANCEMENT ---- */
 img {
-  image-rendering: -webkit-optimize-contrast !important;
-  image-rendering: crisp-edges !important;
-  image-rendering: high-quality !important;
   -webkit-backface-visibility: hidden !important;
   backface-visibility: hidden !important;
-  transform: translateZ(0) !important;
+  /* NOTE: crisp-edges removed — it makes photos blurry/pixelated */
+  /* NOTE: transform: translateZ(0) removed — causes GPU subpixel blur */
 }
 
-img, 
-.bu-brand-logo, 
-.bu-chancellor-img, 
-.bu-footer-logo, 
-.bu-hero-video, 
-.bu-subpage-img, 
-.bu-card-img, 
-.bu-facility-card img, 
-.bu-gallery-item img, 
-.bu-recruiter-logo img, 
-.kf_edu2_grid img, 
+/* Sharp rendering ONLY for logos & icons (not photos) */
+.bu-brand-logo,
+.bu-footer-logo,
+.bu-recruiter-logo img {
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: auto !important;
+  filter: contrast(1.02) saturate(1.03) !important;
+}
+
+/* Enhance photo quality without blur */
+img,
+.bu-chancellor-img,
+.bu-hero-video,
+.bu-subpage-img,
+.bu-card-img,
+.bu-facility-card img,
+.bu-gallery-item img,
+.bu-gallery-img,
+.kf_edu2_grid img,
 .kf_edu2_thumb img,
 .kf_cur_catg_des img {
-  filter: contrast(1.03) saturate(1.04) brightness(1.01) !important;
+  image-rendering: auto !important;
+  filter: contrast(1.04) saturate(1.05) brightness(1.01) !important;
 }
+
+/* Gallery thumbnail images — crisp & clear */
+.bu-gallery-img {
+  image-rendering: auto !important;
+  filter: none !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  display: block !important;
+  transition: transform 0.4s ease !important;
+}
+.bu-gallery-card-inner:hover .bu-gallery-img {
+  transform: scale(1.05) !important;
+}
+
 
 /* ================================================================
    1. COURSES / PROGRAMMES SECTION

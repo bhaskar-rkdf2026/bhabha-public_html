@@ -6,6 +6,7 @@
         <li><a href="pages.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Website Pages</span></a></li>
         <li><a href="media.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Media</span></a></li>
         <li><a href="admission.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Admission</span></a></li>
+        <li><a href="alumni.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Alumni Registrations</span></a></li>
         <li><a href="enquiry.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Course Enquiry </span></a></li>
         <li><a href="academic.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Academic</span></a></li>
         <li><a href="fees.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Fees</span></a></li>

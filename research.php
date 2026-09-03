@@ -1442,8 +1442,8 @@ include_once('config.php');
             <div class="bu-media-icon"><i class="fa fa-envelope-open-o"></i></div>
             <h3 class="bu-media-title">E-Newsletter</h3>
             <p class="bu-media-desc">Quarterly digest featuring campus events, academic milestones, and research discoveries.</p>
-            <a href="<?php echo href('news.php'); ?>" class="bu-media-btn">
-              <i class="fa fa-download"></i> View Newsletters
+            <a href="<?php echo href('newsletter.php'); ?>" class="bu-media-btn">
+              <i class="fa fa-newspaper-o"></i> View Newsletters
             </a>
           </div>
 
@@ -1452,7 +1452,7 @@ include_once('config.php');
             <div class="bu-media-icon"><i class="fa fa-book"></i></div>
             <h3 class="bu-media-title">University Magazine</h3>
             <p class="bu-media-desc">Annual flagship publication highlighting creative writing and institutional milestones.</p>
-            <a href="<?php echo href('news.php'); ?>" class="bu-media-btn">
+            <a href="<?php echo href('magazine.php'); ?>" class="bu-media-btn">
               <i class="fa fa-file-pdf-o"></i> Read Magazine
             </a>
           </div>
@@ -1462,8 +1462,8 @@ include_once('config.php');
             <div class="bu-media-icon"><i class="fa fa-rss"></i></div>
             <h3 class="bu-media-title">Research &amp; Tech Blog</h3>
             <p class="bu-media-desc">Opinion pieces, case studies, and faculty perspectives on emerging technology and healthcare.</p>
-            <a href="<?php echo href('news.php'); ?>" class="bu-media-btn">
-              <i class="fa fa-external-link"></i> Explore Blogs
+            <a href="<?php echo href('blogs.php'); ?>" class="bu-media-btn">
+              <i class="fa fa-pencil-square-o"></i> Explore Blogs
             </a>
           </div>
         </div>

@@ -121,6 +121,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   background-color: var(--bu-bg-header) !important;
   border-bottom: 1px solid #E2E8F0 !important;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
+  overflow: visible !important;
 }
 .bu-header-container {
   display: flex !important;
@@ -129,7 +130,9 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   max-width: 1380px !important;
   margin: 0 auto !important;
   padding: 10px 24px !important;
-  gap: 16px !important;
+  gap: 10px !important;
+  flex-wrap: nowrap !important;
+  min-width: 0 !important;
 }
 
 /* ---- LOGO BRAND ---- */
@@ -162,7 +165,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 }
 
 /* ---- MAIN NAVBAR ---- */
-.bu-navbar { display: flex !important; align-items: center !important; flex: 1 !important; justify-content: center !important; }
+.bu-navbar { display: flex !important; align-items: center !important; flex: 1 1 0 !important; justify-content: center !important; min-width: 0 !important; overflow: visible !important; }
 .bu-nav-menu {
   display: flex !important;
   align-items: center !important;
@@ -170,6 +173,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   margin: 0 !important;
   padding: 0 !important;
   gap: 0 !important;
+  flex-wrap: nowrap !important;
 }
 .bu-nav-item { position: relative !important; }
 .bu-nav-link {
@@ -232,8 +236,9 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 .bu-dropdown li a {
   display: flex !important;
   align-items: center !important;
-  justify-content: space-between !important;
-  padding: 6.5px 14px !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  padding: 7px 14px !important;
   color: #334155 !important;
   font-size: 12px !important;
   font-weight: 600 !important;
@@ -242,6 +247,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   border-left: 3px solid transparent !important;
   transition: all 0.18s ease !important;
   line-height: 1.35 !important;
+  white-space: nowrap !important;
 }
 .bu-dropdown li a:hover {
   background: #F0F4FF !important;
@@ -251,7 +257,145 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   text-decoration: none !important;
 }
 
-/* 2-COLUMN MEGA DROPDOWN LAYOUT */
+/* Research Dropdown — Class-Based 2 Column */
+@media (min-width: 992px) {
+  .bu-res-dropdown {
+    display: flex !important;
+    flex-direction: row !important;
+    min-width: 520px !important;
+    padding: 10px !important;
+    gap: 0 !important;
+  }
+  .bu-res-col {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .bu-res-col:first-child {
+    padding-right: 8px !important;
+    border-right: 1px solid #E2E8F0 !important;
+  }
+  .bu-res-col:last-child { padding-left: 8px !important; }
+}
+.bu-res-col ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+/* Desktop link style for both res-col and acad-col items */
+.bu-res-col ul li a,
+.bu-acad-col ul li a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  padding: 7px 12px !important;
+  color: #334155 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  border-radius: 6px !important;
+  border-left: 3px solid transparent !important;
+  transition: all 0.18s ease !important;
+  line-height: 1.35 !important;
+  white-space: nowrap !important;
+}
+.bu-res-col ul li a:hover,
+.bu-acad-col ul li a:hover {
+  background: #F0F4FF !important;
+  color: var(--bu-navy) !important;
+  border-left-color: var(--bu-gold-dark) !important;
+  padding-left: 16px !important;
+}
+.bu-res-col-heading {
+  padding: 6px 12px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  color: var(--bu-gold-dark, #D99B00) !important;
+  margin-bottom: 2px !important;
+}
+
+/* Right-align Research dropdown near right side of navbar */
+.bu-nav-item:nth-child(n+5) > .bu-res-dropdown {
+  left: auto !important;
+  right: 0 !important;
+}
+
+/* Academics + Examinations Dropdown — 2 Column */
+@media (min-width: 992px) {
+  .bu-acad-dropdown {
+    display: flex !important;
+    flex-direction: row !important;
+    min-width: 500px !important;
+    padding: 10px !important;
+    gap: 0 !important;
+  }
+  .bu-acad-col {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .bu-acad-col:first-child {
+    padding-right: 8px !important;
+    border-right: 1px solid #E2E8F0 !important;
+  }
+  .bu-acad-col:last-child { padding-left: 8px !important; }
+}
+.bu-acad-col ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.bu-acad-col-heading {
+  padding: 6px 12px 6px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  color: var(--bu-gold-dark, #D99B00) !important;
+  margin-bottom: 4px !important;
+  border-bottom: 1px solid #E8EEF4 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+/* Mobile: stack columns */
+@media (max-width: 991px) {
+  .bu-acad-dropdown {
+    display: block !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  .bu-acad-col {
+    display: block !important;
+    border-right: none !important;
+    padding: 0 !important;
+  }
+  .bu-acad-col-heading {
+    color: #FFC107 !important;
+    padding: 10px 20px 5px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.12) !important;
+    margin-top: 4px !important;
+  }
+  .bu-acad-col ul li a {
+    color: rgba(255,255,255,0.78) !important;
+    padding: 8px 20px 8px 32px !important;
+    font-size: 12px !important;
+    display: block !important;
+  }
+  .bu-acad-col ul li a:hover {
+    background: rgba(255,255,255,0.08) !important;
+    color: #FFC107 !important;
+    padding-left: 36px !important;
+  }
+}
+
+/* 2-COLUMN MEGA DROPDOWN LAYOUT (About, Schools, Admissions) */
 @media (min-width: 992px) {
   .bu-dropdown-2col {
     min-width: 490px !important;
@@ -265,18 +409,90 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
     font-size: 11.5px !important;
     border-radius: 6px !important;
   }
-  .bu-dropdown-2col li a:hover {
-    padding-left: 15px !important;
-  }
-  /* Right-align dropdowns near right side of navbar to prevent viewport clipping */
+  .bu-dropdown-2col li a:hover { padding-left: 15px !important; }
+  /* Right-align dropdowns near right side of navbar */
   .bu-nav-item:nth-child(n+5) > .bu-dropdown-2col {
     left: auto !important;
     right: 0 !important;
   }
+
+  /* Academics+Examinations 2-col: each col-head starts a new column */
+  .bu-acad-dropdown {
+    min-width: 500px !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    align-items: start !important;
+  }
+  /* Column headings span full width of their column cell, act as dividers */
+  .bu-acad-dropdown .bu-dropdown-col-head {
+    grid-column: auto !important;
+  }
 }
 
+/* Section heading inside 2-col dropdown */
+.bu-dropdown-col-head {
+  padding: 6px 12px 4px !important;
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.9px !important;
+  color: var(--bu-gold-dark, #D99B00) !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  margin-bottom: 3px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+/* Mobile: stack everything in one column */
+@media (max-width: 991px) {
+  .bu-acad-dropdown {
+    grid-template-columns: 1fr !important;
+  }
+  .bu-dropdown-col-head {
+    border-bottom: 1px solid rgba(255,255,255,0.15) !important;
+    color: #FFC107 !important;
+    padding: 10px 20px 5px !important;
+    margin-top: 4px !important;
+  }
+}
+
+
+
+/* Mobile: Research dropdown stacks as single column */
+@media (max-width: 991px) {
+  .bu-res-dropdown {
+    display: block !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  .bu-res-col {
+    display: block !important;
+    border-right: none !important;
+    padding: 0 !important;
+  }
+  .bu-res-col-heading {
+    padding: 8px 20px 4px 20px !important;
+    font-size: 10px !important;
+  }
+  .bu-res-col ul li a {
+    color: rgba(255,255,255,0.78) !important;
+    padding: 8px 20px 8px 32px !important;
+    font-size: 12px !important;
+    display: block !important;
+  }
+  .bu-res-col ul li a:hover {
+    background: rgba(255,255,255,0.08) !important;
+    color: #FFC107 !important;
+    padding-left: 36px !important;
+  }
+}
+
+
 /* ---- HEADER ACTIONS ---- */
-.bu-header-actions { display: flex !important; align-items: center !important; gap: 10px !important; flex-shrink: 0 !important; }
+.bu-header-actions { display: flex !important; align-items: center !important; gap: 10px !important; flex-shrink: 0 !important; white-space: nowrap !important; }
 .bu-search-btn {
   background: transparent !important; border: none !important;
   color: var(--bu-navy) !important; font-size: 16px !important;
@@ -405,16 +621,28 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
 }
 
-/* ---- RESPONSIVE ---- */
+/* ---- RESPONSIVE: 1200px - show smaller text ---- */
+@media (max-width: 1200px) {
+  .bu-nav-link { font-size: 11.5px !important; padding: 14px 7px !important; }
+  .bu-btn-navy { padding: 8px 16px !important; font-size: 11px !important; }
+}
+/* ---- RESPONSIVE: 1100px ---- */
 @media (max-width: 1100px) {
-  .bu-nav-link { font-size: 11px !important; padding: 14px 6px !important; }
+  .bu-nav-link { font-size: 11px !important; padding: 14px 5px !important; }
+  .bu-btn-navy { padding: 8px 14px !important; font-size: 11px !important; }
+}
+/* ---- RESPONSIVE: 992-1099px (key fix for button cutoff) ---- */
+@media (max-width: 1050px) {
+  .bu-nav-link { font-size: 10.5px !important; padding: 14px 4px !important; letter-spacing: 0.3px !important; }
+  .bu-brand-title { font-size: 20px !important; }
+  .bu-header-container { gap: 6px !important; padding: 10px 14px !important; }
 }
 /* ---- TABLET (768px - 991px) ---- */
 @media (max-width: 991px) {
   .bu-topbar { display: none !important; }
   .bu-mobile-toggle { display: flex !important; align-items: center !important; justify-content: center !important; }
 
-  /* Hide action buttons from header on small screens, show hamburger */
+  /* Hide search button on mobile, keep Apply */
   .bu-header-actions .bu-search-btn { display: none !important; }
 
   /* Off-canvas drawer */
@@ -422,12 +650,13 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
     position: fixed !important;
     top: 0 !important;
     left: -300px !important;
-    width: 280px !important;
+    width: 285px !important;
     height: 100vh !important;
     background: var(--bu-navy) !important;
     box-shadow: 4px 0 24px rgba(0,0,0,0.3) !important;
     transition: left 0.3s cubic-bezier(0.4,0,0.2,1) !important;
     overflow-y: auto !important;
+    overflow-x: hidden !important;
     z-index: 9998 !important;
     padding: 70px 0 30px !important;
     flex-direction: column !important;
@@ -442,6 +671,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
     align-items: flex-start !important;
     width: 100% !important;
     padding: 0 !important;
+    gap: 0 !important;
   }
   .bu-nav-item {
     width: 100% !important;
@@ -454,11 +684,12 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
     justify-content: space-between !important;
     padding: 15px 20px !important;
     font-size: 13px !important;
+    white-space: normal !important;
   }
   .bu-nav-link::after { display: none !important; }
   .bu-nav-link i.fa-angle-down { font-size: 13px !important; }
 
-  /* Mobile Dropdown */
+  /* Mobile Dropdown — both ul and div based */
   .bu-dropdown {
     position: static !important;
     opacity: 1 !important;
@@ -470,19 +701,40 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
     border-radius: 0 !important;
     display: none !important;
     width: 100% !important;
+    min-width: 0 !important;
     padding: 4px 0 !important;
+    /* Force single column on mobile for grid/flex dropdowns */
+    grid-template-columns: 1fr !important;
+    flex-direction: column !important;
   }
   .bu-nav-item.open > .bu-dropdown { display: block !important; }
-  .bu-dropdown li a {
+  /* Research dropdown (div-based, flex columns) — stack on mobile */
+  .bu-nav-item.open > .bu-dropdown > div {
+    flex-direction: column !important;
+    border-right: none !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+  .bu-dropdown ul { list-style: none !important; margin: 0 !important; padding: 0 !important; }
+  .bu-dropdown li a,
+  .bu-dropdown ul li a {
     color: rgba(255,255,255,0.78) !important;
-    padding: 11px 20px 11px 32px !important;
+    padding: 10px 20px 10px 32px !important;
     font-size: 12.5px !important;
     border-left: none !important;
   }
-  .bu-dropdown li a:hover {
+  .bu-dropdown li a:hover,
+  .bu-dropdown ul li a:hover {
     background: rgba(255,255,255,0.08) !important;
     color: var(--bu-gold) !important;
     padding-left: 36px !important;
+  }
+  /* Section headings inside Research dropdown */
+  .bu-dropdown > div > div:first-child,
+  .bu-dropdown > div > div[style*="font-weight"] {
+    color: var(--bu-gold) !important;
+    padding: 10px 20px 4px 20px !important;
+    font-size: 10px !important;
   }
 
   /* Rotate arrow when open */
@@ -490,7 +742,9 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 
   /* Brand adjustments on tablet */
   .bu-brand-title { font-size: 19px !important; }
-  .bu-header-container { padding: 10px 16px !important; }
+  .bu-brand-logo { height: 44px !important; }
+  .bu-header-container { padding: 10px 14px !important; gap: 8px !important; }
+  .bu-btn-navy { padding: 8px 16px !important; font-size: 11.5px !important; }
 }
 
 /* ---- MOBILE (max-width: 575px) ---- */
@@ -580,14 +834,11 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
       font-weight: 500;
       color: #FFF;
       }
-      /* Global HD Image Enhancement */
+      /* Global Image Quality — NO crisp-edges (causes photo blur) */
       img {
-        image-rendering: -webkit-optimize-contrast !important;
-        image-rendering: crisp-edges !important;
-        image-rendering: high-quality !important;
         -webkit-backface-visibility: hidden !important;
         backface-visibility: hidden !important;
-        transform: translateZ(0) !important;
+        image-rendering: auto !important;
       }
       .bu-brand-logo, .bu-footer-logo {
         height: auto !important;
