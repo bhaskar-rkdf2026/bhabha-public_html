@@ -75,7 +75,7 @@ RewriteRule departments/(.*)/$		departments.php?id=$1		[NC,L,QSA]
    php_value memory_limit 1024M
    php_value post_max_size 1024M
    php_value session.gc_maxlifetime 1440
-   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php74"
    php_value upload_max_filesize 1024M
    php_flag zlib.output_compression On
 </IfModule>
@@ -87,7 +87,7 @@ RewriteRule departments/(.*)/$		departments.php?id=$1		[NC,L,QSA]
    php_value memory_limit 1024M
    php_value post_max_size 1024M
    php_value session.gc_maxlifetime 1440
-   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php74"
    php_value upload_max_filesize 1024M
    php_flag zlib.output_compression On
 </IfModule>
@@ -96,6 +96,6 @@ RewriteRule departments/(.*)/$		departments.php?id=$1		[NC,L,QSA]
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php74” package as the default “PHP” programming language.
 <IfModule mime_module>
-  AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
+  AddHandler application/x-httpd-ea-php74___lsphp .php .php7 .phtml
 </IfModule>
 # php -- END cPanel-generated handler, do not edit
