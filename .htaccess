@@ -1,17 +1,13 @@
-DirectoryIndex index.php index.html index.htm
 
-## Start Redirection Code ##
-<IfModule mod_rewrite.c>
+ ##Start Redirection Code## 
+
+Header always set Content-Security-Policy "upgrade-insecure-requests;"
 RewriteEngine On
-
-# Redirect HTTP to HTTPS
 RewriteCond %{HTTPS} off
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-</IfModule>
-## End Redirection Code ##
+ ##End Redirection Code##
 
-<IfModule mod_rewrite.c>
+
 RewriteEngine On 
 
 RewriteRule index/$					index.php				[NC,L,QSA]
@@ -66,23 +62,13 @@ RewriteRule program/(.*)/$			program.php?id=$1	[NC,L,QSA]
 RewriteRule syllabus/$				syllabus.php				[NC,L,QSA]
 RewriteRule virtual/$				virtual.php				[NC,L,QSA]
 RewriteRule departments/(.*)/$		departments.php?id=$1		[NC,L,QSA]
-RewriteRule nirf/$					nirf.php					[NC,L,QSA]
-RewriteRule auditreport/$			auditreport.php				[NC,L,QSA]
-RewriteRule ugc-proforma/$			ugc-proforma.php			[NC,L,QSA]
-RewriteRule BUquestionPapers_demo/$	BUQuestionPapers_demo.php	[NC,L,QSA]
-RewriteRule events/$				events.php					[NC,L,QSA]
-RewriteRule downlod1/$				downlod1.php				[NC,L,QSA]
-RewriteRule BUquestionPapers/$		BUQuestionPapers.php		[NC,L,QSA]
-RewriteRule mandatory-disclosure/$	mandatory-disclosure.php	[NC,L,QSA]
-RewriteRule public-md/$				public-md.php				[NC,L,QSA]
-</IfModule>
 
 # BEGIN cPanel-generated php ini directives, do not edit
 # Manual editing of this file may result in unexpected behavior.
 # To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
 # For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
-<IfModule php8_module>
-   php_flag display_errors Off
+<IfModule php7_module>
+   php_flag display_errors On
    php_value max_execution_time 3000
    php_value max_input_time 6000
    php_value max_input_vars 10000
@@ -91,10 +77,10 @@ RewriteRule public-md/$				public-md.php				[NC,L,QSA]
    php_value session.gc_maxlifetime 1440
    php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
    php_value upload_max_filesize 1024M
-   php_flag zlib.output_compression Off
+   php_flag zlib.output_compression On
 </IfModule>
 <IfModule lsapi_module>
-   php_flag display_errors Off
+   php_flag display_errors On
    php_value max_execution_time 3000
    php_value max_input_time 6000
    php_value max_input_vars 10000
@@ -103,12 +89,12 @@ RewriteRule public-md/$				public-md.php				[NC,L,QSA]
    php_value session.gc_maxlifetime 1440
    php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
    php_value upload_max_filesize 1024M
-   php_flag zlib.output_compression Off
+   php_flag zlib.output_compression On
 </IfModule>
 # END cPanel-generated php ini directives, do not edit
 
 # php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php82” package as the default “PHP” programming language.
+# Set the “ea-php74” package as the default “PHP” programming language.
 <IfModule mime_module>
   AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
 </IfModule>
