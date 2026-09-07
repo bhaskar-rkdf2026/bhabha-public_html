@@ -791,24 +791,6 @@ function getPagingFront($refUrl,$aryOpts,$pgCnt,$curPg)
 }
 function href($page,$param="")
 {
-	// Detect local development environment (localhost / 127.0.0.1 / XAMPP)
-	$host = isset($_SERVER['HTTP_HOST']) ? strtolower($_SERVER['HTTP_HOST']) : '';
-	$isLocal = (
-		strpos($host, 'localhost') !== false ||
-		strpos($host, '127.0.0.1') !== false ||
-		strpos($host, '::1') !== false
-	);
-
-	if ($isLocal) {
-		// Return simple relative path — works with XAMPP without pretty URLs
-		if ($param != '') {
-			return $page . '?' . $param;
-		} else {
-			return $page;
-		}
-	}
-
-	// Live server — keep existing pretty URL format
 	$url = explode(".", $page);
 	$url = $url[0];
 	if ($param != '') {
