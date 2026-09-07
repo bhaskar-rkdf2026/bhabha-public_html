@@ -1120,7 +1120,7 @@
                alt="Bhabha University Bhopal Campus" 
                class="bu-overview-img">
           <div class="bu-overview-badge">
-            <span class="bu-overview-badge-num">2004</span>
+            <span class="bu-overview-badge-num">2004444</span>
             <span class="bu-overview-badge-lbl">Established</span>
           </div>
         </div>
