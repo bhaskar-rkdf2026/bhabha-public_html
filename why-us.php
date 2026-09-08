@@ -48,7 +48,7 @@
           </p>
           <p>
             Bhabha University is situated in Bhopal, the beautiful "City of Lakes", the capital of Madhya Pradesh. 
-            The ambience and serenity of a world-class infrastructure housed in a clean and green campus creates 
+            The ambience and serenity of a world-class infrastructure housed in a clean and green campus create 
             an ideal environment for holistic growth.
           </p>
         </div>

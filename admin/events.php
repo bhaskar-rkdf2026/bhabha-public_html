@@ -34,6 +34,7 @@ if(isset($_POST['submit']))
 	{
 		$data = Array(
 					"title" => $_POST['title'],
+					"category" => !empty($_POST['category']) ? $_POST['category'] : 'Campus Event',
 					"description" => $_POST['description'],
 					"details" => $_POST['details']
 					 );
@@ -57,7 +58,8 @@ if(isset($_POST['submit']))
 	elseif($_REQUEST['action']=="edit" && count($stat) == 0)	
 	{
 		$data = Array(
-						"title" => $_POST['title'],
+					"title" => $_POST['title'],
+					"category" => !empty($_POST['category']) ? $_POST['category'] : 'Campus Event',
 					"description" => $_POST['description'],
 					"details" => $_POST['details']
 					 );
@@ -144,6 +146,27 @@ if($action=="delete")
                     <input type="text" name="title" class="form-control"  value="<?php if($action=="edit"){echo $aryData['title'];}else{echo $_POST['title'];}?>"/>
                   </div>
                   <div class="form-group col-xs-12">
+                    <label>Category</label>
+                    <?php 
+                    $curCat = ($action == "edit") ? ($aryData['category'] ?? 'Campus Event') : ($_POST['category'] ?? 'Campus Event');
+                    $eventCategories = [
+                      'Webinar',
+                      'Seminar & Workshop',
+                      'Lecture Series',
+                      'Celebration & Special Events',
+                      'Cultural & Sports',
+                      'Campus Event'
+                    ];
+                    ?>
+                    <select name="category" class="form-control" required>
+                      <?php foreach ($eventCategories as $catOption): ?>
+                        <option value="<?php echo htmlspecialchars($catOption); ?>" <?php if ($curCat == $catOption) echo 'selected'; ?>>
+                          <?php echo htmlspecialchars($catOption); ?>
+                        </option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                  <div class="form-group col-xs-12">
                     <label>Description</label>
                     <textarea name="description" class="form-control" rows="3" ><?php if($action=="edit"){echo $aryData['description'];}else{echo $_POST['description'];}?>
 </textarea>
@@ -193,6 +216,7 @@ if($action=="delete")
                     <thead>
                       <tr>
                         <th>Title</th>
+                        <th>Category</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -203,6 +227,7 @@ if($action=="delete")
                 ?>
                       <tr>
                         <td><?php echo ucfirst($iList['title']);?></td>
+                        <td><span class="badge badge-info" style="font-size: 12px; padding: 5px 10px;"><?php echo htmlspecialchars($iList['category'] ?: 'Campus Event');?></span></td>
                         <td><a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=edit" class="btn btn-sm btn-info">Edit</a> <a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=delete" onclick="return deletex();" class="btn btn-sm btn-danger">Delete</a></td>
                       </tr>
                       <?php

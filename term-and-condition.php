@@ -47,7 +47,7 @@
 
       <div class="bu-policy-container">
         <div class="bu-policy-content">
-          <p>Welcome to our website. If you continue to browse and use this website you are agreeing to comply with and be bound by the following terms and conditions of use</p>
+          <p>Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use.</p>
           <p>The use of this website is subject to the following terms of use:</p>
           <ul style="list-style-type: none; padding-left: 0;">
             <li><strong>1)</strong> The content of the pages of this website is for your general information and use only. It is subject to change without notice.</li>

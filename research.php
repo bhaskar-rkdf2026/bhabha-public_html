@@ -29,24 +29,24 @@ include_once('config.php');
   --bu-text-muted: #64748B;
 }
 
-/* RESET style.css DEFAULT EXCESSIVE PADDINGS */
+/* RESET style.css DEFAULT EXCESSIVE PADDINGS & ADD PROPER SECTION SPACING */
 .bu-res-portal section,
 .kode_wrapper section {
-  padding: 0 !important;
-  margin: 0 0 35px 0 !important;
+  padding: 15px 0 !important;
+  margin: 0 0 75px 0 !important;
   float: none !important;
   overflow: visible !important;
   clear: both !important;
 }
 
 /* =========================================================
-   1. DEDICATED RESEARCH HERO BANNER (NO MORE BLANK SPACE)
+   1. DEDICATED RESEARCH HERO BANNER (ELEGANT & SPACIOUS)
    ========================================================= */
 .bu-hero-research {
   background: linear-gradient(135deg, #030B24 0%, #0A1B54 50%, #061D7C 100%) !important;
   position: relative !important;
   width: 100% !important;
-  padding: 50px 20px 45px !important;
+  padding: 70px 30px 65px !important;
   color: #ffffff !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
@@ -81,12 +81,12 @@ include_once('config.php');
   z-index: 3;
   display: grid;
   grid-template-columns: 1.35fr 1fr;
-  gap: 35px;
+  gap: 48px;
   align-items: center;
 }
 @media (max-width: 991px) {
-  .bu-hero-research-container { grid-template-columns: 1fr; gap: 28px; }
-  .bu-hero-research { padding: 36px 16px 32px !important; }
+  .bu-hero-research-container { grid-template-columns: 1fr; gap: 32px; }
+  .bu-hero-research { padding: 45px 20px 40px !important; }
 }
 
 /* Breadcrumb */
@@ -198,20 +198,20 @@ include_once('config.php');
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.16);
   backdrop-filter: blur(12px);
-  border-radius: 14px;
-  padding: 24px;
+  border-radius: 16px;
+  padding: 28px 24px;
   box-shadow: 0 16px 36px rgba(0,0,0,0.25);
 }
 .bu-hero-stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 18px;
 }
 .bu-hero-stat-box {
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 10px;
-  padding: 14px 16px;
+  border-radius: 12px;
+  padding: 16px 16px;
   text-align: center;
   transition: transform 0.2s ease;
 }
@@ -220,11 +220,11 @@ include_once('config.php');
   background: rgba(255,255,255,0.1);
 }
 .bu-hero-stat-num {
-  font-size: 26px;
+  font-size: 27px;
   font-weight: 800;
   color: var(--bu-gold);
   line-height: 1.1;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 .bu-hero-stat-lbl {
   font-size: 11.5px;
@@ -235,7 +235,7 @@ include_once('config.php');
 }
 
 /* =========================================================
-   2. STICKY SUB-NAVIGATION BAR (COMPACT)
+   2. STICKY SUB-NAVIGATION BAR (SPACIOUS)
    ========================================================= */
 .bu-res-nav-bar {
   background: #ffffff;
@@ -248,7 +248,7 @@ include_once('config.php');
 .bu-res-nav-container {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   overflow-x: auto;
@@ -256,8 +256,8 @@ include_once('config.php');
 }
 .bu-res-nav-container::-webkit-scrollbar { display: none; }
 .bu-res-nav-link {
-  padding: 14px 18px;
-  font-size: 13px;
+  padding: 16px 22px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--bu-text-muted);
   text-decoration: none;
@@ -266,7 +266,7 @@ include_once('config.php');
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 .bu-res-nav-link:hover, .bu-res-nav-link.active {
   color: var(--bu-navy);
@@ -275,24 +275,27 @@ include_once('config.php');
 }
 
 /* =========================================================
-   3. SECTION LAYOUT & COMPACT SPACING
+   3. SECTION LAYOUT & GENEROUS SPACING
    ========================================================= */
 .bu-res-portal {
   background: #FAF9F6;
   font-family: 'Plus Jakarta Sans', sans-serif;
   color: var(--bu-text-dark);
-  padding: 30px 16px 50px;
+  padding: 60px 24px 90px;
+}
+@media (max-width: 767px) {
+  .bu-res-portal { padding: 40px 16px 60px; }
 }
 .bu-res-wrap {
   max-width: 1240px;
   margin: 0 auto;
 }
 
-/* Section Header (Compact) */
+/* Section Header (Spacious) */
 .bu-sec-title-wrap {
   text-align: center;
-  max-width: 750px;
-  margin: 0 auto 24px;
+  max-width: 780px;
+  margin: 0 auto 38px;
 }
 .bu-badge-pill {
   display: inline-flex;
@@ -300,20 +303,20 @@ include_once('config.php');
   gap: 6px;
   background: var(--bu-gold-light);
   color: #8D6B00;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
-  padding: 4px 14px;
+  padding: 5px 16px;
   border-radius: 50px;
   border: 1px solid rgba(217,155,0,0.25);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .bu-sec-title {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--bu-navy);
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   line-height: 1.25;
   font-family: 'Playfair Display', serif;
 }
@@ -322,9 +325,9 @@ include_once('config.php');
   font-style: italic;
 }
 .bu-sec-desc {
-  font-size: 14px;
+  font-size: 14.5px;
   color: var(--bu-text-muted);
-  line-height: 1.55;
+  line-height: 1.6;
   margin: 0;
 }
 
@@ -333,14 +336,17 @@ include_once('config.php');
    ========================================================= */
 .bu-pharm-card {
   background: #ffffff !important;
-  border-radius: 14px !important;
+  border-radius: 16px !important;
   border: 1px solid var(--bu-border) !important;
   border-top: 4px solid var(--bu-gold) !important;
-  padding: 28px 32px !important;
+  padding: 38px 40px !important;
   color: var(--bu-text-dark) !important;
   position: relative !important;
   overflow: hidden !important;
   box-shadow: 0 8px 26px rgba(10,27,84,0.06) !important;
+}
+@media (max-width: 767px) {
+  .bu-pharm-card { padding: 24px 20px !important; }
 }
 .bu-pharm-card::before {
   display: none !important;
@@ -351,21 +357,21 @@ include_once('config.php');
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 26px;
 }
 .bu-pharm-heading {
-  font-size: 26px !important;
+  font-size: 28px !important;
   font-weight: 800 !important;
   color: var(--bu-navy) !important;
-  margin: 6px 0 8px !important;
+  margin: 6px 0 10px !important;
   font-family: 'Playfair Display', serif !important;
   line-height: 1.25 !important;
 }
 .bu-pharm-desc {
-  font-size: 14px !important;
+  font-size: 14.5px !important;
   color: var(--bu-text-muted) !important;
-  line-height: 1.6 !important;
-  max-width: 820px !important;
+  line-height: 1.65 !important;
+  max-width: 850px !important;
   margin: 0 !important;
 }
 
@@ -373,17 +379,17 @@ include_once('config.php');
 .bu-pharm-cert-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px;
-  margin: 20px 0;
+  gap: 18px;
+  margin: 26px 0;
 }
 .bu-cert-card {
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
-  border-radius: 10px;
-  padding: 12px 14px;
+  border-radius: 12px;
+  padding: 15px 18px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   transition: all 0.2s ease;
 }
 .bu-cert-card:hover {
@@ -393,13 +399,13 @@ include_once('config.php');
   box-shadow: 0 4px 14px rgba(10,27,84,0.06);
 }
 .bu-cert-icon-box {
-  width: 42px;
-  height: 42px;
-  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 19px;
+  font-size: 20px;
   flex-shrink: 0;
 }
 .bu-cert-fssai { background: #ECFDF5; color: #059669; }
@@ -408,13 +414,13 @@ include_once('config.php');
 .bu-cert-gmp { background: #F5F3FF; color: #7C3AED; }
 
 .bu-cert-title {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 800;
   color: var(--bu-navy);
   margin-bottom: 2px;
 }
 .bu-cert-subtitle {
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--bu-text-muted);
   font-weight: 600;
 }
@@ -423,15 +429,15 @@ include_once('config.php');
 .bu-pharm-stats-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 12px;
-  padding-top: 18px;
+  gap: 18px;
+  padding-top: 24px;
   border-top: 1px dashed var(--bu-border);
 }
 .bu-pharm-stat-item {
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  padding: 12px 16px;
+  border-radius: 10px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -443,13 +449,13 @@ include_once('config.php');
   box-shadow: 0 4px 12px rgba(10,27,84,0.05);
 }
 .bu-pharm-stat-val {
-  font-size: 24px;
+  font-size: 25px;
   font-weight: 800;
   color: var(--bu-navy);
   line-height: 1;
 }
 .bu-pharm-stat-lbl {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   color: var(--bu-text-muted);
   text-transform: uppercase;
@@ -458,16 +464,16 @@ include_once('config.php');
 }
 
 /* =========================================================
-   5. LAUNCHED PRODUCTS (COMPACT STYLISH CARDS)
+   5. LAUNCHED PRODUCTS (SPACIOUS STYLISH CARDS)
    ========================================================= */
 .bu-products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-  gap: 22px;
+  gap: 28px;
 }
 .bu-prod-card {
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid var(--bu-border);
   overflow: hidden;
   box-shadow: 0 6px 20px rgba(0,0,0,0.03);
@@ -481,7 +487,7 @@ include_once('config.php');
   border-color: rgba(255,193,7,0.7);
 }
 .bu-prod-header {
-  padding: 24px 20px;
+  padding: 26px 24px;
   position: relative;
   display: flex;
   align-items: center;
@@ -511,9 +517,9 @@ include_once('config.php');
   gap: 4px;
 }
 .bu-prod-icon-circle {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
   background: linear-gradient(135deg, #0A1B54 0%, #061D7C 100%);
   color: var(--bu-gold);
   font-size: 24px;
@@ -523,7 +529,7 @@ include_once('config.php');
   box-shadow: 0 4px 12px rgba(10,27,84,0.2);
 }
 .bu-prod-body {
-  padding: 20px;
+  padding: 24px 24px 26px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -537,7 +543,7 @@ include_once('config.php');
   margin-bottom: 6px;
 }
 .bu-prod-title {
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 800;
   color: var(--bu-navy);
   margin: 0 0 8px;
@@ -545,21 +551,21 @@ include_once('config.php');
 .bu-prod-desc {
   font-size: 13.5px;
   color: var(--bu-text-muted);
-  line-height: 1.55;
-  margin-bottom: 14px;
+  line-height: 1.6;
+  margin-bottom: 18px;
   flex-grow: 1;
 }
 .bu-prod-specs {
   background: var(--bu-gray-bg);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-bottom: 14px;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
   font-size: 12px;
 }
 .bu-prod-spec-row {
   display: flex;
   justify-content: space-between;
-  padding: 3px 0;
+  padding: 4px 0;
   border-bottom: 1px dashed #E2E8F0;
 }
 .bu-prod-spec-row:last-child { border-bottom: none; }
@@ -567,18 +573,18 @@ include_once('config.php');
 .bu-prod-spec-val { color: var(--bu-navy); font-weight: 700; }
 
 /* =========================================================
-   6. INCUBATION & EDC (COMPACT)
+   6. INCUBATION & EDC (SPACIOUS)
    ========================================================= */
 .bu-innov-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-  gap: 22px;
+  gap: 28px;
 }
 .bu-innov-box {
   background: #ffffff;
   border: 1px solid var(--bu-border);
-  border-radius: 12px;
-  padding: 26px 24px;
+  border-radius: 14px;
+  padding: 30px 28px;
   border-left: 4px solid var(--bu-navy);
   box-shadow: 0 6px 18px rgba(0,0,0,0.02);
   transition: all 0.25s ease;
@@ -592,18 +598,18 @@ include_once('config.php');
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 .bu-innov-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
   background: rgba(10,27,84,0.06);
   color: var(--bu-navy);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 24px;
   flex-shrink: 0;
 }
 .bu-innov-box:hover .bu-innov-icon {
@@ -611,7 +617,7 @@ include_once('config.php');
   color: var(--bu-gold);
 }
 .bu-innov-title {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 800;
   color: var(--bu-navy);
   margin: 0;
@@ -619,8 +625,8 @@ include_once('config.php');
 .bu-innov-desc {
   font-size: 13.5px;
   color: var(--bu-text-muted);
-  line-height: 1.6;
-  margin-bottom: 14px;
+  line-height: 1.65;
+  margin-bottom: 16px;
 }
 .bu-innov-bullets {
   list-style: none;
@@ -630,7 +636,7 @@ include_once('config.php');
 .bu-innov-bullets li {
   font-size: 13px;
   color: var(--bu-text-dark);
-  padding: 5px 0 5px 20px;
+  padding: 6px 0 6px 22px;
   position: relative;
 }
 .bu-innov-bullets li::before {
@@ -642,21 +648,21 @@ include_once('config.php');
 }
 
 /* =========================================================
-   7. RESEARCH PILLARS & DOMAINS (COMPACT GRID)
+   7. RESEARCH PILLARS & DOMAINS (SPACIOUS GRID)
    ========================================================= */
 .bu-res-domains-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 14px;
+  gap: 18px;
 }
 .bu-domain-item {
   background: #fff;
   border: 1px solid var(--bu-border);
-  border-radius: 10px;
-  padding: 14px 16px;
+  border-radius: 12px;
+  padding: 16px 18px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
   transition: all 0.2s ease;
 }
@@ -667,15 +673,15 @@ include_once('config.php');
   box-shadow: 0 6px 16px rgba(10,27,84,0.12);
 }
 .bu-domain-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
   background: var(--bu-gray-bg);
   color: var(--bu-navy-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
   flex-shrink: 0;
   transition: all 0.2s ease;
 }
@@ -684,33 +690,33 @@ include_once('config.php');
   color: var(--bu-gold);
 }
 .bu-domain-title {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   color: inherit;
   line-height: 1.35;
 }
 
 /* =========================================================
-   8. DATA TABLES CARD (COMPACT)
+   8. DATA TABLES CARD (SPACIOUS)
    ========================================================= */
 .bu-tables-card {
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid var(--bu-border);
-  padding: 24px;
+  padding: 32px 28px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.03);
 }
 .bu-table-tabs {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   border-bottom: 2px solid var(--bu-border);
-  margin-bottom: 18px;
+  margin-bottom: 22px;
   overflow-x: auto;
   scrollbar-width: none;
 }
 .bu-table-tab-btn {
-  padding: 10px 18px;
-  font-size: 13.5px;
+  padding: 12px 20px;
+  font-size: 14px;
   font-weight: 700;
   border: none;
   background: transparent;
@@ -744,19 +750,19 @@ include_once('config.php');
 .bu-data-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 13.5px;
   text-align: left;
 }
 .bu-data-table th {
   background: #F1F5F9;
   color: var(--bu-navy);
   font-weight: 700;
-  padding: 12px 14px;
+  padding: 14px 16px;
   border-bottom: 2px solid var(--bu-border);
   white-space: nowrap;
 }
 .bu-data-table td {
-  padding: 11px 14px;
+  padding: 13px 16px;
   border-bottom: 1px solid var(--bu-border);
   color: var(--bu-text-dark);
   vertical-align: top;
@@ -782,18 +788,18 @@ include_once('config.php');
 }
 
 /* =========================================================
-   9. PUBLICATIONS & MEDIA (COMPACT)
+   9. PUBLICATIONS & MEDIA (SPACIOUS)
    ========================================================= */
 .bu-media-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
+  gap: 24px;
 }
 .bu-media-card {
   background: #ffffff;
   border: 1px solid var(--bu-border);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 14px;
+  padding: 28px 24px;
   text-align: center;
   transition: all 0.25s ease;
   box-shadow: 0 4px 14px rgba(0,0,0,0.03);
@@ -804,28 +810,28 @@ include_once('config.php');
   box-shadow: 0 10px 22px rgba(10,27,84,0.07);
 }
 .bu-media-icon {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: var(--bu-gold-light);
   color: var(--bu-gold-dark);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  margin: 0 auto 12px;
+  font-size: 22px;
+  margin: 0 auto 14px;
 }
 .bu-media-title {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 800;
   color: var(--bu-navy);
   margin-bottom: 6px;
 }
 .bu-media-desc {
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--bu-text-muted);
-  line-height: 1.5;
-  margin-bottom: 14px;
+  line-height: 1.55;
+  margin-bottom: 16px;
 }
 .bu-media-btn {
   display: inline-flex;

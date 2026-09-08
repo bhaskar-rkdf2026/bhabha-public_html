@@ -48,7 +48,7 @@
 
       <div class="bu-policy-container">
         <div class="bu-policy-content">
-          <p>The <strong>BHABHA UNIVERSITY</strong> supports the students. However, if there is a clear error in the amount of payment or payee, please contact our office within 30 days in the hours of 9.30 am and 4.45 pm Indian Standard Time to resolve the issue.</p>
+          <p><strong>Bhabha University</strong> supports its students. However, if there is a discrepancy or error in the payment amount or transaction details, please contact our accounts office within 30 days between 9:30 AM and 4:45 PM (IST) on working days to resolve the issue.</p>
         </div>
       </div>
       <?php include('inc.footer.php');?>

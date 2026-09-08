@@ -22,7 +22,6 @@ if ($event_id > 0) {
 <?php include('inc.meta.php'); ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
@@ -317,85 +316,6 @@ body {
   transform: translateY(-2px);
   text-decoration: none;
 }
-
-/* Grid Layout for All Events View */
-.bu-events-directory-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 28px;
-}
-.bu-dir-card {
-  background: var(--bu-card-bg);
-  border: 1px solid var(--bu-border);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgba(10, 27, 84, 0.04);
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
-}
-.bu-dir-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(10, 27, 84, 0.12);
-  border-color: var(--bu-gold);
-}
-.bu-dir-img-wrap {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  background: var(--bu-navy-dark);
-}
-.bu-dir-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-.bu-dir-card:hover .bu-dir-img {
-  transform: scale(1.05);
-}
-.bu-dir-body {
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-.bu-dir-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--bu-navy);
-  margin: 0 0 10px 0;
-  line-height: 1.3;
-}
-.bu-dir-desc {
-  font-size: 13.5px;
-  color: var(--bu-text-muted);
-  line-height: 1.55;
-  margin-bottom: 18px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.bu-dir-btn {
-  margin-top: auto;
-  align-self: flex-start;
-  color: var(--bu-navy);
-  font-weight: 700;
-  font-size: 13px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: gap 0.2s ease, color 0.2s ease;
-}
-.bu-dir-btn:hover {
-  color: var(--bu-gold-dark);
-  gap: 10px;
-  text-decoration: none;
-}
 .bu-back-btn {
   display: inline-flex;
   align-items: center;
@@ -413,6 +333,304 @@ body {
   background: var(--bu-navy-light);
   color: #ffffff;
   text-decoration: none;
+}
+
+/* ============================================================
+   EVENTS DIRECTORY & LIST VIEW (TAB WISE & SEARCH BAR)
+   ============================================================ */
+.bu-events-dir-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.bu-events-dir-header .bu-evt-h2 {
+  margin-bottom: 8px;
+}
+.bu-events-dir-header p {
+  font-size: 15px;
+  color: var(--bu-text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Category Filter Tabs */
+.bu-events-cat-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+.bu-cat-tab-btn {
+  background: #ffffff;
+  border: 1px solid var(--bu-border);
+  color: var(--bu-text-dark);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+.bu-cat-tab-btn i {
+  color: var(--bu-gold-dark);
+  font-size: 14px;
+}
+.bu-cat-tab-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+.bu-cat-tab-btn.active {
+  background: var(--bu-navy);
+  color: #ffffff;
+  border-color: var(--bu-navy);
+  box-shadow: 0 4px 14px rgba(10, 27, 84, 0.2);
+}
+.bu-cat-tab-btn.active i {
+  color: var(--bu-gold);
+}
+
+/* Search Bar Toolbar */
+.bu-events-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #ffffff;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--bu-border);
+  box-shadow: 0 2px 10px rgba(10, 27, 84, 0.03);
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+.bu-events-search-bar-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+}
+.bu-events-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--bu-text-muted);
+  font-size: 15px;
+  pointer-events: none;
+}
+.bu-events-search-input {
+  width: 100%;
+  padding: 11px 40px 11px 40px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--bu-navy);
+  background: #f8fafc;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+.bu-events-search-input:focus {
+  background: #ffffff;
+  border-color: var(--bu-navy);
+  box-shadow: 0 0 0 3px rgba(10, 27, 84, 0.1);
+}
+.bu-events-search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  display: none;
+}
+.bu-events-search-clear:hover {
+  color: #ef4444;
+}
+.bu-events-count-badge {
+  font-size: 13px;
+  color: var(--bu-navy);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Event List Row View */
+.bu-events-list-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.bu-event-row {
+  display: flex;
+  align-items: center;
+  background: var(--bu-card-bg);
+  border: 1px solid var(--bu-border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 0 3px 12px rgba(10, 27, 84, 0.03);
+  transition: all 0.25s ease;
+  gap: 24px;
+}
+.bu-event-row:hover {
+  border-color: var(--bu-gold);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(10, 27, 84, 0.08);
+}
+.bu-event-col-media {
+  flex-shrink: 0;
+  width: 140px;
+  height: 95px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #051235;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bu-event-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.bu-event-badge-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0A1B54 0%, #051235 100%);
+  color: var(--bu-gold);
+  padding: 10px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.bu-event-badge-box i {
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+.bu-badge-text {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+.bu-event-col-content {
+  flex: 1;
+  min-width: 0;
+}
+.bu-event-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.bu-event-tag {
+  background: rgba(255, 193, 7, 0.15);
+  color: #92400e;
+  border: 1px solid rgba(255, 193, 7, 0.4);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.bu-event-meta-item {
+  font-size: 12px;
+  color: var(--bu-text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.bu-event-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  line-height: 1.35;
+}
+.bu-event-title a {
+  color: var(--bu-navy);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.bu-event-title a:hover {
+  color: var(--bu-gold-dark);
+}
+.bu-event-desc {
+  font-size: 13.5px;
+  color: var(--bu-text-muted);
+  line-height: 1.55;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.bu-event-col-action {
+  flex-shrink: 0;
+}
+.bu-event-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f1f5f9;
+  color: var(--bu-navy);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.bu-event-btn i {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+.bu-event-row:hover .bu-event-btn {
+  background: var(--bu-navy);
+  color: var(--bu-gold);
+}
+.bu-event-row:hover .bu-event-btn i {
+  transform: translateX(4px);
+}
+
+@media (max-width: 767px) {
+  .bu-event-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px;
+    gap: 16px;
+  }
+  .bu-event-col-media {
+    width: 100%;
+    height: 140px;
+  }
+  .bu-event-col-action {
+    width: 100%;
+  }
+  .bu-event-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 </style>
 </head>
@@ -448,14 +666,13 @@ body {
         
         <!-- Left Main Column -->
         <main>
-          <!-- Main Feature Image Banner -->
+          <!-- Main Feature Image Banner (Rendered only if image is set in database) -->
+          <?php if (!empty($aryData['image'])): ?>
           <div class="bu-evt-banner-wrap">
-            <?php 
-            $evtImg = !empty($aryData['image']) ? URL_UPLOAD . 'events/' . $aryData['image'] : URL_ROOT . 'images/banner4.jpg';
-            ?>
-            <img src="<?php echo $evtImg; ?>" alt="<?php echo htmlspecialchars($aryData['title']); ?>" class="bu-evt-banner-img" onerror="this.src='<?php echo URL_ROOT;?>images/banner4.jpg';">
+            <img src="<?php echo URL_UPLOAD . 'events/' . $aryData['image']; ?>" alt="<?php echo htmlspecialchars($aryData['title']); ?>" class="bu-evt-banner-img" onerror="this.closest('.bu-evt-banner-wrap').style.display='none';">
             <span class="bu-evt-badge-overlay"><i class="fa fa-calendar-check-o"></i> Official Campus Event</span>
           </div>
+          <?php endif; ?>
 
           <!-- Description Card -->
           <div class="bu-evt-card">
@@ -534,10 +751,15 @@ body {
             $otherEvents = $db->get('events', 4);
             if (is_array($otherEvents) && count($otherEvents) > 0):
               foreach($otherEvents as $oevt):
-                $thumb = !empty($oevt['image']) ? URL_UPLOAD . 'events/' . $oevt['image'] : URL_ROOT . 'images/banner4.jpg';
+                $hasThumb = !empty($oevt['image']);
             ?>
             <a href="<?php echo href('events.php', 'id=' . $oevt['id']); ?>" class="bu-recent-event">
-              <img src="<?php echo $thumb; ?>" alt="<?php echo htmlspecialchars($oevt['title']); ?>" class="bu-recent-img" onerror="this.src='<?php echo URL_ROOT;?>images/banner4.jpg';">
+              <?php if ($hasThumb): ?>
+                <img src="<?php echo URL_UPLOAD . 'events/' . $oevt['image']; ?>" alt="<?php echo htmlspecialchars($oevt['title']); ?>" class="bu-recent-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="bu-recent-icon-badge" style="display:none;"><i class="fa fa-calendar-check-o"></i></div>
+              <?php else: ?>
+                <div class="bu-recent-icon-badge"><i class="fa fa-calendar-check-o"></i></div>
+              <?php endif; ?>
               <div class="bu-recent-title"><?php echo htmlspecialchars($oevt['title']); ?></div>
             </a>
             <?php 
@@ -559,38 +781,128 @@ body {
       </div>
 
       <?php else: ?>
-      <!-- ================= ALL EVENTS DIRECTORY VIEW ================= -->
-      <div style="margin-bottom: 35px; text-align: center;">
-        <span style="font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--bu-gold-dark); display: block; margin-bottom: 8px;">CAMPUS LIFE &amp; ACTIVITIES</span>
+      <!-- ================= ALL EVENTS DIRECTORY LIST VIEW ================= -->
+      <div class="bu-events-directory-header">
+        <span class="bu-events-subtitle-tag"><i class="fa fa-calendar"></i> Campus Life &amp; Activities</span>
         <h2 class="bu-evt-h2" style="font-size: 36px; margin-bottom: 12px;">Discover <em>Campus Events</em></h2>
         <p style="font-size: 15px; color: var(--bu-text-muted); max-width: 650px; margin: 0 auto 25px;">Stay connected with seminars, workshops, cultural fests, and academic celebrations happening across Bhabha University.</p>
         <div class="bu-evt-divider" style="margin: 0 auto;"></div>
       </div>
 
-      <div class="bu-events-directory-grid">
-        <?php
-        $allEvents = $db->get('events');
-        if (is_array($allEvents) && count($allEvents) > 0):
-          foreach ($allEvents as $evt):
-            $eImg = !empty($evt['image']) ? URL_UPLOAD . 'events/' . $evt['image'] : URL_ROOT . 'images/banner4.jpg';
+      <?php
+      $allEvents = $db->get('events');
+      $totalEvents = (is_array($allEvents)) ? count($allEvents) : 0;
+
+      // Calculate category counts
+      $categoryCounts = [];
+      if ($totalEvents > 0) {
+        foreach ($allEvents as $evt) {
+          $catName = !empty($evt['category']) ? trim($evt['category']) : 'Campus Event';
+          $categoryCounts[$catName] = ($categoryCounts[$catName] ?? 0) + 1;
+        }
+      }
+      ?>
+
+      <!-- Category Filter Tabs -->
+      <?php if ($totalEvents > 0 && count($categoryCounts) > 1): ?>
+      <div class="bu-events-cat-tabs" id="eventsCategoryTabs">
+        <button type="button" class="bu-cat-tab-btn active" data-category="all">
+          <i class="fa fa-th-large"></i>
+          <span>All Events</span>
+          <span class="bu-tab-count"><?php echo $totalEvents; ?></span>
+        </button>
+        <?php foreach ($categoryCounts as $catName => $catCnt): 
+          $catIcon = 'fa-tag';
+          if (stripos($catName, 'webinar') !== false) $catIcon = 'fa-laptop';
+          elseif (stripos($catName, 'seminar') !== false || stripos($catName, 'workshop') !== false) $catIcon = 'fa-graduation-cap';
+          elseif (stripos($catName, 'lecture') !== false) $catIcon = 'fa-microphone';
+          elseif (stripos($catName, 'celebrat') !== false || stripos($catName, 'fest') !== false) $catIcon = 'fa-trophy';
+          elseif (stripos($catName, 'cultural') !== false || stripos($catName, 'sport') !== false) $catIcon = 'fa-users';
         ?>
-        <div class="bu-dir-card">
-          <div class="bu-dir-img-wrap">
-            <img src="<?php echo $eImg; ?>" alt="<?php echo htmlspecialchars($evt['title']); ?>" class="bu-dir-img" onerror="this.src='<?php echo URL_ROOT;?>images/banner4.jpg';">
+        <button type="button" class="bu-cat-tab-btn" data-category="<?php echo htmlspecialchars($catName); ?>">
+          <i class="fa <?php echo $catIcon; ?>"></i>
+          <span><?php echo htmlspecialchars($catName); ?></span>
+          <span class="bu-tab-count"><?php echo $catCnt; ?></span>
+        </button>
+        <?php endforeach; ?>
+      </div>
+      <?php endif; ?>
+
+      <!-- Search & Count Bar -->
+      <div class="bu-events-controls-bar">
+        <div class="bu-events-search-box">
+          <i class="fa fa-search bu-events-search-icon"></i>
+          <input type="text" id="eventSearchInput" class="bu-events-search-input" placeholder="Search events by title, keyword, or topic..." autocomplete="off">
+          <button type="button" id="clearSearchBtn" class="bu-events-search-clear" title="Clear search"><i class="fa fa-times-circle"></i></button>
+        </div>
+        <div id="eventsCountBadge" class="bu-events-count-badge">
+          <i class="fa fa-calendar-check-o" style="color:var(--bu-gold-dark);"></i> Showing <strong><?php echo $totalEvents; ?></strong> Events
+        </div>
+      </div>
+
+      <div class="bu-events-list-wrap" id="eventsListContainer">
+        <?php
+        if ($totalEvents > 0):
+          foreach ($allEvents as $evt):
+            $cleanTitle = htmlspecialchars($evt['title']);
+            $cleanDesc  = !empty($evt['description']) ? strip_tags($evt['description']) : 'Official event and interactive session hosted at Bhabha University Bhopal campus.';
+            $hasImg     = !empty($evt['image']);
+            $imgUrl     = $hasImg ? URL_UPLOAD . 'events/' . $evt['image'] : '';
+            $rowCat     = !empty($evt['category']) ? $evt['category'] : 'Campus Event';
+        ?>
+        <div class="bu-event-row" data-category="<?php echo htmlspecialchars($rowCat); ?>" data-title="<?php echo strtolower($cleanTitle); ?>" data-desc="<?php echo strtolower(htmlspecialchars($cleanDesc)); ?>">
+          <!-- Media / Badge Box -->
+          <div class="bu-event-col-media">
+            <?php if ($hasImg): ?>
+              <img src="<?php echo $imgUrl; ?>" alt="<?php echo $cleanTitle; ?>" class="bu-event-thumb" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="bu-event-badge-box" style="display: none;">
+                <i class="fa fa-calendar-check-o"></i>
+                <span class="bu-badge-text">EVENT</span>
+              </div>
+            <?php else: ?>
+              <div class="bu-event-badge-box">
+                <i class="fa fa-calendar-check-o"></i>
+                <span class="bu-badge-text">EVENT</span>
+              </div>
+            <?php endif; ?>
           </div>
-          <div class="bu-dir-body">
-            <h3 class="bu-dir-title"><?php echo htmlspecialchars($evt['title']); ?></h3>
-            <div class="bu-dir-desc"><?php echo !empty($evt['description']) ? strip_tags($evt['description']) : 'Official event at Bhabha University Bhopal campus.'; ?></div>
-            <a href="<?php echo href('events.php', 'id=' . $evt['id']); ?>" class="bu-dir-btn">
-              Event Details <i class="fa fa-arrow-right"></i>
+
+          <!-- Content Details -->
+          <div class="bu-event-col-content">
+            <div class="bu-event-meta-row">
+              <span class="bu-event-tag"><i class="fa fa-tag"></i> <?php echo htmlspecialchars($rowCat); ?></span>
+              <span class="bu-event-meta-item"><i class="fa fa-map-marker"></i> Bhopal Campus</span>
+            </div>
+            <h3 class="bu-event-title">
+              <a href="<?php echo href('events.php', 'id=' . $evt['id']); ?>">
+                <?php echo $cleanTitle; ?>
+              </a>
+            </h3>
+            <p class="bu-event-desc">
+              <?php echo $cleanDesc; ?>
+            </p>
+          </div>
+
+          <!-- Action Button -->
+          <div class="bu-event-col-action">
+            <a href="<?php echo href('events.php', 'id=' . $evt['id']); ?>" class="bu-event-btn">
+              <span>View Details</span> <i class="fa fa-arrow-right"></i>
             </a>
           </div>
         </div>
         <?php 
           endforeach;
-        else:
         ?>
-        <div style="grid-column: 1 / -1; text-align: center; background: #ffffff; padding: 48px; border-radius: 16px; border: 1px solid var(--bu-border);">
+
+        <!-- No Matching Search Results Placeholder -->
+        <div id="noSearchResults" style="display: none; text-align: center; background: #ffffff; padding: 48px; border-radius: 14px; border: 1px solid var(--bu-border); box-shadow: 0 4px 16px rgba(10, 27, 84, 0.04);">
+          <i class="fa fa-search" style="font-size: 38px; color: var(--bu-gold); margin-bottom: 14px;"></i>
+          <h4 style="font-size: 18px; color: var(--bu-navy); font-weight: 700; margin-bottom: 6px;">No Matching Events Found</h4>
+          <p style="font-size: 14px; color: var(--bu-text-muted); margin: 0;">Try adjusting your search terms or selecting a different category tab.</p>
+        </div>
+
+        <?php else: ?>
+        <div style="text-align: center; background: #ffffff; padding: 48px; border-radius: 16px; border: 1px solid var(--bu-border);">
           <i class="fa fa-calendar-o" style="font-size: 42px; color: var(--bu-gold); margin-bottom: 16px;"></i>
           <h3 style="font-size: 20px; color: var(--bu-navy); font-weight: 700; margin-bottom: 8px;">No Events Found</h3>
           <p style="font-size: 14px; color: var(--bu-text-muted); margin-bottom: 20px;">There are no active events posted at the moment. Please check back soon.</p>
@@ -610,5 +922,81 @@ body {
 </div>
 
 <?php include('inc.footer.js.php');?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var searchInput = document.getElementById('eventSearchInput');
+  var clearSearchBtn = document.getElementById('clearSearchBtn');
+  var countBadge = document.getElementById('eventsCountBadge');
+  var eventRows = document.querySelectorAll('.bu-event-row');
+  var noResultsBox = document.getElementById('noSearchResults');
+  var tabButtons = document.querySelectorAll('.bu-cat-tab-btn');
+  
+  var currentCategory = 'all';
+  var currentQuery = '';
+
+  function filterEvents() {
+    var visibleCount = 0;
+
+    eventRows.forEach(function(row) {
+      var rowCategory = (row.getAttribute('data-category') || '').trim();
+      var title = row.getAttribute('data-title') || '';
+      var desc = row.getAttribute('data-desc') || '';
+
+      var categoryMatches = (currentCategory === 'all' || rowCategory.toLowerCase() === currentCategory.toLowerCase());
+      var queryMatches = (!currentQuery || title.indexOf(currentQuery) !== -1 || desc.indexOf(currentQuery) !== -1);
+
+      if (categoryMatches && queryMatches) {
+        row.style.display = 'flex';
+        visibleCount++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    if (countBadge) {
+      countBadge.innerHTML = '<i class="fa fa-calendar-check-o" style="color:var(--bu-gold-dark);"></i> Showing <strong>' + visibleCount + '</strong> Event' + (visibleCount === 1 ? '' : 's');
+    }
+
+    if (noResultsBox) {
+      noResultsBox.style.display = (visibleCount === 0) ? 'block' : 'none';
+    }
+  }
+
+  // Category Tab Click Handler
+  tabButtons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabButtons.forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      currentCategory = this.getAttribute('data-category') || 'all';
+      filterEvents();
+    });
+  });
+
+  // Search Input Handler
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      currentQuery = this.value.toLowerCase().trim();
+      if (clearSearchBtn) {
+        clearSearchBtn.style.display = currentQuery ? 'block' : 'none';
+      }
+      filterEvents();
+    });
+  }
+
+  // Clear Search Handler
+  if (clearSearchBtn) {
+    clearSearchBtn.addEventListener('click', function() {
+      if (searchInput) {
+        searchInput.value = '';
+        currentQuery = '';
+        this.style.display = 'none';
+        searchInput.focus();
+        filterEvents();
+      }
+    });
+  }
+});
+</script>
 </body>
 </html>

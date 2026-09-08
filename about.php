@@ -1120,7 +1120,7 @@
                alt="Bhabha University Bhopal Campus" 
                class="bu-overview-img">
           <div class="bu-overview-badge">
-            <span class="bu-overview-badge-num">2004444</span>
+            <span class="bu-overview-badge-num">2004</span>
             <span class="bu-overview-badge-lbl">Established</span>
           </div>
         </div>
@@ -1552,7 +1552,7 @@
 
         <a href="<?php echo href('infrastructure.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
-            <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/bhabha-main-building.jpg" alt="Campus & Infrastructure" class="bu-subpage-img">
+            <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/bhabha-campus-infrastucture.jpeg" alt="Campus & Infrastructure" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-building"></i></div>
           </div>
           <div class="bu-subpage-body">
@@ -1669,32 +1669,32 @@
           <span class="bu-accred-badge-desc">Accredited</span>
         </div>
         <div class="bu-accred-badge">
-          <img loading=" lazy\ src="<?php echo URL_IMG;?>AICT.png" alt="AICTE" class="bu-accred-logo">
+          <img loading="lazy" src="<?php echo URL_IMG;?>AICT.png" alt="AICTE" class="bu-accred-logo">
           <span class="bu-accred-badge-name">AICTE</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
-          <img loading=" lazy\ src="<?php echo URL_IMG;?>PCI.png" alt="PCI" class="bu-accred-logo">
+          <img loading="lazy" src="<?php echo URL_IMG;?>PCI.png" alt="PCI" class="bu-accred-logo">
           <span class="bu-accred-badge-name">PCI</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
-          <img loading=" lazy\ src="<?php echo URL_IMG;?>bci.png" alt="BCI" class="bu-accred-logo">
+          <img loading="lazy" src="<?php echo URL_IMG;?>bci.png" alt="BCI" class="bu-accred-logo">
           <span class="bu-accred-badge-name">BCI</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
-          <img loading=" lazy\ src="<?php echo URL_IMG;?>dci.png" alt="DCI" class="bu-accred-logo">
+          <img loading="lazy" src="<?php echo URL_IMG;?>dci.png" alt="DCI" class="bu-accred-logo">
           <span class="bu-accred-badge-name">DCI</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
-          <img loading=" lazy\ src="<?php echo URL_IMG;?>nci.png" alt="NCTE" class="bu-accred-logo">
+          <img loading="lazy" src="<?php echo URL_IMG;?>nci.png" alt="NCTE" class="bu-accred-logo">
           <span class="bu-accred-badge-name">NCTE</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
         <div class="bu-accred-badge">
-          <img loading=" lazy\ src="<?php echo URL_IMG;?>MPNRC.png" alt="MPNRC" class="bu-accred-logo">
+          <img loading="lazy" src="<?php echo URL_IMG;?>MPNRC.png" alt="MPNRC" class="bu-accred-logo">
           <span class="bu-accred-badge-name">MPNRC</span>
           <span class="bu-accred-badge-desc">Recognized</span>
         </div>

@@ -75,6 +75,32 @@ if($action=="delete")
   display: block;
   word-break: break-word;
 }
+.filter-year-input,
+input[name="filter_year"] {
+  padding-left: 8px !important;
+  padding-right: 6px !important;
+  font-size: 13px;
+}
+.filter-year-input::placeholder,
+input[name="filter_year"]::placeholder {
+  font-size: 11px !important;
+  opacity: 0.75;
+}
+.filter-year-input::-webkit-input-placeholder,
+input[name="filter_year"]::-webkit-input-placeholder {
+  font-size: 11px !important;
+  opacity: 0.75;
+}
+.filter-year-input::-moz-placeholder,
+input[name="filter_year"]::-moz-placeholder {
+  font-size: 11px !important;
+  opacity: 0.75;
+}
+.filter-year-input:-ms-input-placeholder,
+input[name="filter_year"]:-ms-input-placeholder {
+  font-size: 11px !important;
+  opacity: 0.75;
+}
 </style>
 </head>
 <body>
@@ -332,7 +358,7 @@ if($action=="delete")
                   </div>
                   <div class="form-group col-md-1">
                     <label class="font-weight-bold text-dark"><i class="mdi mdi-calendar"></i> Year</label>
-                    <input type="text" name="filter_year" list="list_years" class="form-control" placeholder="Year" value="<?php echo htmlspecialchars($filter_year); ?>">
+                    <input type="text" name="filter_year" list="list_years" class="form-control filter-year-input" placeholder="Year" value="<?php echo htmlspecialchars($filter_year); ?>">
                     <datalist id="list_years">
                       <?php if(is_array($distinct_years)) foreach($distinct_years as $dy): ?>
                         <option value="<?php echo htmlspecialchars($dy['passing_year']); ?>"></option>

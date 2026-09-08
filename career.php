@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bhabha University Bhopal Madhya Pradesh</title>
+<title>Careers &amp; Opportunities - Bhabha University Bhopal Madhya Pradesh</title>
 <!-- Bootstrap core CSS -->
 <?php include('inc.meta.php');?>
 </head>
@@ -24,13 +24,13 @@
                     	<!--KF INR BANNER DES Wrap Start-->
                         <div class="kf_inr_ban_des">
                         	<div class="inr_banner_heading">
-								<h3>Contact US</h3>
+								<h3>Careers &amp; Opportunities</h3>
                         	</div>
                            
                             <div class="kf_inr_breadcrumb">
 								<ul>
-									<li><a href="#">Home</a></li>
-									<li><a href="#">contact us</a></li>
+									<li><a href="<?php echo URL_ROOT;?>">Home</a></li>
+									<li><a href="#">Careers</a></li>
 								</ul>
 							</div>
                         </div>

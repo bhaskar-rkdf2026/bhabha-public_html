@@ -70,7 +70,7 @@
       <!-- Column 4: Contact -->
       <div class="bu-footer-col bu-footer-info-col">
         <div class="bu-footer-logo-wrap">
-          <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Bhabha University Logo" class="bu-footer-logo" onerror="this.src='https://www.bhabhauniversity.edu.in/images/Bhabha university logo.png'">
+          <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Bhabha University Logo" class="bu-footer-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
           <div class="bu-footer-title-wrap">
             <h3 class="bu-footer-main-title">Bhabha University</h3>
             <span class="bu-footer-subtitle">BHOPAL &nbsp;·&nbsp; INDIA</span>
