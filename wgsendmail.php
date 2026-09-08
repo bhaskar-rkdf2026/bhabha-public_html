@@ -1,4 +1,5 @@
 <?php
+require_once('config.php');
 
 $to = "rajeev@bhabhauniversity.edu.in";
 $subject= "New Whatsapp group joining";
@@ -64,8 +65,7 @@ if (mail($to, $subject, $message, $headers))
 Document and Information Submitted Successfully for official Bhabha University Whatsapp group joining.\n
 
 For Support Call Us on +91-9039921140 or Email at info@bhabhauniversity.edu.in.\n
- <a href='wgform.php'> <h1>Back</h1> </a>";
-   /*echo "<h1>Sent successfully! Thank You"." ".$name.", We will reply shortly !!!   <a href='form_new.html'> Back </a></h1>";*/
+ <a href='" . href('wgform.php') . "'> <h1>Back</h1> </a>";
 else
    echo "Error in mail";
 

@@ -248,7 +248,7 @@
           </a>
 
           <!-- 4. Computer Applications -->
-          <a href="<?php echo href('BUQuestionPapers_computer applications.php');?>" class="bu-qp-card qp-item">
+          <a href="<?php echo href('BUQuestionPapers_computer_applications.php');?>" class="bu-qp-card qp-item">
             <div class="bu-qp-info">
               <div class="bu-qp-icon-badge">
                 <i class="fa fa-laptop"></i>

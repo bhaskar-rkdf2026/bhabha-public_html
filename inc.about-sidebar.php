@@ -11,7 +11,7 @@ $active_page = $active_page ?? '';
     <div class="bu-sidebar-nav-header"><i class="fa fa-list" style="margin-right:8px;"></i>About University</div>
     <ul>
       <li>
-        <a href="about.php" class="<?php echo ($active_page=='about') ? 'active' : ''; ?>">
+        <a href="<?php echo href('about.php'); ?>" class="<?php echo ($active_page=='about') ? 'active' : ''; ?>">
           <i class="fa fa-home"></i> About Overview
         </a>
       </li>
@@ -66,7 +66,7 @@ $active_page = $active_page ?? '';
         </a>
       </li>
       <li>
-        <a href="auditreport.php" class="<?php echo ($active_page=='auditreport') ? 'active' : ''; ?>">
+        <a href="<?php echo href('auditreport.php'); ?>" class="<?php echo ($active_page=='auditreport') ? 'active' : ''; ?>">
           <i class="fa fa-bar-chart"></i> Finance &amp; Audit Report
         </a>
       </li>
@@ -76,7 +76,7 @@ $active_page = $active_page ?? '';
         </a>
       </li>
       <li>
-        <a href="ugc-proforma.php" class="<?php echo ($active_page=='ugc-proforma') ? 'active' : ''; ?>">
+        <a href="<?php echo href('ugc-proforma.php'); ?>" class="<?php echo ($active_page=='ugc-proforma') ? 'active' : ''; ?>">
           <i class="fa fa-file-text"></i> UGC Proforma
         </a>
       </li>

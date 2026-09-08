@@ -791,14 +791,20 @@ function getPagingFront($refUrl,$aryOpts,$pgCnt,$curPg)
 }
 function href($page,$param="")
 {
+	$hash = "";
+	if (strpos($page, '#') !== false) {
+		$parts = explode('#', $page, 2);
+		$page  = $parts[0];
+		$hash  = '#' . $parts[1];
+	}
 	$url = explode(".", $page);
 	$url = $url[0];
 	if ($param != '') {
 		$paramParts = explode("=", $param);
 		$linkParam  = end($paramParts);
-		return URL_ROOT . $url . "/" . $linkParam . "/";
+		return URL_ROOT . $url . "/" . $linkParam . "/" . $hash;
 	} else {
-		return URL_ROOT . $url . "/";
+		return URL_ROOT . $url . "/" . $hash;
 	}
 }
 function createslug($string){

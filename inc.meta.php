@@ -820,7 +820,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 	<link href="<?php echo URL_CSS;?>breaking-news-ticker.css" rel="stylesheet">
 	<!-- SIDE MENU -->
 	<link rel="stylesheet" href="<?php echo URL_CSS;?>jquery.sidr.dark.css">
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="<?php echo URL_JS;?>jquery.js"></script> 
 <!-- OWL Carousel CDN (for hero slider) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">

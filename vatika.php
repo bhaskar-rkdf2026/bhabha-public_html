@@ -57,16 +57,15 @@
 	<tbody>
 		
 		<tr>
-					<td><a href="https://www.bhabhauniversity.edu.in/upload/media/793ae2cd79002c644adb9a4953bd382a.pdf" target="_blank"><span style="color:#cc6600">Navgrah vatika </span></a></td>
+					<td><a href="<?php echo URL_UPLOAD;?>media/9ace0ddc31bab9c2cd740ebb0501a138.pdf" target="_blank"><span style="color:#cc6600">Navgrah vatika </span></a></td>
 		</tr>
 		
 		<tr>	
-		
-		            <td><a href="https://www.bhabhauniversity.edu.in/upload/media/839d6947c4dde5eac88955478d58cde5.pdf" target="_blank"><span style="color:#cc6600">Nakshatra Vatika </span></a></td>
+		            <td><a href="<?php echo URL_UPLOAD;?>media/5152b2ae2930adf0067e9bca01ceca0e.pdf" target="_blank"><span style="color:#cc6600">Nakshatra Vatika </span></a></td>
 		</tr>
 		
 		<tr>	
-		            <td><a href="https://www.bhabhauniversity.edu.in/upload/media/57338e0c0b13a285d1e1c952d154f2f4.pdf" target="_blank"><span style="color:#cc6600">Panchtatva Vatika </span></a></td>
+		            <td><a href="<?php echo URL_UPLOAD;?>media/62971404675378a264e5505ce58dc2aa.pdf" target="_blank"><span style="color:#cc6600">Panchtatva Vatika </span></a></td>
 		            
 		</tr>
 		

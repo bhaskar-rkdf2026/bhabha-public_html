@@ -176,35 +176,6 @@ $( ".datepicker" ).datepicker({
 	
 	
 	
-	
-	<!--
-	<tbody>
-		
-		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
-			<td><a href="https://www.bhabhauniversity.edu.in/upload/media/5981b5afb8200eb5135e719198400899.pdf" target="_blank"><span style="color:#cc6600">Notice University Certificate (Fees) </span></a></td>
-		</tr>
-	    
-	    <tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
-			<td><a href="https://www.bhabhauniversity.edu.in/upload/media/06f18fdc2b080553cc19bb8c22c0b348.pdf" target="_blank"><span style="color:#cc6600">Issue of Duplicate Name Correction In MarkSheet</span></a></td>
-		</tr> 
-		
-		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
-			<td><a href="https://www.bhabhauniversity.edu.in/upload/media/61728fff6e3460b19fbb10a35eb4bfb6.pdf" target="_blank"><span style="color:#cc6600">Application Form for Issue of Provisional Migration Certificate </span></a></td>
-		</tr>
-		
-		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
-			<td><a href="https://www.bhabhauniversity.edu.in/upload/media/a51be85af68c8ce5eb50e4cb0ef4e5a3.pdf" target="_blank"><span style="color:#cc6600">Application for Issue of Degree Certificate </span></a></td>
-		</tr>
-		
-		
-		
-		
-		
-	</tbody> -->
 </table>
  </div>
                       

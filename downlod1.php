@@ -57,28 +57,28 @@
 	<tbody>
 		
 		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
-			<td><a href="https://www.bhabhauniversity.edu.in/upload/media/43220e47ba4dc41f2feedaa84d2b75b1.pdf" target="_blank"><span style="color:#cc6600">Notice University Certificate (Fees) </span></a></td>
+			<td><img src="<?php echo URL_UPLOAD;?>media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
+			<td><a href="<?php echo URL_UPLOAD;?>media/43220e47ba4dc41f2feedaa84d2b75b1.pdf" target="_blank"><span style="color:#cc6600">Notice University Certificate (Fees) </span></a></td>
 		</tr>
 	    
 	    <tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
-			<td><a href="https://www.bhabhauniversity.edu.in/upload/media/4dfae40cb8bf1f1b5d0fb8b63d542672.pdf" target="_blank"><span style="color:#cc6600">Issue of Duplicate Name Correction In MarkSheet New</span></a></td>
+			<td><img src="<?php echo URL_UPLOAD;?>media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
+			<td><a href="<?php echo URL_UPLOAD;?>media/4dfae40cb8bf1f1b5d0fb8b63d542672.pdf" target="_blank"><span style="color:#cc6600">Issue of Duplicate Name Correction In MarkSheet New</span></a></td>
 		</tr> 
 		
 		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
-			<td><a href="https://www.bhabhauniversity.edu.in/upload/media/019c18458f2b9b6485deb792fc7c3c2b.pdf" target="_blank"><span style="color:#cc6600">Application Form for Issue of Provisional / Migration Certificate </span></a></td>
+			<td><img src="<?php echo URL_UPLOAD;?>media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
+			<td><a href="<?php echo URL_UPLOAD;?>media/019c18458f2b9b6485deb792fc7c3c2b.pdf" target="_blank"><span style="color:#cc6600">Application Form for Issue of Provisional / Migration Certificate </span></a></td>
 		</tr>
 		
 		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
-			<td><a href="https://www.bhabhauniversity.edu.in/upload/media/9feec28a9ceec19a4a7cef2f7f07795a.pdf" target="_blank"><span style="color:#cc6600">Application for Issue of Degree Certificate </span></a></td>
+			<td><img src="<?php echo URL_UPLOAD;?>media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
+			<td><a href="<?php echo URL_UPLOAD;?>media/9feec28a9ceec19a4a7cef2f7f07795a.pdf" target="_blank"><span style="color:#cc6600">Application for Issue of Degree Certificate </span></a></td>
 		</tr>
 		
 		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
-			<td><a href="https://www.bhabhauniversity.edu.in/upload/media/Application Form for Issue of transcript (1).pdf" target="_blank"><span style="color:#cc6600">Application Form for Issue of Transcript </span></a></td>
+			<td><img src="<?php echo URL_UPLOAD;?>media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
+			<td><a href="<?php echo URL_UPLOAD;?>media/Application Form for Issue of transcript (1).pdf" target="_blank"><span style="color:#cc6600">Application Form for Issue of Transcript </span></a></td>
 		</tr>
 		
 		<!--<tr>

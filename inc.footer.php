@@ -37,8 +37,8 @@
           <li><a href="https://scholarshipportal.mp.nic.in/Index.aspx" target="_blank"><i class="fa fa-angle-right"></i> MP Scholarship Portal 2.0</a></li>
           <li><a href="https://scholarships.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> National Scholarship Portal</a></li>
           <li><a href="https://drive.google.com/file/d/1jhIfUzZbjtOWSCnYu77C0MM5C8U5vumt/view" target="_blank"><i class="fa fa-angle-right"></i> Prospectus 2024-25</a></li>
-          <li><a href="<?php echo href("page.php", "id=staff-details"); ?>"><i class="fa fa-angle-right"></i> Staff Details</a></li>
-          <li><a href="<?php echo href("page.php", "id=income-expenditure-details"); ?>"><i class="fa fa-angle-right"></i> Income Expenditure Details</a></li>
+          <li><a href="<?php echo href("faculties.php"); ?>"><i class="fa fa-angle-right"></i> Staff Details</a></li>
+          <li><a href="<?php echo href("auditreport.php"); ?>"><i class="fa fa-angle-right"></i> Income Expenditure Details</a></li>
           <li><a href="http://www.mppurc.mp.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> MPPURC</a></li>
           <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> NATIONAL RAGGING PREVENTION PROGRAMME</a></li>
         </ul>
