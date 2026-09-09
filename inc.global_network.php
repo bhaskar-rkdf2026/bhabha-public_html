@@ -1,5 +1,25 @@
 <?php
 // Bhabha University – International / Global Network section (Exact Design Match)
+$glob_sec = null;
+if (isset($db) && is_object($db)) {
+    $db->where('section_key', 'global_network');
+    $glob_sec = $db->getOne('homepage_sections');
+}
+if ($glob_sec && isset($glob_sec['status']) && $glob_sec['status'] == 0) {
+    return; // Section disabled from Admin
+}
+
+$glob_label = !empty($glob_sec['title']) ? $glob_sec['title'] : 'INTERNATIONAL';
+$glob_heading = !empty($glob_sec['heading']) ? $glob_sec['heading'] : 'A truly <em>global</em> network.';
+$glob_sub = !empty($glob_sec['subheading']) ? $glob_sec['subheading'] : '60+ MoUs with leading universities across North America, Europe and Asia. Student exchange, joint research and dual degree pathways.';
+
+$glob_extra = !empty($glob_sec['extra_data']) ? json_decode($glob_sec['extra_data'], true) : [];
+$glob_tags = !empty($glob_extra['tags']) ? $glob_extra['tags'] : ['University of Toronto', 'TU Munich', 'NUS Singapore', 'Monash', 'Curtin', 'UPenn', 'Sheffield', 'Kyoto University', 'ETH Zürich'];
+$glob_btn_text = !empty($glob_extra['button_text']) ? $glob_extra['button_text'] : 'APPLY NOW &nbsp;→';
+$glob_btn_url = !empty($glob_extra['button_url']) ? $glob_extra['button_url'] : (function_exists('href') ? href("enquiry.php") : 'enquiry.php');
+if (strpos($glob_btn_url, 'http') !== 0 && strpos($glob_btn_url, '/') !== 0 && strpos($glob_btn_url, '#') !== 0) {
+    $glob_btn_url = URL_ROOT . $glob_btn_url;
+}
 ?>
 <section class="bu-global-network-section">
   <div class="bu-global-network-container">
@@ -10,30 +30,22 @@
     </div>
     
     <!-- Header Block -->
-    <span class="bu-network-label">INTERNATIONAL</span>
-    <h2 class="bu-network-heading">A truly <em>global</em> network.</h2>
-    <p class="bu-network-sub">60+ MoUs with leading universities across North America, Europe and Asia. Student exchange, joint research and dual degree pathways.</p>
+    <span class="bu-network-label"><?php echo htmlspecialchars($glob_label); ?></span>
+    <h2 class="bu-network-heading"><?php echo $glob_heading; ?></h2>
+    <p class="bu-network-sub"><?php echo nl2br(htmlspecialchars($glob_sub)); ?></p>
     
     <!-- Partner Tags Grid -->
     <div class="bu-network-tags">
       <div class="bu-network-tags-row">
-        <span class="bu-net-tag">University of Toronto</span>
-        <span class="bu-net-tag">TU Munich</span>
-        <span class="bu-net-tag">NUS Singapore</span>
-        <span class="bu-net-tag">Monash</span>
-        <span class="bu-net-tag">Curtin</span>
-        <span class="bu-net-tag">UPenn</span>
-        <span class="bu-net-tag">Sheffield</span>
-      </div>
-      <div class="bu-network-tags-row">
-        <span class="bu-net-tag">Kyoto University</span>
-        <span class="bu-net-tag">ETH Zürich</span>
+        <?php foreach ($glob_tags as $tag): ?>
+          <span class="bu-net-tag"><?php echo htmlspecialchars($tag); ?></span>
+        <?php endforeach; ?>
       </div>
     </div>
     
     <!-- Bottom Button -->
     <div class="bu-network-btn-wrap">
-      <a href="<?php echo href("enquiry.php"); ?>" class="bu-btn-gold">APPLY NOW &nbsp;→</a>
+      <a href="<?php echo $glob_btn_url; ?>" class="bu-btn-gold"><?php echo $glob_btn_text; ?></a>
     </div>
 
   </div>
@@ -63,6 +75,13 @@
   font-size: 36px !important;
   color: #FFC107 !important;
   margin-bottom: 20px !important;
+}
+.bu-network-icon-wrap i,
+.bu-network-icon-wrap .fa {
+  font-family: 'FontAwesome' !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  display: inline-block !important;
 }
 
 /* Header */

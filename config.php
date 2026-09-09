@@ -2,6 +2,9 @@
 error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
 date_default_timezone_set('Asia/Kolkata');
 @session_start();
+if (!headers_sent()) {
+    @header("Permissions-Policy: unload=*");
+}
 define("DS",DIRECTORY_SEPARATOR);
 define("PATH_ROOT",dirname(__FILE__));
 define("PATH_LIB",PATH_ROOT.DS."library".DS);

@@ -1,7 +1,20 @@
 <?php
 // Bhabha University – Official Instagram Reels Section (Direct Inline Player Cards)
+$reels_sec = null;
+if (isset($db) && is_object($db)) {
+    $db->where('section_key', 'insta_reels');
+    $reels_sec = $db->getOne('homepage_sections');
+}
+if ($reels_sec && isset($reels_sec['status']) && $reels_sec['status'] == 0) {
+    return; // Section disabled from Admin
+}
 
-$reelsData = [
+$reels_label = !empty($reels_sec['title']) ? $reels_sec['title'] : 'LIFE AT BHABHA · INSTAGRAM REELS';
+$reels_heading = !empty($reels_sec['heading']) ? $reels_sec['heading'] : 'Inside the <em>University</em>';
+$reels_desc = !empty($reels_sec['subheading']) ? $reels_sec['subheading'] : 'Watch real campus moments, student celebrations, and university highlights directly from our official Instagram feed.';
+
+$reels_extra = !empty($reels_sec['extra_data']) ? json_decode($reels_sec['extra_data'], true) : [];
+$reelsData = !empty($reels_extra['reels']) ? $reels_extra['reels'] : [
     [
         'id'        => 'reel-1',
         'title'     => 'Campus Celebrations & Events',
@@ -31,6 +44,8 @@ $reelsData = [
         'insta_url' => 'https://www.instagram.com/reel/DaSehWXDgwj/'
     ]
 ];
+$reels_footer_btn_text = !empty($reels_extra['footer_button_text']) ? $reels_extra['footer_button_text'] : 'View Instagram Page &nbsp;→';
+$reels_footer_btn_url = !empty($reels_sec['media_url']) ? $reels_sec['media_url'] : (!empty($reels_extra['footer_button_url']) ? $reels_extra['footer_button_url'] : 'https://www.instagram.com/bhabhauniversitybhopal/');
 ?>
 
 <!-- ===== INSTAGRAM REELS SECTION ===== -->
@@ -41,11 +56,11 @@ $reelsData = [
     <div class="bu-reels-header">
       <span class="bu-reels-label">
         <svg class="bu-ig-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        LIFE AT BHABHA &nbsp;·&nbsp; INSTAGRAM REELS
+        <?php echo htmlspecialchars($reels_label); ?>
       </span>
-      <h2 class="bu-reels-title">Inside the <em>University</em></h2>
+      <h2 class="bu-reels-title"><?php echo $reels_heading; ?></h2>
       <p class="bu-reels-desc">
-        Watch real campus moments, student celebrations, and university highlights directly from our official Instagram feed.
+        <?php echo nl2br(htmlspecialchars($reels_desc)); ?>
       </p>
     </div>
 
@@ -53,13 +68,18 @@ $reelsData = [
     <div class="bu-reels-grid">
       <?php foreach($reelsData as $reel): ?>
       <div class="bu-reel-embed-card">
+        <div class="bu-reel-loader-bg">
+          <div class="bu-reel-spinner"></div>
+          <span class="bu-reel-loading-text">Loading Reel...</span>
+        </div>
         <iframe 
-          src="<?php echo $reel['embed_url']; ?>" 
-          class="bu-reel-embed-iframe"
+          loading="lazy"
+          data-src="<?php echo $reel['embed_url']; ?>" 
+          class="bu-reel-embed-iframe bu-lazy-reel"
           frameborder="0" 
           scrolling="no" 
           allowtransparency="true"
-          allow="encrypted-media; autoplay; clipboard-write; picture-in-picture">
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share; unload *">
         </iframe>
         <div class="bu-reel-card-footer">
           <a href="<?php echo $reel['insta_url']; ?>" target="_blank" class="bu-reel-ig-link" title="Watch full video on Instagram">
@@ -76,9 +96,9 @@ $reelsData = [
 
     <!-- Footer Instagram Follow CTA -->
     <div class="bu-reels-footer">
-      <a href="https://www.instagram.com/bhabhauniversitybhopal/" target="_blank" class="bu-reels-follow-btn">
+      <a href="<?php echo htmlspecialchars($reels_footer_btn_url); ?>" target="_blank" class="bu-reels-follow-btn">
         <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        View Instagram Page &nbsp;→
+        <?php echo $reels_footer_btn_text; ?>
       </a>
     </div>
 
@@ -148,6 +168,7 @@ $reelsData = [
 
 /* ── Direct Inline Embed Card ── */
 .bu-reel-embed-card {
+  position: relative;
   background: #FFFFFF;
   border-radius: 18px;
   overflow: hidden;
@@ -161,13 +182,54 @@ $reelsData = [
   transform: translateY(-6px);
   box-shadow: 0 20px 48px rgba(10, 27, 84, 0.24);
 }
+.bu-reel-loader-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(145deg, #0A1B54 0%, #172B70 100%);
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+.bu-reel-embed-card.bu-loaded .bu-reel-loader-bg {
+  opacity: 0;
+  pointer-events: none;
+}
+.bu-reel-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255, 193, 7, 0.25);
+  border-top-color: #FFC107;
+  border-radius: 50%;
+  animation: buReelSpin 0.9s linear infinite;
+}
+@keyframes buReelSpin {
+  to { transform: rotate(360deg); }
+}
+.bu-reel-loading-text {
+  font-size: 11.5px;
+  color: #FFFFFF;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  opacity: 0.85;
+}
 .bu-reel-embed-iframe {
+  position: relative;
+  z-index: 2;
   width: 100%;
   height: 480px !important;
   border: none;
   display: block;
 }
 .bu-reel-card-footer {
+  position: relative;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -234,10 +296,53 @@ $reelsData = [
 @media (max-width: 1199px) {
   .bu-reels-grid { grid-template-columns: repeat(2, 1fr); }
   .bu-reel-embed-card { height: 500px; }
+  .bu-reel-loader-bg { height: 500px; }
 }
 @media (max-width: 600px) {
   .bu-reels-grid { grid-template-columns: 1fr; }
   .bu-reel-embed-card { height: 480px; }
+  .bu-reel-loader-bg { height: 480px; }
   .bu-reels-section { padding: 55px 16px 65px; }
 }
 </style>
+
+<script>
+(function() {
+  function initLazyReels() {
+    var lazyReels = document.querySelectorAll('.bu-lazy-reel');
+    if (!lazyReels.length) return;
+
+    function loadReel(el) {
+      if (el.dataset.src) {
+        el.src = el.dataset.src;
+        el.removeAttribute('data-src');
+        el.addEventListener('load', function() {
+          var card = el.closest('.bu-reel-embed-card');
+          if (card) card.classList.add('bu-loaded');
+        }, { once: true });
+      }
+    }
+
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries, obs) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            loadReel(entry.target);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '300px 0px' });
+
+      lazyReels.forEach(function(el) { observer.observe(el); });
+    } else {
+      lazyReels.forEach(loadReel);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLazyReels);
+  } else {
+    initLazyReels();
+  }
+})();
+</script>

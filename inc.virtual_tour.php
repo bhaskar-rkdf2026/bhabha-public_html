@@ -1,4 +1,39 @@
-<?php // Virtual Campus Tour Section — used on Home page ?>
+<?php
+// Virtual Campus Tour Section — used on Home page
+$vt_sec = null;
+if (isset($db) && is_object($db)) {
+    $db->where('section_key', 'virtual_tour');
+    $vt_sec = $db->getOne('homepage_sections');
+}
+if ($vt_sec && isset($vt_sec['status']) && $vt_sec['status'] == 0) {
+    return; // Section disabled from Admin
+}
+
+$vt_title = !empty($vt_sec['title']) ? $vt_sec['title'] : 'Explore Campus · 360° Drone View';
+$vt_heading = !empty($vt_sec['heading']) ? $vt_sec['heading'] : 'Virtual Tour of <em>Bhabha Campus</em>';
+$vt_desc = !empty($vt_sec['subheading']) ? $vt_sec['subheading'] : 'Experience our breathtaking 150-acre green campus from the sky. Explore world-class academic blocks, research labs, sports arenas, and vibrant student life — all from right here.';
+
+$vt_extra = !empty($vt_sec['extra_data']) ? json_decode($vt_sec['extra_data'], true) : [];
+$vt_tabs = !empty($vt_extra['video_tabs']) ? $vt_extra['video_tabs'] : [
+    ['label' => 'Aerial Drone', 'icon' => 'fa fa-plane', 'video_url' => 'new-media/image/hero/bhabha_1.mp4'],
+    ['label' => 'Campus Tour Video', 'icon' => 'fa fa-film', 'video_url' => 'new-media/image/hero/bhabha_2.mp4'],
+    ['label' => 'Academic & Labs', 'icon' => 'fa fa-flask', 'video_url' => 'new-media/image/hero/academic-lab.mp4'],
+    ['label' => 'Student Life', 'icon' => 'fa fa-graduation-cap', 'video_url' => 'new-media/image/hero/bhabha_4.mp4']
+];
+$vt_cards = !empty($vt_extra['info_cards']) ? $vt_extra['info_cards'] : [
+    ['icon' => 'fa fa-tree', 'title' => '150-Acre Green Campus', 'desc' => 'Eco-friendly campus with solar energy, botanical gardens, and spacious plazas.'],
+    ['icon' => 'fa fa-university', 'title' => '15 Schools & Institutes', 'desc' => 'Engineering, Medical, Dental, Pharmacy, Law, Agriculture & Management blocks.'],
+    ['icon' => 'fa fa-flask', 'title' => '120+ Modern Labs', 'desc' => 'Hi-tech practical skill labs, research wings, and state-of-art computing centers.'],
+    ['icon' => 'fa fa-hospital-o', 'title' => '500-Bed Hospital', 'desc' => 'Full-fledged multi-speciality teaching hospital & clinical training facility.']
+];
+$vt_cta_text = !empty($vt_extra['cta_text']) ? $vt_extra['cta_text'] : 'Explore Full Virtual Tour';
+$vt_cta_url = !empty($vt_extra['cta_url']) ? $vt_extra['cta_url'] : (function_exists('href') ? href('about.php') : 'about.php') . '#virtualTour';
+if (strpos($vt_cta_url, 'http') !== 0 && strpos($vt_cta_url, '/') !== 0 && strpos($vt_cta_url, '#') !== 0) {
+    $vt_cta_url = URL_ROOT . $vt_cta_url;
+}
+
+$main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], 'http') === 0 ? $vt_sec['media_url'] : URL_ROOT . ltrim($vt_sec['media_url'], '/')) : URL_ROOT . 'new-media/image/hero/bhabha_1.mp4';
+?>
 
 <style>
 /* ===== Virtual Campus Tour – Home Page ===== */
@@ -226,6 +261,13 @@
   font-size: 19px;
   box-shadow: 0 4px 14px rgba(255,193,7,0.35);
 }
+.bu-hvt-icon-box i,
+.bu-hvt-icon-box .fa {
+  font-family: 'FontAwesome' !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  display: inline-block !important;
+}
 .bu-hvt-card-content h4 {
   font-size: 14.5px;
   font-weight: 700;
@@ -291,12 +333,11 @@
     <div class="bu-hvt-header">
       <span class="bu-hvt-label">
         <span class="bu-hvt-label-dot"></span>
-        Explore Campus &nbsp;·&nbsp; 360° Drone View
+        <?php echo htmlspecialchars($vt_title); ?>
       </span>
-      <h2 class="bu-hvt-title">Virtual Tour of <em>Bhabha Campus</em></h2>
+      <h2 class="bu-hvt-title"><?php echo $vt_heading; ?></h2>
       <p class="bu-hvt-desc">
-        Experience our breathtaking 150-acre green campus from the sky. Explore world-class academic blocks, 
-        research labs, sports arenas, and vibrant student life — all from right here.
+        <?php echo nl2br(htmlspecialchars($vt_desc)); ?>
       </p>
     </div>
 
@@ -318,7 +359,7 @@
 
         <video id="buHvtVideo" class="bu-hvt-video" autoplay loop muted playsinline
                poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
-          <source id="buHvtSource" src="<?php echo URL_ROOT;?>new-media/image/hero/bhabha_1.mp4" type="video/mp4">
+          <source id="buHvtSource" src="<?php echo $main_video_url; ?>" type="video/mp4">
           Your browser does not support HTML5 video.
         </video>
 
@@ -334,64 +375,48 @@
           </div>
 
           <div class="bu-hvt-tabs">
-            <button class="bu-hvt-tab-btn active" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_1.mp4', this)">
-              <i class="fa fa-plane"></i> Aerial Drone
-            </button>
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_2.mp4', this)">
-              <i class="fa fa-film"></i> Campus Tour Video
-            </button>
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/academic-lab.mp4', this)">
-              <i class="fa fa-flask"></i> Academic &amp; Labs
-            </button>
-            <button class="bu-hvt-tab-btn" onclick="switchHvtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_4.mp4', this)">
-              <i class="fa fa-graduation-cap"></i> Student Life
-            </button>
+            <?php foreach ($vt_tabs as $idx => $tab): 
+              $tab_url = strpos($tab['video_url'], 'http') === 0 ? $tab['video_url'] : URL_ROOT . ltrim($tab['video_url'], '/');
+              $rawTabIcon = trim($tab['icon'] ?? 'fa fa-video-camera');
+              if (strpos($rawTabIcon, 'fa ') !== 0 && strpos($rawTabIcon, 'fas ') !== 0 && strpos($rawTabIcon, 'far ') !== 0 && strpos($rawTabIcon, 'fab ') !== 0) {
+                  $tabIconClass = 'fa ' . (strpos($rawTabIcon, 'fa-') === 0 ? $rawTabIcon : 'fa-' . $rawTabIcon);
+              } else {
+                  $tabIconClass = $rawTabIcon;
+              }
+            ?>
+              <button class="bu-hvt-tab-btn <?php echo $idx === 0 ? 'active' : ''; ?>" onclick="switchHvtVideo('<?php echo $tab_url; ?>', this)">
+                <i class="<?php echo htmlspecialchars($tabIconClass); ?>"></i> <?php echo htmlspecialchars($tab['label']); ?>
+              </button>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
 
       <!-- Side Highlight Cards -->
       <div class="bu-hvt-side-cards">
-
-        <div class="bu-hvt-info-card">
-          <div class="bu-hvt-icon-box"><i class="fa fa-tree"></i></div>
-          <div class="bu-hvt-card-content">
-            <h4>150-Acre Green Campus</h4>
-            <p>Eco-friendly campus with solar energy, botanical gardens, and spacious plazas.</p>
+        <?php foreach ($vt_cards as $card): 
+          $rawCardIcon = trim($card['icon'] ?? 'fa fa-check');
+          if (strpos($rawCardIcon, 'fa ') !== 0 && strpos($rawCardIcon, 'fas ') !== 0 && strpos($rawCardIcon, 'far ') !== 0 && strpos($rawCardIcon, 'fab ') !== 0) {
+              $cardIconClass = 'fa ' . (strpos($rawCardIcon, 'fa-') === 0 ? $rawCardIcon : 'fa-' . $rawCardIcon);
+          } else {
+              $cardIconClass = $rawCardIcon;
+          }
+        ?>
+          <div class="bu-hvt-info-card">
+            <div class="bu-hvt-icon-box"><i class="<?php echo htmlspecialchars($cardIconClass); ?>"></i></div>
+            <div class="bu-hvt-card-content">
+              <h4><?php echo htmlspecialchars($card['title']); ?></h4>
+              <p><?php echo htmlspecialchars($card['desc']); ?></p>
+            </div>
           </div>
-        </div>
-
-        <div class="bu-hvt-info-card">
-          <div class="bu-hvt-icon-box"><i class="fa fa-university"></i></div>
-          <div class="bu-hvt-card-content">
-            <h4>15 Schools &amp; Institutes</h4>
-            <p>Engineering, Medical, Dental, Pharmacy, Law, Agriculture &amp; Management blocks.</p>
-          </div>
-        </div>
-
-        <div class="bu-hvt-info-card">
-          <div class="bu-hvt-icon-box"><i class="fa fa-flask"></i></div>
-          <div class="bu-hvt-card-content">
-            <h4>120+ Modern Labs</h4>
-            <p>Hi-tech practical skill labs, research wings, and state-of-art computing centers.</p>
-          </div>
-        </div>
-
-        <div class="bu-hvt-info-card">
-          <div class="bu-hvt-icon-box"><i class="fa fa-hospital-o"></i></div>
-          <div class="bu-hvt-card-content">
-            <h4>500-Bed Hospital</h4>
-            <p>Full-fledged multi-speciality teaching hospital &amp; clinical training facility.</p>
-          </div>
-        </div>
-
+        <?php endforeach; ?>
       </div>
     </div>
 
     <!-- CTA Button -->
     <div class="bu-hvt-cta-row">
-      <a href="<?php echo href('about.php'); ?>#virtualTour" class="bu-hvt-cta-btn">
-        <i class="fa fa-play-circle"></i> Explore Full Virtual Tour
+      <a href="<?php echo $vt_cta_url; ?>" class="bu-hvt-cta-btn">
+        <i class="fa fa-play-circle"></i> <?php echo htmlspecialchars($vt_cta_text); ?>
       </a>
     </div>
 

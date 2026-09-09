@@ -9,8 +9,9 @@ if (typeof window.__chromium_devtools_metrics_reporter !== 'function') {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
-<!-- Font Awesome Icons (Instant Local Loading for Fast Performance) -->
+<!-- Font Awesome Icons (Instant Local Loading with CDN Fallback) -->
 <link rel="stylesheet" href="<?php echo URL_CSS;?>font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="<?php echo URL_CSS;?>bootstrap.min.css" rel="stylesheet">
 <!-- BU Global Page Redesign CSS -->
 <link href="<?php echo URL_CSS;?>bu-global.css?v=<?php echo time(); ?>" rel="stylesheet">

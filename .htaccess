@@ -1,5 +1,9 @@
 DirectoryIndex index.php index.html index.htm
 
+<IfModule mod_headers.c>
+    Header set Permissions-Policy "unload=*"
+</IfModule>
+
 ## Start Redirection Code ##
 <IfModule mod_rewrite.c>
 RewriteEngine On

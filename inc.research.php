@@ -1,45 +1,76 @@
 <?php
 // Bhabha University – Research & Innovation section (Exact Design Match)
+$res_sec = null;
+if (isset($db) && is_object($db)) {
+    $db->where('section_key', 'research_innovation');
+    $res_sec = $db->getOne('homepage_sections');
+}
+if ($res_sec && isset($res_sec['status']) && $res_sec['status'] == 0) {
+    return; // Section disabled from Admin
+}
+
+$res_label = !empty($res_sec['title']) ? $res_sec['title'] : 'RESEARCH & INNOVATION';
+$res_heading = !empty($res_sec['heading']) ? $res_sec['heading'] : 'Knowledge that <em>moves</em> the<br>world forward.';
+$res_sub = !empty($res_sec['subheading']) ? $res_sec['subheading'] : 'From climate-resilient agriculture to AI in healthcare — our 120+ labs and research centres tackle the questions that matter most.';
+$res_img = !empty($res_sec['media_url']) ? (strpos($res_sec['media_url'], 'http') === 0 ? $res_sec['media_url'] : URL_ROOT . ltrim($res_sec['media_url'], '/')) : URL_ROOT . 'new-media/image/campus-aerial.png';
+
+$res_extra = !empty($res_sec['extra_data']) ? json_decode($res_sec['extra_data'], true) : [];
+$res_metrics = !empty($res_extra['metrics']) ? $res_extra['metrics'] : [
+    ['target' => 250, 'value' => '250', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'PATENTS FILED'],
+    ['target' => 1200, 'value' => '1200', 'suffix' => '+', 'prefix' => '', 'commas' => true, 'label' => 'PUBLICATIONS'],
+    ['target' => 85, 'value' => '85', 'suffix' => ' Cr', 'prefix' => '₹', 'commas' => false, 'label' => 'ACTIVE GRANTS'],
+    ['target' => 60, 'value' => '60', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'GLOBAL MOUS']
+];
+$res_highlight = !empty($res_extra['highlight_text']) ? $res_extra['highlight_text'] : 'Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.';
+$res_btn_text = !empty($res_extra['button_text']) ? $res_extra['button_text'] : 'EXPLORE RESEARCH &nbsp;→';
+$raw_btn_url = !empty($res_extra['button_url']) ? $res_extra['button_url'] : 'research.php';
+if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
+    $res_btn_url = $raw_btn_url;
+} else {
+    $res_btn_url = function_exists('href') ? href($raw_btn_url) : URL_ROOT . ltrim($raw_btn_url, '/');
+}
 ?>
 <section class="bu-research-section">
   <div class="bu-research-container">
     
     <!-- LEFT: Text content & Metrics -->
     <div class="bu-research-text-col">
-      <span class="bu-res-label">RESEARCH & INNOVATION</span>
-      <h2 class="bu-res-heading">Knowledge that <em>moves</em> the<br>world forward.</h2>
-      <p class="bu-res-sub">From climate-resilient agriculture to AI in healthcare — our 120+ labs and research centres tackle the questions that matter most.</p>
+      <span class="bu-res-label"><?php echo htmlspecialchars($res_label); ?></span>
+      <h2 class="bu-res-heading"><?php echo $res_heading; ?></h2>
+      <p class="bu-res-sub"><?php echo nl2br(htmlspecialchars($res_sub)); ?></p>
       
       <!-- Metrics Grid -->
       <div class="bu-res-metrics">
-        <div class="bu-metric-item">
-          <div class="bu-metric-value" data-target="250" data-suffix="+">0</div>
-          <div class="bu-metric-lbl">PATENTS FILED</div>
-        </div>
-        <div class="bu-metric-item">
-          <div class="bu-metric-value" data-target="1200" data-suffix="+" data-commas="true">0</div>
-          <div class="bu-metric-lbl">PUBLICATIONS</div>
-        </div>
-        <div class="bu-metric-item">
-          <div class="bu-metric-value" data-target="85" data-prefix="₹" data-suffix=" Cr">0</div>
-          <div class="bu-metric-lbl">ACTIVE GRANTS</div>
-        </div>
-        <div class="bu-metric-item">
-          <div class="bu-metric-value" data-target="60" data-suffix="+">0</div>
-          <div class="bu-metric-lbl">GLOBAL MOUS</div>
-        </div>
+        <?php foreach ($res_metrics as $m): 
+          $rawNum = !empty($m['target']) ? $m['target'] : ($m['value'] ?? 0);
+          $targetVal = (int)preg_replace('/[^0-9]/', '', (string)$rawNum);
+          $prefix = $m['prefix'] ?? '';
+          $suffix = $m['suffix'] ?? '';
+          $useCommas = !empty($m['commas']) || ($targetVal >= 1000);
+          $formattedNum = $useCommas ? number_format($targetVal) : $targetVal;
+          $displayText = $prefix . $formattedNum . $suffix;
+        ?>
+          <div class="bu-metric-item">
+            <div class="bu-metric-value" 
+                 data-target="<?php echo $targetVal; ?>" 
+                 data-suffix="<?php echo htmlspecialchars($suffix); ?>" 
+                 data-prefix="<?php echo htmlspecialchars($prefix); ?>" 
+                 data-commas="<?php echo $useCommas ? 'true' : 'false'; ?>"><?php echo htmlspecialchars($displayText); ?></div>
+            <div class="bu-metric-lbl"><?php echo htmlspecialchars($m['label']); ?></div>
+          </div>
+        <?php endforeach; ?>
       </div>
       
-      <a href="<?php echo href("page.php","id=22"); ?>" class="bu-res-btn">EXPLORE RESEARCH &nbsp;→</a>
+      <a href="<?php echo $res_btn_url; ?>" class="bu-res-btn"><?php echo $res_btn_text; ?></a>
     </div>
 
     <!-- RIGHT: Image & Highlight Card -->
     <div class="bu-research-img-col">
       <div class="bu-res-img-wrapper">
-        <img src="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png" alt="Research at Bhabha University" class="bu-res-img">
+        <img src="<?php echo $res_img; ?>" alt="Research at Bhabha University" class="bu-res-img">
         <div class="bu-res-highlight-card">
           <div class="bu-card-icon"><i class="fa fa-flask"></i></div>
-          <p class="bu-card-highlight-text">Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.</p>
+          <p class="bu-card-highlight-text"><?php echo htmlspecialchars($res_highlight); ?></p>
         </div>
       </div>
     </div>
@@ -271,6 +302,7 @@
     function startResearchCounters() {
       rCounters.forEach(function (counter) {
         var target = parseInt(counter.getAttribute('data-target'), 10);
+        if (isNaN(target) || target <= 0) return;
         var prefix = counter.getAttribute('data-prefix') || '';
         var suffix = counter.getAttribute('data-suffix') || '';
         var useCommas = counter.getAttribute('data-commas') === 'true';
@@ -304,7 +336,7 @@
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.1 });
 
       var researchSec = document.querySelector('.bu-research-section');
       if (researchSec) {

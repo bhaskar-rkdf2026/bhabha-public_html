@@ -4,6 +4,7 @@
       <ul class="metismenu" id="side-menu">
         <li><a href="dashboard.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Dashboard</span></a></li>
         <li><a href="pages.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Website Pages</span></a></li>
+        <li><a href="homepage_sections.php" class="waves-effect"><i class="mdi mdi-view-dashboard-outline"></i> <span>Home Page Sections</span></a></li>
         <li><a href="media.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Media</span></a></li>
         <li><a href="admission.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Admission</span></a></li>
         <li><a href="alumni.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Alumni Registrations</span></a></li>

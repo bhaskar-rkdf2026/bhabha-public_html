@@ -1,6 +1,27 @@
 <?php
 // Bhabha University – Redesigned Chancellor's Message Section
-$chancellor_video_url = URL_ROOT . "new-media/image/hero/sadhna-mam.mp4"; // E.g., "uploads/chancellor_video.mp4". Leave empty to show image.
+$chanc_sec = null;
+if (isset($db) && is_object($db)) {
+    $db->where('section_key', 'chancellor_welcome');
+    $chanc_sec = $db->getOne('homepage_sections');
+}
+if ($chanc_sec && isset($chanc_sec['status']) && $chanc_sec['status'] == 0) {
+    return; // Section disabled from Admin
+}
+
+$chanc_label = !empty($chanc_sec['title']) ? $chanc_sec['title'] : "CHANCELLOR'S MESSAGE";
+$chanc_heading = !empty($chanc_sec['heading']) ? $chanc_sec['heading'] : "A legacy of <em>excellence</em>.<br>\nA vision for tomorrow.";
+$chanc_quote = !empty($chanc_sec['quote']) ? $chanc_sec['quote'] : '“We bridge academic brilliance with industrial pragmatism.”';
+$chanc_author = !empty($chanc_sec['author']) ? $chanc_sec['author'] : 'DR. SADHNA KAPOOR · CHANCELLOR';
+$chanc_desc = !empty($chanc_sec['content']) ? $chanc_sec['content'] : "<p><strong>Dr. Sadhna Kapoor</strong> is the Chancellor of BHABHA University. A visionary and a selfless leader with exceptional entrepreneurial, interpersonal, social and administrative skills; Dr. Sadhna Kapoor is passionate about technology and innovation, community development, social service, and interdisciplinary teaching and research.</p>\n<p>She has been awarded the title of “Honorary Professor” by the Academic Union Oxford, UK, reflecting her global dedication to educational innovation and excellence.</p>";
+$chancellor_video_url = !empty($chanc_sec['media_url']) ? (strpos($chanc_sec['media_url'], 'http') === 0 ? $chanc_sec['media_url'] : URL_ROOT . ltrim($chanc_sec['media_url'], '/')) : URL_ROOT . "new-media/image/hero/sadhna-mam.mp4";
+
+$chanc_extra = !empty($chanc_sec['extra_data']) ? json_decode($chanc_sec['extra_data'], true) : [];
+$chanc_recogs = !empty($chanc_extra['recognitions']) ? $chanc_extra['recognitions'] : [
+    ['title' => 'UGC', 'label' => 'RECOGNISED'],
+    ['title' => 'NAAC', 'label' => 'A+ GRADE'],
+    ['title' => 'AICTE', 'label' => 'APPROVED']
+];
 ?>
 <section class="bu-chancellor-section">
   <div class="bu-chancellor-container">
@@ -17,40 +38,32 @@ $chancellor_video_url = URL_ROOT . "new-media/image/hero/sadhna-mam.mp4"; // E.g
           <img loading="lazy" src="<?php echo URL_IMG;?>vcpic.jpg" alt="Dr. Sadhna Kapoor, Chancellor Bhabha University" class="bu-chancellor-img" onerror="this.src='https://www.bhabhauniversity.edu.in/images/vcpic.jpg'">
         <?php endif; ?>
         <div class="bu-chancellor-quote-card">
-          <p class="bu-quote-text">“We bridge academic brilliance with industrial pragmatism.”</p>
-          <span class="bu-quote-author">DR. SADHNA KAPOOR · CHANCELLOR</span>
+          <p class="bu-quote-text"><?php echo htmlspecialchars($chanc_quote); ?></p>
+          <span class="bu-quote-author"><?php echo htmlspecialchars($chanc_author); ?></span>
         </div>
       </div>
     </div>
     
     <!-- RIGHT: Text content & Recognitions -->
     <div class="bu-chancellor-text-col">
-      <span class="bu-chancellor-label">CHANCELLOR'S MESSAGE</span>
+      <span class="bu-chancellor-label"><?php echo htmlspecialchars($chanc_label); ?></span>
       <h2 class="bu-chancellor-heading">
-        A legacy of <em>excellence</em>.<br>
-        A vision for tomorrow.
+        <?php echo $chanc_heading; ?>
       </h2>
       <div class="bu-chancellor-desc">
-        <p><strong>Dr. Sadhna Kapoor</strong> is the Chancellor of BHABHA University. A visionary and a selfless leader with exceptional entrepreneurial, interpersonal, social and administrative skills; Dr. Sadhna Kapoor is passionate about technology and innovation, community development, social service, and interdisciplinary teaching and research.</p>
-        <p>She has been awarded the title of “Honorary Professor” by the Academic Union Oxford, UK, reflecting her global dedication to educational innovation and excellence.</p>
+        <?php echo $chanc_desc; ?>
       </div>
       
       <div class="bu-chancellor-divider"></div>
       
       <!-- Recognitions Row -->
       <div class="bu-chancellor-recognitions">
+        <?php foreach($chanc_recogs as $rec): ?>
         <div class="bu-recog-item">
-          <span class="bu-recog-title">UGC</span>
-          <span class="bu-recog-label">RECOGNISED</span>
+          <span class="bu-recog-title"><?php echo htmlspecialchars($rec['title']); ?></span>
+          <span class="bu-recog-label"><?php echo htmlspecialchars($rec['label']); ?></span>
         </div>
-        <div class="bu-recog-item">
-          <span class="bu-recog-title">NAAC</span>
-          <span class="bu-recog-label">A+ GRADE</span>
-        </div>
-        <div class="bu-recog-item">
-          <span class="bu-recog-title">AICTE</span>
-          <span class="bu-recog-label">APPROVED</span>
-        </div>
+        <?php endforeach; ?>
       </div>
     </div>
 
