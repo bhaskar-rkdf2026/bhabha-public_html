@@ -1,5 +1,6 @@
 <?php 
 include_once("config.php");
+$portalPage = function_exists('getPortalPage') ? getPortalPage('newsletter') : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +8,7 @@ include_once("config.php");
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>E-Newsletter &amp; Quarterly Digest - Bhabha University</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'E-Newsletter &amp; Quarterly Digest - Bhabha University'); ?></title>
 <meta name="description" content="Read the official Bhabha University E-Newsletter and quarterly digests featuring campus news, research discoveries, academic achievements, and student milestones.">
 <?php include('inc.meta.php');?>
 
@@ -409,8 +410,8 @@ include_once("config.php");
 
   <!-- INNER HERO BANNER -->
   <?php
-  $page_title    = 'E-Newsletter <em>&amp; Quarterly Digest</em>';
-  $page_subtitle = 'Official electronic newsletters of Bhabha University — Celebrating academic excellence, research milestones, campus chronicles, and student achievements.';
+  $page_title    = portalVal($portalPage, 'heading', 'E-Newsletter <em>&amp; Quarterly Digest</em>');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'Official electronic newsletters of Bhabha University — Celebrating academic excellence, research milestones, campus chronicles, and student achievements.');
   $page_icon     = 'fa-newspaper-o';
   $breadcrumbs   = [
     ['label' => 'Home', 'url' => URL_ROOT],
@@ -420,36 +421,64 @@ include_once("config.php");
   include('inc.page-banner.php');
   ?>
 
+  <?php
+  // Extract dynamic data from portal page
+  $cData = !empty($portalPage['data']) ? $portalPage['data'] : [];
+  $latest = !empty($cData['latest']) ? $cData['latest'] : [];
+  $archive = !empty($cData['archive']) ? $cData['archive'] : [];
+
+  // Default fallbacks if empty
+  $featTitle      = !empty($latest['title']) ? $latest['title'] : 'Bhabha Chronicle — Q2 2026 Edition';
+  $featVolume     = !empty($latest['volume']) ? $latest['volume'] : 'Vol. 6 | Issue 2';
+  $featPeriod     = !empty($latest['period']) ? $latest['period'] : 'Apr – Jun 2026';
+  $featBadge      = !empty($latest['badge']) ? $latest['badge'] : 'LATEST RELEASE';
+  $featDesc       = !empty($latest['desc']) ? $latest['desc'] : 'Dive into the latest quarterly happenings across all 11 constituent institutes of Bhabha University, featuring major commercial research launches, international academic collaborations, NAAC updates, and our highest placement records.';
+  $featHighlights = !empty($latest['highlights']) && is_array($latest['highlights']) ? $latest['highlights'] : [
+    'Launch of 14 Commercial Herbal Formulations (15th August)',
+    'Record campus placement offers with TCS, Infosys, Sun Pharma',
+    'Inauguration of New AI & Robotics Centre of Excellence',
+    'Faculty patent grants in advanced drug delivery systems'
+  ];
+
+  $featPdf = !empty($latest['pdf_url']) ? $latest['pdf_url'] : (URL_UPLOAD . 'research/overview.pdf');
+  if (!preg_match('/^(http|https):\/\//i', $featPdf) && !str_starts_with($featPdf, '/')) {
+    $featPdfLink = URL_ROOT . $featPdf;
+  } else {
+    $featPdfLink = $featPdf;
+  }
+  ?>
+
   <div class="bu-newslet-wrap">
     <div class="bu-newslet-container">
 
       <!-- 1. FEATURED CURRENT ISSUE -->
       <div class="bu-feat-nl-card">
         <div class="bu-feat-nl-cover">
-          <span class="cover-badge">LATEST RELEASE</span>
+          <span class="cover-badge"><?php echo htmlspecialchars($featBadge); ?></span>
           <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="BU Logo" class="cover-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
           <div class="cover-title">BHABHA CHRONICLE</div>
-          <div class="cover-vol">Vol. 6 | Issue 2 (Apr – Jun 2026)</div>
+          <div class="cover-vol"><?php echo htmlspecialchars($featVolume . ' (' . $featPeriod . ')'); ?></div>
         </div>
 
         <div class="bu-feat-nl-info">
           <div class="bu-feat-pill">
             <i class="fa fa-star"></i> Featured Current Edition
           </div>
-          <h2>Bhabha Chronicle — Q2 2026 Edition</h2>
+          <h2><?php echo htmlspecialchars($featTitle); ?></h2>
           <p>
-            Dive into the latest quarterly happenings across all 11 constituent institutes of Bhabha University, featuring major commercial research launches, international academic collaborations, NAAC updates, and our highest placement records.
+            <?php echo nl2br(htmlspecialchars($featDesc)); ?>
           </p>
 
+          <?php if (!empty($featHighlights)): ?>
           <ul class="bu-feat-highlights">
-            <li><i class="fa fa-check-circle"></i> Launch of 14 Commercial Herbal Formulations (15th August)</li>
-            <li><i class="fa fa-check-circle"></i> Record campus placement offers with TCS, Infosys, Sun Pharma</li>
-            <li><i class="fa fa-check-circle"></i> Inauguration of New AI &amp; Robotics Centre of Excellence</li>
-            <li><i class="fa fa-check-circle"></i> Faculty patent grants in advanced drug delivery systems</li>
+            <?php foreach ($featHighlights as $hl): ?>
+            <li><i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($hl); ?></li>
+            <?php endforeach; ?>
           </ul>
+          <?php endif; ?>
 
           <div class="bu-feat-actions">
-            <a href="<?php echo URL_UPLOAD;?>research/overview.pdf" target="_blank" class="bu-btn-gold">
+            <a href="<?php echo htmlspecialchars($featPdfLink); ?>" target="_blank" class="bu-btn-gold">
               <i class="fa fa-file-pdf-o"></i> Read Current Issue (PDF)
             </a>
             <a href="<?php echo href('news.php'); ?>" class="bu-btn-outline-white">
@@ -467,127 +496,41 @@ include_once("config.php");
       </div>
 
       <div class="bu-nl-grid">
-
-        <!-- Issue 1 -->
-        <div class="bu-nl-card">
-          <div class="bu-nl-header">
-            <span class="bu-nl-vol">Vol. 6 | Issue 1</span>
-            <span class="bu-nl-date">Jan – Mar 2026</span>
+        <?php if (!empty($archive)): ?>
+          <?php foreach ($archive as $issue): 
+            $pdfUrl = !empty($issue['url']) ? $issue['url'] : (URL_UPLOAD . 'research/overview.pdf');
+            if (!preg_match('/^(http|https):\/\//i', $pdfUrl) && !str_starts_with($pdfUrl, '/')) {
+              $pdfLink = URL_ROOT . $pdfUrl;
+            } else {
+              $pdfLink = $pdfUrl;
+            }
+            $topics = is_array($issue['topics'] ?? null) ? $issue['topics'] : (!empty($issue['topics']) ? explode("\n", $issue['topics']) : []);
+          ?>
+          <div class="bu-nl-card">
+            <div class="bu-nl-header">
+              <span class="bu-nl-vol"><?php echo htmlspecialchars($issue['vol'] ?? 'Quarterly Issue'); ?></span>
+              <span class="bu-nl-date"><?php echo htmlspecialchars($issue['date'] ?? ''); ?></span>
+            </div>
+            <h3 class="bu-nl-title"><?php echo htmlspecialchars($issue['title'] ?? ''); ?></h3>
+            <?php if (!empty($topics)): ?>
+            <ul class="bu-nl-topics">
+              <?php foreach ($topics as $top): 
+                $top = trim($top);
+                if (!empty($top)):
+              ?>
+              <li><?php echo htmlspecialchars($top); ?></li>
+              <?php endif; endforeach; ?>
+            </ul>
+            <?php endif; ?>
+            <div class="bu-nl-footer">
+              <span class="bu-nl-size"><i class="fa fa-file-text-o"></i> <?php echo htmlspecialchars($issue['size'] ?? '16 Pages • PDF'); ?></span>
+              <a href="<?php echo htmlspecialchars($pdfLink); ?>" target="_blank" class="bu-nl-btn-dl">
+                <i class="fa fa-download"></i> Download
+              </a>
+            </div>
           </div>
-          <h3 class="bu-nl-title">New Horizons in Innovation &amp; Academic Milestones</h3>
-          <ul class="bu-nl-topics">
-            <li>National Conference on Smart Computing &amp; IoT Solutions</li>
-            <li>Annual Sports Meet &amp; Cultural Fest 'Tarang 2026'</li>
-            <li>Launch of Entrepreneurship &amp; Incubation EDC Cell</li>
-          </ul>
-          <div class="bu-nl-footer">
-            <span class="bu-nl-size"><i class="fa fa-file-text-o"></i> 16 Pages &bull; PDF</span>
-            <a href="<?php echo URL_UPLOAD;?>research/overview.pdf" target="_blank" class="bu-nl-btn-dl">
-              <i class="fa fa-download"></i> Download
-            </a>
-          </div>
-        </div>
-
-        <!-- Issue 2 -->
-        <div class="bu-nl-card">
-          <div class="bu-nl-header">
-            <span class="bu-nl-vol">Vol. 5 | Issue 4</span>
-            <span class="bu-nl-date">Oct – Dec 2025</span>
-          </div>
-          <h3 class="bu-nl-title">Convocation Special &amp; Industry Collaboration Report</h3>
-          <ul class="bu-nl-topics">
-            <li>5th Annual University Convocation &amp; Gold Medalists</li>
-            <li>MOU Signing with leading pharmaceutical &amp; IT giants</li>
-            <li>Winter Faculty Development Programme (FDP) outcomes</li>
-          </ul>
-          <div class="bu-nl-footer">
-            <span class="bu-nl-size"><i class="fa fa-file-text-o"></i> 20 Pages &bull; PDF</span>
-            <a href="<?php echo URL_UPLOAD;?>research/overview.pdf" target="_blank" class="bu-nl-btn-dl">
-              <i class="fa fa-download"></i> Download
-            </a>
-          </div>
-        </div>
-
-        <!-- Issue 3 -->
-        <div class="bu-nl-card">
-          <div class="bu-nl-header">
-            <span class="bu-nl-vol">Vol. 5 | Issue 3</span>
-            <span class="bu-nl-date">Jul – Sep 2025</span>
-          </div>
-          <h3 class="bu-nl-title">Pharmacy Research &amp; Healthcare Outreach Focus</h3>
-          <ul class="bu-nl-topics">
-            <li>Community Health Camps conducted across Bhopal district</li>
-            <li>International Pharmacy Week &amp; Clinical Trial Workshop</li>
-            <li>Student innovators receive State Science Council Grant</li>
-          </ul>
-          <div class="bu-nl-footer">
-            <span class="bu-nl-size"><i class="fa fa-file-text-o"></i> 18 Pages &bull; PDF</span>
-            <a href="<?php echo URL_UPLOAD;?>research/overview.pdf" target="_blank" class="bu-nl-btn-dl">
-              <i class="fa fa-download"></i> Download
-            </a>
-          </div>
-        </div>
-
-        <!-- Issue 4 -->
-        <div class="bu-nl-card">
-          <div class="bu-nl-header">
-            <span class="bu-nl-vol">Vol. 5 | Issue 2</span>
-            <span class="bu-nl-date">Apr – Jun 2025</span>
-          </div>
-          <h3 class="bu-nl-title">Engineering Innovations &amp; Smart Campus Upgrades</h3>
-          <ul class="bu-nl-topics">
-            <li>Solar-powered green campus initiative completion</li>
-            <li>Hackathon 2025 winners develop Agriculture IoT kit</li>
-            <li>Alumni Mentorship series conducted across all departments</li>
-          </ul>
-          <div class="bu-nl-footer">
-            <span class="bu-nl-size"><i class="fa fa-file-text-o"></i> 16 Pages &bull; PDF</span>
-            <a href="<?php echo URL_UPLOAD;?>research/overview.pdf" target="_blank" class="bu-nl-btn-dl">
-              <i class="fa fa-download"></i> Download
-            </a>
-          </div>
-        </div>
-
-        <!-- Issue 5 -->
-        <div class="bu-nl-card">
-          <div class="bu-nl-header">
-            <span class="bu-nl-vol">Vol. 5 | Issue 1</span>
-            <span class="bu-nl-date">Jan – Mar 2025</span>
-          </div>
-          <h3 class="bu-nl-title">Academic Year Kickoff &amp; Placement Milestones</h3>
-          <ul class="bu-nl-topics">
-            <li>Orientation of 2025 academic batch across 50+ courses</li>
-            <li>Over 850 campus placement offers recorded in Phase 1</li>
-            <li>IQAC quality enhancement framework rollout</li>
-          </ul>
-          <div class="bu-nl-footer">
-            <span class="bu-nl-size"><i class="fa fa-file-text-o"></i> 14 Pages &bull; PDF</span>
-            <a href="<?php echo URL_UPLOAD;?>research/overview.pdf" target="_blank" class="bu-nl-btn-dl">
-              <i class="fa fa-download"></i> Download
-            </a>
-          </div>
-        </div>
-
-        <!-- Issue 6 -->
-        <div class="bu-nl-card">
-          <div class="bu-nl-header">
-            <span class="bu-nl-vol">Vol. 4 | Special Issue</span>
-            <span class="bu-nl-date">Annual Roundup 2024</span>
-          </div>
-          <h3 class="bu-nl-title">20 Years of Educational Excellence — 2004 to 2024</h3>
-          <ul class="bu-nl-topics">
-            <li>Two-decade institutional milestone commemorative report</li>
-            <li>Notable Alumni hall of fame &amp; global contributions</li>
-            <li>Strategic 2030 vision roadmap of Bhabha University</li>
-          </ul>
-          <div class="bu-nl-footer">
-            <span class="bu-nl-size"><i class="fa fa-file-text-o"></i> 32 Pages &bull; PDF</span>
-            <a href="<?php echo URL_UPLOAD;?>research/overview.pdf" target="_blank" class="bu-nl-btn-dl">
-              <i class="fa fa-download"></i> Download
-            </a>
-          </div>
-        </div>
-
+          <?php endforeach; ?>
+        <?php endif; ?>
       </div>
 
       <!-- 3. SUBSCRIBE TO FUTURE EDITIONS -->

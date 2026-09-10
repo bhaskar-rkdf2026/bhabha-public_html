@@ -1,5 +1,6 @@
 <?php 
 include_once("config.php");
+$portalPage = function_exists('getPortalPage') ? getPortalPage('magazine') : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +8,7 @@ include_once("config.php");
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>University Magazine &amp; Publications - Bhabha University</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'University Magazine &amp; Publications - Bhabha University'); ?></title>
 <meta name="description" content="Explore 'Bhabha Spandan' and annual university magazines celebrating creative literature, student expressions, technological breakthroughs, and institutional glory.">
 <?php include('inc.meta.php');?>
 
@@ -356,8 +357,8 @@ include_once("config.php");
 
   <!-- INNER HERO BANNER -->
   <?php
-  $page_title    = 'University <em>Magazine &amp; Publications</em>';
-  $page_subtitle = 'Bhabha Spandan & Annual Chronicles — A vibrant canvas of creative literature, student expressions, technological breakthroughs, and institutional glory.';
+  $page_title    = portalVal($portalPage, 'heading', 'University <em>Magazine &amp; Publications</em>');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'Bhabha Spandan & Annual Chronicles — A vibrant canvas of creative literature, student expressions, technological breakthroughs, and institutional glory.');
   $page_icon     = 'fa-book';
   $breadcrumbs   = [
     ['label' => 'Home', 'url' => URL_ROOT],
@@ -365,6 +366,14 @@ include_once("config.php");
     ['label' => 'University Magazine', 'url' => '#'],
   ];
   include('inc.page-banner.php');
+
+  $flagship   = !empty($portalPage['content_data']['flagship']) ? $portalPage['content_data']['flagship'] : null;
+  $flagTitle   = !empty($flagship['title']) ? $flagship['title'] : 'BHABHA SPANDAN';
+  $flagEdition = !empty($flagship['edition']) ? $flagship['edition'] : '2025 – 2026';
+  $flagSub     = !empty($flagship['subtitle']) ? $flagship['subtitle'] : 'Annual University Magazine';
+  $flagDesc    = !empty($flagship['desc']) ? $flagship['desc'] : "'Bhabha Spandan' is the annual creative and intellectual flagship publication of Bhabha University. It chronicles student achievements, literary poetry, thought leadership essays by faculty members, campus event photo stories, and our journey towards becoming a global hub of higher learning.";
+  $flagPdf     = !empty($flagship['pdf_url']) && $flagship['pdf_url'] !== '#' ? href($flagship['pdf_url']) : '#';
+  $flagTarget  = $flagPdf !== '#' ? 'target="_blank"' : 'onclick="alert(\'Magazine PDF coming soon! Contact admin for access.\'); return false;"';
   ?>
 
   <div class="bu-mag-wrap">
@@ -374,16 +383,16 @@ include_once("config.php");
       <div class="bu-mag-hero-card">
         <div class="bu-mag-cover-box">
           <span class="mag-tag">FLAGSHIP EDITION</span>
-          <h3>BHABHA SPANDAN</h3>
-          <div class="mag-subtitle">Annual University Magazine</div>
-          <div class="mag-year">2025 – 2026</div>
+          <h3><?php echo htmlspecialchars($flagTitle); ?></h3>
+          <div class="mag-subtitle"><?php echo htmlspecialchars($flagSub); ?></div>
+          <div class="mag-year"><?php echo htmlspecialchars($flagEdition); ?></div>
           <div class="mag-theme">Theme: "Innovating for a Sustainable &amp; Inclusive Tomorrow"</div>
         </div>
 
         <div class="bu-mag-details">
-          <h2>Bhabha Spandan — 2025-26 Edition</h2>
+          <h2><?php echo htmlspecialchars($flagTitle); ?> — <?php echo htmlspecialchars($flagEdition); ?></h2>
           <p>
-            'Bhabha Spandan' is the annual creative and intellectual flagship publication of Bhabha University. It chronicles student achievements, literary poetry, thought leadership essays by faculty members, campus event photo stories, and our journey towards becoming a global hub of higher learning.
+            <?php echo htmlspecialchars($flagDesc); ?>
           </p>
 
           <div class="bu-mag-pill-list">
@@ -395,7 +404,7 @@ include_once("config.php");
           </div>
 
           <div class="bu-mag-actions">
-            <a href="#" onclick="alert('Magazine PDF coming soon! Contact admin for access.'); return false;" class="bu-btn-primary">
+            <a href="<?php echo $flagPdf; ?>" <?php echo $flagTarget; ?> class="bu-btn-primary">
               <i class="fa fa-file-pdf-o"></i> Read Full Magazine (PDF)
             </a>
             <a href="<?php echo href('gallery.php'); ?>" class="bu-btn-secondary">

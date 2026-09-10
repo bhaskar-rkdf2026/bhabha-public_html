@@ -1,11 +1,14 @@
-<?php include('config.php');?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('mission-vision') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vision & Mission - Bhabha University Bhopal</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'Vision & Mission - Bhabha University Bhopal'); ?></title>
 <meta name="description" content="Bhabha University's Vision and Mission — committed to excellence in education, research, and community development to shape the leaders of tomorrow.">
 <?php include('inc.meta.php');?>
 </head>
@@ -14,9 +17,9 @@
   <?php include('inc.header.php');?>
 
   <?php
-  $page_title    = 'Vision & <em>Mission</em>';
-  $page_subtitle = 'The guiding philosophy that shapes every decision, programme, and initiative at Bhabha University.';
-  $page_icon     = 'fa-eye';
+  $page_title    = portalVal($portalPage, 'heading', 'Vision & <em>Mission</em>');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'The guiding philosophy that shapes every decision, programme, and initiative at Bhabha University.');
+  $page_icon     = (!empty($portalPage['data']['page_icon'])) ? $portalPage['data']['page_icon'] : 'fa-eye';
   $breadcrumbs   = [
     ['label' => 'Home',     'url' => URL_ROOT],
     ['label' => 'About',    'url' => href('about.php')],
@@ -29,7 +32,22 @@
     <?php $active_page = 'mission-vision'; include('inc.about-sidebar.php'); ?>
 
     <main class="bu-inner-content">
-
+      <?php if (!empty($portalPage['data']['cards']) && is_array($portalPage['data']['cards'])): ?>
+        <?php foreach ($portalPage['data']['cards'] as $card): ?>
+          <div class="bu-content-card" <?php echo !empty($card['style']) ? 'style="'.htmlspecialchars($card['style']).'"' : ''; ?>>
+            <?php if (!empty($card['label'])): ?>
+              <span class="bu-content-label" <?php echo !empty($card['label_style']) ? 'style="'.htmlspecialchars($card['label_style']).'"' : ''; ?>><?php echo htmlspecialchars($card['label']); ?></span>
+            <?php endif; ?>
+            <?php if (!empty($card['heading'])): ?>
+              <h2 class="bu-content-h2" <?php echo !empty($card['heading_style']) ? 'style="'.htmlspecialchars($card['heading_style']).'"' : ''; ?>><?php echo $card['heading']; ?></h2>
+            <?php endif; ?>
+            <div class="bu-content-divider" <?php echo !empty($card['style']) ? 'style="background:rgba(255,255,255,0.15) !important;"' : ''; ?>></div>
+            <div class="bu-content-body">
+              <?php echo $card['body']; ?>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
       <!-- Vision Card -->
       <div class="bu-content-card">
         <span class="bu-content-label">Our Purpose</span>
@@ -81,7 +99,7 @@
           </p>
         </div>
       </div>
-
+      <?php endif; ?>
     </main>
   </div>
 

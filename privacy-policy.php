@@ -1,11 +1,14 @@
-<?php include('config.php');?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('privacy-policy') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Privacy Policy - Bhabha University Bhopal Madhya Pradesh</title>
+    <title><?php echo portalVal($portalPage, 'page_title', 'Privacy Policy - Bhabha University Bhopal Madhya Pradesh'); ?></title>
     <!-- Bootstrap core CSS -->
     <?php include('inc.meta.php');?>
     </head>
@@ -39,15 +42,18 @@
 
       <div class="bu-policy-hero">
         <div class="container">
-          <h1>Privacy Policy</h1>
+          <h1><?php echo strip_tags(portalVal($portalPage, 'heading', 'Privacy Policy')); ?></h1>
           <div class="bu-policy-breadcrumb">
-            <a href="<?php echo URL_ROOT;?>">Home</a> &nbsp;&bull;&nbsp; Privacy Policy
+            <a href="<?php echo URL_ROOT;?>">Home</a> &nbsp;&bull;&nbsp; <?php echo strip_tags(portalVal($portalPage, 'heading', 'Privacy Policy')); ?>
           </div>
         </div>
       </div>
 
       <div class="bu-policy-container">
         <div class="bu-policy-content">
+          <?php if (!empty($portalPage['data']['body'])): ?>
+            <?php echo $portalPage['data']['body']; ?>
+          <?php else: ?>
           <p>The <strong>BHABHA UNIVERSITY</strong> protects the personal information collected from and about students, graduates, staff and other business partners. This includes the training of employees and the establishment of control systems for the responsible use of personal information that is accessible to BHABHA UNIVERSITY employees while performing work-related duties. The BHABHA UNIVERSITY directs its employees to exercise caution when making personal information available to others and not to give others access to BHABHA UNIVERSITY information or passwords. All full-time and part-time employees of the BHABHA UNIVERSITY, as well as student interns, are required to sign the employee non-disclosure &amp; confidential agreement.</p>
           
           <h4>In general, access to personal information is limited to the following:</h4>
@@ -65,6 +71,7 @@
             <li>The BHABHA UNIVERSITY may confirm inquiries as to whether an individual holds a designation or degree in good standing from The BHABHA UNIVERSITY, and this information can be made available to the public through The BHABHA UNIVERSITY website.</li>
             <li>The BHABHA UNIVERSITY releases name and address information to a limited number of professional industry organizations or associations regarding students expressly for the purpose of informing them of their eligibility for membership or other benefits or promoting local classes.</li>
           </ul>
+          <?php endif; ?>
         </div>
       </div>
       <?php include('inc.footer.php');?>

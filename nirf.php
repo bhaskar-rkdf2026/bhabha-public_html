@@ -1,11 +1,14 @@
-<?php include('config.php'); ?>
+<?php 
+include('config.php'); 
+$portalPage = function_exists('getPortalPage') ? getPortalPage('nirf') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NIRF Rankings & Submission Reports - Bhabha University Bhopal</title>
+  <title><?php echo portalVal($portalPage, 'page_title', 'NIRF Rankings & Submission Reports - Bhabha University Bhopal'); ?></title>
   <meta name="description" content="National Institutional Ranking Framework (NIRF) data reports submitted by Bhabha University Bhopal to the Ministry of Education, Government of India.">
   <?php include('inc.meta.php'); ?>
 
@@ -409,9 +412,9 @@
 
   <!-- HERO BANNER -->
   <?php 
-  $page_title    = "NIRF Rankings & Submission Reports";
-  $page_subtitle = "National Institutional Ranking Framework (NIRF) data reports submitted by Bhabha University to the Ministry of Education, Govt. of India.";
-  $page_icon     = "fa-line-chart";
+  $page_title    = portalVal($portalPage, 'heading', "NIRF Rankings & Submission Reports");
+  $page_subtitle = portalVal($portalPage, 'subheading', "National Institutional Ranking Framework (NIRF) data reports submitted by Bhabha University to the Ministry of Education, Govt. of India.");
+  $page_icon     = (!empty($portalPage['data']['page_icon'])) ? $portalPage['data']['page_icon'] : "fa-line-chart";
   $breadcrumbs   = [
     ['label' => 'Home', 'url' => URL_ROOT],
     ['label' => 'NIRF Rankings', 'url' => '#']
@@ -425,10 +428,10 @@
       
       <!-- OVERVIEW CARD -->
       <div class="bu-nirf-overview-card">
-        <span class="bu-nirf-badge-tag"><i class="fa fa-certificate"></i> Govt. of India Accredited</span>
-        <h2 class="bu-nirf-overview-title">National Institutional Ranking Framework</h2>
+        <span class="bu-nirf-badge-tag"><i class="fa fa-certificate"></i> <?php echo portalVal($portalPage, 'badge', 'Govt. of India Accredited'); ?></span>
+        <h2 class="bu-nirf-overview-title"><?php echo portalVal($portalPage, 'overview_title', 'National Institutional Ranking Framework'); ?></h2>
         <p class="bu-nirf-overview-desc">
-          The National Institutional Ranking Framework (NIRF) was launched by the Honorable Minister of Human Resource Development (now Ministry of Education). This framework outlines a methodology to rank institutions across India based on five broad parameter categories: Teaching, Research, Graduation Outcomes, Outreach, and Perception.
+          <?php echo portalVal($portalPage, 'overview_desc', 'The National Institutional Ranking Framework (NIRF) was launched by the Honorable Minister of Human Resource Development (now Ministry of Education). This framework outlines a methodology to rank institutions across India based on five broad parameter categories: Teaching, Research, Graduation Outcomes, Outreach, and Perception.'); ?>
         </p>
         
         <div class="bu-nirf-stats-row">
@@ -473,6 +476,34 @@
 
       <!-- ================= NIRF 2026 REPORTS GRID ================= -->
       <div id="nirfGrid2026" class="bu-nirf-grid">
+        <?php if (!empty($portalPage['data']['docs']) && is_array($portalPage['data']['docs'])): ?>
+          <?php foreach ($portalPage['data']['docs'] as $nd): 
+            $ndUrl = strpos($nd['url'], 'http') === 0 ? $nd['url'] : URL_ROOT . ltrim($nd['url'], '/');
+            $yearTag = $portalPage['data']['academic_year'] ?? 'NIRF 2026';
+          ?>
+          <div class="bu-nirf-card" data-title="<?php echo htmlspecialchars($nd['title']); ?>">
+            <div>
+              <div class="bu-nirf-card-header">
+                <span class="bu-nirf-disc-badge"><?php echo htmlspecialchars($nd['code'] ?? 'NIRF'); ?></span>
+                <span class="bu-nirf-year-tag"><?php echo htmlspecialchars($yearTag); ?></span>
+              </div>
+              <h3 class="bu-nirf-card-title"><?php echo htmlspecialchars($nd['title']); ?></h3>
+              <div class="bu-nirf-card-meta">
+                <i class="fa fa-file-pdf-o"></i>
+                <span><?php echo htmlspecialchars($nd['discipline'] ?? 'Official Submission Document (PDF)'); ?></span>
+              </div>
+            </div>
+            <div class="bu-nirf-card-actions">
+              <a href="<?php echo $ndUrl;?>" target="_blank" class="bu-nirf-btn-view">
+                <i class="fa fa-external-link"></i> View Report
+              </a>
+              <a href="<?php echo $ndUrl;?>" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
+                <i class="fa fa-download"></i>
+              </a>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        <?php else: ?>
         
         <!-- Overall 2026 -->
         <div class="bu-nirf-card" data-title="Overall NIRF 2026 Bhabha University Bhopal">
@@ -657,7 +688,7 @@
             </a>
           </div>
         </div>
-
+        <?php endif; ?>
       </div>
 
       <!-- ================= NIRF 2025 REPORTS GRID ================= -->

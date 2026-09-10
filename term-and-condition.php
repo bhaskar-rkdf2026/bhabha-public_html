@@ -1,11 +1,14 @@
-<?php include('config.php');?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('term-and-condition') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Terms & Conditions - Bhabha University Bhopal Madhya Pradesh</title>
+    <title><?php echo portalVal($portalPage, 'page_title', 'Terms & Conditions - Bhabha University Bhopal Madhya Pradesh'); ?></title>
     <!-- Bootstrap core CSS -->
     <?php include('inc.meta.php');?>
     </head>
@@ -27,6 +30,7 @@
       .bu-policy-container { max-width: 900px; margin: 0 auto; padding: 0 20px 80px; }
       .bu-policy-content { background: #fff; padding: 50px 60px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.05); }
       .bu-policy-content p { font-size: 16px; line-height: 1.8; color: #475569; margin-bottom: 20px; }
+      .bu-policy-content h4 { font-size: 20px; font-weight: 700; color: var(--bu-navy, #040F4A); margin-top: 35px; margin-bottom: 15px; }
       .bu-policy-content ul { padding-left: 20px; margin-bottom: 25px; }
       .bu-policy-content li { font-size: 16px; line-height: 1.8; color: #475569; margin-bottom: 12px; }
       .bu-policy-content strong { color: var(--bu-navy, #040F4A); }
@@ -38,15 +42,18 @@
 
       <div class="bu-policy-hero">
         <div class="container">
-          <h1>Terms &amp; Conditions</h1>
+          <h1><?php echo strip_tags(portalVal($portalPage, 'heading', 'Terms & Conditions')); ?></h1>
           <div class="bu-policy-breadcrumb">
-            <a href="<?php echo URL_ROOT;?>">Home</a> &nbsp;&bull;&nbsp; Terms &amp; Conditions
+            <a href="<?php echo URL_ROOT;?>">Home</a> &nbsp;&bull;&nbsp; <?php echo strip_tags(portalVal($portalPage, 'heading', 'Terms & Conditions')); ?>
           </div>
         </div>
       </div>
 
       <div class="bu-policy-container">
         <div class="bu-policy-content">
+          <?php if (!empty($portalPage['data']['body'])): ?>
+            <?php echo $portalPage['data']['body']; ?>
+          <?php else: ?>
           <p>Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use.</p>
           <p>The use of this website is subject to the following terms of use:</p>
           <ul style="list-style-type: none; padding-left: 0;">
@@ -61,6 +68,7 @@
             <li><strong>9)</strong> You may not create a link to this website from another website or document without our prior written consent.</li>
             <li><strong>10)</strong> Your use of this website and any dispute arising out of such use of the website is subject to the laws of India and shall fall under the jurisdiction of the Courts of Madhya Pradesh (Bhopal), India.</li>
           </ul>
+          <?php endif; ?>
         </div>
       </div>
       <?php include('inc.footer.php');?>

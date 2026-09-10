@@ -1,11 +1,14 @@
-<?php include('config.php');?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('refund-policy') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Refund and Cancellation Policy - Bhabha University Bhopal Madhya Pradesh</title>
+    <title><?php echo portalVal($portalPage, 'page_title', 'Refund and Cancellation Policy - Bhabha University Bhopal'); ?></title>
     <!-- Bootstrap core CSS -->
     <?php include('inc.meta.php');?>
     </head>
@@ -39,16 +42,20 @@
 
       <div class="bu-policy-hero">
         <div class="container">
-          <h1>Refund and Cancellation Policy</h1>
+          <h1><?php echo strip_tags(portalVal($portalPage, 'heading', 'Refund and Cancellation Policy')); ?></h1>
           <div class="bu-policy-breadcrumb">
-            <a href="<?php echo URL_ROOT;?>">Home</a> &nbsp;&bull;&nbsp; Refund and Cancellation Policy
+            <a href="<?php echo URL_ROOT;?>">Home</a> &nbsp;&bull;&nbsp; <?php echo strip_tags(portalVal($portalPage, 'heading', 'Refund and Cancellation Policy')); ?>
           </div>
         </div>
       </div>
 
       <div class="bu-policy-container">
         <div class="bu-policy-content">
+          <?php if (!empty($portalPage['data']['body'])): ?>
+            <?php echo $portalPage['data']['body']; ?>
+          <?php else: ?>
           <p><strong>Bhabha University</strong> supports its students. However, if there is a discrepancy or error in the payment amount or transaction details, please contact our accounts office within 30 days between 9:30 AM and 4:45 PM (IST) on working days to resolve the issue.</p>
+          <?php endif; ?>
         </div>
       </div>
       <?php include('inc.footer.php');?>

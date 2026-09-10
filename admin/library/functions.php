@@ -811,4 +811,51 @@ function createslug($string){
    $slug=strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $string));
    return $slug;
 }
+
+/**
+ * Fetch portal page record with decoded JSON content_data
+ */
+function getPortalPage($page_key) {
+    global $db;
+    if (!isset($db) || !is_object($db)) return null;
+    try {
+        $db->where('page_key', $page_key);
+        $row = $db->getOne('site_portal_pages');
+        if ($row) {
+            $data = !empty($row['content_data']) ? json_decode($row['content_data'], true) : [];
+            $row['data'] = is_array($data) ? $data : [];
+            return $row;
+        }
+    } catch (Exception $e) {}
+    return null;
+}
+
+function getPortalPagesByCategory($category) {
+    global $db;
+    if (!isset($db) || !is_object($db)) return [];
+    try {
+        $db->where('category', $category);
+        $rows = $db->get('site_portal_pages');
+        $res = [];
+        if ($rows) {
+            foreach ($rows as $r) {
+                $data = !empty($r['content_data']) ? json_decode($r['content_data'], true) : [];
+                $r['data'] = is_array($data) ? $data : [];
+                $res[$r['page_key']] = $r;
+            }
+        }
+        return $res;
+    } catch (Exception $e) {}
+    return [];
+}
+
+function portalVal($pageData, $field, $default = '') {
+    if (!empty($pageData['data']) && isset($pageData['data'][$field]) && $pageData['data'][$field] !== '') {
+        return $pageData['data'][$field];
+    }
+    if (isset($pageData[$field]) && $pageData[$field] !== '') {
+        return $pageData[$field];
+    }
+    return $default;
+}
 ?>

@@ -1,5 +1,6 @@
 <?php 
 include_once("config.php");
+$portalPage = function_exists('getPortalPage') ? getPortalPage('blogs') : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +8,7 @@ include_once("config.php");
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Research, Academic &amp; Tech Blogs - Bhabha University</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'Research, Academic &amp; Tech Blogs - Bhabha University'); ?></title>
 <meta name="description" content="Explore insights, faculty thought leadership, research breakthroughs, and career guides on emerging technology, pharmaceuticals, management, and student life.">
 <?php include('inc.meta.php');?>
 
@@ -186,6 +187,36 @@ include_once("config.php");
   margin: 0;
 }
 
+/* Featured Hero Grid with Image */
+.bu-featured-grid-wrap {
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 991px) {
+  .bu-featured-grid-wrap {
+    grid-template-columns: 1fr;
+  }
+}
+.bu-featured-img-col {
+  border-radius: 12px;
+  overflow: hidden;
+  height: 270px;
+  box-shadow: 0 8px 24px rgba(10, 27, 84, 0.08);
+  border: 1px solid var(--bu-border);
+}
+.bu-featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.bu-featured-img-col:hover .bu-featured-img {
+  transform: scale(1.04);
+}
+
 /* Blog Posts Grid */
 .bu-blog-grid {
   display: grid;
@@ -197,7 +228,7 @@ include_once("config.php");
   background: #ffffff;
   border: 1px solid var(--bu-border);
   border-radius: 14px;
-  padding: 26px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -208,6 +239,25 @@ include_once("config.php");
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(10,27,84,0.08);
   border-color: #CBD5E1;
+}
+.bu-post-thumb-wrap {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: #F1F5F9;
+  border: 1px solid var(--bu-border);
+}
+.bu-post-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.bu-post-card:hover .bu-post-thumb {
+  transform: scale(1.04);
 }
 .bu-post-top {
   margin-bottom: 15px;
@@ -267,47 +317,20 @@ include_once("config.php");
   color: var(--bu-gold-dark);
 }
 
-/* Modal for Reading Article */
-.bu-modal-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(10,27,84,0.7);
-  z-index: 999999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+.bu-featured-blog h2 a,
+.bu-post-title a {
+  color: inherit !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease;
 }
-.bu-modal-overlay.active {
-  display: flex;
-}
-.bu-modal-box {
-  background: #ffffff;
-  max-width: 800px;
-  width: 100%;
-  max-height: 85vh;
-  border-radius: 16px;
-  padding: 35px 40px;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-}
-.bu-modal-close {
-  position: absolute;
-  top: 20px; right: 20px;
-  font-size: 24px;
-  background: #F1F5F9;
-  border: none;
-  border-radius: 50%;
-  width: 36px; height: 36px;
-  cursor: pointer;
-  color: #64748B;
+.bu-featured-blog h2 a:hover,
+.bu-post-title a:hover {
+  color: var(--bu-gold-dark) !important;
 }
 
 @media (max-width: 768px) {
   .bu-blog-toolbar { flex-direction: column; align-items: stretch; }
   .bu-featured-blog { padding: 25px 20px; }
-  .bu-modal-box { padding: 25px 20px; }
 }
 </style>
 </head>
@@ -320,8 +343,8 @@ include_once("config.php");
 
   <!-- INNER HERO BANNER -->
   <?php
-  $page_title    = 'Research, Academic <em>&amp; Tech Blogs</em>';
-  $page_subtitle = 'Insights, faculty thought leadership, research breakthroughs, and career guides on emerging technology, pharmaceuticals, management, and campus life.';
+  $page_title    = portalVal($portalPage, 'heading', 'Research, Academic <em>&amp; Tech Blogs</em>');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'Insights, faculty thought leadership, research breakthroughs, and career guides on emerging technology, pharmaceuticals, management, and campus life.');
   $page_icon     = 'fa-rss';
   $breadcrumbs   = [
     ['label' => 'Home', 'url' => URL_ROOT],
@@ -331,17 +354,40 @@ include_once("config.php");
   include('inc.page-banner.php');
   ?>
 
+  <?php
+  // Query blogs from site_blogs table
+  $featuredArticle = $db->where('status', 1)->where('is_featured', 1)->getOne('site_blogs');
+  if (!$featuredArticle) {
+      $featuredArticle = $db->where('status', 1)->orderBy('publish_date', 'DESC')->getOne('site_blogs');
+  }
+
+  // Fetch grid articles (excluding featured article if present)
+  if ($featuredArticle) {
+      $db->where('id', $featuredArticle['id'], '!=');
+  }
+  $gridArticles = $db->where('status', 1)->orderBy('publish_date', 'DESC')->get('site_blogs');
+
+  if (!function_exists('getBlogUrl')) {
+      function getBlogUrl($row) {
+          if (!empty($row['slug'])) {
+              return URL_ROOT . 'blog/' . rawurlencode($row['slug']);
+          }
+          return URL_ROOT . 'blog-details.php?id=' . ($row['id'] ?? 1);
+      }
+  }
+  ?>
+
   <div class="bu-blog-wrap">
     <div class="bu-blog-container">
 
       <!-- 1. CATEGORY FILTER & SEARCH TOOLBAR -->
       <div class="bu-blog-toolbar">
         <div class="bu-blog-cats">
-          <button class="bu-cat-btn active" onclick="filterBlogCategory('all', this)">All Insights</button>
-          <button class="bu-cat-btn" onclick="filterBlogCategory('tech', this)">AI &amp; Tech</button>
-          <button class="bu-cat-btn" onclick="filterBlogCategory('pharmacy', this)">Pharmacy &amp; Health</button>
-          <button class="bu-cat-btn" onclick="filterBlogCategory('research', this)">Patents &amp; Research</button>
-          <button class="bu-cat-btn" onclick="filterBlogCategory('career', this)">Career &amp; Placements</button>
+          <button class="bu-cat-btn active" data-cat="all" onclick="filterBlogCategory('all', this)">All Insights</button>
+          <button class="bu-cat-btn" data-cat="tech" onclick="filterBlogCategory('tech', this)">AI &amp; Tech</button>
+          <button class="bu-cat-btn" data-cat="pharmacy" onclick="filterBlogCategory('pharmacy', this)">Pharmacy &amp; Health</button>
+          <button class="bu-cat-btn" data-cat="research" onclick="filterBlogCategory('research', this)">Patents &amp; Research</button>
+          <button class="bu-cat-btn" data-cat="career" onclick="filterBlogCategory('career', this)">Career &amp; Placements</button>
         </div>
 
         <div class="bu-blog-search">
@@ -351,214 +397,134 @@ include_once("config.php");
       </div>
 
       <!-- 2. FEATURED HERO ARTICLE -->
-      <div class="bu-featured-blog" data-cat="research pharmacy">
-        <div class="bu-feat-meta">
-          <span class="bu-badge-cat" style="background:#FEF3C7;color:#92400E;">FEATURED INSIGHT</span>
-          <span class="bu-badge-cat">Pharmacy &amp; Innovation</span>
-          <span class="bu-blog-date"><i class="fa fa-calendar-o"></i> 15 August 2026</span>
-          <span class="bu-blog-readtime"><i class="fa fa-clock-o"></i> 5 min read</span>
-        </div>
+      <?php if ($featuredArticle): 
+        $featCatKey = htmlspecialchars($featuredArticle['category']);
+        $featCatLabel = htmlspecialchars($featuredArticle['category_name'] ?: 'Featured Insight');
+        $featDate = date('d F Y', strtotime($featuredArticle['publish_date']));
+        $featRead = htmlspecialchars($featuredArticle['read_time'] ?: '5 min read');
+        $featTitle = htmlspecialchars($featuredArticle['title']);
+        $featSummary = htmlspecialchars($featuredArticle['summary']);
+        $featAuthor = htmlspecialchars($featuredArticle['author_name']);
+        $featRole = htmlspecialchars($featuredArticle['author_role'] ?? 'Bhabha University');
+        $featImg = !empty($featuredArticle['image']) ? ((strpos($featuredArticle['image'], 'http') === 0) ? $featuredArticle['image'] : (URL_ROOT . ltrim($featuredArticle['image'], '/'))) : '';
+        $initials = '';
+        $parts = explode(' ', trim($featuredArticle['author_name']));
+        foreach ($parts as $p) {
+          if (!empty($p)) $initials .= strtoupper($p[0]);
+          if (strlen($initials) >= 2) break;
+        }
+        if (empty($initials)) $initials = 'BU';
+      ?>
+      <div class="bu-featured-blog" data-cat="<?php echo $featCatKey; ?>">
+        <div class="bu-featured-grid-wrap">
+          <div>
+            <div class="bu-feat-meta">
+              <span class="bu-badge-cat" style="background:#FEF3C7;color:#92400E;">FEATURED INSIGHT</span>
+              <span class="bu-badge-cat"><?php echo $featCatLabel; ?></span>
+              <span class="bu-blog-date"><i class="fa fa-calendar-o"></i> <?php echo $featDate; ?></span>
+              <span class="bu-blog-readtime"><i class="fa fa-clock-o"></i> <?php echo $featRead; ?></span>
+            </div>
 
-        <h2>Commercializing Academic Research: How Bhabha University Developed 14 Proprietary Herbal &amp; Pharmacy Formulations</h2>
-        <p>
-          Translating laboratory discoveries into commercially viable healthcare products is the hallmark of modern university research. At Bhabha University, our dedicated team of pharmaceutical researchers, faculty innovators, and student scholars engineered 14 breakthrough formulations—from advanced antimicrobial ointments to herbal immunomodulators. Here is a look at the methodology, regulatory clearances, and the patent roadmap that made it possible.
-        </p>
+            <h2><a href="<?php echo getBlogUrl($featuredArticle); ?>"><?php echo $featTitle; ?></a></h2>
+            <p>
+              <?php echo $featSummary; ?>
+            </p>
 
-        <div class="bu-feat-author-bar">
-          <div class="bu-author-info">
-            <div class="bu-author-avatar">SV</div>
-            <div>
-              <div class="bu-author-name">Dr. S. K. Verma</div>
-              <div class="bu-author-role">Dean, Research &amp; Pharmaceutical Sciences &bull; Bhabha University</div>
+            <div class="bu-feat-author-bar">
+              <div class="bu-author-info">
+                <div class="bu-author-avatar"><?php echo htmlspecialchars($initials); ?></div>
+                <div>
+                  <div class="bu-author-name"><?php echo $featAuthor; ?></div>
+                  <div class="bu-author-role"><?php echo $featRole; ?></div>
+                </div>
+              </div>
+              <a href="<?php echo getBlogUrl($featuredArticle); ?>" class="bu-post-btn-read" style="font-size:14px;color:var(--bu-navy);">
+                Read Full Story <i class="fa fa-arrow-right"></i>
+              </a>
             </div>
           </div>
-          <a href="<?php echo href('research.php#launched-products'); ?>" class="bu-post-btn-read" style="font-size:14px;color:var(--bu-navy);">
-            View 14 Formulations <i class="fa fa-arrow-right"></i>
-          </a>
+          <?php if (!empty($featImg)): ?>
+          <div class="bu-featured-img-col">
+            <a href="<?php echo getBlogUrl($featuredArticle); ?>" style="display:block;height:100%;">
+              <img src="<?php echo htmlspecialchars($featImg); ?>" alt="<?php echo $featTitle; ?>" class="bu-featured-img">
+            </a>
+          </div>
+          <?php endif; ?>
         </div>
       </div>
+      <?php endif; ?>
 
       <!-- 3. ARTICLES GRID -->
       <div class="bu-blog-grid" id="blogGrid">
-
-        <!-- Article 1 -->
-        <div class="bu-post-card" data-cat="tech">
-          <div class="bu-post-top">
-            <div class="bu-feat-meta">
-              <span class="bu-badge-cat">AI &amp; Tech</span>
-              <span class="bu-blog-readtime"><i class="fa fa-clock-o"></i> 4 min read</span>
+        <?php if (!empty($gridArticles)): ?>
+          <?php foreach ($gridArticles as $art): 
+            $catKey = htmlspecialchars($art['category']);
+            $catLabel = htmlspecialchars($art['category_name'] ?: ucfirst($art['category']));
+            $readTime = htmlspecialchars($art['read_time'] ?: '5 min read');
+            $title = htmlspecialchars($art['title']);
+            $authorName = htmlspecialchars($art['author_name']);
+            $summary = htmlspecialchars($art['summary']);
+            $tags = array_filter(array_map('trim', explode(',', $art['tags'] ?? '')));
+            $artDate = date('d M Y', strtotime($art['publish_date']));
+            $artImg = !empty($art['image']) ? ((strpos($art['image'], 'http') === 0) ? $art['image'] : (URL_ROOT . ltrim($art['image'], '/'))) : '';
+          ?>
+          <div class="bu-post-card" data-cat="<?php echo $catKey; ?>">
+            <?php if (!empty($artImg)): ?>
+            <div class="bu-post-thumb-wrap">
+              <a href="<?php echo getBlogUrl($art); ?>" style="display:block;height:100%;">
+                <img src="<?php echo htmlspecialchars($artImg); ?>" alt="<?php echo $title; ?>" class="bu-post-thumb" loading="lazy">
+              </a>
             </div>
-            <h3 class="bu-post-title">Architecting Resilient Cloud Infrastructure with Edge AI</h3>
-            <p class="bu-post-excerpt">
-              How distributed edge computing and lightweight machine learning models are transforming real-time data processing in IoT sensors and smart manufacturing.
-            </p>
-            <div class="bu-post-tags">
-              <span>#CloudComputing</span>
-              <span>#EdgeAI</span>
-              <span>#IoT</span>
+            <?php endif; ?>
+            <div class="bu-post-top">
+              <div class="bu-feat-meta">
+                <span class="bu-badge-cat"><?php echo $catLabel; ?></span>
+                <span class="bu-blog-date"><i class="fa fa-calendar-o"></i> <?php echo $artDate; ?></span>
+                <span class="bu-blog-readtime"><i class="fa fa-clock-o"></i> <?php echo $readTime; ?></span>
+              </div>
+              <h3 class="bu-post-title"><a href="<?php echo getBlogUrl($art); ?>"><?php echo $title; ?></a></h3>
+              <p class="bu-post-excerpt">
+                <?php echo $summary; ?>
+              </p>
+              <?php if (!empty($tags)): ?>
+              <div class="bu-post-tags">
+                <?php foreach ($tags as $t): ?>
+                  <span>#<?php echo htmlspecialchars(ltrim($t, '#')); ?></span>
+                <?php endforeach; ?>
+              </div>
+              <?php endif; ?>
             </div>
-          </div>
-          <div class="bu-post-footer">
-            <span class="bu-post-author-small"><i class="fa fa-user-circle-o"></i> Prof. Amit Sen</span>
-            <a href="javascript:void(0)" onclick="openBlogModal('Architecting Resilient Cloud Infrastructure with Edge AI', 'Prof. Amit Sen (Dept. of Computer Science & Engineering)', 'Edge computing brings computation and data storage closer to the sources of data. This improves response times and saves bandwidth. When integrated with lightweight Edge AI models, devices can perform real-time inferences without continuous cloud connectivity, critical in autonomous vehicles, smart farming, and hospital telemedicine equipment.')" class="bu-post-btn-read">
-              Read Article <i class="fa fa-angle-right"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Article 2 -->
-        <div class="bu-post-card" data-cat="pharmacy">
-          <div class="bu-post-top">
-            <div class="bu-feat-meta">
-              <span class="bu-badge-cat">Pharmacy &amp; Health</span>
-              <span class="bu-blog-readtime"><i class="fa fa-clock-o"></i> 6 min read</span>
-            </div>
-            <h3 class="bu-post-title">Next-Generation Targeted Drug Delivery via Lipid Nanoparticles</h3>
-            <p class="bu-post-excerpt">
-              A comprehensive exploration of lipid nanoparticle systems in oncology and mRNA therapeutics, minimizing systemic side effects and improving bioavailability.
-            </p>
-            <div class="bu-post-tags">
-              <span>#Nanomedicine</span>
-              <span>#DrugDelivery</span>
-              <span>#PharmaResearch</span>
-            </div>
-          </div>
-          <div class="bu-post-footer">
-            <span class="bu-post-author-small"><i class="fa fa-user-circle-o"></i> Dr. Manisha Joshi</span>
-            <a href="javascript:void(0)" onclick="openBlogModal('Next-Generation Targeted Drug Delivery via Lipid Nanoparticles', 'Dr. Manisha Joshi (Faculty of Pharmacy)', 'Targeted drug delivery represents one of the most promising frontiers in modern pharmacotherapy. By encapsulating therapeutic agents in engineered lipid nanoparticles (LNPs), drugs can bypass biological barriers and release active ingredients specifically at diseased tissue sites.')" class="bu-post-btn-read">
-              Read Article <i class="fa fa-angle-right"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Article 3 -->
-        <div class="bu-post-card" data-cat="career">
-          <div class="bu-post-top">
-            <div class="bu-feat-meta">
-              <span class="bu-badge-cat">Career &amp; Placements</span>
-              <span class="bu-blog-readtime"><i class="fa fa-clock-o"></i> 5 min read</span>
-            </div>
-            <h3 class="bu-post-title">Mastering Technical &amp; HR Interviews in Top Tier Companies</h3>
-            <p class="bu-post-excerpt">
-              Essential strategies for engineering and management students preparing for campus placement rounds with IT majors, banking giants, and MNCs.
-            </p>
-            <div class="bu-post-tags">
-              <span>#PlacementTips</span>
-              <span>#CareerGrowth</span>
-              <span>#InterviewSkills</span>
+            <div class="bu-post-footer">
+              <span class="bu-post-author-small"><i class="fa fa-user-circle-o"></i> <?php echo $authorName; ?></span>
+              <a href="<?php echo getBlogUrl($art); ?>" class="bu-post-btn-read">
+                Read Article <i class="fa fa-angle-right"></i>
+              </a>
             </div>
           </div>
-          <div class="bu-post-footer">
-            <span class="bu-post-author-small"><i class="fa fa-user-circle-o"></i> T&amp;P Cell Advisory</span>
-            <a href="javascript:void(0)" onclick="openBlogModal('Mastering Technical & HR Interviews in Top Tier Companies', 'Training & Placement Directorate', 'Cracking campus placements requires a balance of core domain competence, problem-solving dexterity, and soft skills communication. Focus on Data Structures, fundamental business case studies, active listening, and showcasing live project contributions during technical rounds.')" class="bu-post-btn-read">
-              Read Article <i class="fa fa-angle-right"></i>
-            </a>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <div style="grid-column: 1 / -1; text-align:center; padding: 50px 20px;">
+            <i class="fa fa-newspaper-o text-muted" style="font-size:42px; margin-bottom:12px; display:block;"></i>
+            <h4 style="color:var(--bu-navy); font-weight:700;">More Articles Coming Soon</h4>
+            <p class="text-muted">Check back next month for fresh research publications, career advisories, and technical whitepapers.</p>
           </div>
-        </div>
-
-        <!-- Article 4 -->
-        <div class="bu-post-card" data-cat="research">
-          <div class="bu-post-top">
-            <div class="bu-feat-meta">
-              <span class="bu-badge-cat">Patents &amp; Research</span>
-              <span class="bu-blog-readtime"><i class="fa fa-clock-o"></i> 7 min read</span>
-            </div>
-            <h3 class="bu-post-title">Navigating the Patent Filing Process for Student Innovators</h3>
-            <p class="bu-post-excerpt">
-              Step-by-step guidance on prior-art search, patent drafting, provisional applications, and institutional support provided by Bhabha University IPR Cell.
-            </p>
-            <div class="bu-post-tags">
-              <span>#Patents</span>
-              <span>#IPR</span>
-              <span>#Innovation</span>
-            </div>
-          </div>
-          <div class="bu-post-footer">
-            <span class="bu-post-author-small"><i class="fa fa-user-circle-o"></i> IPR Cell Coordinator</span>
-            <a href="javascript:void(0)" onclick="openBlogModal('Navigating the Patent Filing Process for Student Innovators', 'IPR & Incubation Cell', 'Protecting intellectual property early in the development lifecycle gives inventors a significant competitive edge. Bhabha University provides comprehensive legal and financial assistance for eligible student and faculty inventions via our IPR Facilitation Cell.')" class="bu-post-btn-read">
-              Read Article <i class="fa fa-angle-right"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Article 5 -->
-        <div class="bu-post-card" data-cat="tech">
-          <div class="bu-post-top">
-            <div class="bu-feat-meta">
-              <span class="bu-badge-cat">AI &amp; Tech</span>
-              <span class="bu-blog-readtime"><i class="fa fa-clock-o"></i> 4 min read</span>
-            </div>
-            <h3 class="bu-post-title">Sustainable Energy Harvesting for Smart Cities &amp; Campus IoT</h3>
-            <p class="bu-post-excerpt">
-              Examining low-power micro-generators, piezoelectric pavements, and solar rooftop integration tested on the Bhabha University green campus.
-            </p>
-            <div class="bu-post-tags">
-              <span>#CleanTech</span>
-              <span>#GreenEnergy</span>
-              <span>#SmartCampus</span>
-            </div>
-          </div>
-          <div class="bu-post-footer">
-            <span class="bu-post-author-small"><i class="fa fa-user-circle-o"></i> Dept. of Electrical Engg</span>
-            <a href="javascript:void(0)" onclick="openBlogModal('Sustainable Energy Harvesting for Smart Cities & Campus IoT', 'Faculty of Engineering & Technology', 'Transitioning towards carbon-neutral smart campuses requires innovative energy harvesting techniques. By deploying localized solar trackers and micro-wind installations, institutions can sustainably power smart streetlights and sensor networks.')" class="bu-post-btn-read">
-              Read Article <i class="fa fa-angle-right"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Article 6 -->
-        <div class="bu-post-card" data-cat="career">
-          <div class="bu-post-top">
-            <div class="bu-feat-meta">
-              <span class="bu-badge-cat">Career &amp; Placements</span>
-              <span class="bu-blog-readtime"><i class="fa fa-clock-o"></i> 3 min read</span>
-            </div>
-            <h3 class="bu-post-title">Effective Habits for Academic Excellence &amp; Mental Well-being</h3>
-            <p class="bu-post-excerpt">
-              Practical psychological tools, active recall learning methods, and stress resilience practices for university scholars during exam seasons.
-            </p>
-            <div class="bu-post-tags">
-              <span>#StudentLife</span>
-              <span>#StudyTips</span>
-              <span>#MentalHealth</span>
-            </div>
-          </div>
-          <div class="bu-post-footer">
-            <span class="bu-post-author-small"><i class="fa fa-user-circle-o"></i> Student Counseling Cell</span>
-            <a href="javascript:void(0)" onclick="openBlogModal('Effective Habits for Academic Excellence & Mental Well-being', 'Student Welfare & Counseling Cell', 'Academic success is directly linked with cognitive balance and physical health. Implementing spaced repetition, scheduled digital detox intervals, and participating in extracurricular sports significantly enhances memory retention and reduces anxiety.')" class="bu-post-btn-read">
-              Read Article <i class="fa fa-angle-right"></i>
-            </a>
-          </div>
-        </div>
-
+        <?php endif; ?>
       </div>
 
-    </div>
-  </div>
-
-  <!-- ARTICLE MODAL -->
-  <div class="bu-modal-overlay" id="articleModal">
-    <div class="bu-modal-box">
-      <button class="bu-modal-close" onclick="closeBlogModal()">&times;</button>
-      <div id="modalContent">
-        <h2 id="modalTitle" style="font-family:'Playfair Display',serif;color:var(--bu-navy);margin-bottom:10px;"></h2>
-        <div id="modalAuthor" style="font-size:13px;color:var(--bu-gold-dark);font-weight:700;margin-bottom:20px;"></div>
-        <div id="modalBody" style="font-size:14.5px;color:var(--bu-text-dark);line-height:1.75;"></div>
-      </div>
     </div>
   </div>
 
   <!-- FOOTER START -->
-  <?php include('inc.footer.php');?>
+  <?php include('inc.footer.php'); ?>
   <!-- FOOTER END -->
 </div>
 
 <!-- Scripts -->
-<?php include('inc.footer.js.php');?>
+<?php include('inc.footer.js.php'); ?>
 <script>
 function filterBlogCategory(cat, btn) {
   document.querySelectorAll('.bu-cat-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
 
   var cards = document.querySelectorAll('.bu-post-card');
   cards.forEach(function(card) {
@@ -588,19 +554,26 @@ function searchBlogArticles(query) {
   });
 }
 
-function openBlogModal(title, author, text) {
-  document.getElementById('modalTitle').innerText = title;
-  document.getElementById('modalAuthor').innerText = author;
-  document.getElementById('modalBody').innerHTML = '<p>' + text + '</p><p style="margin-top:20px;color:#64748B;font-size:13.5px;">For full research whitepapers, extended datasets, or to contribute an article to the Bhabha University Research & Tech Blog, please write to <a href="mailto:research@bhabhauniversity.edu.in" style="color:var(--bu-navy);font-weight:bold;">research@bhabhauniversity.edu.in</a>.</p>';
-  document.getElementById('articleModal').classList.add('active');
-}
+// Deep linking support for category and search query
+document.addEventListener('DOMContentLoaded', function() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var catParam = urlParams.get('cat');
+  var qParam = urlParams.get('q');
 
-function closeBlogModal() {
-  document.getElementById('articleModal').classList.remove('active');
-}
+  if (catParam) {
+    var targetBtn = document.querySelector('.bu-cat-btn[data-cat="' + catParam + '"]');
+    if (targetBtn) {
+      filterBlogCategory(catParam, targetBtn);
+    }
+  }
 
-document.getElementById('articleModal').addEventListener('click', function(e) {
-  if(e.target === this) closeBlogModal();
+  if (qParam) {
+    var searchInput = document.getElementById('blogSearchInp');
+    if (searchInput) {
+      searchInput.value = qParam;
+      searchBlogArticles(qParam);
+    }
+  }
 });
 </script>
 </body>

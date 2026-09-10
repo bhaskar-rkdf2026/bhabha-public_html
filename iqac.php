@@ -1,5 +1,6 @@
 <?php 
 include_once('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('iqac') : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +8,7 @@ include_once('config.php');
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Internal Quality Assurance Cell (IQAC) - Bhabha University Bhopal</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'Internal Quality Assurance Cell (IQAC) - Bhabha University Bhopal'); ?></title>
 <meta name="description" content="Internal Quality Assurance Cell (IQAC) of Bhabha University Bhopal. NAAC, AQAR, SSR reports, institutional policies, audits, strategic plans, and best practices.">
 <?php include('inc.meta.php');?>
 
@@ -340,15 +341,15 @@ include_once('config.php');
       </ul>
 
       <div class="bu-hero-badge">
-        <i class="fa fa-shield"></i> Statutory Quality Sustenance Cell
+        <i class="fa fa-shield"></i> <?php echo portalVal($portalPage, 'badge', 'Statutory Quality Sustenance Cell'); ?>
       </div>
 
       <h1 class="bu-hero-title">
-        Internal Quality <em>Assurance Cell (IQAC)</em>
+        <?php echo portalVal($portalPage, 'heading', 'Internal Quality <em>Assurance Cell (IQAC)</em>'); ?>
       </h1>
 
       <p class="bu-hero-desc">
-        Institutional mechanism for continuous quality enhancement, academic and administrative audits, NAAC benchmark sustenance, and holistic educational excellence at Bhabha University Bhopal.
+        <?php echo portalVal($portalPage, 'subheading', 'Institutional mechanism for continuous quality enhancement, academic and administrative audits, NAAC benchmark sustenance, and holistic educational excellence at Bhabha University Bhopal.'); ?>
       </p>
     </div>
   </div>

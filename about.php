@@ -1,11 +1,14 @@
-<?php include('config.php');?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About Us - Bhabha University Bhopal | Best University in MP</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'About Us - Bhabha University Bhopal | Best University in MP'); ?></title>
 <meta name="description" content="Learn about Bhabha University Bhopal – our history, vision, mission, leadership, accreditations and campus. One of the best private universities in Madhya Pradesh, established in 2004.">
 <meta name="keywords" content="About Bhabha University, Bhabha University history, best university bhopal, bhabha university overview, chancellor bhabha university">
 <?php include('inc.meta.php');?>
@@ -1081,15 +1084,22 @@
         <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
         <li>About Us</li>
       </ul>
-      <span class="bu-about-hero-label">About Bhabha University</span>
+      <span class="bu-about-hero-label"><?php echo portalVal($portalPage, 'badge', 'About Bhabha University'); ?></span>
       <h1 class="bu-about-hero-title">
-        Shaping futures since<br><em>2004.</em>
+        <?php echo portalVal($portalPage, 'heading', 'Shaping futures since<br><em>2004.</em>'); ?>
       </h1>
       <p class="bu-about-hero-desc">
-        Bhabha University, Bhopal stands as one of Central India's most respected private universities — 
-        committed to academic excellence, research innovation, and producing leaders who make a difference.
+        <?php echo portalVal($portalPage, 'subheading', "Bhabha University, Bhopal stands as one of Central India's most respected private universities — committed to academic excellence, research innovation, and producing leaders who make a difference."); ?>
       </p>
       <div class="bu-about-hero-stats">
+        <?php if (!empty($portalPage['data']['stats']) && is_array($portalPage['data']['stats'])): ?>
+          <?php foreach ($portalPage['data']['stats'] as $st): ?>
+            <div class="bu-hero-stat-item">
+              <span class="bu-hero-stat-num"><?php echo htmlspecialchars($st['num']); ?></span>
+              <span class="bu-hero-stat-lbl"><?php echo htmlspecialchars($st['label']); ?></span>
+            </div>
+          <?php endforeach; ?>
+        <?php else: ?>
         <div class="bu-hero-stat-item">
           <span class="bu-hero-stat-num">20+</span>
           <span class="bu-hero-stat-lbl">Years of Excellence</span>
@@ -1106,6 +1116,7 @@
           <span class="bu-hero-stat-num">50+</span>
           <span class="bu-hero-stat-lbl">Programmes Offered</span>
         </div>
+        <?php endif; ?>
       </div>
     </div>
   </section>
@@ -1129,13 +1140,9 @@
           <span class="bu-section-label">University Overview</span>
           <h2 class="bu-section-title">A university built<br>for <em>real-world impact.</em></h2>
           <div class="bu-section-divider"></div>
-          <p class="bu-section-text">
-            Bhabha University, located on NH-12 Narmadapuram Road, Bhopal, Madhya Pradesh, 
-            was established by the Ayushmati Education and Social Society. Over two decades, 
-            it has grown into a vibrant multi-disciplinary university offering programmes in 
-            Engineering, Pharmacy, Dental Sciences, Nursing, Management, Law, Agriculture, 
-            Science, Commerce, Education, and Hotel Management.
-          </p>
+          <div class="bu-section-text">
+            <?php echo !empty($portalPage['data']['overview_text']) ? $portalPage['data']['overview_text'] : '<p>Bhabha University, located on NH-12 Narmadapuram Road, Bhopal, Madhya Pradesh, was established by the Ayushmati Education and Social Society. Over two decades, it has grown into a vibrant multi-disciplinary university offering programmes in Engineering, Pharmacy, Dental Sciences, Nursing, Management, Law, Agriculture, Science, Commerce, Education, and Hotel Management.</p>'; ?>
+          </div>
           <ul class="bu-overview-points">
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>

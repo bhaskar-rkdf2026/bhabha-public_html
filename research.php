@@ -1,5 +1,40 @@
 <?php 
 include_once('config.php');
+
+// Dynamically load Research & Innovation Portal configuration from DB
+$portal_sections = [];
+if (isset($db) && is_object($db)) {
+    $rawPortal = $db->get('research_portal');
+    if (!empty($rawPortal)) {
+        foreach ($rawPortal as $ps) {
+            $ps['extra'] = !empty($ps['extra_data']) ? json_decode($ps['extra_data'], true) : [];
+            $portal_sections[$ps['section_key']] = $ps;
+        }
+    }
+}
+
+if (!function_exists('getPortalSec')) {
+    function getPortalSec($key, $default = []) {
+        global $portal_sections;
+        return $portal_sections[$key] ?? $default;
+    }
+}
+
+if (!function_exists('isPortalSecActive')) {
+    function isPortalSecActive($key) {
+        global $portal_sections;
+        if (!isset($portal_sections[$key])) return true;
+        return ($portal_sections[$key]['status'] == 1);
+    }
+}
+
+// Fallback metrics if not set in hero
+$portal_metrics = [
+    ['target' => 250, 'value' => '250', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'Patents Filed'],
+    ['target' => 1200, 'value' => '1200', 'suffix' => '+', 'prefix' => '', 'commas' => true, 'label' => 'Scopus / UGC Papers'],
+    ['target' => 85, 'value' => '85', 'suffix' => ' Cr', 'prefix' => '₹', 'commas' => false, 'label' => 'Active Grants'],
+    ['target' => 60, 'value' => '60', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'Global & Ind. MoUs']
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -859,11 +894,25 @@ include_once('config.php');
 <div class="kode_wrapper"> 
   <!-- HEADER START -->
   <?php include('inc.header.php');?>
-  <!-- HEADER END -->
-
-  <!-- =========================================================
+  <!-- HEADER END -->  <!-- =========================================================
        HERO BANNER SECTION (CUSTOM LUXURY HIGH-IMPACT DESIGN)
        ========================================================= -->
+  <?php 
+  $heroSec = getPortalSec('hero');
+  $heroExtra = $heroSec['extra'] ?? [];
+  $heroBadgeText = !empty($heroSec['badge_text']) ? $heroSec['badge_text'] : 'Centre for Advanced Research & Excellence';
+  $heroBadgeIcon = !empty($heroSec['badge_icon']) ? $heroSec['badge_icon'] : 'fa fa-flask';
+  $heroHeading = !empty($heroSec['heading']) ? $heroSec['heading'] : 'Research, Innovation & <em>Enterprise</em>';
+  $heroDesc = !empty($heroSec['subheading']) ? $heroSec['subheading'] : 'Advancing cutting-edge pharmaceutical formulations, commercial product development, student startup incubation, and global indexed publications at Bhabha University Bhopal.';
+  $heroActions = !empty($heroExtra['actions']) ? $heroExtra['actions'] : [
+      ['text' => 'Launched Products (15 Aug)', 'url' => '#launched-products', 'icon' => 'fa fa-cube', 'style' => 'gold'],
+      ['text' => 'Patents & Papers', 'url' => '#patents-publications', 'icon' => 'fa fa-database', 'style' => 'outline'],
+      ['text' => 'Incubation Centre', 'url' => '#incubation-edc', 'icon' => 'fa fa-lightbulb-o', 'style' => 'outline']
+  ];
+  $portal_milestones = !empty($heroExtra['milestones']) ? $heroExtra['milestones'] : $portal_metrics;
+  $heroMsTitle = !empty($heroExtra['milestones_title']) ? $heroExtra['milestones_title'] : 'Research Milestones at a Glance';
+  ?>
+  <?php if (isPortalSecActive('hero')): ?>
   <div class="bu-hero-research">
     <div class="bu-hero-research-container">
       
@@ -872,32 +921,30 @@ include_once('config.php');
         <ul class="bu-hero-breadcrumb">
           <li><a href="<?php echo URL_ROOT; ?>">Home</a></li>
           <li class="sep">›</li>
-          <li class="active">Research &amp; Innovation</li>
+          <li class="active"><?php echo htmlspecialchars($heroExtra['breadcrumb_active'] ?? 'Research & Innovation'); ?></li>
         </ul>
 
         <div class="bu-hero-badge">
-          <i class="fa fa-flask"></i> Centre for Advanced Research &amp; Excellence
+          <i class="<?php echo htmlspecialchars($heroBadgeIcon); ?>"></i> <?php echo htmlspecialchars($heroBadgeText); ?>
         </div>
 
         <h1 class="bu-hero-title">
-          Research, Innovation &amp; <em>Enterprise</em>
+          <?php echo $heroHeading; ?>
         </h1>
 
         <p class="bu-hero-desc">
-          Advancing cutting-edge pharmaceutical formulations, commercial product development, student startup incubation, and global indexed publications at Bhabha University Bhopal.
+          <?php echo nl2br(htmlspecialchars($heroDesc)); ?>
         </p>
 
         <!-- Quick Jump Buttons -->
         <div class="bu-hero-actions">
-          <a href="#launched-products" class="bu-btn-gold">
-            <i class="fa fa-cube"></i> Launched Products (15 Aug)
+          <?php foreach ($heroActions as $ha): 
+            $btnClass = ($ha['style'] == 'gold') ? 'bu-btn-gold' : 'bu-btn-outline-white';
+          ?>
+          <a href="<?php echo htmlspecialchars($ha['url']); ?>" class="<?php echo $btnClass; ?>">
+            <i class="<?php echo htmlspecialchars($ha['icon']); ?>"></i> <?php echo htmlspecialchars($ha['text']); ?>
           </a>
-          <a href="#patents-publications" class="bu-btn-outline-white">
-            <i class="fa fa-database"></i> Patents &amp; Papers
-          </a>
-          <a href="#incubation-edc" class="bu-btn-outline-white">
-            <i class="fa fa-lightbulb-o"></i> Incubation Centre
-          </a>
+          <?php endforeach; ?>
         </div>
       </div>
 
@@ -905,41 +952,40 @@ include_once('config.php');
       <div>
         <div class="bu-hero-stats-card">
           <div style="font-size:12px;font-weight:800;letter-spacing:1px;color:var(--bu-gold);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-            <i class="fa fa-line-chart"></i> Research Milestones at a Glance
+            <i class="fa fa-line-chart"></i> <?php echo htmlspecialchars($heroMsTitle); ?>
           </div>
           <div class="bu-hero-stats-grid">
+            <?php foreach ($portal_milestones as $pm): 
+              $rawVal = !empty($pm['target']) ? $pm['target'] : ($pm['value'] ?? 0);
+              $targetNum = (int)preg_replace('/[^0-9]/', '', (string)$rawVal);
+              $pPrefix = $pm['prefix'] ?? '';
+              $pSuffix = $pm['suffix'] ?? '';
+              $useCommas = !empty($pm['commas']) || ($targetNum >= 1000);
+              $cleanSuffix = (preg_match('/^[a-zA-Z]/', $pSuffix)) ? ' ' . $pSuffix : $pSuffix;
+              $displayVal = $pPrefix . ($useCommas ? number_format($targetNum) : $targetNum) . $cleanSuffix;
+            ?>
             <div class="bu-hero-stat-box">
-              <div class="bu-hero-stat-num">250+</div>
-              <div class="bu-hero-stat-lbl">Patents Filed</div>
+              <div class="bu-hero-stat-num"><?php echo htmlspecialchars($displayVal); ?></div>
+              <div class="bu-hero-stat-lbl"><?php echo htmlspecialchars($pm['label']); ?></div>
             </div>
-            <div class="bu-hero-stat-box">
-              <div class="bu-hero-stat-num">1,200+</div>
-              <div class="bu-hero-stat-lbl">Scopus / UGC Papers</div>
-            </div>
-            <div class="bu-hero-stat-box">
-              <div class="bu-hero-stat-num">₹85 Cr+</div>
-              <div class="bu-hero-stat-lbl">Active Grants</div>
-            </div>
-            <div class="bu-hero-stat-box">
-              <div class="bu-hero-stat-num">60+</div>
-              <div class="bu-hero-stat-lbl">Global &amp; Ind. MoUs</div>
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
 
     </div>
   </div>
+  <?php endif; ?>
 
   <!-- Quick Sticky Sub-Navigation -->
   <div class="bu-res-nav-bar">
     <div class="bu-res-nav-container">
-      <a href="#pharmacy-labs" class="bu-res-nav-link active"><i class="fa fa-medkit"></i> Pharmacy Labs</a>
-      <a href="#launched-products" class="bu-res-nav-link"><i class="fa fa-cube"></i> Launched Products</a>
-      <a href="#incubation-edc" class="bu-res-nav-link"><i class="fa fa-lightbulb-o"></i> Incubation &amp; EDC</a>
-      <a href="#research-domains" class="bu-res-nav-link"><i class="fa fa-th-large"></i> Research Domains</a>
-      <a href="#patents-publications" class="bu-res-nav-link"><i class="fa fa-table"></i> Patents &amp; Papers</a>
-      <a href="#media-publications" class="bu-res-nav-link"><i class="fa fa-newspaper-o"></i> E-Newsletter &amp; Blogs</a>
+      <?php if (isPortalSecActive('pharmacy_labs')): ?><a href="#pharmacy-labs" class="bu-res-nav-link active"><i class="fa fa-medkit"></i> Pharmacy Labs</a><?php endif; ?>
+      <?php if (isPortalSecActive('launched_products')): ?><a href="#launched-products" class="bu-res-nav-link"><i class="fa fa-cube"></i> Launched Products</a><?php endif; ?>
+      <?php if (isPortalSecActive('incubation_edc')): ?><a href="#incubation-edc" class="bu-res-nav-link"><i class="fa fa-lightbulb-o"></i> Incubation &amp; EDC</a><?php endif; ?>
+      <?php if (isPortalSecActive('research_domains')): ?><a href="#research-domains" class="bu-res-nav-link"><i class="fa fa-th-large"></i> Research Domains</a><?php endif; ?>
+      <?php if (isPortalSecActive('patents_publications')): ?><a href="#patents-publications" class="bu-res-nav-link"><i class="fa fa-table"></i> Patents &amp; Papers</a><?php endif; ?>
+      <?php if (isPortalSecActive('media_publications')): ?><a href="#media-publications" class="bu-res-nav-link"><i class="fa fa-newspaper-o"></i> E-Newsletter &amp; Blogs</a><?php endif; ?>
     </div>
   </div>
 
@@ -947,6 +993,17 @@ include_once('config.php');
     <div class="bu-res-wrap">
 
       <!-- ================= 1. BHABHA PHARMACY RESEARCH LABORATORIES ================= -->
+      <?php if (isPortalSecActive('pharmacy_labs')): 
+        $pharmSec = getPortalSec('pharmacy_labs');
+        $pharmExtra = $pharmSec['extra'] ?? [];
+        $pharmBadgeText = !empty($pharmSec['badge_text']) ? $pharmSec['badge_text'] : 'CENTRE OF EXCELLENCE · R&D FACILITY';
+        $pharmBadgeIcon = !empty($pharmSec['badge_icon']) ? $pharmSec['badge_icon'] : 'fa fa-flask';
+        $pharmHeading = !empty($pharmSec['heading']) ? $pharmSec['heading'] : 'Bhabha Pharmacy Research Laboratories';
+        $pharmDesc = !empty($pharmSec['subheading']) ? $pharmSec['subheading'] : 'Pioneering formulation development, phytochemical research, analytical testing, and commercial health innovations under stringent national regulatory approvals and standardization protocols.';
+        $pharmCertBadge = !empty($pharmExtra['certified_badge']) ? $pharmExtra['certified_badge'] : 'Certified Facility';
+        $pharmCerts = !empty($pharmExtra['certifications']) ? $pharmExtra['certifications'] : [];
+        $pharmStats = !empty($pharmExtra['stats']) ? $pharmExtra['stats'] : [];
+      ?>
       <section id="pharmacy-labs" style="scroll-margin-top: 60px;">
         <div class="bu-pharm-card">
           
@@ -954,365 +1011,220 @@ include_once('config.php');
           <div class="bu-pharm-top">
             <div>
               <span class="bu-badge-pill" style="background:#FFF9E6; color:#92400E; border:1px solid #FDE68A;">
-                <i class="fa fa-flask"></i> CENTRE OF EXCELLENCE · R&amp;D FACILITY
+                <i class="<?php echo htmlspecialchars($pharmBadgeIcon); ?>"></i> <?php echo htmlspecialchars($pharmBadgeText); ?>
               </span>
               <h2 class="bu-pharm-heading">
-                Bhabha Pharmacy Research Laboratories
+                <?php echo $pharmHeading; ?>
               </h2>
               <p class="bu-pharm-desc">
-                Pioneering formulation development, phytochemical research, analytical testing, and commercial health innovations under stringent national regulatory approvals and standardization protocols.
+                <?php echo nl2br(htmlspecialchars($pharmDesc)); ?>
               </p>
             </div>
             <div style="display:flex;align-items:center;gap:8px;">
               <span style="background:#0A1B54;color:#FFC107;font-size:12px;font-weight:800;padding:6px 14px;border-radius:20px;letter-spacing:0.8px;text-transform:uppercase;">
-                <i class="fa fa-certificate"></i> Certified Facility
+                <i class="fa fa-certificate"></i> <?php echo htmlspecialchars($pharmCertBadge); ?>
               </span>
             </div>
           </div>
 
           <!-- 4 Regulatory Approvals & Certifications Grid -->
           <div class="bu-pharm-cert-grid">
-            
+            <?php foreach ($pharmCerts as $pc): 
+              $pTheme = !empty($pc['theme']) ? 'bu-cert-' . $pc['theme'] : 'bu-cert-fssai';
+            ?>
             <div class="bu-cert-card">
-              <div class="bu-cert-icon-box bu-cert-fssai">
-                <i class="fa fa-check-circle"></i>
+              <div class="bu-cert-icon-box <?php echo $pTheme; ?>">
+                <i class="<?php echo htmlspecialchars($pc['icon']); ?>"></i>
               </div>
               <div>
-                <div class="bu-cert-title">FSSAI Approved</div>
-                <div class="bu-cert-subtitle">Food Safety &amp; Standards Authority</div>
+                <div class="bu-cert-title"><?php echo htmlspecialchars($pc['title']); ?></div>
+                <div class="bu-cert-subtitle"><?php echo htmlspecialchars($pc['subtitle']); ?></div>
               </div>
             </div>
-
-            <div class="bu-cert-card">
-              <div class="bu-cert-icon-box bu-cert-msme">
-                <i class="fa fa-certificate"></i>
-              </div>
-              <div>
-                <div class="bu-cert-title">MSME Registered</div>
-                <div class="bu-cert-subtitle">Ministry of MSME, Govt. of India</div>
-              </div>
-            </div>
-
-            <div class="bu-cert-card">
-              <div class="bu-cert-icon-box bu-cert-gumasta">
-                <i class="fa fa-shield"></i>
-              </div>
-              <div>
-                <div class="bu-cert-title">Gumasta Licensed</div>
-                <div class="bu-cert-subtitle">Municipal Trade Registration</div>
-              </div>
-            </div>
-
-            <div class="bu-cert-card">
-              <div class="bu-cert-icon-box bu-cert-gmp">
-                <i class="fa fa-industry"></i>
-              </div>
-              <div>
-                <div class="bu-cert-title">GMP Compliant</div>
-                <div class="bu-cert-subtitle">Standardized Testing Labs</div>
-              </div>
-            </div>
-
+            <?php endforeach; ?>
           </div>
 
           <!-- 4 Lab Stat Highlights in Soft Clean Cards -->
           <div class="bu-pharm-stats-row">
-            
+            <?php foreach ($pharmStats as $ps): ?>
             <div class="bu-pharm-stat-item">
-              <div style="width:40px;height:40px;border-radius:8px;background:#ECFDF5;color:#059669;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">
-                <i class="fa fa-cubes"></i>
+              <div style="width:40px;height:40px;border-radius:8px;background:<?php echo htmlspecialchars($ps['bg'] ?? '#ECFDF5'); ?>;color:<?php echo htmlspecialchars($ps['color'] ?? '#059669'); ?>;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">
+                <i class="<?php echo htmlspecialchars($ps['icon']); ?>"></i>
               </div>
               <div>
-                <div class="bu-pharm-stat-val" style="color:#059669;">3+</div>
-                <div class="bu-pharm-stat-lbl">Commercial Products</div>
+                <div class="bu-pharm-stat-val" style="color:<?php echo htmlspecialchars($ps['color'] ?? '#059669'); ?>;"><?php echo htmlspecialchars($ps['val']); ?></div>
+                <div class="bu-pharm-stat-lbl"><?php echo htmlspecialchars($ps['lbl']); ?></div>
               </div>
             </div>
-
-            <div class="bu-pharm-stat-item">
-              <div style="width:40px;height:40px;border-radius:8px;background:#EFF6FF;color:#2563EB;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">
-                <i class="fa fa-shield"></i>
-              </div>
-              <div>
-                <div class="bu-pharm-stat-val" style="color:#2563EB;">100%</div>
-                <div class="bu-pharm-stat-lbl">Regulatory Compliance</div>
-              </div>
-            </div>
-
-            <div class="bu-pharm-stat-item">
-              <div style="width:40px;height:40px;border-radius:8px;background:#FEF3C7;color:#D97706;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">
-                <i class="fa fa-users"></i>
-              </div>
-              <div>
-                <div class="bu-pharm-stat-val" style="color:#D97706;">25+</div>
-                <div class="bu-pharm-stat-lbl">Faculty Researchers</div>
-              </div>
-            </div>
-
-            <div class="bu-pharm-stat-item">
-              <div style="width:40px;height:40px;border-radius:8px;background:#F5F3FF;color:#7C3AED;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">
-                <i class="fa fa-flask"></i>
-              </div>
-              <div>
-                <div class="bu-pharm-stat-val" style="color:#7C3AED;">12+</div>
-                <div class="bu-pharm-stat-lbl">Active R&amp;D Projects</div>
-              </div>
-            </div>
-
+            <?php endforeach; ?>
           </div>
 
         </div>
       </section>
+      <?php endif; ?>
 
       <!-- ================= 2. LAUNCHED PRODUCTS (15th August Launch) ================= -->
+      <?php if (isPortalSecActive('launched_products')): 
+        $prodSec = getPortalSec('launched_products');
+        $prodExtra = $prodSec['extra'] ?? [];
+        $prodBadgeText = !empty($prodSec['badge_text']) ? $prodSec['badge_text'] : 'Commercial Innovations';
+        $prodBadgeIcon = !empty($prodSec['badge_icon']) ? $prodSec['badge_icon'] : 'fa fa-rocket';
+        $prodHeading = !empty($prodSec['heading']) ? $prodSec['heading'] : 'Products Developed & <em>Launched</em>';
+        $prodDesc = !empty($prodSec['subheading']) ? $prodSec['subheading'] : 'Formulated and commercially launched by Bhabha Pharmacy Research Laboratories on 15th August, adhering to pharmaceutical purity standards.';
+        $productList = !empty($prodExtra['products']) ? $prodExtra['products'] : [];
+      ?>
       <section id="launched-products" style="scroll-margin-top: 60px;">
         <div class="bu-sec-title-wrap">
-          <span class="bu-badge-pill"><i class="fa fa-rocket"></i> Commercial Innovations</span>
-          <h2 class="bu-sec-title">Products Developed &amp; <em>Launched</em></h2>
+          <span class="bu-badge-pill"><i class="<?php echo htmlspecialchars($prodBadgeIcon); ?>"></i> <?php echo htmlspecialchars($prodBadgeText); ?></span>
+          <h2 class="bu-sec-title"><?php echo $prodHeading; ?></h2>
           <p class="bu-sec-desc">
-            Formulated and commercially launched by Bhabha Pharmacy Research Laboratories on 15th August, adhering to pharmaceutical purity standards.
+            <?php echo nl2br(htmlspecialchars($prodDesc)); ?>
           </p>
         </div>
 
         <div class="bu-products-grid">
-          
-          <!-- Product 1: Dextro Zing (Jeera) -->
+          <?php foreach ($productList as $prod): ?>
           <div class="bu-prod-card">
             <div class="bu-prod-header">
               <div class="bu-prod-icon-circle">
-                <i class="fa fa-coffee"></i>
+                <i class="<?php echo htmlspecialchars($prod['icon'] ?? 'fa fa-cube'); ?>"></i>
               </div>
               <div style="text-align:right;">
-                <span class="bu-prod-badge-left"><i class="fa fa-calendar"></i> 15 Aug Launch</span>
+                <?php if (!empty($prod['badge_left'])): ?>
+                <span class="bu-prod-badge-left"><i class="fa fa-calendar"></i> <?php echo htmlspecialchars($prod['badge_left']); ?></span>
+                <?php endif; ?>
+                <?php if (!empty($prod['badge_right'])): ?>
                 <div style="margin-top:6px;">
-                  <span class="bu-prod-badge-right"><i class="fa fa-check"></i> FSSAI Approved</span>
+                  <span class="bu-prod-badge-right"><i class="fa fa-check"></i> <?php echo htmlspecialchars($prod['badge_right']); ?></span>
                 </div>
+                <?php endif; ?>
               </div>
             </div>
             <div class="bu-prod-body">
-              <div class="bu-prod-sub">Nutraceutical Formulation</div>
-              <h3 class="bu-prod-title">Dextro Zing (Jeera)</h3>
+              <div class="bu-prod-sub"><?php echo htmlspecialchars($prod['subtitle']); ?></div>
+              <h3 class="bu-prod-title"><?php echo htmlspecialchars($prod['name']); ?></h3>
               <p class="bu-prod-desc">
-                Instant energy formulation enriched with digestive cumin (Jeera) extracts and essential electrolytes for rapid replenishment.
+                <?php echo nl2br(htmlspecialchars($prod['desc'])); ?>
               </p>
+              <?php if (!empty($prod['specs']) && is_array($prod['specs'])): ?>
               <div class="bu-prod-specs">
+                <?php foreach ($prod['specs'] as $sp): 
+                  if (empty($sp['value']) && empty($sp['label'])) continue;
+                ?>
                 <div class="bu-prod-spec-row">
-                  <span class="bu-prod-spec-lbl">Category:</span>
-                  <span class="bu-prod-spec-val">Oral Electrolyte &amp; Energy</span>
+                  <span class="bu-prod-spec-lbl"><?php echo htmlspecialchars($sp['label']); ?></span>
+                  <span class="bu-prod-spec-val"><?php echo htmlspecialchars($sp['value']); ?></span>
                 </div>
-                <div class="bu-prod-spec-row">
-                  <span class="bu-prod-spec-lbl">Flavour:</span>
-                  <span class="bu-prod-spec-val">Natural Refreshing Jeera</span>
-                </div>
-                <div class="bu-prod-spec-row">
-                  <span class="bu-prod-spec-lbl">Registration:</span>
-                  <span class="bu-prod-spec-val">FSSAI / MSME Approved</span>
-                </div>
+                <?php endforeach; ?>
               </div>
+              <?php endif; ?>
+              <?php if (!empty($prod['lab'])): ?>
               <div style="font-size:11.5px;color:var(--bu-text-muted);display:flex;align-items:center;gap:6px;">
-                <i class="fa fa-building-o" style="color:var(--bu-gold-dark);"></i> Bhabha Pharmacy Research Labs
+                <i class="fa fa-building-o" style="color:var(--bu-gold-dark);"></i> <?php echo htmlspecialchars($prod['lab']); ?>
               </div>
+              <?php endif; ?>
             </div>
           </div>
-
-          <!-- Product 2: Energy Drink -->
-          <div class="bu-prod-card">
-            <div class="bu-prod-header">
-              <div class="bu-prod-icon-circle">
-                <i class="fa fa-bolt"></i>
-              </div>
-              <div style="text-align:right;">
-                <span class="bu-prod-badge-left"><i class="fa fa-calendar"></i> 15 Aug Launch</span>
-                <div style="margin-top:6px;">
-                  <span class="bu-prod-badge-right"><i class="fa fa-check"></i> FSSAI Approved</span>
-                </div>
-              </div>
-            </div>
-            <div class="bu-prod-body">
-              <div class="bu-prod-sub">Health &amp; Vitality Drink</div>
-              <h3 class="bu-prod-title">Bhabha Energy Drink</h3>
-              <p class="bu-prod-desc">
-                Scientifically balanced revitalizing beverage designed with active vitamins, minerals, and revitalizing supplements.
-              </p>
-              <div class="bu-prod-specs">
-                <div class="bu-prod-spec-row">
-                  <span class="bu-prod-spec-lbl">Category:</span>
-                  <span class="bu-prod-spec-val">Nutritional Beverage</span>
-                </div>
-                <div class="bu-prod-spec-row">
-                  <span class="bu-prod-spec-lbl">Key Nutrients:</span>
-                  <span class="bu-prod-spec-val">Vitamin B Complex &amp; Taurine</span>
-                </div>
-                <div class="bu-prod-spec-row">
-                  <span class="bu-prod-spec-lbl">Testing:</span>
-                  <span class="bu-prod-spec-val">Lab Standardized</span>
-                </div>
-              </div>
-              <div style="font-size:11.5px;color:var(--bu-text-muted);display:flex;align-items:center;gap:6px;">
-                <i class="fa fa-building-o" style="color:var(--bu-gold-dark);"></i> Bhabha Pharmacy Research Labs
-              </div>
-            </div>
-          </div>
-
-          <!-- Product 3: Aloe Vera Gel -->
-          <div class="bu-prod-card">
-            <div class="bu-prod-header">
-              <div class="bu-prod-icon-circle">
-                <i class="fa fa-leaf"></i>
-              </div>
-              <div style="text-align:right;">
-                <span class="bu-prod-badge-left"><i class="fa fa-calendar"></i> 15 Aug Launch</span>
-                <div style="margin-top:6px;">
-                  <span class="bu-prod-badge-right"><i class="fa fa-check"></i> Herbal Pure</span>
-                </div>
-              </div>
-            </div>
-            <div class="bu-prod-body">
-              <div class="bu-prod-sub">Herbal Skincare &amp; Cosmetic</div>
-              <h3 class="bu-prod-title">Pure Aloe Vera Gel</h3>
-              <p class="bu-prod-desc">
-                Cold-pressed Aloe barbadensis leaf extract enriched with natural Vitamin E. Hypoallergenic and soothing formulation.
-              </p>
-              <div class="bu-prod-specs">
-                <div class="bu-prod-spec-row">
-                  <span class="bu-prod-spec-lbl">Formulation:</span>
-                  <span class="bu-prod-spec-val">99% Pure Organic Aloe</span>
-                </div>
-                <div class="bu-prod-spec-row">
-                  <span class="bu-prod-spec-lbl">Properties:</span>
-                  <span class="bu-prod-spec-val">Paraben &amp; Sulphate Free</span>
-                </div>
-                <div class="bu-prod-spec-row">
-                  <span class="bu-prod-spec-lbl">Testing:</span>
-                  <span class="bu-prod-spec-val">Dermatologically Safe</span>
-                </div>
-              </div>
-              <div style="font-size:11.5px;color:var(--bu-text-muted);display:flex;align-items:center;gap:6px;">
-                <i class="fa fa-building-o" style="color:var(--bu-gold-dark);"></i> Bhabha Pharmacy Research Labs
-              </div>
-            </div>
-          </div>
-
+          <?php endforeach; ?>
         </div>
       </section>
+      <?php endif; ?>
 
       <!-- ================= 3. INCUBATION & ENTREPRENEURSHIP CELL ================= -->
+      <?php if (isPortalSecActive('incubation_edc')): 
+        $incSec = getPortalSec('incubation_edc');
+        $incExtra = $incSec['extra'] ?? [];
+        $incBadgeText = !empty($incSec['badge_text']) ? $incSec['badge_text'] : 'Startup Ecosystem';
+        $incBadgeIcon = !empty($incSec['badge_icon']) ? $incSec['badge_icon'] : 'fa fa-building';
+        $incHeading = !empty($incSec['heading']) ? $incSec['heading'] : 'Incubation Centre & <em>EDC</em>';
+        $incDesc = !empty($incSec['subheading']) ? $incSec['subheading'] : 'Empowering students and faculty to transform innovative ideas into viable enterprises through mentorship and prototyping facilities.';
+        $incBoxes = !empty($incExtra['boxes']) ? $incExtra['boxes'] : [];
+      ?>
       <section id="incubation-edc" style="scroll-margin-top: 60px;">
         <div class="bu-sec-title-wrap">
-          <span class="bu-badge-pill"><i class="fa fa-building"></i> Startup Ecosystem</span>
-          <h2 class="bu-sec-title">Incubation Centre &amp; <em>EDC</em></h2>
+          <span class="bu-badge-pill"><i class="<?php echo htmlspecialchars($incBadgeIcon); ?>"></i> <?php echo htmlspecialchars($incBadgeText); ?></span>
+          <h2 class="bu-sec-title"><?php echo $incHeading; ?></h2>
           <p class="bu-sec-desc">
-            Empowering students and faculty to transform innovative ideas into viable enterprises through mentorship and prototyping facilities.
+            <?php echo nl2br(htmlspecialchars($incDesc)); ?>
           </p>
         </div>
 
         <div class="bu-innov-grid">
-          <!-- Box 1 -->
+          <?php foreach ($incBoxes as $ib): ?>
           <div class="bu-innov-box">
             <div class="bu-innov-header">
-              <div class="bu-innov-icon"><i class="fa fa-industry"></i></div>
-              <h3 class="bu-innov-title">University / Industrial Incubation Centre</h3>
+              <div class="bu-innov-icon"><i class="<?php echo htmlspecialchars($ib['icon']); ?>"></i></div>
+              <h3 class="bu-innov-title"><?php echo htmlspecialchars($ib['title']); ?></h3>
             </div>
             <p class="bu-innov-desc">
-              Bridging academia with industry by offering pre-incubation, prototyping lab facilities, intellectual property guidance, and investor access.
+              <?php echo nl2br(htmlspecialchars($ib['desc'])); ?>
             </p>
+            <?php if (!empty($ib['bullets']) && is_array($ib['bullets'])): ?>
             <ul class="bu-innov-bullets">
-              <li>Comprehensive Prototype Development &amp; Pilot Testing Labs</li>
-              <li>Seed funding support &amp; government grant proposal guidance</li>
-              <li>Corporate technology transfer &amp; patent filing assistance</li>
+              <?php foreach ($ib['bullets'] as $blt): if(empty($blt)) continue; ?>
+              <li><?php echo htmlspecialchars($blt); ?></li>
+              <?php endforeach; ?>
             </ul>
+            <?php endif; ?>
           </div>
-
-          <!-- Box 2 -->
-          <div class="bu-innov-box">
-            <div class="bu-innov-header">
-              <div class="bu-innov-icon"><i class="fa fa-line-chart"></i></div>
-              <h3 class="bu-innov-title">Entrepreneurship Development Cell (EDC)</h3>
-            </div>
-            <p class="bu-innov-desc">
-              Cultivating an entrepreneurial mindset across all faculties through bootcamps, business plan competitions, and startup pitch events.
-            </p>
-            <ul class="bu-innov-bullets">
-              <li>Annual Startup Summits, Hackathons &amp; Pitch Competitions</li>
-              <li>One-on-one mentorship by experienced founders &amp; angel networks</li>
-              <li>Legal and financial advisory for corporate registration &amp; compliance</li>
-            </ul>
-          </div>
+          <?php endforeach; ?>
         </div>
       </section>
+      <?php endif; ?>
 
       <!-- ================= 4. RESEARCH PILLARS & DOMAINS ================= -->
+      <?php if (isPortalSecActive('research_domains')): 
+        $domSec = getPortalSec('research_domains');
+        $domExtra = $domSec['extra'] ?? [];
+        $domBadgeText = !empty($domSec['badge_text']) ? $domSec['badge_text'] : 'Academic Framework';
+        $domBadgeIcon = !empty($domSec['badge_icon']) ? $domSec['badge_icon'] : 'fa fa-sitemap';
+        $domHeading = !empty($domSec['heading']) ? $domSec['heading'] : 'Research Pillars & <em>Framework</em>';
+        $domDesc = !empty($domSec['subheading']) ? $domSec['subheading'] : 'Institutional framework governing interdisciplinary research, ethical compliance, and technology transfers.';
+        $domainItems = !empty($domExtra['domains']) ? $domExtra['domains'] : [];
+      ?>
       <section id="research-domains" style="scroll-margin-top: 60px;">
         <div class="bu-sec-title-wrap">
-          <span class="bu-badge-pill"><i class="fa fa-sitemap"></i> Academic Framework</span>
-          <h2 class="bu-sec-title">Research Pillars &amp; <em>Framework</em></h2>
+          <span class="bu-badge-pill"><i class="<?php echo htmlspecialchars($domBadgeIcon); ?>"></i> <?php echo htmlspecialchars($domBadgeText); ?></span>
+          <h2 class="bu-sec-title"><?php echo $domHeading; ?></h2>
           <p class="bu-sec-desc">
-            Institutional framework governing interdisciplinary research, ethical compliance, and technology transfers.
+            <?php echo nl2br(htmlspecialchars($domDesc)); ?>
           </p>
         </div>
 
         <div class="bu-res-domains-grid">
+          <?php foreach ($domainItems as $di): 
+            $dUrl = !empty($di['url']) ? $di['url'] : '';
+          ?>
           <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-compass"></i></div>
-            <div class="bu-domain-title">Research Overview &amp; Mandate</div>
+            <div class="bu-domain-icon"><i class="<?php echo htmlspecialchars($di['icon']); ?>"></i></div>
+            <div class="bu-domain-title">
+              <?php if (!empty($dUrl)): ?>
+                <a href="<?php echo htmlspecialchars($dUrl); ?>" style="color:inherit; text-decoration:none;"><?php echo htmlspecialchars($di['title']); ?></a>
+              <?php else: ?>
+                <?php echo htmlspecialchars($di['title']); ?>
+              <?php endif; ?>
+            </div>
           </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-bullseye"></i></div>
-            <div class="bu-domain-title">Vision &amp; Mission of Research</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-handshake-o"></i></div>
-            <div class="bu-domain-title">Collaborations &amp; MoUs</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-tasks"></i></div>
-            <div class="bu-domain-title">Funded Research Projects</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-certificate"></i></div>
-            <div class="bu-domain-title">Patents &amp; Publications</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-graduation-cap"></i></div>
-            <div class="bu-domain-title">Faculty Training Programs</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-shield"></i></div>
-            <div class="bu-domain-title">Ethical Committee</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-cogs"></i></div>
-            <div class="bu-domain-title">Skill Development Programs</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-users"></i></div>
-            <div class="bu-domain-title">Workshops, Seminars &amp; CDE</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-video-camera"></i></div>
-            <div class="bu-domain-title">R&amp;D Videos</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-exchange"></i></div>
-            <div class="bu-domain-title">Transfer of Technology (ToT)</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-trophy"></i></div>
-            <div class="bu-domain-title">Research Achievements</div>
-          </div>
-          <div class="bu-domain-item">
-            <div class="bu-domain-icon"><i class="fa fa-book"></i></div>
-            <div class="bu-domain-title">University Research Policy</div>
-          </div>
+          <?php endforeach; ?>
         </div>
       </section>
+      <?php endif; ?>
 
       <!-- ================= 5. PATENTS, RESEARCH PAPERS & BOOKS TABLES ================= -->
+      <?php if (isPortalSecActive('patents_publications')): 
+        $patSec = getPortalSec('patents_publications');
+        $patExtra = $patSec['extra'] ?? [];
+        $patBadgeText = !empty($patSec['badge_text']) ? $patSec['badge_text'] : 'Scholarly Records';
+        $patBadgeIcon = !empty($patSec['badge_icon']) ? $patSec['badge_icon'] : 'fa fa-database';
+        $patHeading = !empty($patSec['heading']) ? $patSec['heading'] : 'Patents, Publications & <em>Research Papers</em>';
+        $patDesc = !empty($patSec['subheading']) ? $patSec['subheading'] : 'Verified repository of filed patents, indexed papers (Scopus, UGC CARE), and authored book chapters.';
+      ?>
       <section id="patents-publications" style="scroll-margin-top: 60px;">
         <div class="bu-sec-title-wrap">
-          <span class="bu-badge-pill"><i class="fa fa-database"></i> Scholarly Records</span>
-          <h2 class="bu-sec-title">Patents, Publications &amp; <em>Research Papers</em></h2>
+          <span class="bu-badge-pill"><i class="<?php echo htmlspecialchars($patBadgeIcon); ?>"></i> <?php echo htmlspecialchars($patBadgeText); ?></span>
+          <h2 class="bu-sec-title"><?php echo $patHeading; ?></h2>
           <p class="bu-sec-desc">
-            Verified repository of filed patents, indexed papers (Scopus, UGC CARE), and authored book chapters.
+            <?php echo nl2br(htmlspecialchars($patDesc)); ?>
           </p>
         </div>
 
@@ -1320,21 +1232,21 @@ include_once('config.php');
           <!-- Table Tab Navigation -->
           <div class="bu-table-tabs">
             <button class="bu-table-tab-btn active" onclick="switchTableTab(event, 'tab-patents')">
-              <i class="fa fa-lightbulb-o"></i> Patent Filing Records
+              <i class="fa fa-lightbulb-o"></i> <?php echo htmlspecialchars($patExtra['tab1_title'] ?? 'Patent Filing Records'); ?>
             </button>
             <button class="bu-table-tab-btn" onclick="switchTableTab(event, 'tab-papers')">
-              <i class="fa fa-file-text-o"></i> Research Paper List
+              <i class="fa fa-file-text-o"></i> <?php echo htmlspecialchars($patExtra['tab2_title'] ?? 'Research Paper List'); ?>
             </button>
             <button class="bu-table-tab-btn" onclick="switchTableTab(event, 'tab-books')">
-              <i class="fa fa-book"></i> Books &amp; Chapters Published
+              <i class="fa fa-book"></i> <?php echo htmlspecialchars($patExtra['tab3_title'] ?? 'Books & Chapters Published'); ?>
             </button>
           </div>
 
           <!-- TAB 1: PATENTS TABLE -->
           <div id="tab-patents" class="bu-tab-panel active">
             <div style="margin-bottom:12px;font-size:12.5px;color:var(--bu-text-muted);display:flex;justify-content:space-between;align-items:center;">
-              <span>Official patent applications submitted by university faculty and researchers.</span>
-              <span class="bu-tag-patent">Format: IPO Indian Patent Office</span>
+              <span><?php echo htmlspecialchars($patExtra['tab1_desc'] ?? 'Official patent applications submitted by university faculty and researchers.'); ?></span>
+              <span class="bu-tag-patent"><?php echo htmlspecialchars($patExtra['tab1_tag'] ?? 'Format: IPO Indian Patent Office'); ?></span>
             </div>
             <div class="bu-responsive-table">
               <table class="bu-data-table">
@@ -1356,7 +1268,7 @@ include_once('config.php');
                     <td colspan="9" style="text-align:center; padding:36px 20px; color:#64748B;">
                       <i class="fa fa-folder-open-o" style="font-size:28px; color:#94A3B8; display:block; margin-bottom:8px;"></i>
                       <strong style="font-size:14px; color:var(--bu-navy); display:block; margin-bottom:4px;">No Patent Records Available</strong>
-                      <span style="font-size:12.5px; color:#94A3B8;">Official patent filing data will be updated upon departmental submission.</span>
+                      <span style="font-size:12.5px; color:#94A3B8;"><?php echo htmlspecialchars($patExtra['tab1_empty'] ?? 'Official patent filing data will be updated upon departmental submission.'); ?></span>
                     </td>
                   </tr>
                 </tbody>
@@ -1367,8 +1279,8 @@ include_once('config.php');
           <!-- TAB 2: RESEARCH PAPERS TABLE -->
           <div id="tab-papers" class="bu-tab-panel">
             <div style="margin-bottom:12px;font-size:12.5px;color:var(--bu-text-muted);display:flex;justify-content:space-between;align-items:center;">
-              <span>Papers indexed in Scopus, SCIE, UGC Care Group I &amp; II, and PubMed journals.</span>
-              <span class="bu-tag-index">Indexed Repository</span>
+              <span><?php echo htmlspecialchars($patExtra['tab2_desc'] ?? 'Papers indexed in Scopus, SCIE, UGC Care Group I & II, and PubMed journals.'); ?></span>
+              <span class="bu-tag-index"><?php echo htmlspecialchars($patExtra['tab2_tag'] ?? 'Indexed Repository'); ?></span>
             </div>
             <div class="bu-responsive-table">
               <table class="bu-data-table">
@@ -1390,7 +1302,7 @@ include_once('config.php');
                     <td colspan="9" style="text-align:center; padding:36px 20px; color:#64748B;">
                       <i class="fa fa-folder-open-o" style="font-size:28px; color:#94A3B8; display:block; margin-bottom:8px;"></i>
                       <strong style="font-size:14px; color:var(--bu-navy); display:block; margin-bottom:4px;">No Research Papers Available</strong>
-                      <span style="font-size:12.5px; color:#94A3B8;">Official publications list will be updated upon departmental submission.</span>
+                      <span style="font-size:12.5px; color:#94A3B8;"><?php echo htmlspecialchars($patExtra['tab2_empty'] ?? 'Official publications list will be updated upon departmental submission.'); ?></span>
                     </td>
                   </tr>
                 </tbody>
@@ -1401,7 +1313,7 @@ include_once('config.php');
           <!-- TAB 3: BOOKS & CHAPTERS TABLE -->
           <div id="tab-books" class="bu-tab-panel">
             <div style="margin-bottom:12px;font-size:12.5px;color:var(--bu-text-muted);">
-              <span>Authored reference textbooks and chapters published by recognized national and international publishers.</span>
+              <span><?php echo htmlspecialchars($patExtra['tab3_desc'] ?? 'Authored reference textbooks and chapters published by recognized national and international publishers.'); ?></span>
             </div>
             <div class="bu-responsive-table">
               <table class="bu-data-table">
@@ -1421,7 +1333,7 @@ include_once('config.php');
                     <td colspan="7" style="text-align:center; padding:36px 20px; color:#64748B;">
                       <i class="fa fa-folder-open-o" style="font-size:28px; color:#94A3B8; display:block; margin-bottom:8px;"></i>
                       <strong style="font-size:14px; color:var(--bu-navy); display:block; margin-bottom:4px;">No Books / Chapters Available</strong>
-                      <span style="font-size:12.5px; color:#94A3B8;">Official authored books and chapters records will be updated upon departmental submission.</span>
+                      <span style="font-size:12.5px; color:#94A3B8;"><?php echo htmlspecialchars($patExtra['tab3_empty'] ?? 'Official authored books and chapters records will be updated upon departmental submission.'); ?></span>
                     </td>
                   </tr>
                 </tbody>
@@ -1431,49 +1343,43 @@ include_once('config.php');
 
         </div>
       </section>
+      <?php endif; ?>
 
       <!-- ================= 6. E-NEWSLETTER, MAGAZINE & BLOGS ================= -->
+      <?php if (isPortalSecActive('media_publications')): 
+        $medSec = getPortalSec('media_publications');
+        $medExtra = $medSec['extra'] ?? [];
+        $medBadgeText = !empty($medSec['badge_text']) ? $medSec['badge_text'] : 'Publications';
+        $medBadgeIcon = !empty($medSec['badge_icon']) ? $medSec['badge_icon'] : 'fa fa-bookmark';
+        $medHeading = !empty($medSec['heading']) ? $medSec['heading'] : 'E-Newsletter, Magazine & <em>Blogs</em>';
+        $medDesc = !empty($medSec['subheading']) ? $medSec['subheading'] : 'Stay updated with quarterly research updates, student magazines, and academic insights.';
+        $mediaCards = !empty($medExtra['cards']) ? $medExtra['cards'] : [];
+      ?>
       <section id="media-publications" style="scroll-margin-top: 60px;">
         <div class="bu-sec-title-wrap">
-          <span class="bu-badge-pill"><i class="fa fa-bookmark"></i> Publications</span>
-          <h2 class="bu-sec-title">E-Newsletter, Magazine &amp; <em>Blogs</em></h2>
+          <span class="bu-badge-pill"><i class="<?php echo htmlspecialchars($medBadgeIcon); ?>"></i> <?php echo htmlspecialchars($medBadgeText); ?></span>
+          <h2 class="bu-sec-title"><?php echo $medHeading; ?></h2>
           <p class="bu-sec-desc">
-            Stay updated with quarterly research updates, student magazines, and academic insights.
+            <?php echo nl2br(htmlspecialchars($medDesc)); ?>
           </p>
         </div>
 
         <div class="bu-media-grid">
-          <!-- Card 1 -->
+          <?php foreach ($mediaCards as $mc): 
+            $mcUrl = !empty($mc['btn_url']) ? (strpos($mc['btn_url'], 'http') === 0 ? $mc['btn_url'] : (function_exists('href') ? href($mc['btn_url']) : URL_ROOT . ltrim($mc['btn_url'], '/'))) : '#';
+          ?>
           <div class="bu-media-card">
-            <div class="bu-media-icon"><i class="fa fa-envelope-open-o"></i></div>
-            <h3 class="bu-media-title">E-Newsletter</h3>
-            <p class="bu-media-desc">Quarterly digest featuring campus events, academic milestones, and research discoveries.</p>
-            <a href="<?php echo href('newsletter.php'); ?>" class="bu-media-btn">
-              <i class="fa fa-newspaper-o"></i> View Newsletters
+            <div class="bu-media-icon"><i class="<?php echo htmlspecialchars($mc['icon']); ?>"></i></div>
+            <h3 class="bu-media-title"><?php echo htmlspecialchars($mc['title']); ?></h3>
+            <p class="bu-media-desc"><?php echo nl2br(htmlspecialchars($mc['desc'])); ?></p>
+            <a href="<?php echo $mcUrl; ?>" class="bu-media-btn">
+              <i class="<?php echo htmlspecialchars($mc['btn_icon']); ?>"></i> <?php echo htmlspecialchars($mc['btn_text']); ?>
             </a>
           </div>
-
-          <!-- Card 2 -->
-          <div class="bu-media-card">
-            <div class="bu-media-icon"><i class="fa fa-book"></i></div>
-            <h3 class="bu-media-title">University Magazine</h3>
-            <p class="bu-media-desc">Annual flagship publication highlighting creative writing and institutional milestones.</p>
-            <a href="<?php echo href('magazine.php'); ?>" class="bu-media-btn">
-              <i class="fa fa-file-pdf-o"></i> Read Magazine
-            </a>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="bu-media-card">
-            <div class="bu-media-icon"><i class="fa fa-rss"></i></div>
-            <h3 class="bu-media-title">Research &amp; Tech Blog</h3>
-            <p class="bu-media-desc">Opinion pieces, case studies, and faculty perspectives on emerging technology and healthcare.</p>
-            <a href="<?php echo href('blogs.php'); ?>" class="bu-media-btn">
-              <i class="fa fa-pencil-square-o"></i> Explore Blogs
-            </a>
-          </div>
+          <?php endforeach; ?>
         </div>
       </section>
+      <?php endif; ?>
 
     </div>
   </div>

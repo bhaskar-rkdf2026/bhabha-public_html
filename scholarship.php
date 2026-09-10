@@ -1,11 +1,14 @@
-<?php include('config.php');?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('scholarship') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scholarship Programs - Bhabha University Bhopal</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'Scholarship Programs - Bhabha University Bhopal'); ?></title>
 <meta name="description" content="Explore state and national scholarship opportunities at Bhabha University Bhopal — MP Post Matric Scholarship, Mukhyamantri Medhavi Vidyarthi Yojana, OBC, SC, ST and Merit scholarships.">
 <?php include('inc.meta.php');?>
 <style>
@@ -84,9 +87,9 @@
   <!-- HEADER END -->
 
   <?php
-  $page_title    = 'Scholarships &amp; <em>Financial Aid</em>';
-  $page_subtitle = 'Supporting meritorious and underprivileged students through government and institutional scholarship schemes.';
-  $page_icon     = 'fa-graduation-cap';
+  $page_title    = portalVal($portalPage, 'heading', 'Scholarships &amp; <em>Financial Aid</em>');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'Supporting meritorious and underprivileged students through government and institutional scholarship schemes.');
+  $page_icon     = (!empty($portalPage['data']['page_icon'])) ? $portalPage['data']['page_icon'] : 'fa-graduation-cap';
   $breadcrumbs   = [
     ['label' => 'Home',       'url' => URL_ROOT],
     ['label' => 'Admissions', 'url' => '#'],
@@ -99,16 +102,28 @@
     <main>
 
       <div class="bu-content-card">
-        <span class="bu-content-label">Financial Assistance</span>
-        <h2 class="bu-content-h2">MP State &amp; <em>National Scholarships</em></h2>
+        <span class="bu-content-label"><?php echo portalVal($portalPage, 'badge', 'Financial Assistance'); ?></span>
+        <h2 class="bu-content-h2"><?php echo portalVal($portalPage, 'heading', 'MP State &amp; <em>National Scholarships</em>'); ?></h2>
         <div class="bu-content-divider"></div>
 
         <div class="bu-content-body">
+          <?php if (!empty($portalPage['data']['intro_body'])): ?>
+            <?php echo $portalPage['data']['intro_body']; ?>
+          <?php else: ?>
           <p>The Madhya Pradesh Scholarship Program provides substantial financial assistance to eligible students pursuing Higher Secondary to Post Graduation programs. Every academic year, thousands of students at Bhabha University benefit from government schemes reserved for SC, ST, OBC, Minorities, and General Economically Weaker Section (EWS) candidates.</p>
+          <?php endif; ?>
         </div>
 
         <!-- Scholarship Schemes Cards Grid -->
         <div class="bu-scholar-card-grid">
+          <?php if (!empty($portalPage['data']['schemes']) && is_array($portalPage['data']['schemes'])): ?>
+            <?php foreach ($portalPage['data']['schemes'] as $idx => $sc): ?>
+            <div class="bu-scholar-item">
+              <h4><?php echo ($idx + 1) . '. ' . htmlspecialchars($sc['title']); ?></h4>
+              <p><?php echo htmlspecialchars($sc['desc']); ?></p>
+            </div>
+            <?php endforeach; ?>
+          <?php else: ?>
           <div class="bu-scholar-item">
             <h4>1. Mukhyamantri Medhavi Vidyarthi Yojana (MMVY)</h4>
             <p>For students securing 75%+ in MP Board or 85%+ in CBSE/ICSE 12th. Annual family income limit: INR 6 Lakhs. Applicable to Engineering (JEE Mains under 50,000 rank), Medical (NEET), and Law (CLAT) students.</p>
@@ -138,6 +153,8 @@
             <h4>6. Other State Scholarships (UP, Bihar, National Portal)</h4>
             <p>Students from states outside MP (e.g. Bihar Post Matric, UP Scholarship, National Scholarship Portal - NSP) can apply through their respective state portals.</p>
           </div>
+          <?php endif; ?>
+        </div>
         </div>
 
         <h4 style="font-size:16px;font-weight:700;color:#061D7C;margin:30px 0 12px 0;">Mandatory Documents Required for Application:</h4>

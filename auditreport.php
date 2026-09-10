@@ -1,11 +1,14 @@
-<?php include('config.php');?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('auditreport') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Finance & Audit Report - Bhabha University Bhopal</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'Finance & Audit Report - Bhabha University Bhopal'); ?></title>
 <meta name="description" content="Bhabha University Finance Officer's Audit Reports and Balance Sheets — transparency in financial governance.">
 <?php include('inc.meta.php');?>
 </head>
@@ -14,9 +17,9 @@
   <?php include('inc.header.php');?>
 
   <?php
-  $page_title    = 'Finance & <em>Audit Report</em>';
-  $page_subtitle = 'Official financial reports, audit statements and balance sheets — reflecting our commitment to transparency and accountability.';
-  $page_icon     = 'fa-bar-chart';
+  $page_title    = portalVal($portalPage, 'heading', 'Finance & <em>Audit Report</em>');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'Official financial reports, audit statements and balance sheets — reflecting our commitment to transparency and accountability.');
+  $page_icon     = (!empty($portalPage['data']['page_icon'])) ? $portalPage['data']['page_icon'] : 'fa-bar-chart';
   $breadcrumbs   = [
     ['label' => 'Home',  'url' => URL_ROOT],
     ['label' => 'About', 'url' => href('about.php')],
@@ -30,11 +33,15 @@
 
     <main class="bu-inner-content">
       <div class="bu-content-card">
-        <span class="bu-content-label">Financial Transparency</span>
-        <h2 class="bu-content-h2">Finance & <em>Audit Report</em></h2>
+        <span class="bu-content-label"><?php echo portalVal($portalPage, 'badge', 'Financial Transparency'); ?></span>
+        <h2 class="bu-content-h2"><?php echo portalVal($portalPage, 'heading', 'Finance & <em>Audit Report</em>'); ?></h2>
         <div class="bu-content-divider"></div>
         <div class="bu-content-body">
+          <?php if (!empty($portalPage['data']['body'])): ?>
+            <?php echo $portalPage['data']['body']; ?>
+          <?php else: ?>
           <p>Bhabha University maintains complete transparency in its financial operations. Below are the official audit reports and balance sheets as submitted to the Finance Officer and regulatory bodies.</p>
+          <?php endif; ?>
         </div>
         <div style="display:grid;gap:12px;margin-top:24px;">
           <?php
@@ -44,8 +51,11 @@
             ['title'=>'Balance Sheet 2023-24','url'=>'https://www.bhabhauniversity.edu.in/upload/media/c0ca03c0cd958e2bd34d2c186ac3d5c4.pdf','year'=>'2023-24'],
             ['title'=>'Balance Sheet 2021-22 — Ayushmati Education Society','url'=>'https://www.bhabhauniversity.edu.in/upload/media/18a8b68a5dcc6fdc4682eb26d790d238.pdf','year'=>'2021-22'],
           ];
-          foreach($docs as $doc): ?>
-          <a href="<?php echo $doc['url'];?>" target="_blank" 
+          $display_docs = (!empty($portalPage['data']['docs']) && is_array($portalPage['data']['docs'])) ? $portalPage['data']['docs'] : $docs;
+          foreach($display_docs as $doc): 
+            $docUrl = strpos($doc['url'], 'http') === 0 ? $doc['url'] : URL_ROOT . ltrim($doc['url'], '/');
+          ?>
+          <a href="<?php echo $docUrl;?>" target="_blank" 
              style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:8px;border-left:3px solid #FFC107;text-decoration:none;transition:all 0.25s;"
              onmouseover="this.style.background='#0A1B54'; this.style.color='#ffffff';"
              onmouseout="this.style.background='#F8FAFC'; this.style.color='';">
@@ -54,7 +64,7 @@
             </div>
             <div style="flex:1;">
               <span style="font-size:15px;font-weight:700;color:inherit;display:block;margin-bottom:3px;"><?php echo $doc['title'];?></span>
-              <span style="font-size:11px;font-weight:600;color:inherit;opacity:0.55;text-transform:uppercase;letter-spacing:0.5px;">Financial Year <?php echo $doc['year'];?> &bull; PDF Document</span>
+              <span style="font-size:11px;font-weight:600;color:inherit;opacity:0.55;text-transform:uppercase;letter-spacing:0.5px;">Financial Year <?php echo $doc['year'] ?? '';?> &bull; PDF Document</span>
             </div>
             <i class="fa fa-download" style="font-size:16px;color:#D99B00;flex-shrink:0;"></i>
           </a>

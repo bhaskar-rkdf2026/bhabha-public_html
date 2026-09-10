@@ -163,8 +163,13 @@ if (isset($_POST['submit'])) {
                     ];
                 }
             }
+            $rawHlIcon = trim($_POST['res_highlight_icon'] ?? 'fa fa-flask');
+            if (!empty($rawHlIcon) && strpos($rawHlIcon, 'fa ') !== 0 && strpos($rawHlIcon, 'fas ') !== 0 && strpos($rawHlIcon, 'far ') !== 0 && strpos($rawHlIcon, 'fab ') !== 0) {
+                $rawHlIcon = 'fa ' . (strpos($rawHlIcon, 'fa-') === 0 ? $rawHlIcon : 'fa-' . $rawHlIcon);
+            }
             $extraArray = [
                 'metrics'        => $metrics,
+                'highlight_icon' => $rawHlIcon,
                 'highlight_text' => trim($_POST['res_highlight'] ?? ''),
                 'button_text'    => trim($_POST['res_btn_text'] ?? 'EXPLORE RESEARCH →'),
                 'button_url'     => trim($_POST['res_btn_url'] ?? 'research.php')
@@ -316,7 +321,7 @@ if (isset($_POST['submit'])) {
         <div class="row">
           <div class="col-sm-12">
             <div class="page-title-box">
-              <h4 class="page-title"><?php echo TITLE; ?></h4>
+              <h4 class="page-title"><i class="mdi mdi-home"></i> <?php echo TITLE; ?></h4>
             </div>
           </div>
         </div>
@@ -337,7 +342,7 @@ if (isset($_POST['submit'])) {
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <div>
-                    <h4 class="mt-0 header-title">Edit Section: <?php echo htmlspecialchars($aryData['section_name']); ?></h4>
+                    <h4 class="mt-0 header-title"><i class="fa fa-edit text-primary"></i> Edit Section: <?php echo htmlspecialchars($aryData['section_name']); ?></h4>
                     <span class="section-badge-key"><?php echo htmlspecialchars($aryData['section_key']); ?></span>
                   </div>
                   <a href="<?php echo PAGE; ?>" class="btn btn-secondary btn-sm"><i class="fa fa-arrow-left"></i> Back to List</a>
@@ -393,7 +398,7 @@ if (isset($_POST['submit'])) {
                   <?php endif; ?>
                   
                   <!-- Media / Video URL -->
-                  <?php if (in_array($aryData['section_key'], ['hero_video', 'chancellor_welcome', 'virtual_tour', 'research_innovation'])): ?>
+                  <?php if (in_array($aryData['section_key'], ['hero_video', 'chancellor_welcome', 'virtual_tour'])): ?>
                   <div class="row">
                     <div class="form-group col-md-8">
                       <label>Media / Video URL</label>
@@ -602,9 +607,36 @@ if (isset($_POST['submit'])) {
                   <!-- 5. RESEARCH & INNOVATION -->
                   <?php if ($aryData['section_key'] == 'research_innovation'): 
                     $metrics = !empty($extra['metrics']) ? $extra['metrics'] : [];
+                    $resImg = !empty($aryData['media_url']) ? (strpos($aryData['media_url'], 'http') === 0 ? $aryData['media_url'] : '../' . ltrim($aryData['media_url'], '/')) : '../new-media/image/research-students.png';
                   ?>
                   <div class="simple-card-group">
+                    <!-- Research Side Image Preview & Upload -->
                     <div class="simple-card-title">
+                      <i class="fa fa-image"></i> Research Section Side Image
+                    </div>
+                    <div class="row align-items-center mb-3">
+                      <div class="col-md-3 text-center">
+                        <div style="background:#f1f5f9; padding:8px; border-radius:8px; border:1px solid #e2e8f0;">
+                          <img src="<?php echo $resImg; ?>" alt="Research Preview" style="max-width:100%; max-height:120px; border-radius:6px; object-fit:cover;" onerror="this.src='../images/fav-icon.png';">
+                          <div class="small text-muted mt-1 font-weight-bold">Current Image Preview</div>
+                        </div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group mb-2">
+                          <label>Image File Path / External URL</label>
+                          <input type="text" name="media_url" class="form-control" value="<?php echo htmlspecialchars($aryData['media_url']); ?>" placeholder="e.g. new-media/image/research-students.png">
+                          <small class="help-tip">Path to image file (e.g. <code>new-media/image/research-students.png</code>)</small>
+                        </div>
+                        <div class="form-group mb-0">
+                          <label>Or Upload New Image</label>
+                          <input type="file" name="media_file" class="form-control-file">
+                          <small class="help-tip">Allowed: JPG, PNG, WEBP. Uploads directly to <code>upload/media/</code></small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Research Metrics (4 Counters) -->
+                    <div class="simple-card-title mt-4">
                       <i class="fa fa-line-chart"></i> Research Metrics (4 Counters)
                     </div>
                     <div class="row">
@@ -636,12 +668,24 @@ if (isset($_POST['submit'])) {
                       <?php endfor; ?>
                     </div>
 
+                    <!-- Highlight Grant Card -->
                     <div class="simple-card-title mt-3">
-                      <i class="fa fa-bullhorn"></i> Featured Grant Highlight &amp; Button
+                      <i class="fa fa-bullhorn"></i> Featured Grant Highlight &amp; Explore Button
                     </div>
-                    <div class="form-group">
-                      <label>Featured Grant Highlight Card Text</label>
-                      <input type="text" name="res_highlight" class="form-control" value="<?php echo htmlspecialchars($extra['highlight_text'] ?? 'Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.'); ?>" placeholder="e.g. Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>Highlight Card Icon</label>
+                          <input type="text" name="res_highlight_icon" class="form-control" value="<?php echo htmlspecialchars($extra['highlight_icon'] ?? 'fa fa-flask'); ?>" placeholder="fa fa-flask">
+                          <small class="help-tip">FontAwesome icon class (e.g. <code>fa fa-flask</code>, <code>fa fa-trophy</code>)</small>
+                        </div>
+                      </div>
+                      <div class="col-md-9">
+                        <div class="form-group">
+                          <label>Featured Grant Highlight Card Text</label>
+                          <input type="text" name="res_highlight" class="form-control" value="<?php echo htmlspecialchars($extra['highlight_text'] ?? 'Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.'); ?>" placeholder="e.g. Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.">
+                        </div>
+                      </div>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
@@ -754,7 +798,7 @@ if (isset($_POST['submit'])) {
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <div>
-                    <h4 class="mt-0 header-title">Homepage Sections List</h4>
+                    <h4 class="mt-0 header-title"><i class="fa fa-list text-primary"></i> Homepage Sections List</h4>
                     <p class="text-muted mb-0">Manage and update all major interactive and branding sections of the Bhabha University Home Page.</p>
                   </div>
                 </div>
@@ -788,11 +832,21 @@ if (isset($_POST['submit'])) {
                               if (strlen($cleanHeading) > 60) {
                                   $cleanHeading = substr($cleanHeading, 0, 57) . '...';
                               }
+                              $secIcons = [
+                                  'hero_video' => 'fa fa-video-camera',
+                                  'chancellor_welcome' => 'fa fa-user-circle',
+                                  'why_bhabha' => 'fa fa-graduation-cap',
+                                  'virtual_tour' => 'fa fa-street-view',
+                                  'research_portal' => 'fa fa-flask',
+                                  'global_network' => 'fa fa-globe',
+                                  'insta_reels' => 'fa fa-instagram'
+                              ];
+                              $iconClass = $secIcons[$sec['section_key']] ?? 'fa fa-cube';
                       ?>
                       <tr>
                         <td><strong><?php echo $i++; ?></strong></td>
                         <td>
-                          <strong><?php echo htmlspecialchars($sec['section_name']); ?></strong>
+                          <i class="<?php echo $iconClass; ?> text-primary mr-1"></i> <strong><?php echo htmlspecialchars($sec['section_name']); ?></strong>
                         </td>
                         <td>
                           <span class="section-badge-key"><?php echo htmlspecialchars($sec['section_key']); ?></span>

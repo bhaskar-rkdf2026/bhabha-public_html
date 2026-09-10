@@ -1,11 +1,14 @@
-<?php include('config.php');?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('values') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Core Values - Bhabha University Bhopal</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'Core Values - Bhabha University Bhopal'); ?></title>
 <meta name="description" content="The core values of Bhabha University — Integrity, Innovation, Care, Excellence, Collaboration and Social Responsibility that guide everything we do.">
 <?php include('inc.meta.php');?>
 </head>
@@ -14,9 +17,9 @@
   <?php include('inc.header.php');?>
 
   <?php
-  $page_title    = 'Core <em>Values</em>';
-  $page_subtitle = 'The principles that define who we are, how we work, and guide how we act with each other and every stakeholder.';
-  $page_icon     = 'fa-heart';
+  $page_title    = portalVal($portalPage, 'heading', 'Core <em>Values</em>');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'The principles that define who we are, how we work, and guide how we act with each other and every stakeholder.');
+  $page_icon     = (!empty($portalPage['data']['page_icon'])) ? $portalPage['data']['page_icon'] : 'fa-heart';
   $breadcrumbs   = [
     ['label' => 'Home',  'url' => URL_ROOT],
     ['label' => 'About', 'url' => href('about.php')],
@@ -32,16 +35,20 @@
 
       <!-- Intro -->
       <div class="bu-content-card">
-        <span class="bu-content-label">Our Foundation</span>
-        <h2 class="bu-content-h2">Core <em>Values</em></h2>
+        <span class="bu-content-label"><?php echo portalVal($portalPage, 'badge', 'Our Foundation'); ?></span>
+        <h2 class="bu-content-h2"><?php echo portalVal($portalPage, 'heading', 'Core <em>Values</em>'); ?></h2>
         <div class="bu-content-divider"></div>
         <div class="bu-content-body">
+          <?php if (!empty($portalPage['data']['intro_body'])): ?>
+            <?php echo $portalPage['data']['intro_body']; ?>
+          <?php else: ?>
           <p>
             In fulfilling our mission, the faculty, staff, and students of Bhabha University are committed 
             to the following values — both as an institution and in our actions as individuals. 
             <strong>Core Values are at the heart of our education.</strong> They define who we are, 
             how we work, and guide how we act with each other and with other stakeholders. They are our DNA.
           </p>
+          <?php endif; ?>
         </div>
       </div>
 
@@ -62,10 +69,16 @@
             ['icon'=>'fa-graduation-cap','color'=>'#C05621','title'=>'Discovery & Learning','desc'=>'We foster a culture of curiosity, continuous learning and intellectual exploration. Research and scholarship are embedded in every aspect of university life.'],
             ['icon'=>'fa-balance-scale','color'=>'#285E61','title'=>'Diversity & Inclusiveness','desc'=>'We celebrate diversity in all its forms and are committed to providing an inclusive environment where every student and faculty member feels valued and respected.'],
           ];
-          foreach($core_values as $v): ?>
+          $display_values = (!empty($portalPage['data']['values']) && is_array($portalPage['data']['values'])) ? $portalPage['data']['values'] : $core_values;
+          $color_palette = ['#0A1B54', '#D99B00', '#E53E3E', '#38A169', '#6B46C1', '#2B6CB0', '#C05621', '#285E61'];
+          $idx = 0;
+          foreach($display_values as $v): 
+            $c = $v['color'] ?? $color_palette[$idx % count($color_palette)];
+            $idx++;
+          ?>
           <div style="display:flex;gap:16px;align-items:flex-start;padding:22px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:8px;transition:all 0.25s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(6,29,124,0.1)';this.style.transform='translateY(-2px)';" onmouseout="this.style.boxShadow='none';this.style.transform='none';">
-            <div style="width:44px;height:44px;background:<?php echo $v['color'];?>1a;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa <?php echo $v['icon'];?>" style="font-size:18px;color:<?php echo $v['color'];?>;"></i>
+            <div style="width:44px;height:44px;background:<?php echo $c;?>1a;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="fa <?php echo $v['icon'] ?? 'fa-check';?>" style="font-size:18px;color:<?php echo $c;?>;"></i>
             </div>
             <div>
               <h4 style="font-size:15px;font-weight:700;color:#061D7C;margin:0 0 6px 0;font-family:'Plus Jakarta Sans',sans-serif;"><?php echo $v['title'];?></h4>

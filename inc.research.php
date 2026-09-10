@@ -12,7 +12,7 @@ if ($res_sec && isset($res_sec['status']) && $res_sec['status'] == 0) {
 $res_label = !empty($res_sec['title']) ? $res_sec['title'] : 'RESEARCH & INNOVATION';
 $res_heading = !empty($res_sec['heading']) ? $res_sec['heading'] : 'Knowledge that <em>moves</em> the<br>world forward.';
 $res_sub = !empty($res_sec['subheading']) ? $res_sec['subheading'] : 'From climate-resilient agriculture to AI in healthcare — our 120+ labs and research centres tackle the questions that matter most.';
-$res_img = !empty($res_sec['media_url']) ? (strpos($res_sec['media_url'], 'http') === 0 ? $res_sec['media_url'] : URL_ROOT . ltrim($res_sec['media_url'], '/')) : URL_ROOT . 'new-media/image/campus-aerial.png';
+$res_img = !empty($res_sec['media_url']) ? (strpos($res_sec['media_url'], 'http') === 0 ? $res_sec['media_url'] : URL_ROOT . ltrim($res_sec['media_url'], '/')) : URL_ROOT . 'new-media/image/research-students.png';
 
 $res_extra = !empty($res_sec['extra_data']) ? json_decode($res_sec['extra_data'], true) : [];
 $res_metrics = !empty($res_extra['metrics']) ? $res_extra['metrics'] : [
@@ -22,6 +22,10 @@ $res_metrics = !empty($res_extra['metrics']) ? $res_extra['metrics'] : [
     ['target' => 60, 'value' => '60', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'GLOBAL MOUS']
 ];
 $res_highlight = !empty($res_extra['highlight_text']) ? $res_extra['highlight_text'] : 'Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.';
+$res_highlight_icon = !empty($res_extra['highlight_icon']) ? trim($res_extra['highlight_icon']) : 'fa fa-flask';
+if (strpos($res_highlight_icon, 'fa ') !== 0 && strpos($res_highlight_icon, 'fas ') !== 0 && strpos($res_highlight_icon, 'far ') !== 0 && strpos($res_highlight_icon, 'fab ') !== 0) {
+    $res_highlight_icon = 'fa ' . (strpos($res_highlight_icon, 'fa-') === 0 ? $res_highlight_icon : 'fa-' . $res_highlight_icon);
+}
 $res_btn_text = !empty($res_extra['button_text']) ? $res_extra['button_text'] : 'EXPLORE RESEARCH &nbsp;→';
 $raw_btn_url = !empty($res_extra['button_url']) ? $res_extra['button_url'] : 'research.php';
 if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
@@ -48,12 +52,13 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
           $suffix = $m['suffix'] ?? '';
           $useCommas = !empty($m['commas']) || ($targetVal >= 1000);
           $formattedNum = $useCommas ? number_format($targetVal) : $targetVal;
-          $displayText = $prefix . $formattedNum . $suffix;
+          $cleanSuffix = (preg_match('/^[a-zA-Z]/', $suffix)) ? ' ' . $suffix : $suffix;
+          $displayText = $prefix . $formattedNum . $cleanSuffix;
         ?>
           <div class="bu-metric-item">
             <div class="bu-metric-value" 
                  data-target="<?php echo $targetVal; ?>" 
-                 data-suffix="<?php echo htmlspecialchars($suffix); ?>" 
+                 data-suffix="<?php echo htmlspecialchars($cleanSuffix); ?>" 
                  data-prefix="<?php echo htmlspecialchars($prefix); ?>" 
                  data-commas="<?php echo $useCommas ? 'true' : 'false'; ?>"><?php echo htmlspecialchars($displayText); ?></div>
             <div class="bu-metric-lbl"><?php echo htmlspecialchars($m['label']); ?></div>
@@ -69,7 +74,7 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
       <div class="bu-res-img-wrapper">
         <img src="<?php echo $res_img; ?>" alt="Research at Bhabha University" class="bu-res-img">
         <div class="bu-res-highlight-card">
-          <div class="bu-card-icon"><i class="fa fa-flask"></i></div>
+          <div class="bu-card-icon"><i class="<?php echo htmlspecialchars($res_highlight_icon); ?>"></i></div>
           <p class="bu-card-highlight-text"><?php echo htmlspecialchars($res_highlight); ?></p>
         </div>
       </div>
@@ -221,6 +226,13 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
   font-size: 18px !important;
   color: #061D7C !important;
   margin-bottom: 10px !important;
+}
+.bu-card-icon i,
+.bu-card-icon .fa {
+  font-family: 'FontAwesome' !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  display: inline-block !important;
 }
 .bu-card-highlight-text {
   font-family: 'Playfair Display', Georgia, serif !important;

@@ -1,11 +1,14 @@
-<?php include('config.php');?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('why-us') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Why Choose Bhabha University - Bhabha University Bhopal</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'Why Choose Bhabha University - Bhabha University Bhopal'); ?></title>
 <meta name="description" content="Discover why Bhabha University is the right choice — NAAC accreditation, 98% placements, global MoUs, research excellence and a 150-acre green campus.">
 <?php include('inc.meta.php');?>
 </head>
@@ -14,9 +17,9 @@
   <?php include('inc.header.php');?>
 
   <?php
-  $page_title    = 'Why Choose <em>Bhabha University</em>';
-  $page_subtitle = 'From accreditation to career outcomes — every dimension of the Bhabha experience is designed for your success.';
-  $page_icon     = 'fa-star';
+  $page_title    = portalVal($portalPage, 'heading', 'Why Choose <em>Bhabha University</em>');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'From accreditation to career outcomes — every dimension of the Bhabha experience is designed for your success.');
+  $page_icon     = (!empty($portalPage['data']['page_icon'])) ? $portalPage['data']['page_icon'] : 'fa-star';
   $breadcrumbs   = [
     ['label' => 'Home',  'url' => URL_ROOT],
     ['label' => 'About', 'url' => href('about.php')],
@@ -32,10 +35,13 @@
 
       <!-- Intro Card -->
       <div class="bu-content-card">
-        <span class="bu-content-label">Our Advantage</span>
-        <h2 class="bu-content-h2">Why Choose <em>Bhabha University</em></h2>
+        <span class="bu-content-label"><?php echo portalVal($portalPage, 'badge', 'Our Advantage'); ?></span>
+        <h2 class="bu-content-h2"><?php echo portalVal($portalPage, 'heading', 'Why Choose <em>Bhabha University</em>'); ?></h2>
         <div class="bu-content-divider"></div>
         <div class="bu-content-body">
+          <?php if (!empty($portalPage['data']['intro_body'])): ?>
+            <?php echo $portalPage['data']['intro_body']; ?>
+          <?php else: ?>
           <p>
             <strong>Bhabha University</strong> is a research-intensive university with an outstanding reputation 
             for its learning environments across a broad range of disciplines. Our commitment to our students 
@@ -51,6 +57,7 @@
             The ambience and serenity of a world-class infrastructure housed in a clean and green campus create 
             an ideal environment for holistic growth.
           </p>
+          <?php endif; ?>
         </div>
       </div>
 
@@ -73,10 +80,18 @@
             ['icon'=>'fa-shield','title'=>'Safe & Secure Campus','desc'=>'24x7 security with CCTV surveillance, safe hostel accommodation, and dedicated campus police presence.'],
             ['icon'=>'fa-heart','title'=>'Student Welfare','desc'=>'Medical centre, mental health counselling, sports programmes and cultural events for holistic student development.'],
           ];
-          foreach($reasons as $r): ?>
+          $items = $reasons;
+          if (!empty($portalPage['data']['reasons']) && is_array($portalPage['data']['reasons'])) {
+            $items = $portalPage['data']['reasons'];
+          } elseif (!empty($portalPage['data']['pillars']) && is_array($portalPage['data']['pillars'])) {
+            $items = $portalPage['data']['pillars'];
+          }
+          foreach($items as $r): 
+            $icon = $r['icon'] ?? 'fa-check-circle';
+          ?>
           <div style="display:flex;gap:14px;align-items:flex-start;padding:20px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:8px;transition:all 0.25s;" onmouseover="this.style.background='#fff';this.style.boxShadow='0 8px 24px rgba(6,29,124,0.1)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='#F8FAFC';this.style.boxShadow='none';this.style.transform='none';">
             <div style="width:42px;height:42px;background:rgba(10,27,84,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa <?php echo $r['icon'];?>" style="font-size:17px;color:#0A1B54;"></i>
+              <i class="fa <?php echo $icon;?>" style="font-size:17px;color:#0A1B54;"></i>
             </div>
             <div>
               <h4 style="font-size:14px;font-weight:700;color:#061D7C;margin:0 0 6px 0;font-family:'Plus Jakarta Sans',sans-serif;"><?php echo $r['title'];?></h4>

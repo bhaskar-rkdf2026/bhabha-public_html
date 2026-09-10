@@ -3,8 +3,14 @@
     <div id="sidebar-menu"><!-- Left Menu Start -->
       <ul class="metismenu" id="side-menu">
         <li><a href="dashboard.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Dashboard</span></a></li>
+        <li><a href="homepage_sections.php" class="waves-effect"><i class="mdi mdi-home"></i> <span>Home Page Sections</span></a></li>
         <li><a href="pages.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Website Pages</span></a></li>
-        <li><a href="homepage_sections.php" class="waves-effect"><i class="mdi mdi-view-dashboard-outline"></i> <span>Home Page Sections</span></a></li>
+        <li><a href="research.php" class="waves-effect"><i class="mdi mdi-flask"></i> <span>Research Page</span></a></li>
+        <li><a href="university_overview.php" class="waves-effect"><i class="fa fa-university"></i> <span>University Overview</span></a></li>
+        <li><a href="reports_accreditation.php" class="waves-effect"><i class="fa fa-certificate"></i> <span>Reports & Accreditation</span></a></li>
+        <li><a href="policies.php" class="waves-effect"><i class="fa fa-balance-scale"></i> <span>Legal & Policies</span></a></li>
+        <li><a href="student_publications.php" class="waves-effect"><i class="fa fa-book"></i> <span>Student & Publications</span></a></li>
+        <li><a href="blogs.php" class="waves-effect"><i class="fa fa-rss"></i> <span>Blogs &amp; Articles</span></a></li>
         <li><a href="media.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Media</span></a></li>
         <li><a href="admission.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Admission</span></a></li>
         <li><a href="alumni.php" class="waves-effect"><i class="mdi mdi-album"></i> <span>Alumni Registrations</span></a></li>
