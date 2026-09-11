@@ -9,10 +9,7 @@ define("DS",DIRECTORY_SEPARATOR);
 define("PATH_ROOT",dirname(__FILE__));
 define("PATH_LIB",PATH_ROOT.DS."library".DS);
 
-$dbName ="bhabhaun_mohitdb";
-$user = "root";
-$pass = "";
-$host = "localhost";
+require_once(PATH_ROOT.DS."db_config.php");
 
 if (!defined("URL_ROOT")) {
     if (isset($_SERVER['HTTP_HOST'])) {
@@ -48,13 +45,16 @@ require_once(PATH_LIB."functions.php");
 require_once(PATH_LIB."validations.php");
 require_once(PATH_LIB."class.mailer.php");
 
-$db = new MysqliDb($host,$user,$pass,$dbName);
-$aryFormTemp=$db->get("settings");
-if(!is_null($aryFormTemp) && is_array($aryFormTemp) && count($aryFormTemp)>0)
-{
-	foreach($aryFormTemp as $iFormTemp)
-	{
-		$aryForm[$iFormTemp['field']]=$iFormTemp['value'];
-	}
+$aryForm = [];
+try {
+    $db = new MysqliDb($host, $user, $pass, $dbName);
+    $aryFormTemp = $db->get("settings");
+    if (!is_null($aryFormTemp) && is_array($aryFormTemp) && count($aryFormTemp) > 0) {
+        foreach ($aryFormTemp as $iFormTemp) {
+            $aryForm[$iFormTemp['field']] = $iFormTemp['value'];
+        }
+    }
+} catch (\Throwable $e) {
+    error_log("Database Connection Error: " . $e->getMessage());
 }
 ?>

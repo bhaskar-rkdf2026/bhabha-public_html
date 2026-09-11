@@ -6,10 +6,7 @@ define("DS",DIRECTORY_SEPARATOR);
 define("PATH_ROOT",dirname(__FILE__));
 define("PATH_LIB",PATH_ROOT.DS."library".DS);
 
-$dbName ="bhabhaun_mohitdb";
-$user = "root";
-$pass = "";
-$host = "localhost";
+require_once(dirname(PATH_ROOT).DS."db_config.php");
 
 if (!defined("URL_ROOT")) {
     if (isset($_SERVER['HTTP_HOST'])) {
@@ -41,6 +38,11 @@ require_once(PATH_LIB."MysqliDb.php");
 require_once(PATH_LIB."functions.php");
 require_once(PATH_LIB."validations.php");
 
-$db = new MysqliDb($host,$user,$pass,$dbName);
+try {
+    $db = new MysqliDb($host, $user, $pass, $dbName);
+} catch (\Throwable $e) {
+    error_log("Admin DB Connection Error: " . $e->getMessage());
+}
 define("LOGIN_ADMIN","");
 define("LOGIN_USER","");
+?>
