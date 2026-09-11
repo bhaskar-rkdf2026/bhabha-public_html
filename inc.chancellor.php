@@ -30,7 +30,7 @@ $chanc_recogs = !empty($chanc_extra['recognitions']) ? $chanc_extra['recognition
     <div class="bu-chancellor-img-col">
       <div class="bu-chancellor-img-wrapper">
         <?php if(!empty($chancellor_video_url)): ?>
-          <video id="chancellor-video" src="<?php echo $chancellor_video_url; ?>" class="bu-chancellor-img" autoplay playsinline muted loop style="background:#000;"></video>
+          <video id="chancellor-video" src="<?php echo $chancellor_video_url; ?>" class="bu-chancellor-img" autoplay playsinline muted loop preload="metadata" poster="<?php echo URL_IMG;?>vcpic.jpg" style="background:#000;"></video>
           <button id="chancellor-mute-btn" class="bu-chancellor-mute-btn" onclick="toggleChancellorMute()">
             <i class="fa fa-volume-off"></i>
           </button>
