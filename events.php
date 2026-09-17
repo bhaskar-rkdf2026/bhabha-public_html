@@ -26,7 +26,7 @@ if ($event_id > 0) {
 <style>
 /* ============================================================
    BHABHA UNIVERSITY - EVENTS PAGE THEMED STYLES
-   Theme: Navy #0A1B54 | Gold #FFC107 | Cream/Light #F8FAFC
+   Theme: Navy #0A1B54 | Gold #FFC107 | Light #F8FAFC
    ============================================================ */
 :root {
   --bu-navy: #0A1B54;
@@ -50,9 +50,8 @@ body {
 /* Page Layout Wrappers */
 .bu-evt-wrap {
   width: 100%;
-  float: left;
-  clear: both;
   padding: 50px 0 90px 0;
+  box-sizing: border-box;
 }
 .bu-evt-container {
   max-width: 1200px;
@@ -61,7 +60,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Two Column Layout Grid */
+/* Two Column Layout Grid for Single View */
 .bu-evt-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 350px;
@@ -265,6 +264,18 @@ body {
   object-fit: cover;
   flex-shrink: 0;
 }
+.bu-recent-icon-badge {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  background: #0A1B54;
+  color: var(--bu-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
 .bu-recent-title {
   font-size: 13px;
   font-weight: 600;
@@ -338,22 +349,44 @@ body {
 /* ============================================================
    EVENTS DIRECTORY & LIST VIEW (TAB WISE & SEARCH BAR)
    ============================================================ */
-.bu-events-dir-header {
+.bu-events-directory-header {
   text-align: center;
   margin-bottom: 36px;
 }
-.bu-events-dir-header .bu-evt-h2 {
-  margin-bottom: 8px;
+.bu-events-subtitle-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(10, 27, 84, 0.07);
+  color: var(--bu-navy);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 12px;
 }
-.bu-events-dir-header p {
+.bu-events-subtitle-tag i {
+  color: var(--bu-gold-dark);
+}
+.bu-events-directory-header .bu-evt-h2 {
+  font-size: clamp(26px, 3.2vw, 38px);
+  margin-bottom: 10px;
+}
+.bu-events-directory-header p {
   font-size: 15px;
   color: var(--bu-text-muted);
-  max-width: 600px;
+  max-width: 620px;
+  margin: 0 auto 18px auto;
+  line-height: 1.6;
+}
+.bu-events-directory-header .bu-evt-divider {
   margin: 0 auto;
 }
 
 /* Category Filter Tabs */
-.bu-events-cat-nav {
+.bu-events-cat-tabs {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
@@ -364,7 +397,7 @@ body {
   background: #ffffff;
   border: 1px solid var(--bu-border);
   color: var(--bu-text-dark);
-  padding: 10px 20px;
+  padding: 9px 18px;
   border-radius: 30px;
   font-size: 13px;
   font-weight: 600;
@@ -373,16 +406,29 @@ body {
   align-items: center;
   gap: 8px;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  box-shadow: 0 2px 6px rgba(10, 27, 84, 0.03);
 }
 .bu-cat-tab-btn i {
   color: var(--bu-gold-dark);
-  font-size: 14px;
+  font-size: 13px;
+  transition: color 0.2s ease;
+}
+.bu-tab-count {
+  background: #f1f5f9;
+  color: var(--bu-navy);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 12px;
+  min-width: 18px;
+  text-align: center;
+  transition: all 0.2s ease;
 }
 .bu-cat-tab-btn:hover {
-  background: #f1f5f9;
+  background: #f8fafc;
   border-color: #cbd5e1;
   transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(10, 27, 84, 0.06);
 }
 .bu-cat-tab-btn.active {
   background: var(--bu-navy);
@@ -393,22 +439,26 @@ body {
 .bu-cat-tab-btn.active i {
   color: var(--bu-gold);
 }
+.bu-cat-tab-btn.active .bu-tab-count {
+  background: rgba(255, 193, 7, 0.25);
+  color: var(--bu-gold);
+}
 
-/* Search Bar Toolbar */
-.bu-events-toolbar {
+/* Search Bar & Controls Bar */
+.bu-events-controls-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   background: #ffffff;
-  padding: 14px 20px;
+  padding: 12px 18px;
   border-radius: 12px;
   border: 1px solid var(--bu-border);
-  box-shadow: 0 2px 10px rgba(10, 27, 84, 0.03);
-  margin-bottom: 30px;
+  box-shadow: 0 3px 12px rgba(10, 27, 84, 0.03);
+  margin-bottom: 28px;
   flex-wrap: wrap;
 }
-.bu-events-search-bar-wrap {
+.bu-events-search-box {
   position: relative;
   flex: 1;
   min-width: 260px;
@@ -419,12 +469,13 @@ body {
   top: 50%;
   transform: translateY(-50%);
   color: var(--bu-text-muted);
-  font-size: 15px;
+  font-size: 14px;
   pointer-events: none;
+  z-index: 2;
 }
 .bu-events-search-input {
   width: 100%;
-  padding: 11px 40px 11px 40px;
+  padding: 10px 38px 10px 40px;
   border: 1.5px solid #e2e8f0;
   border-radius: 8px;
   font-size: 14px;
@@ -437,11 +488,11 @@ body {
 .bu-events-search-input:focus {
   background: #ffffff;
   border-color: var(--bu-navy);
-  box-shadow: 0 0 0 3px rgba(10, 27, 84, 0.1);
+  box-shadow: 0 0 0 3px rgba(10, 27, 84, 0.08);
 }
 .bu-events-search-clear {
   position: absolute;
-  right: 12px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -451,17 +502,23 @@ body {
   font-size: 16px;
   padding: 4px;
   display: none;
+  z-index: 2;
 }
 .bu-events-search-clear:hover {
   color: #ef4444;
 }
 .bu-events-count-badge {
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--bu-navy);
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
+  background: #f8fafc;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
 }
 
 /* Event List Row View */
@@ -477,19 +534,19 @@ body {
   border: 1px solid var(--bu-border);
   border-radius: 14px;
   padding: 20px 24px;
-  box-shadow: 0 3px 12px rgba(10, 27, 84, 0.03);
+  box-shadow: 0 2px 10px rgba(10, 27, 84, 0.03);
   transition: all 0.25s ease;
-  gap: 24px;
+  gap: 22px;
 }
 .bu-event-row:hover {
-  border-color: var(--bu-gold);
-  transform: translateY(-3px);
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(10, 27, 84, 0.08);
 }
 .bu-event-col-media {
   flex-shrink: 0;
-  width: 140px;
-  height: 95px;
+  width: 130px;
+  height: 90px;
   border-radius: 10px;
   overflow: hidden;
   background: #051235;
@@ -502,6 +559,10 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.3s ease;
+}
+.bu-event-row:hover .bu-event-thumb {
+  transform: scale(1.05);
 }
 .bu-event-badge-box {
   width: 100%;
@@ -517,8 +578,8 @@ body {
   box-sizing: border-box;
 }
 .bu-event-badge-box i {
-  font-size: 26px;
-  margin-bottom: 5px;
+  font-size: 24px;
+  margin-bottom: 4px;
 }
 .bu-badge-text {
   font-size: 10px;
@@ -534,8 +595,8 @@ body {
 .bu-event-meta-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 6px;
+  gap: 10px;
+  margin-bottom: 7px;
   flex-wrap: wrap;
 }
 .bu-event-tag {
@@ -561,7 +622,7 @@ body {
 }
 .bu-event-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 19px;
+  font-size: 18.5px;
   font-weight: 700;
   margin: 0 0 6px 0;
   line-height: 1.35;
@@ -622,13 +683,21 @@ body {
   }
   .bu-event-col-media {
     width: 100%;
-    height: 140px;
+    height: 130px;
   }
   .bu-event-col-action {
     width: 100%;
   }
   .bu-event-btn {
     width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .bu-events-controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .bu-events-count-badge {
     justify-content: center;
   }
 }
@@ -666,7 +735,7 @@ body {
         
         <!-- Left Main Column -->
         <main>
-          <!-- Main Feature Image Banner (Rendered only if image is set in database) -->
+          <!-- Main Feature Image Banner -->
           <?php if (!empty($aryData['image'])): ?>
           <div class="bu-evt-banner-wrap">
             <img src="<?php echo URL_UPLOAD . 'events/' . $aryData['image']; ?>" alt="<?php echo htmlspecialchars($aryData['title']); ?>" class="bu-evt-banner-img" onerror="this.closest('.bu-evt-banner-wrap').style.display='none';">
@@ -783,10 +852,10 @@ body {
       <?php else: ?>
       <!-- ================= ALL EVENTS DIRECTORY LIST VIEW ================= -->
       <div class="bu-events-directory-header">
-        <span class="bu-events-subtitle-tag"><i class="fa fa-calendar"></i> Campus Life &amp; Activities</span>
-        <h2 class="bu-evt-h2" style="font-size: 36px; margin-bottom: 12px;">Discover <em>Campus Events</em></h2>
-        <p style="font-size: 15px; color: var(--bu-text-muted); max-width: 650px; margin: 0 auto 25px;">Stay connected with seminars, workshops, cultural fests, and academic celebrations happening across Bhabha University.</p>
-        <div class="bu-evt-divider" style="margin: 0 auto;"></div>
+        <span class="bu-events-subtitle-tag"><i class="fa fa-calendar-check-o"></i> Campus Life &amp; Activities</span>
+        <h2 class="bu-evt-h2">Discover <em>Campus Events</em></h2>
+        <p>Stay connected with seminars, workshops, cultural fests, and academic celebrations happening across Bhabha University.</p>
+        <div class="bu-evt-divider"></div>
       </div>
 
       <?php
@@ -898,7 +967,8 @@ body {
         <div id="noSearchResults" style="display: none; text-align: center; background: #ffffff; padding: 48px; border-radius: 14px; border: 1px solid var(--bu-border); box-shadow: 0 4px 16px rgba(10, 27, 84, 0.04);">
           <i class="fa fa-search" style="font-size: 38px; color: var(--bu-gold); margin-bottom: 14px;"></i>
           <h4 style="font-size: 18px; color: var(--bu-navy); font-weight: 700; margin-bottom: 6px;">No Matching Events Found</h4>
-          <p style="font-size: 14px; color: var(--bu-text-muted); margin: 0;">Try adjusting your search terms or selecting a different category tab.</p>
+          <p style="font-size: 14px; color: var(--bu-text-muted); margin-bottom: 16px;">Try adjusting your search terms or selecting a different category tab.</p>
+          <button type="button" id="resetFiltersBtn" class="bu-back-btn" style="cursor: pointer; border: none;"><i class="fa fa-refresh"></i> Reset Filters</button>
         </div>
 
         <?php else: ?>
@@ -931,6 +1001,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var eventRows = document.querySelectorAll('.bu-event-row');
   var noResultsBox = document.getElementById('noSearchResults');
   var tabButtons = document.querySelectorAll('.bu-cat-tab-btn');
+  var resetFiltersBtn = document.getElementById('resetFiltersBtn');
   
   var currentCategory = 'all';
   var currentQuery = '';
@@ -994,6 +1065,22 @@ document.addEventListener('DOMContentLoaded', function() {
         searchInput.focus();
         filterEvents();
       }
+    });
+  }
+
+  // Reset Filters Handler
+  if (resetFiltersBtn) {
+    resetFiltersBtn.addEventListener('click', function() {
+      if (searchInput) {
+        searchInput.value = '';
+        currentQuery = '';
+        if (clearSearchBtn) clearSearchBtn.style.display = 'none';
+      }
+      tabButtons.forEach(function(b) { b.classList.remove('active'); });
+      var allTab = document.querySelector('.bu-cat-tab-btn[data-category="all"]');
+      if (allTab) allTab.classList.add('active');
+      currentCategory = 'all';
+      filterEvents();
     });
   }
 });
