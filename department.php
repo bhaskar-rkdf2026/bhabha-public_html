@@ -518,6 +518,32 @@ section.bu-section-block {
   z-index: 2;
 }
 
+.bu-vm-content {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #475569;
+  position: relative;
+  z-index: 2;
+  flex-grow: 1;
+}
+
+.bu-vm-content p {
+  margin-bottom: 8px;
+}
+
+.bu-vm-content p:last-child {
+  margin-bottom: 0;
+}
+
+.bu-vm-content ul, .bu-vm-content ol {
+  padding-left: 20px;
+  margin-bottom: 8px;
+}
+
+.bu-vm-content li {
+  margin-bottom: 4px;
+}
+
 /* ================================================================
    3. PROGRAMMES & SPECIALIZATIONS (2-COLUMN BALANCED CARDS)
    ================================================================ */
@@ -1665,6 +1691,201 @@ section.bu-section-block {
 
 .bu-modal-body p:last-child {
   margin-bottom: 0;
+}
+
+.bu-modal-body img {
+  max-width: 100%;
+  height: auto !important;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(6, 29, 124, 0.08);
+  margin: 10px 0;
+}
+
+/* Executive Dean Profile Card inside Modal */
+.bu-dean-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 100%);
+  border: 1px solid #CBD5E1;
+  border-left: 5px solid var(--bu-navy-primary);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 14px rgba(6, 29, 124, 0.05);
+}
+
+@media(max-width: 600px) {
+  .bu-dean-profile-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.bu-dean-avatar-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--bu-gold-primary);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  background: #061D7C;
+}
+
+.bu-dean-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #FFC107;
+}
+
+.bu-dean-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.bu-dean-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(4, 15, 74, 0.92);
+  color: #FFC107;
+  font-size: 9.5px;
+  font-weight: 800;
+  text-align: center;
+  padding: 3px 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bu-dean-info h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--bu-navy-primary);
+  margin: 0 0 4px 0 !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.bu-dean-deg {
+  display: inline-block;
+  background: rgba(6, 29, 124, 0.08);
+  color: var(--bu-navy-primary);
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 14px;
+  margin-bottom: 4px;
+}
+
+.bu-dean-sub {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748B;
+  margin: 0 !important;
+}
+
+/* Executive Dean Quote Box */
+.bu-dean-quote-box {
+  background: #FFFBEB;
+  border-left: 4px solid var(--bu-gold-primary);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 16px 0 18px 0;
+  position: relative;
+}
+
+.bu-quote-icon {
+  color: var(--bu-gold-dark);
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.bu-dean-quote-box p {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #78350F;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+/* Lead Box */
+.bu-modal-lead-box {
+  background: rgba(6, 29, 124, 0.03);
+  border: 1px solid rgba(6, 29, 124, 0.12);
+  border-left: 4px solid var(--bu-navy-primary);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+
+.bu-lead-paragraph {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--bu-navy-dark);
+  margin: 0 !important;
+  line-height: 1.6;
+}
+
+/* Highlight Box with 2-Column Grid */
+.bu-modal-highlight-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 18px 0 16px 0;
+}
+
+.bu-modal-highlight-box h5 {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--bu-navy-primary);
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bu-modal-highlight-box ul {
+  padding-left: 0;
+  list-style: none;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}
+
+@media(max-width: 600px) {
+  .bu-modal-highlight-box ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bu-modal-highlight-box li {
+  font-size: 12.5px;
+  color: #334155;
+  position: relative;
+  padding-left: 18px;
+  line-height: 1.45;
+}
+
+.bu-modal-highlight-box li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #10B981;
+  font-weight: bold;
+  font-size: 11px;
 }
 
 .bu-modal-footer {

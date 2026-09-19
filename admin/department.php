@@ -334,10 +334,12 @@ if ($action == "delete") {
                         <div class="form-group col-md-6">
                           <label class="font-weight-bold">Featured / Hero Lab Image</label>
                           <input type="file" name="image" class="form-control" accept="image/*"/>
-                          <?php if (!empty($aryData['image'])): ?>
+                          <?php if (!empty($aryData['image'])): 
+                            $previewImg = (strpos($aryData['image'], 'http') === 0 ? $aryData['image'] : URL_ROOT . $aryData['image']);
+                          ?>
                             <div class="mt-2">
-                              <small class="text-muted">Current Image:</small><br>
-                              <img src="<?php echo URL_ROOT . $aryData['image'];?>" style="max-height: 80px; border-radius: 6px; border: 1px solid #ccc;">
+                              <small class="text-muted font-weight-bold">Current Featured Image:</small><br>
+                              <img src="<?php echo $previewImg;?>" style="max-height: 90px; border-radius: 6px; border: 1px solid #ccc; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-top: 4px;">
                             </div>
                           <?php endif; ?>
                         </div>
@@ -656,6 +658,7 @@ if ($action == "delete") {
                       <tr>
                         <th style="width:50px;">ID</th>
                         <th>Icon</th>
+                        <th>Photo</th>
                         <th>Department Title</th>
                         <th>Subtitle</th>
                         <th>Status</th>
@@ -673,6 +676,8 @@ if ($action == "delete") {
                         } else {
                             $iconClass = $rawIcon;
                         }
+
+                        $deptImg = !empty($iList['image']) ? (strpos($iList['image'], 'http') === 0 ? $iList['image'] : URL_ROOT . $iList['image']) : URL_ROOT . 'images/skill_lab.jpg';
                       ?>
                       <tr>
                         <td><strong>#<?php echo $iList['id'];?></strong></td>
@@ -680,6 +685,9 @@ if ($action == "delete") {
                           <div style="width: 40px; height: 40px; background: rgba(6, 29, 124, 0.08); border: 1px solid rgba(6, 29, 124, 0.15); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: #061D7C; font-size: 18px;">
                             <i class="<?php echo htmlspecialchars($iconClass);?>"></i>
                           </div>
+                        </td>
+                        <td class="text-center">
+                          <img src="<?php echo $deptImg; ?>" alt="<?php echo htmlspecialchars($iList['title']);?>" style="width: 60px; height: 42px; object-fit: cover; border-radius: 6px; border: 1px solid #dee2e6; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
                         </td>
                         <td>
                           <strong><?php echo ucfirst($iList['title']);?></strong>
