@@ -178,10 +178,10 @@ $loopRecruiters = array_merge($recruiterList, $recruiterList);
 
 .bu-logo-pill {
   background: #FFFFFF !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   padding: 6px 16px !important;
-  height: 88px !important;
-  min-width: 175px !important;
+  height: 80px !important;
+  min-width: 160px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -195,16 +195,14 @@ $loopRecruiters = array_merge($recruiterList, $recruiterList);
   box-shadow: 0 10px 28px rgba(255, 193, 7, 0.45) !important;
 }
 .bu-logo-pill img {
-  height: 72px !important;
-  max-height: 72px !important;
-  max-width: 190px !important;
-  width: 100% !important;
-  object-fit: cover !important;
+  height: 56px !important;
+  max-height: 56px !important;
+  max-width: 140px !important;
+  width: auto !important;
+  object-fit: contain !important;
   display: block !important;
   mix-blend-mode: multiply !important;
-  filter: contrast(1.18) brightness(0.98) !important;
-  image-rendering: -webkit-optimize-contrast !important;
-  transform: scale(1.14) !important;
+  filter: contrast(1.15) brightness(0.98) !important;
 }
 
 /* ---- RESPONSIVE ---- */
@@ -224,23 +222,34 @@ $loopRecruiters = array_merge($recruiterList, $recruiterList);
   }
 }
 @media (max-width: 575px) {
+  .bu-place-heading {
+    font-size: clamp(24px, 7vw, 32px) !important;
+  }
   .bu-place-counters {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 16px 8px !important;
+    gap: 12px 6px !important;
   }
   .bu-place-number {
-    font-size: 26px !important;
+    font-size: 22px !important;
   }
   .bu-place-sub {
     font-size: 8.5px !important;
-    letter-spacing: 1px !important;
+    letter-spacing: 0.8px !important;
   }
   .bu-place-ticker-track {
-    gap: 40px !important;
+    gap: 16px !important;
   }
-  .bu-company {
-    font-size: 20px !important;
+  .bu-logo-pill {
+    height: 58px !important;
+    min-width: 120px !important;
+    padding: 4px 10px !important;
+    border-radius: 8px !important;
+  }
+  .bu-logo-pill img {
+    height: 42px !important;
+    max-height: 42px !important;
+    max-width: 100px !important;
   }
 }
 </style>

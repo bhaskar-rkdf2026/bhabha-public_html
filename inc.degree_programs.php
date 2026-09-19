@@ -751,33 +751,55 @@
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 20px !important;
+    margin-bottom: 30px !important;
   }
   .bu-deg-tabs-wrapper {
-    align-items: flex-start !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
     width: 100% !important;
-  }
-  .bu-justify-end {
     justify-content: flex-start !important;
+    padding: 4px 2px 10px 2px !important;
+    gap: 8px !important;
+    scrollbar-width: none !important;
+  }
+  .bu-deg-tabs-wrapper::-webkit-scrollbar {
+    display: none !important;
+  }
+  .bu-deg-tab {
+    flex-shrink: 0 !important;
+    border-radius: 20px !important;
+    padding: 8px 16px !important;
+    font-size: 11px !important;
   }
   .bu-deg-grid {
     grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
   }
   .bu-deg-programs-section {
     padding: 55px 18px !important;
   }
 }
 @media (max-width: 580px) {
+  .bu-deg-heading {
+    font-size: clamp(24px, 7vw, 32px) !important;
+    line-height: 1.22 !important;
+  }
+  .bu-deg-programs-section {
+    padding: 45px 16px !important;
+  }
   .bu-deg-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
   }
-  .bu-deg-tabs-row {
-    flex-wrap: wrap !important;
-    gap: 6px !important;
+  .bu-deg-card {
+    padding: 24px 20px !important;
+    border-radius: 12px !important;
   }
-  .bu-deg-tab {
-    padding: 8px 16px !important;
-    font-size: 10px !important;
+  .bu-deg-card-title {
+    font-size: 20px !important;
   }
 }
 </style>

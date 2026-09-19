@@ -13,18 +13,58 @@
       <!-- 2-Column List -->
       <div class="bu-infra-list">
         <ul class="bu-infra-ul">
-          <li><span class="bu-bullet"></span>Smart Classrooms</li>
-          <li><span class="bu-bullet"></span>Research Labs</li>
-          <li><span class="bu-bullet"></span>Medical Centre</li>
-          <li><span class="bu-bullet"></span>Hostels</li>
-          <li><span class="bu-bullet"></span>Auditorium</li>
+          <li>
+            <a href="<?php echo href("infrastructure.php"); ?>#smart-classrooms" class="bu-infra-link">
+              <span class="bu-bullet"></span>Smart Classrooms
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo href("research.php"); ?>" class="bu-infra-link">
+              <span class="bu-bullet"></span>Research Labs
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo href("infrastructure.php"); ?>#health-centre" class="bu-infra-link">
+              <span class="bu-bullet"></span>Medical Centre
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo href("infrastructure.php"); ?>#hostel" class="bu-infra-link">
+              <span class="bu-bullet"></span>Hostels
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo href("infrastructure.php"); ?>#seminar-hall" class="bu-infra-link">
+              <span class="bu-bullet"></span>Auditorium
+            </a>
+          </li>
         </ul>
         <ul class="bu-infra-ul">
-          <li><span class="bu-bullet"></span>Central Library</li>
-          <li><span class="bu-bullet"></span>Innovation Hub</li>
-          <li><span class="bu-bullet"></span>Sports Complex</li>
-          <li><span class="bu-bullet"></span>Cafeteria</li>
-          <li><span class="bu-bullet"></span>Wi-Fi Campus</li>
+          <li>
+            <a href="<?php echo href("hbkportal.php"); ?>" class="bu-infra-link">
+              <span class="bu-bullet"></span>Central Library
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo href("research.php"); ?>#incubation" class="bu-infra-link">
+              <span class="bu-bullet"></span>Innovation Hub
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo href("activities.php"); ?>" class="bu-infra-link">
+              <span class="bu-bullet"></span>Sports Complex
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo href("infrastructure.php"); ?>#canteen" class="bu-infra-link">
+              <span class="bu-bullet"></span>Cafeteria
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo href("infrastructure.php"); ?>#wi-fi-campus" class="bu-infra-link">
+              <span class="bu-bullet"></span>Wi-Fi Campus
+            </a>
+          </li>
         </ul>
       </div>
 
@@ -126,12 +166,29 @@
   gap: 12px !important;
 }
 .bu-infra-ul li {
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.bu-infra-link {
   font-size: 13.5px !important;
   font-weight: 600 !important;
   color: #061D7C !important;
-  display: flex !important;
+  display: inline-flex !important;
   align-items: center !important;
   gap: 10px !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+.bu-infra-link:hover {
+  color: #D99B00 !important;
+  transform: translateX(4px) !important;
+  text-decoration: none !important;
+}
+.bu-infra-link:hover .bu-bullet {
+  background-color: #061D7C !important;
+  transform: scale(1.35) !important;
 }
 .bu-bullet {
   width: 6px !important;
@@ -139,6 +196,8 @@
   background-color: #FFC107 !important;
   border-radius: 50% !important;
   display: inline-block !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
 }
 .bu-infra-btn {
   padding: 12px 28px !important;
@@ -190,42 +249,69 @@
 @media (max-width: 991px) {
   .bu-infra-container {
     flex-direction: column !important;
-    gap: 40px !important;
+    gap: 36px !important;
   }
   .bu-infra-text-col {
     width: 100% !important;
-    align-items: center !important;
-    text-align: center !important;
+    align-items: flex-start !important;
+    text-align: left !important;
   }
   .bu-infra-list {
-    justify-content: center !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px 20px !important;
+    width: 100% !important;
   }
   .bu-infra-ul {
     text-align: left !important;
   }
 }
 @media (max-width: 575px) {
+  .bu-infra-section {
+    padding: 50px 16px !important;
+  }
+  .bu-infra-heading {
+    font-size: clamp(26px, 7vw, 32px) !important;
+    line-height: 1.22 !important;
+    margin-bottom: 14px !important;
+  }
+  .bu-infra-sub {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 22px !important;
+  }
   .bu-infra-list {
-    flex-direction: column !important;
-    gap: 12px !important;
-    align-items: center !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px 12px !important;
+    margin-bottom: 28px !important;
+  }
+  .bu-infra-ul li {
+    font-size: 12.5px !important;
+    gap: 8px !important;
   }
   .bu-collage-wrapper {
     grid-template-columns: 1fr !important;
+    gap: 12px !important;
     height: auto !important;
   }
   .bu-collage-main {
-    height: 260px !important;
+    height: 220px !important;
   }
   .bu-collage-side {
-    height: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    height: 130px !important;
   }
   .bu-collage-side-top,
   .bu-collage-side-bottom {
-    height: 160px !important;
+    height: 130px !important;
   }
-  .bu-infra-section {
-    padding: 60px 16px !important;
+  .bu-infra-btn {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
   }
 }
 </style>

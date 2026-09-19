@@ -62,10 +62,37 @@
           $count++;
       ?>
       <div class="bu-faculty-card">
-        <a href="<?php echo href("department.php","id=".$idepartment['id']); ?>" class="bu-card-img-wrapper" title="<?php echo htmlspecialchars($idepartment['title']); ?>">
-          <span class="bu-card-number"><?php echo $num_str; ?></span>
-          <img src="<?php echo $img_src; ?>" alt="<?php echo htmlspecialchars($idepartment['title']); ?>" class="bu-card-img">
+        <!-- 3D Flip Card Image Wrapper -->
+        <a href="<?php echo href("department.php","id=".$idepartment['id']); ?>" class="bu-card-img-wrapper bu-flip-card" title="<?php echo htmlspecialchars($idepartment['title']); ?>">
+          <div class="bu-flip-inner">
+            
+            <!-- FRONT FACE: Original Image + Badge -->
+            <div class="bu-flip-face bu-flip-front">
+              <span class="bu-card-number"><?php echo $num_str; ?></span>
+              <img src="<?php echo $img_src; ?>" alt="<?php echo htmlspecialchars($idepartment['title']); ?>" class="bu-card-img">
+              <div class="bu-flip-hint"><i class="fa fa-refresh"></i> Flip</div>
+            </div>
+
+            <!-- BACK FACE: Dark Navy Luxury Background with Large Title & Action Button -->
+            <div class="bu-flip-face bu-flip-back">
+              <img src="<?php echo $img_src; ?>" alt="" class="bu-flip-bg-img" aria-hidden="true">
+              <div class="bu-flip-overlay"></div>
+              <div class="bu-flip-content">
+                <span class="bu-hover-badge"><i class="fa fa-graduation-cap"></i> FACULTY OF</span>
+                <h4 class="bu-hover-title"><?php echo htmlspecialchars($idepartment['title']); ?></h4>
+                <div class="bu-hover-divider"></div>
+                <p class="bu-flip-desc"><?php echo !empty($idepartment['short_description']) ? htmlspecialchars($idepartment['short_description']) : 'Industry-aligned curriculum, research labs and expert faculty.'; ?></p>
+                <span class="bu-hover-btn">
+                  <span>Explore Faculty</span>
+                  <i class="fa fa-arrow-right"></i>
+                </span>
+              </div>
+            </div>
+
+          </div>
         </a>
+
+        <!-- Card Body -->
         <div class="bu-card-body">
           <h3 class="bu-card-title">
             <a href="<?php echo href("department.php","id=".$idepartment['id']); ?>" class="bu-card-title-link"><?php echo htmlspecialchars($idepartment['title']); ?></a>
@@ -172,26 +199,71 @@
   flex-direction: column !important;
   position: relative !important;
 }
-.bu-card-img-wrapper {
+
+/* ===== 3D FLIP CARD STYLES ===== */
+.bu-card-img-wrapper.bu-flip-card {
   position: relative !important;
   width: 100% !important;
   height: 320px !important;
-  border-radius: 4px !important;
-  overflow: hidden !important;
+  perspective: 1200px !important;
+  -webkit-perspective: 1200px !important;
+  background: transparent !important;
+  border-radius: 6px !important;
   margin-bottom: 20px !important;
   display: block !important;
   cursor: pointer !important;
+  text-decoration: none !important;
 }
-.bu-card-img {
+
+.bu-flip-inner {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  transform-style: preserve-3d !important;
+  -webkit-transform-style: preserve-3d !important;
+  transition: transform 0.75s cubic-bezier(0.34, 1.3, 0.64, 1) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Flip Trigger on Hover */
+.bu-faculty-card:hover .bu-flip-inner,
+.bu-card-img-wrapper:hover .bu-flip-inner {
+  transform: rotateY(180deg) !important;
+  box-shadow: 0 16px 35px rgba(6, 29, 124, 0.22) !important;
+}
+
+/* Front & Back Faces Common */
+.bu-flip-face {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+}
+
+/* ===== 1. FRONT FACE ===== */
+.bu-flip-front {
+  background-color: #061D7C !important;
+  z-index: 2 !important;
+  transform: rotateY(0deg) !important;
+}
+
+.bu-flip-front .bu-card-img {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
-  transition: transform 0.4s ease !important;
+  display: block !important;
+  transition: transform 0.5s ease !important;
 }
-.bu-faculty-card:hover .bu-card-img,
-.bu-card-img-wrapper:hover .bu-card-img {
+
+.bu-faculty-card:hover .bu-flip-front .bu-card-img {
   transform: scale(1.05) !important;
 }
+
 .bu-card-number {
   position: absolute !important;
   top: 15px !important;
@@ -202,7 +274,131 @@
   font-weight: 800 !important;
   padding: 4px 8px !important;
   border-radius: 2px !important;
+  z-index: 5 !important;
+}
+
+.bu-flip-hint {
+  position: absolute !important;
+  bottom: 12px !important;
+  right: 12px !important;
+  background: rgba(6, 29, 124, 0.8) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  color: #FFC107 !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  opacity: 0.9 !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ===== 2. BACK FACE ===== */
+.bu-flip-back {
+  background: linear-gradient(145deg, #061D7C 0%, #020A30 100%) !important;
+  transform: rotateY(180deg) !important;
+  z-index: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px 20px !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(255, 193, 7, 0.3) !important;
+}
+
+.bu-flip-bg-img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  opacity: 0.16 !important;
+  filter: blur(4px) grayscale(50%) !important;
+}
+
+.bu-flip-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  background: radial-gradient(circle at center, rgba(6, 29, 124, 0.7) 0%, rgba(2, 10, 48, 0.95) 100%) !important;
+}
+
+.bu-flip-content {
+  position: relative !important;
   z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.bu-hover-badge {
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+  color: #FFC107 !important;
+  text-transform: uppercase !important;
+  margin-bottom: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.bu-hover-title {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: clamp(20px, 2.2vw, 25px) !important;
+  font-weight: 800 !important;
+  color: #FFFFFF !important;
+  margin: 0 !important;
+  line-height: 1.25 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.bu-hover-divider {
+  width: 44px !important;
+  height: 3px !important;
+  background-color: #FFC107 !important;
+  border-radius: 2px !important;
+  margin: 10px auto 12px auto !important;
+}
+
+.bu-flip-desc {
+  font-size: 12.5px !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+  line-height: 1.5 !important;
+  margin: 0 0 16px 0 !important;
+  max-width: 260px !important;
+}
+
+.bu-hover-btn {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  color: #061D7C !important;
+  background-color: #FFC107 !important;
+  padding: 8px 20px !important;
+  border-radius: 20px !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4) !important;
+  transition: all 0.25s ease !important;
+}
+
+.bu-faculty-card:hover .bu-hover-btn {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.6) !important;
+  background-color: #FFD54F !important;
 }
 
 /* Card Body */

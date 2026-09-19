@@ -13,15 +13,75 @@ $why_label = !empty($why_sec['title']) ? $why_sec['title'] : 'WHY BHABHA';
 $why_heading = !empty($why_sec['heading']) ? $why_sec['heading'] : "A university built<br>\n          for <em>impact.</em>";
 $why_intro = !empty($why_sec['subheading']) ? $why_sec['subheading'] : "From accreditation to ecosystem — every dimension of the Bhabha experience is \n          engineered for academic depth, global mobility and lifelong opportunity.";
 
-$why_extra = !empty($why_sec['extra_data']) ? json_decode($why_sec['extra_data'], true) : [];
-$why_features = !empty($why_extra['features']) ? $why_extra['features'] : [
-    ['icon' => 'fa fa-certificate', 'title' => 'NAAC & UGC Recognised', 'desc' => 'Accredited by NAAC; UGC recognised under 2(f) & 12(B).'],
-    ['icon' => 'fa fa-flask', 'title' => 'Research Excellence', 'desc' => '120+ research labs, 250+ patents and 1,200+ publications.'],
-    ['icon' => 'fa fa-globe', 'title' => 'Global Collaborations', 'desc' => 'MoUs with 60+ international universities across 4 continents.'],
-    ['icon' => 'fa fa-mortar-board', 'title' => 'Outstanding Placements', 'desc' => '98% placement rate with 500+ recruiters and packages up to ₹52 LPA.'],
-    ['icon' => 'fa fa-building-o', 'title' => 'Smart Campus', 'desc' => '150-acre wifi-enabled green campus with smart classrooms.'],
-    ['icon' => 'fa fa-rocket', 'title' => 'Innovation Ecosystem', 'desc' => 'Incubation centre, student startups and industry mentoring.']
+$default_features = [
+    ['icon' => 'fa fa-certificate', 'title' => 'NAAC & UGC Recognised', 'desc' => 'Accredited by NAAC; UGC recognised under 2(f) & 12(B).', 'url' => 'approvals.php'],
+    ['icon' => 'fa fa-flask', 'title' => 'Research Excellence', 'desc' => '120+ research labs, 250+ patents and 1,200+ publications.', 'url' => 'research.php'],
+    ['icon' => 'fa fa-globe', 'title' => 'Global Collaborations', 'desc' => 'MoUs with 60+ international universities across 4 continents.', 'url' => 'page.php?id=9'],
+    ['icon' => 'fa fa-mortar-board', 'title' => 'Outstanding Placements', 'desc' => '98% placement rate with 500+ recruiters and packages up to ₹52 LPA.', 'url' => 'placements.php'],
+    ['icon' => 'fa fa-building-o', 'title' => 'Smart Campus', 'desc' => '150-acre wifi-enabled green campus with smart classrooms.', 'url' => 'infrastructure.php'],
+    ['icon' => 'fa fa-rocket', 'title' => 'Innovation Ecosystem', 'desc' => 'Incubation centre, student startups and industry mentoring.', 'url' => 'research.php#incubation-edc']
 ];
+
+$why_extra = !empty($why_sec['extra_data']) ? json_decode($why_sec['extra_data'], true) : [];
+$why_features = !empty($why_extra['features']) ? $why_extra['features'] : $default_features;
+
+// Helper to resolve card redirect URL
+if (!function_exists('bu_resolve_feature_url')) {
+    function bu_resolve_feature_url($feature, $index = 0) {
+        $rawUrl = trim($feature['url'] ?? '');
+        $title = trim($feature['title'] ?? '');
+
+        // If no explicit URL is stored, match based on title or fallback to default
+        if (empty($rawUrl)) {
+            if (stripos($title, 'NAAC') !== false || stripos($title, 'UGC') !== false || stripos($title, 'Recognis') !== false || stripos($title, 'Accredit') !== false) {
+                $rawUrl = 'approvals.php';
+            } elseif (stripos($title, 'Research') !== false || stripos($title, 'Patent') !== false || stripos($title, 'Publication') !== false) {
+                $rawUrl = 'research.php';
+            } elseif (stripos($title, 'Global') !== false || stripos($title, 'Collaboration') !== false || stripos($title, 'MoU') !== false || stripos($title, 'International') !== false) {
+                $rawUrl = 'page.php?id=9';
+            } elseif (stripos($title, 'Placement') !== false || stripos($title, 'Recruiter') !== false || stripos($title, 'Package') !== false) {
+                $rawUrl = 'placements.php';
+            } elseif (stripos($title, 'Campus') !== false || stripos($title, 'Smart') !== false || stripos($title, 'Infrastruct') !== false || stripos($title, 'Classroom') !== false) {
+                $rawUrl = 'infrastructure.php';
+            } elseif (stripos($title, 'Innovation') !== false || stripos($title, 'Incubat') !== false || stripos($title, 'Startup') !== false || stripos($title, 'Ecosystem') !== false) {
+                $rawUrl = 'research.php#incubation-edc';
+            } else {
+                $defaults = ['approvals.php', 'research.php', 'page.php?id=9', 'placements.php', 'infrastructure.php', 'research.php#incubation-edc'];
+                $rawUrl = $defaults[$index] ?? '#';
+            }
+        }
+
+        if (empty($rawUrl) || $rawUrl === '#') {
+            return '#';
+        }
+
+        // Check if already an absolute URL or anchor
+        if (strpos($rawUrl, 'http://') === 0 || strpos($rawUrl, 'https://') === 0 || strpos($rawUrl, '//') === 0) {
+            return $rawUrl;
+        }
+
+        // Process internal relative URLs
+        $hash = '';
+        if (strpos($rawUrl, '#') !== false) {
+            $parts = explode('#', $rawUrl, 2);
+            $rawUrl = $parts[0];
+            $hash = '#' . $parts[1];
+        }
+
+        if (strpos($rawUrl, '.php') !== false) {
+            if (strpos($rawUrl, '?') !== false) {
+                $paramParts = explode('?', $rawUrl, 2);
+                $page = $paramParts[0];
+                $param = $paramParts[1];
+                return function_exists('href') ? href($page, $param) . $hash : $page . '?' . $param . $hash;
+            } else {
+                return function_exists('href') ? href($rawUrl) . $hash : $rawUrl . $hash;
+            }
+        }
+
+        return (defined('URL_ROOT') ? URL_ROOT : '') . ltrim($rawUrl, '/') . $hash;
+    }
+}
 ?>
 <section class="bu-why-section">
   <div class="bu-why-container">
@@ -43,7 +103,7 @@ $why_features = !empty($why_extra['features']) ? $why_extra['features'] : [
     
     <!-- Features Grid -->
     <div class="bu-why-grid">
-      <?php foreach ($why_features as $feature): 
+      <?php foreach ($why_features as $idx => $feature): 
         $rawIcon = trim($feature['icon'] ?? '');
         if (!empty($rawIcon)) {
             if (strpos($rawIcon, 'fa ') !== 0 && strpos($rawIcon, 'fas ') !== 0 && strpos($rawIcon, 'far ') !== 0 && strpos($rawIcon, 'fab ') !== 0) {
@@ -54,12 +114,20 @@ $why_features = !empty($why_extra['features']) ? $why_extra['features'] : [
         } else {
             $iconClass = 'fa fa-certificate';
         }
+        $cardTargetUrl = bu_resolve_feature_url($feature, $idx);
       ?>
-        <div class="bu-why-item">
-          <div class="bu-why-icon"><i class="<?php echo htmlspecialchars($iconClass); ?>"></i></div>
+        <a href="<?php echo htmlspecialchars($cardTargetUrl); ?>" class="bu-why-item" title="Explore <?php echo htmlspecialchars($feature['title']); ?>">
+          <div class="bu-why-icon-row">
+            <div class="bu-why-icon"><i class="<?php echo htmlspecialchars($iconClass); ?>"></i></div>
+            <div class="bu-why-arrow-indicator"><i class="fa fa-arrow-right"></i></div>
+          </div>
           <h3 class="bu-why-title"><?php echo htmlspecialchars($feature['title']); ?></h3>
           <p class="bu-why-desc"><?php echo htmlspecialchars($feature['desc']); ?></p>
-        </div>
+          <div class="bu-why-link-cta">
+            <span>Explore Details</span>
+            <i class="fa fa-angle-right"></i>
+          </div>
+        </a>
       <?php endforeach; ?>
     </div>
 
@@ -141,9 +209,11 @@ $why_features = !empty($why_extra['features']) ? $why_extra['features'] : [
   border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   background: transparent !important;
-  transition: all 0.3s ease !important;
-  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+  cursor: pointer !important;
   box-sizing: border-box !important;
+  text-decoration: none !important;
+  color: inherit !important;
 }
 .bu-why-item:nth-child(3n) {
   border-right: none !important;
@@ -151,18 +221,28 @@ $why_features = !empty($why_extra['features']) ? $why_extra['features'] : [
 .bu-why-item:nth-child(n+4) {
   border-bottom: none !important;
 }
-.bu-why-item:hover {
+.bu-why-item:hover,
+.bu-why-item:focus {
   background: rgba(255, 255, 255, 0.12) !important;
   backdrop-filter: blur(10px) !important;
   -webkit-backdrop-filter: blur(10px) !important;
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3) !important;
   border-radius: 0 !important;
   z-index: 2 !important;
+  text-decoration: none !important;
+  transform: translateY(-2px);
+}
+
+.bu-why-icon-row {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 20px !important;
 }
 .bu-why-icon {
   font-size: 26px !important;
   color: #FFC107 !important;
-  margin-bottom: 20px !important;
   height: 36px !important;
   display: flex !important;
   align-items: center !important;
@@ -179,8 +259,30 @@ $why_features = !empty($why_extra['features']) ? $why_extra['features'] : [
   -moz-osx-font-smoothing: grayscale !important;
 }
 .bu-why-item:hover .bu-why-icon {
-  transform: scale(1.15) !important;
+  transform: scale(1.12) !important;
 }
+
+.bu-why-arrow-indicator {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #FFC107 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+  opacity: 0.5 !important;
+  transform: translateX(-4px) !important;
+  transition: all 0.3s ease !important;
+}
+.bu-why-item:hover .bu-why-arrow-indicator {
+  opacity: 1 !important;
+  background: #FFC107 !important;
+  color: #061D7C !important;
+  transform: translateX(0) !important;
+}
+
 .bu-why-title {
   font-family: 'Playfair Display', Georgia, serif !important;
   font-size: 22px !important;
@@ -188,12 +290,43 @@ $why_features = !empty($why_extra['features']) ? $why_extra['features'] : [
   color: #FFFFFF !important;
   margin: 0 0 12px 0 !important;
   line-height: 1.3 !important;
+  transition: color 0.3s ease !important;
 }
+.bu-why-item:hover .bu-why-title {
+  color: #FFFFFF !important;
+}
+
 .bu-why-desc {
   font-size: 14px !important;
   line-height: 1.65 !important;
-  color: rgba(255, 255, 255, 0.65) !important;
-  margin: 0 !important;
+  color: rgba(255, 255, 255, 0.68) !important;
+  margin: 0 0 16px 0 !important;
+  flex: 1 !important;
+}
+
+.bu-why-link-cta {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #FFC107 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  opacity: 0.85 !important;
+  transition: all 0.3s ease !important;
+  margin-top: auto !important;
+}
+.bu-why-link-cta i {
+  font-size: 15px !important;
+  transition: transform 0.3s ease !important;
+}
+.bu-why-item:hover .bu-why-link-cta {
+  opacity: 1 !important;
+  color: #FFD54F !important;
+}
+.bu-why-item:hover .bu-why-link-cta i {
+  transform: translateX(4px) !important;
 }
 
 /* ---- RESPONSIVE ---- */
@@ -206,24 +339,18 @@ $why_features = !empty($why_extra['features']) ? $why_extra['features'] : [
   }
   .bu-why-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 40px 30px !important;
+    gap: 0 !important;
   }
   .bu-why-item {
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 30px 24px !important;
+  }
+  .bu-why-item:nth-child(2n) {
     border-right: none !important;
-    padding-right: 0 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    padding-bottom: 24px !important;
   }
-  .bu-why-item:nth-child(-n+3) {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    padding-bottom: 24px !important;
-  }
-  .bu-why-item:nth-child(n+4) {
-    padding-top: 0 !important;
-  }
-  .bu-why-item:last-child {
+  .bu-why-item:nth-child(n+5) {
     border-bottom: none !important;
-    padding-bottom: 0 !important;
   }
 }
 @media (max-width: 575px) {
@@ -232,11 +359,12 @@ $why_features = !empty($why_extra['features']) ? $why_extra['features'] : [
   }
   .bu-why-grid {
     grid-template-columns: 1fr !important;
-    gap: 30px !important;
+    gap: 0 !important;
   }
   .bu-why-item {
+    border-right: none !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    padding-bottom: 20px !important;
+    padding: 24px 16px !important;
   }
   .bu-why-item:last-child {
     border-bottom: none !important;

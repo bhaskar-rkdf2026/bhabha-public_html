@@ -292,21 +292,35 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
   .bu-stat-label { font-size: 9px !important; letter-spacing: 1.4px !important; }
 }
 @media (max-width: 991px) {
-  .bu-hero-fw { height: 60vh !important; min-height: 400px !important; }
-  .bu-fwslide-content { left: 32px !important; bottom: 50px !important; max-width: 85% !important; }
+  .bu-hero-fw { height: 60vh !important; min-height: 420px !important; }
+  .bu-fwslide-content { left: 24px !important; right: 24px !important; bottom: 40px !important; max-width: 90% !important; }
   .bu-scroll-hint { display: none !important; }
-  .bu-stats-bar { padding: 18px 10px !important; }
-  .bu-stat-item { min-width: 95px !important; }
-  .bu-stat-number { font-size: 20px !important; }
+  .bu-stats-bar { padding: 24px 16px !important; }
+  .bu-stats-container { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 16px 10px !important; }
+  .bu-stat-item { min-width: auto !important; }
+  .bu-stat-number { font-size: 24px !important; }
 }
 @media (max-width: 575px) {
-  .bu-hero-fw { height: 55vh !important; min-height: 330px !important; }
-  .bu-fwslide-content { left: 16px !important; right: 16px !important; bottom: 35px !important; max-width: 100% !important; }
-  .bu-fwslide-heading { font-size: 28px !important; }
-  .bu-fwslide-sub { font-size: 12.5px !important; }
-  .bu-stats-container { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 14px 6px !important; }
-  .bu-stat-number { font-size: 17px !important; }
-  .bu-stat-label { font-size: 8.5px !important; letter-spacing: 1px !important; }
+  .bu-hero-fw { height: auto !important; min-height: 360px !important; }
+  .bu-fwslide-content { left: 16px !important; right: 16px !important; bottom: 24px !important; max-width: 100% !important; }
+  .bu-fwslide-heading { font-size: clamp(24px, 7vw, 30px) !important; line-height: 1.2 !important; }
+  .bu-fwslide-sub { font-size: 13px !important; line-height: 1.55 !important; margin-top: 10px !important; }
+  .bu-stats-bar { padding: 20px 12px !important; }
+  .bu-stats-container { 
+    display: grid !important; 
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 12px 10px !important; 
+  }
+  .bu-stat-item { 
+    padding: 10px 8px !important; 
+    background: #FFFFFF !important; 
+    border-radius: 6px !important; 
+    border: 1px solid #EAE5D9 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+  }
+  .bu-stat-number { font-size: 22px !important; margin-bottom: 3px !important; }
+  .bu-stat-number sup { font-size: 15px !important; }
+  .bu-stat-label { font-size: 9px !important; letter-spacing: 1.1px !important; line-height: 1.25 !important; }
 }
 </style>
 

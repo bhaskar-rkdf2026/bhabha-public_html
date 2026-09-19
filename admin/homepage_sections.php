@@ -109,7 +109,8 @@ if (isset($_POST['submit'])) {
                         $feats[] = [
                             'icon'  => $rawIcon,
                             'title' => $wtitleTrim,
-                            'desc'  => trim($_POST['why_desc'][$k] ?? '')
+                            'desc'  => trim($_POST['why_desc'][$k] ?? ''),
+                            'url'   => trim($_POST['why_url'][$k] ?? '')
                         ];
                     }
                 }
@@ -492,7 +493,15 @@ if (isset($_POST['submit'])) {
 
                   <!-- 3. WHY BHABHA UNIVERSITY (6 FEATURES) -->
                   <?php if ($aryData['section_key'] == 'why_bhabha'): 
-                    $features = !empty($extra['features']) ? $extra['features'] : [];
+                    $defaultFeats = [
+                        ['icon' => 'fa fa-certificate', 'title' => 'NAAC & UGC Recognised', 'desc' => 'Accredited by NAAC; UGC recognised under 2(f) & 12(B).', 'url' => 'approvals.php'],
+                        ['icon' => 'fa fa-flask', 'title' => 'Research Excellence', 'desc' => '120+ research labs, 250+ patents and 1,200+ publications.', 'url' => 'research.php'],
+                        ['icon' => 'fa fa-globe', 'title' => 'Global Collaborations', 'desc' => 'MoUs with 60+ international universities across 4 continents.', 'url' => 'page.php?id=9'],
+                        ['icon' => 'fa fa-mortar-board', 'title' => 'Outstanding Placements', 'desc' => '98% placement rate with 500+ recruiters and packages up to ₹52 LPA.', 'url' => 'placements.php'],
+                        ['icon' => 'fa fa-building-o', 'title' => 'Smart Campus', 'desc' => '150-acre wifi-enabled green campus with smart classrooms.', 'url' => 'infrastructure.php'],
+                        ['icon' => 'fa fa-rocket', 'title' => 'Innovation Ecosystem', 'desc' => 'Incubation centre, student startups and industry mentoring.', 'url' => 'research.php#incubation-edc']
+                    ];
+                    $features = !empty($extra['features']) ? $extra['features'] : $defaultFeats;
                   ?>
                   <div class="simple-card-group">
                     <div class="simple-card-title">
@@ -500,22 +509,26 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="row">
                       <?php for ($i = 0; $i < 6; $i++): 
-                        $f = $features[$i] ?? ['icon' => 'fa fa-certificate', 'title' => '', 'desc' => ''];
+                        $f = $features[$i] ?? ($defaultFeats[$i] ?? ['icon' => 'fa fa-certificate', 'title' => '', 'desc' => '', 'url' => '']);
                       ?>
                       <div class="col-md-4 mb-3">
                         <div class="simple-item-box h-100">
                           <label class="text-primary font-weight-bold">Feature #<?php echo $i + 1; ?></label>
                           <div class="form-group mb-2">
                             <small class="text-muted">Feature Title</small>
-                            <input type="text" name="why_title[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['title']); ?>" placeholder="Title">
+                            <input type="text" name="why_title[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['title'] ?? ''); ?>" placeholder="Title">
                           </div>
                           <div class="form-group mb-2">
                             <small class="text-muted">FontAwesome Icon Class</small>
-                            <input type="text" name="why_icon[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['icon']); ?>" placeholder="fa fa-certificate">
+                            <input type="text" name="why_icon[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['icon'] ?? ''); ?>" placeholder="fa fa-certificate">
+                          </div>
+                          <div class="form-group mb-2">
+                            <small class="text-muted">Redirect URL / Link</small>
+                            <input type="text" name="why_url[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['url'] ?? ''); ?>" placeholder="e.g. research.php or approvals.php">
                           </div>
                           <div class="form-group mb-0">
                             <small class="text-muted">Description</small>
-                            <textarea name="why_desc[]" class="form-control form-control-sm" rows="2" placeholder="Description"><?php echo htmlspecialchars($f['desc']); ?></textarea>
+                            <textarea name="why_desc[]" class="form-control form-control-sm" rows="2" placeholder="Description"><?php echo htmlspecialchars($f['desc'] ?? ''); ?></textarea>
                           </div>
                         </div>
                       </div>

@@ -207,6 +207,7 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
   width: 100% !important;
   height: 480px !important;
   object-fit: cover !important;
+  object-position: top center !important;
   border-radius: 4px !important;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08) !important;
   display: block !important;
@@ -217,9 +218,9 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
   left: -30px !important;
   background-color: #D99B00 !important; /* Gold matching mockup */
   padding: 20px 24px !important;
-  border-radius: 2px !important;
+  border-radius: 4px !important;
   max-width: 280px !important;
-  box-shadow: 0 12px 28px rgba(217, 155, 0, 0.2) !important;
+  box-shadow: 0 12px 28px rgba(217, 155, 0, 0.25) !important;
   z-index: 5 !important;
 }
 .bu-card-icon {
@@ -247,7 +248,7 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
 @media (max-width: 991px) {
   .bu-research-container {
     flex-direction: column-reverse !important;
-    gap: 40px !important;
+    gap: 36px !important;
   }
   .bu-research-img-col {
     max-width: 100% !important;
@@ -256,51 +257,78 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
     justify-content: center !important;
   }
   .bu-res-img-wrapper {
-    max-width: 400px !important;
+    max-width: 440px !important;
   }
   .bu-res-img {
-    height: 400px !important;
+    height: 380px !important;
   }
   .bu-res-highlight-card {
-    left: -20px !important;
-    bottom: -20px !important;
+    left: -15px !important;
+    bottom: -15px !important;
   }
   .bu-research-text-col {
     width: 100% !important;
-    align-items: center !important;
-    text-align: center !important;
+    align-items: flex-start !important;
+    text-align: left !important;
   }
   .bu-res-metrics {
-    justify-items: center !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px 24px !important;
   }
   .bu-metric-item {
-    align-items: center !important;
-    border-left: none !important;
-    border-top: 2px solid #FFC107 !important;
-    padding-left: 0 !important;
-    padding-top: 10px !important;
-    width: 80% !important;
+    align-items: flex-start !important;
+    border-left: 2px solid #FFC107 !important;
+    border-top: none !important;
+    padding-left: 14px !important;
+    padding-top: 0 !important;
+    width: 100% !important;
   }
 }
 @media (max-width: 575px) {
   .bu-research-section {
-    padding: 60px 16px !important;
+    padding: 50px 16px !important;
+  }
+  .bu-res-heading {
+    font-size: clamp(26px, 7vw, 32px) !important;
+    line-height: 1.22 !important;
+    margin-bottom: 14px !important;
+  }
+  .bu-res-sub {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 24px !important;
+  }
+  .bu-res-img-wrapper {
+    max-width: 100% !important;
   }
   .bu-res-img {
-    height: 320px !important;
+    height: 280px !important;
   }
   .bu-res-highlight-card {
-    position: static !important;
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
     max-width: 100% !important;
-    margin-top: 15px !important;
-    box-shadow: 0 8px 24px rgba(217, 155, 0, 0.15) !important;
+    margin-top: 14px !important;
+    box-shadow: 0 6px 18px rgba(217, 155, 0, 0.2) !important;
+    border-radius: 6px !important;
   }
   .bu-res-metrics {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px 16px !important;
+    margin-bottom: 28px !important;
   }
-  .bu-metric-item {
+  .bu-metric-value {
+    font-size: 24px !important;
+  }
+  .bu-metric-lbl {
+    font-size: 9px !important;
+    letter-spacing: 1px !important;
+  }
+  .bu-res-btn {
     width: 100% !important;
+    text-align: center !important;
   }
 }
 </style>

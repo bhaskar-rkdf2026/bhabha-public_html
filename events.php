@@ -52,6 +52,10 @@ body {
   width: 100%;
   padding: 50px 0 90px 0;
   box-sizing: border-box;
+  clear: both;
+  float: left;
+  position: relative;
+  background-color: var(--bu-bg-light);
 }
 .bu-evt-container {
   max-width: 1200px;
@@ -63,7 +67,7 @@ body {
 /* Two Column Layout Grid for Single View */
 .bu-evt-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 350px;
+  grid-template-columns: minmax(0, 1fr) 360px;
   gap: 32px;
   align-items: start;
 }
@@ -153,20 +157,54 @@ body {
   border-radius: 2px;
 }
 
-/* Description Text */
+/* Single Event Description & Rich Content */
 .bu-evt-desc {
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.8;
   color: #334155;
+  display: block;
 }
 .bu-evt-desc p {
   margin-bottom: 16px;
+  font-size: 15px;
+  line-height: 1.8;
 }
-.bu-evt-desc img {
+.bu-evt-desc img,
+.bu-evt-rich-content img {
   max-width: 100% !important;
   height: auto !important;
   border-radius: 12px;
   margin: 15px 0;
+  display: block;
+  box-shadow: 0 4px 16px rgba(10, 27, 84, 0.08);
+}
+.bu-evt-rich-content {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #334155;
+  word-break: break-word;
+}
+.bu-evt-rich-content a {
+  color: #0d6efd;
+  font-weight: 600;
+  text-decoration: underline;
+  word-break: break-all;
+}
+.bu-evt-rich-content a:hover {
+  color: var(--bu-navy);
+}
+.bu-evt-rich-content strong,
+.bu-evt-rich-content b {
+  color: var(--bu-navy);
+  font-weight: 700;
+}
+.bu-evt-rich-content ul,
+.bu-evt-rich-content ol {
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+.bu-evt-rich-content li {
+  margin-bottom: 6px;
 }
 
 /* Sidebar Widgets */
@@ -743,27 +781,50 @@ body {
           </div>
           <?php endif; ?>
 
-          <!-- Description Card -->
+          <!-- Description & Details Card -->
           <div class="bu-evt-card">
+            <!-- Event Meta Header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <?php if (!empty($aryData['category'])): ?>
+                <span class="bu-event-tag"><i class="fa fa-tag"></i> <?php echo htmlspecialchars($aryData['category']); ?></span>
+                <?php endif; ?>
+                <span class="bu-event-meta-item"><i class="fa fa-map-marker" style="color:var(--bu-gold-dark);"></i> Bhopal Campus</span>
+              </div>
+              <span class="bu-event-meta-item"><i class="fa fa-calendar-check-o" style="color:var(--bu-gold-dark);"></i> Official Notification</span>
+            </div>
+
             <h2 class="bu-evt-h2"><?php echo htmlspecialchars($aryData['title']); ?></h2>
             <div class="bu-evt-divider"></div>
             
-            <div class="bu-evt-desc">
-              <h4 style="font-size: 17px; font-weight: 700; color: var(--bu-navy); margin-bottom: 12px;">Event Overview</h4>
-              <?php echo !empty($aryData['description']) ? $aryData['description'] : '<p>Join us at Bhabha University for this special campus event. Students, faculty, and academic experts gather to participate and collaborate.</p>'; ?>
+            <?php if (!empty($aryData['description'])): ?>
+            <div class="bu-evt-desc" style="margin-bottom: 28px;">
+              <h4 style="font-size: 17px; font-weight: 700; color: var(--bu-navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <i class="fa fa-info-circle" style="color: var(--bu-gold-dark);"></i> Event Overview
+              </h4>
+              <p style="font-size: 15.5px; line-height: 1.8; color: #334155; margin-bottom: 0;">
+                <?php echo nl2br(htmlspecialchars($aryData['description'])); ?>
+              </p>
             </div>
-          </div>
+            <?php endif; ?>
 
-          <!-- Detailed Information Card -->
-          <?php if (!empty($aryData['details'])): ?>
-          <div class="bu-evt-card">
-            <h3 class="bu-evt-h2" style="font-size: 22px;">Event <em>Details &amp; Schedule</em></h3>
-            <div class="bu-evt-divider"></div>
-            <div class="bu-evt-desc">
-              <?php echo $aryData['details']; ?>
+            <?php if (!empty($aryData['details'])): ?>
+            <div class="bu-evt-desc" style="padding-top: 20px; border-top: 1px dashed #e2e8f0;">
+              <h4 style="font-size: 17px; font-weight: 700; color: var(--bu-navy); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                <i class="fa fa-list-alt" style="color: var(--bu-gold-dark);"></i> Detailed Schedule &amp; Information
+              </h4>
+              <div class="bu-evt-rich-content">
+                <?php echo $aryData['details']; ?>
+              </div>
             </div>
+            <?php endif; ?>
+
+            <?php if (empty($aryData['description']) && empty($aryData['details'])): ?>
+            <div class="bu-evt-desc">
+              <p>Join us at Bhabha University for this special campus event. Students, faculty members, and academic experts participate and collaborate. For inquiries, registration details, or event schedules, please feel free to reach out to the university coordinator desk.</p>
+            </div>
+            <?php endif; ?>
           </div>
-          <?php endif; ?>
 
           <!-- Action & Navigation Bar -->
           <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
@@ -783,14 +844,23 @@ body {
                 <div class="bu-info-icon"><i class="fa fa-university"></i></div>
                 <div class="bu-info-content">
                   <label>Venue / Location</label>
-                  <span>Bhabha University Campus, Bhopal</span>
+                  <span>Bhabha University Campus, Jatkhedi, Bhopal</span>
                 </div>
               </li>
+              <?php if (!empty($aryData['category'])): ?>
+              <li class="bu-info-item">
+                <div class="bu-info-icon"><i class="fa fa-tag"></i></div>
+                <div class="bu-info-content">
+                  <label>Category</label>
+                  <span><?php echo htmlspecialchars($aryData['category']); ?></span>
+                </div>
+              </li>
+              <?php endif; ?>
               <li class="bu-info-item">
                 <div class="bu-info-icon"><i class="fa fa-clock-o"></i></div>
                 <div class="bu-info-content">
-                  <label>Timing</label>
-                  <span>10:00 AM onwards</span>
+                  <label>Timing &amp; Session</label>
+                  <span>Campus Schedule / Open Hours</span>
                 </div>
               </li>
               <li class="bu-info-item">

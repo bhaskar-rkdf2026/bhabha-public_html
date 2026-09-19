@@ -82,6 +82,9 @@
           <?php endforeach; ?>
         </div>
         <style>
+          .bu-content-card, .bu-fac-card {
+            scroll-margin-top: 110px;
+          }
           .bu-fac-card {
             background: #F8FAFC;
             border: 1px solid #E5E7EB;
@@ -147,8 +150,10 @@
       <?php
       $infrastructure = $db->get('infrastructure');
       if(is_array($infrastructure) && count($infrastructure) > 0) {
-        foreach($infrastructure as $inf): ?>
-        <div class="bu-content-card">
+        foreach($infrastructure as $inf): 
+          $cardSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $inf['title'])));
+        ?>
+        <div class="bu-content-card" id="<?php echo $cardSlug; ?>">
           <h2 class="bu-content-h2"><?php echo $inf['title'];?></h2>
           <div class="bu-content-divider"></div>
           <?php if($inf['image'] != ''): ?>
