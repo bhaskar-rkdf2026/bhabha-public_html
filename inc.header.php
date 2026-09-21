@@ -184,7 +184,7 @@
             <a href="#" class="bu-nav-link">Admissions <i class="fa fa-angle-down"></i></a>
             <ul class="bu-dropdown bu-dropdown-2col">
               <li><a href="<?php echo href("enquiry.php")?>">Admission Enquiry & Eligibility</a></li>
-              <li><a href="<?php echo href("page.php","id=12");?>">Admission Process</a></li>
+              <li><a href="<?php echo href("admission-process.php");?>">Admission Process</a></li>
               <li><a href="<?php echo href("course.php")?>">Courses, Intake & Eligibility</a></li>
               <li><a href="<?php echo href("fees.php")?>">Fee Structure</a></li>
               <li><a href="<?php echo href("page.php","id=1");?>">University Bank Account Details</a></li>
