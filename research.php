@@ -31,7 +31,7 @@ if (!function_exists('isPortalSecActive')) {
 // Fallback metrics if not set in hero
 $portal_metrics = [
     ['target' => 250, 'value' => '250', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'Patents Filed'],
-    ['target' => 1200, 'value' => '1200', 'suffix' => '+', 'prefix' => '', 'commas' => true, 'label' => 'Scopus / UGC Papers'],
+    ['target' => 2500, 'value' => '2500', 'suffix' => '+', 'prefix' => '', 'commas' => true, 'label' => 'Scopus / UGC Papers'],
     ['target' => 85, 'value' => '85', 'suffix' => ' Cr', 'prefix' => '₹', 'commas' => false, 'label' => 'Active Grants'],
     ['target' => 60, 'value' => '60', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'Global & Ind. MoUs']
 ];

@@ -10,21 +10,21 @@ if ($hero_sec && isset($hero_sec['status']) && $hero_sec['status'] == 0) {
 }
 
 $hero_label = !empty($hero_sec['title']) ? $hero_sec['title'] : 'AERIAL · BHOPAL CAMPUS';
-$hero_heading = !empty($hero_sec['heading']) ? $hero_sec['heading'] : '150 acres of<br><em>living, learning</em> landscape.';
+$hero_heading = !empty($hero_sec['heading']) ? $hero_sec['heading'] : '32 acres of<br><em>living, learning</em> landscape.';
 $hero_sub = !empty($hero_sec['subheading']) ? $hero_sec['subheading'] : "From the medical quadrangle to the engineering labs — a bird's-eye view of the community our students call home.";
 $hero_video = !empty($hero_sec['media_url']) ? (strpos($hero_sec['media_url'], 'http') === 0 ? $hero_sec['media_url'] : URL_ROOT . ltrim($hero_sec['media_url'], '/')) : URL_ROOT . "new-media/image/hero/bhabha_2.mp4";
 
 $hero_extra = !empty($hero_sec['extra_data']) ? json_decode($hero_sec['extra_data'], true) : [];
 $hero_poster = !empty($hero_extra['poster']) ? (strpos($hero_extra['poster'], 'http') === 0 ? $hero_extra['poster'] : URL_ROOT . ltrim($hero_extra['poster'], '/')) : URL_ROOT . "new-media/image/campus-aerial.png";
 $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
-    ['number' => '15000', 'suffix' => '+', 'commas' => true, 'label' => 'STUDENTS'],
-    ['number' => '850', 'suffix' => '+', 'commas' => false, 'label' => 'FACULTY'],
-    ['number' => '200', 'suffix' => '+', 'commas' => false, 'label' => 'PROGRAMS'],
-    ['number' => '15', 'suffix' => '', 'commas' => false, 'label' => 'SCHOOLS'],
-    ['number' => '500', 'suffix' => '+', 'commas' => false, 'label' => 'RECRUITERS'],
-    ['number' => '75', 'suffix' => 'k+', 'commas' => false, 'label' => 'ALUMNI'],
-    ['number' => '1200', 'suffix' => '+', 'commas' => true, 'label' => 'PUBLICATIONS'],
-    ['number' => '150', 'suffix' => ' ac', 'commas' => false, 'label' => 'CAMPUS']
+    ['number' => '8500', 'suffix' => '+', 'commas' => true, 'label' => 'STUDENTS'],
+    ['number' => '750', 'suffix' => '+', 'commas' => false, 'label' => 'FACULTY'],
+    ['number' => '85', 'suffix' => '+', 'commas' => false, 'label' => 'PROGRAMS'],
+    ['number' => '25', 'suffix' => '', 'commas' => false, 'label' => 'SCHOOLS'],
+    ['number' => '300', 'suffix' => '+', 'commas' => false, 'label' => 'RECRUITERS'],
+    ['number' => '20000', 'suffix' => '+', 'commas' => true, 'label' => 'ALUMNI'],
+    ['number' => '2500', 'suffix' => '+', 'commas' => true, 'label' => 'PUBLICATIONS'],
+    ['number' => '32', 'suffix' => ' ac', 'commas' => false, 'label' => 'CAMPUS']
 ];
 ?>
 <!-- ============ HERO VIDEO SECTION ============ -->

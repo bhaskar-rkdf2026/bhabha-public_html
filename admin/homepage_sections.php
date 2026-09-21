@@ -495,10 +495,10 @@ if (isset($_POST['submit'])) {
                   <?php if ($aryData['section_key'] == 'why_bhabha'): 
                     $defaultFeats = [
                         ['icon' => 'fa fa-certificate', 'title' => 'NAAC & UGC Recognised', 'desc' => 'Accredited by NAAC; UGC recognised under 2(f) & 12(B).', 'url' => 'approvals.php'],
-                        ['icon' => 'fa fa-flask', 'title' => 'Research Excellence', 'desc' => '120+ research labs, 250+ patents and 1,200+ publications.', 'url' => 'research.php'],
+                        ['icon' => 'fa fa-flask', 'title' => 'Research Excellence', 'desc' => '120+ research labs, 250+ patents and 2,500+ publications.', 'url' => 'research.php'],
                         ['icon' => 'fa fa-globe', 'title' => 'Global Collaborations', 'desc' => 'MoUs with 60+ international universities across 4 continents.', 'url' => 'page.php?id=9'],
-                        ['icon' => 'fa fa-mortar-board', 'title' => 'Outstanding Placements', 'desc' => '98% placement rate with 500+ recruiters and packages up to ₹52 LPA.', 'url' => 'placements.php'],
-                        ['icon' => 'fa fa-building-o', 'title' => 'Smart Campus', 'desc' => '150-acre wifi-enabled green campus with smart classrooms.', 'url' => 'infrastructure.php'],
+                        ['icon' => 'fa fa-mortar-board', 'title' => 'Outstanding Placements', 'desc' => '98% placement rate with 300+ recruiters and packages up to ₹52 LPA.', 'url' => 'placements.php'],
+                        ['icon' => 'fa fa-building-o', 'title' => 'Smart Campus', 'desc' => '32-acre wifi-enabled green campus with smart classrooms.', 'url' => 'infrastructure.php'],
                         ['icon' => 'fa fa-rocket', 'title' => 'Innovation Ecosystem', 'desc' => 'Incubation centre, student startups and industry mentoring.', 'url' => 'research.php#incubation-edc']
                     ];
                     $features = !empty($extra['features']) ? $extra['features'] : $defaultFeats;
@@ -585,7 +585,7 @@ if (isset($_POST['submit'])) {
                           <div class="row">
                             <div class="col-8">
                               <small class="text-muted">Card Title</small>
-                              <input type="text" name="vt_card_title[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($c['title']); ?>" placeholder="e.g. 150-Acre Green Campus">
+                              <input type="text" name="vt_card_title[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($c['title']); ?>" placeholder="e.g. 32-Acre Green Campus">
                             </div>
                             <div class="col-4">
                               <small class="text-muted">Icon Class</small>

@@ -8,7 +8,7 @@
     <div class="bu-infra-text-col">
       <span class="bu-infra-label">CAMPUS & INFRASTRUCTURE</span>
       <h2 class="bu-infra-heading">A campus designed for<br><em>discovery.</em></h2>
-      <p class="bu-infra-sub">150 acres of green campus with smart classrooms, research labs, a central library, sports complex, hostels and an incubation centre.</p>
+      <p class="bu-infra-sub">32 acres of lush green campus with smart classrooms, research labs, a central library, sports complex, hostels and an incubation centre.</p>
       
       <!-- 2-Column List -->
       <div class="bu-infra-list">

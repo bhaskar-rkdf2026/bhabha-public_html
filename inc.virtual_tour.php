@@ -11,7 +11,7 @@ if ($vt_sec && isset($vt_sec['status']) && $vt_sec['status'] == 0) {
 
 $vt_title = !empty($vt_sec['title']) ? $vt_sec['title'] : 'Explore Campus · 360° Drone View';
 $vt_heading = !empty($vt_sec['heading']) ? $vt_sec['heading'] : 'Virtual Tour of <em>Bhabha Campus</em>';
-$vt_desc = !empty($vt_sec['subheading']) ? $vt_sec['subheading'] : 'Experience our breathtaking 150-acre green campus from the sky. Explore world-class academic blocks, research labs, sports arenas, and vibrant student life — all from right here.';
+$vt_desc = !empty($vt_sec['subheading']) ? $vt_sec['subheading'] : 'Experience our breathtaking 32-acre green campus from the sky. Explore world-class academic blocks, research labs, sports arenas, and vibrant student life — all from right here.';
 
 $vt_extra = !empty($vt_sec['extra_data']) ? json_decode($vt_sec['extra_data'], true) : [];
 $vt_tabs = !empty($vt_extra['video_tabs']) ? $vt_extra['video_tabs'] : [
@@ -21,8 +21,8 @@ $vt_tabs = !empty($vt_extra['video_tabs']) ? $vt_extra['video_tabs'] : [
     ['label' => 'Student Life', 'icon' => 'fa fa-graduation-cap', 'video_url' => 'new-media/image/hero/bhabha_4.mp4']
 ];
 $vt_cards = !empty($vt_extra['info_cards']) ? $vt_extra['info_cards'] : [
-    ['icon' => 'fa fa-tree', 'title' => '150-Acre Green Campus', 'desc' => 'Eco-friendly campus with solar energy, botanical gardens, and spacious plazas.'],
-    ['icon' => 'fa fa-university', 'title' => '15 Schools & Institutes', 'desc' => 'Engineering, Medical, Dental, Pharmacy, Law, Agriculture & Management blocks.'],
+    ['icon' => 'fa fa-tree', 'title' => '32-Acre Green Campus', 'desc' => 'Eco-friendly lush green campus with solar energy, botanical gardens, and spacious plazas.'],
+    ['icon' => 'fa fa-university', 'title' => '25 Schools & Institutes', 'desc' => 'Engineering, Medical, Dental, Pharmacy, Law, Agriculture & Management blocks.'],
     ['icon' => 'fa fa-flask', 'title' => '120+ Modern Labs', 'desc' => 'Hi-tech practical skill labs, research wings, and state-of-art computing centers.'],
     ['icon' => 'fa fa-hospital-o', 'title' => '500-Bed Hospital', 'desc' => 'Full-fledged multi-speciality teaching hospital & clinical training facility.']
 ];

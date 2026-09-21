@@ -195,9 +195,17 @@ if($action=="delete")
               {
                 ?>
                       <tr>
-                        <td><?php echo ucfirst($iList['title']);?></td>
+                        <td>
+                          <strong><?php echo htmlspecialchars($iList['title']);?></strong>
+                          <?php if(!empty($iList['image'])): ?>
+                            <div class="small text-muted mt-1"><i class="fa fa-file-pdf-o text-danger"></i> <?php echo htmlspecialchars($iList['image']); ?></div>
+                          <?php endif; ?>
+                        </td>
                       
                         <td>
+                          <?php if(!empty($iList['image'])): ?>
+                            <a href="../upload/approvals/<?php echo rawurlencode($iList['image']); ?>" target="_blank" class="btn btn-sm btn-primary mr-1"><i class="fa fa-eye"></i> View</a>
+                          <?php endif; ?>
                           <a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=edit" class="btn btn-sm btn-info">Edit</a>
                          
                           <a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=delete" onclick="return deletex();" class="btn btn-sm btn-danger">Delete</a></td>

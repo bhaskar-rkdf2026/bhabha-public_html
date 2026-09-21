@@ -7,7 +7,7 @@
     <!-- Top Header -->
     <div class="bu-deg-header">
       <div class="bu-deg-header-left">
-        <h2 class="bu-deg-heading">200+ programs across<br>every degree level.</h2>
+        <h2 class="bu-deg-heading">85+ programs across<br>every degree level.</h2>
       </div>
       
       <!-- Interactive Degree Tabs -->

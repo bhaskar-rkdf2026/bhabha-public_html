@@ -1154,11 +1154,11 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
             </li>
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
-              Wi-Fi enabled 150-acre green campus with modern labs, library and hostels
+              Wi-Fi enabled 32-acre lush green campus with modern labs, library and hostels
             </li>
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
-              Strong Industry Connect with 500+ companies visiting for campus placements
+              Strong Industry Connect with 300+ companies visiting for campus placements
             </li>
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
@@ -1267,7 +1267,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2010</span>
             <h4>Multi-Discipline Expansion</h4>
-            <p>Expanded to include Engineering, Pharmacy, Dental Sciences, Nursing, and Management schools on the 150-acre Narmadapuram Road campus.</p>
+            <p>Expanded to include Engineering, Pharmacy, Dental Sciences, Nursing, and Management schools on the 32-acre Narmadapuram Road campus.</p>
           </div>
         </div>
 
@@ -1297,7 +1297,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2024+</span>
             <h4>Global Research Excellence</h4>
-            <p>120+ research labs, 60+ international MoUs, 1,200+ publications, and placements exceeding ₹52 LPA — setting new benchmarks every year.</p>
+            <p>120+ research labs, 60+ international MoUs, 2,500+ publications, and placements exceeding ₹52 LPA — setting new benchmarks every year.</p>
           </div>
         </div>
       </div>
@@ -1316,7 +1316,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
         </span>
         <h2 class="bu-vt-title">Virtual Tour of <em>Bhabha Campus</em></h2>
         <p class="bu-vt-desc">
-          Take a visual journey through our 150-acre lush green campus in Bhopal. Explore modern academic blocks, research facilities, sports arenas, and vibrant student life.
+          Take a visual journey through our 32-acre lush green campus in Bhopal. Explore modern academic blocks, research facilities, sports arenas, and vibrant student life.
         </p>
       </div>
 
@@ -1375,15 +1375,15 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-vt-info-card">
             <div class="bu-vt-icon-box"><i class="fa fa-tree"></i></div>
             <div class="bu-vt-card-content">
-              <h4>150-Acre Green Campus</h4>
-              <p>Eco-friendly campus with solar energy, botanical gardens, and spacious plazas.</p>
+              <h4>32-Acre Green Campus</h4>
+              <p>Eco-friendly lush green campus with solar energy, botanical gardens, and spacious plazas.</p>
             </div>
           </div>
 
           <div class="bu-vt-info-card">
             <div class="bu-vt-icon-box"><i class="fa fa-university"></i></div>
             <div class="bu-vt-card-content">
-              <h4>15 Schools &amp; Institutes</h4>
+              <h4>25 Schools &amp; Institutes</h4>
               <p>Engineering, Medical, Dental, Pharmacy, Law, Agriculture &amp; Management blocks.</p>
             </div>
           </div>
@@ -1565,7 +1565,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-subpage-body">
             <div>
               <h4>Campus &amp; Infrastructure</h4>
-              <p>Discover our 150-acre green campus — smart classrooms, labs, hostels, library and more.</p>
+              <p>Discover our 32-acre lush green campus — smart classrooms, labs, hostels, library and more.</p>
             </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>

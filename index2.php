@@ -107,26 +107,26 @@
       <div class="container"> 
         <!--EDU2 COUNTER DES START-->
         <div class="edu2_counter_des"> <span><i class="icon-win5"></i></span>
-          <h3 class="counter">17</h3>
+          <h3 class="counter">22</h3>
           <h5>YEARS OF EXPERIENCE</h5>
         </div>
         <!--EDU2 COUNTER DES END--> 
         <!--EDU2 COUNTER DES START-->
         <div class="edu2_counter_des"> <span><i class="icon-group2"></i></span>
-          <h3 class="counter">37,625</h3>
+          <h3 class="counter">8,500</h3>
           <h5>NO OF STUDENTS</h5>
         </div>
         <!--EDU2 COUNTER DES END--> 
         <!--EDU2 COUNTER DES START-->
         <div class="edu2_counter_des"> <span><i class="icon-book236"></i></span>
-          <h3 class="counter">22</h3>
+          <h3 class="counter">25</h3>
           <h5>NO OF INSTITUTES</h5>
         </div>
         <!--EDU2 COUNTER DES END--> 
         <!--EDU2 COUNTER DES START-->
         <div class="edu2_counter_des"> <span><i class=" icon-user255"></i></span>
-          <h3 class="counter">892</h3>
-          <h5>CERTIFIED TEACHERS</h5>
+          <h3 class="counter">750</h3>
+          <h5>FACULTY MEMBERS</h5>
         </div>
         <!--EDU2 COUNTER DES END--> 
       </div>

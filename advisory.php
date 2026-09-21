@@ -35,6 +35,69 @@
         <div class="bu-content-divider"></div>
         <div class="bu-content-body">
 
+        <style>
+        .bu-advisory-card {
+          display: flex !important;
+          align-items: center !important;
+          gap: 14px !important;
+          padding: 16px 18px !important;
+          background: #F8FAFC !important;
+          border: 1px solid #E5E7EB !important;
+          border-radius: 8px !important;
+          border-left: 3.5px solid #FFC107 !important;
+          text-decoration: none !important;
+          transition: all 0.25s ease !important;
+          box-sizing: border-box !important;
+        }
+        .bu-advisory-card .bu-advisory-title {
+          font-size: 13.5px !important;
+          font-weight: 700 !important;
+          color: #0A1B54 !important;
+          line-height: 1.4 !important;
+          transition: color 0.25s ease !important;
+          display: block !important;
+        }
+        .bu-advisory-card .bu-advisory-icon {
+          color: #D99B00 !important;
+          font-size: 20px !important;
+          flex-shrink: 0 !important;
+          transition: color 0.25s ease !important;
+        }
+        .bu-advisory-card .bu-advisory-link-icon {
+          font-size: 13px !important;
+          color: #94A3B8 !important;
+          margin-left: auto !important;
+          flex-shrink: 0 !important;
+          transition: color 0.25s ease !important;
+        }
+
+        /* Hover State - Pure White Text & Gold Icons on Deep Navy */
+        .bu-advisory-card:hover,
+        .bu-advisory-card:focus,
+        .bu-advisory-card:active {
+          background: #0A1B54 !important;
+          border-color: #0A1B54 !important;
+          border-left-color: #FFC107 !important;
+          transform: translateY(-2px) !important;
+          box-shadow: 0 6px 18px rgba(10, 27, 84, 0.22) !important;
+          color: #FFFFFF !important;
+        }
+        .bu-advisory-card:hover *,
+        .bu-advisory-card:focus *,
+        .bu-advisory-card:active *,
+        .bu-advisory-card:hover span,
+        .bu-advisory-card:hover .bu-advisory-title {
+          color: #FFFFFF !important;
+        }
+        .bu-advisory-card:hover .bu-advisory-icon,
+        .bu-advisory-card:hover .bu-advisory-link-icon,
+        .bu-advisory-card:hover i,
+        .bu-advisory-card:focus i,
+        .bu-advisory-card:active i {
+          color: #FFC107 !important;
+        }
+        </style>
+
         <?php
         $advisory = $db->get('advisory');
         if(is_array($advisory) && count($advisory) > 0) {
@@ -42,11 +105,10 @@
           foreach($advisory as $iadvisory) { ?>
           <a target="_blank" 
              href="<?php echo URL_UPLOAD;?>advisory/<?php echo $iadvisory['image']?>" 
-             style="display:flex;align-items:center;gap:12px;padding:16px 18px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:7px;text-decoration:none;transition:all 0.25s;border-left:3px solid #FFC107;"
-             onmouseover="this.style.background='#0A1B54';this.style.color='#fff';"
-             onmouseout="this.style.background='#F8FAFC';this.style.color='';">
-            <i class="fa fa-file-pdf-o" style="color:#D99B00;font-size:18px;flex-shrink:0;"></i>
-            <span style="font-size:13.5px;font-weight:600;color:inherit;line-height:1.4;"><?php echo $iadvisory['title']?></span>
+             class="bu-advisory-card">
+            <i class="fa fa-file-pdf-o bu-advisory-icon"></i>
+            <span class="bu-advisory-title"><?php echo htmlspecialchars($iadvisory['title']); ?></span>
+            <i class="fa fa-external-link bu-advisory-link-icon"></i>
           </a>
           <?php }
           echo '</div>';

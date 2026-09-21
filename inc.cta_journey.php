@@ -8,7 +8,7 @@
     <div class="bu-journey-text-col">
       <span class="bu-journey-label">ADMISSIONS OPEN · 2026-27</span>
       <h2 class="bu-journey-heading">Your journey starts now.</h2>
-      <p class="bu-journey-sub">Applications open across all 15 schools. Speak to an advisor, download the prospectus, or apply online in minutes.</p>
+      <p class="bu-journey-sub">Applications open across all 25 schools and institutes. Speak to an advisor, download the prospectus, or apply online in minutes.</p>
     </div>
 
     <!-- RIGHT: 3 stacked buttons -->
