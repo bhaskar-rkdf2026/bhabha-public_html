@@ -8,7 +8,7 @@
     <div class="bu-infra-text-col">
       <span class="bu-infra-label">CAMPUS & INFRASTRUCTURE</span>
       <h2 class="bu-infra-heading">A campus designed for<br><em>discovery.</em></h2>
-      <p class="bu-infra-sub">32 acres of lush green campus with smart classrooms, research labs, a central library, sports complex, hostels and an incubation centre.</p>
+      <p class="bu-infra-sub">32 acres of lush green campus with smart classrooms, research labs, an open auditorium, sports complex, hostels and an incubation centre.</p>
       
       <!-- 2-Column List -->
       <div class="bu-infra-list">
@@ -41,8 +41,8 @@
         </ul>
         <ul class="bu-infra-ul">
           <li>
-            <a href="<?php echo href("hbkportal.php"); ?>" class="bu-infra-link">
-              <span class="bu-bullet"></span>Central Library
+            <a href="<?php echo href("infrastructure.php"); ?>#open-auditorium" class="bu-infra-link">
+              <span class="bu-bullet"></span>Open Auditorium
             </a>
           </li>
           <li>

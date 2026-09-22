@@ -16,7 +16,7 @@ $active_page = $active_page ?? '';
         </a>
       </li>
       <li>
-        <a href="<?php echo href('page.php','id=20');?>" class="<?php echo ($active_page=='overview') ? 'active' : ''; ?>">
+        <a href="<?php echo href('university.php');?>" class="<?php echo ($active_page=='overview' || $active_page=='university') ? 'active' : ''; ?>">
           <i class="fa fa-university"></i> University Overview
         </a>
       </li>

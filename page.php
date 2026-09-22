@@ -2,9 +2,19 @@
 include('config.php');
 $id = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 1;
 
-// If admission process (id=12) is requested, redirect permanently to the static page
-if ($id == 12) {
-    header("Location: ".href('admission-process.php'), true, 301);
+// Redirect legacy page IDs to modern portal pages
+$redirectMap = [
+    7  => 'hotel.php',
+    12 => 'admission-process.php',
+    13 => 'scholarship.php',
+    17 => 'mission-vision.php',
+    18 => 'values.php',
+    19 => 'why-us.php',
+    20 => 'university.php',
+    21 => 'hbkportal.php',
+];
+if (isset($redirectMap[$id])) {
+    header("Location: ".href($redirectMap[$id]), true, 301);
     exit;
 }
 
@@ -17,8 +27,8 @@ if(!$pageData) {
 }
 
 // Category & Sidebar determination
-$is_admission_page = in_array($id, [1, 13, 24]);
-$is_about_page     = in_array($id, [18, 19, 20]);
+$is_admission_page = in_array($id, [1, 24]);
+$is_about_page     = false;
 ?>
 <!DOCTYPE html>
 <html lang="en">

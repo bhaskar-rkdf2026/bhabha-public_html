@@ -5,6 +5,7 @@
 <link href="<?php echo URL_CSS;?>icons.css" rel="stylesheet" type="text/css">
 <link href="<?php echo URL_CSS;?>style.css" rel="stylesheet" type="text/css">
 <link href="<?php echo URL_CSS;?>validation.css" rel="stylesheet" type="text/css">
+<link href="<?php echo URL_CSS;?>bu-admin-theme.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css">
 <script>
 function deletex()
 {

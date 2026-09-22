@@ -4,6 +4,61 @@ if (typeof window.__chromium_devtools_metrics_reporter !== 'function') {
 }
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<?php
+// Dynamic SEO Resolution Engine
+$bu_route = basename($_SERVER['SCRIPT_FILENAME'] ?? $_SERVER['PHP_SELF'] ?? 'index.php');
+if ($bu_route === 'page.php' && isset($_GET['id'])) {
+    $bu_route = 'page.php?id=' . (int)$_GET['id'];
+}
+
+$bu_seo = null;
+if (isset($db) && is_object($db)) {
+    try {
+        $bu_seo_rows = $db->rawQuery("SELECT * FROM seo_metadata WHERE page_route = ? LIMIT 1", [$bu_route]);
+        if (!empty($bu_seo_rows)) {
+            $bu_seo = $bu_seo_rows[0];
+        }
+    } catch (\Throwable $e) {}
+}
+
+$bu_page_title = !empty($bu_seo['meta_title']) ? $bu_seo['meta_title'] : 'Bhabha University Bhopal | Premier Higher Education in MP';
+$bu_meta_desc  = !empty($bu_seo['meta_description']) ? $bu_seo['meta_description'] : 'Bhabha University Bhopal is a premier multidisciplinary university in Madhya Pradesh offering engineering, pharmacy, medical, science, and management programs.';
+$bu_meta_keys  = !empty($bu_seo['meta_keywords']) ? $bu_seo['meta_keywords'] : 'Bhabha University Bhopal, top university in MP, admissions 2026';
+$bu_canonical  = !empty($bu_seo['canonical_url']) ? $bu_seo['canonical_url'] : (defined('URL_ROOT') ? URL_ROOT . $bu_route : 'https://www.bhabhauniversity.edu.in/' . $bu_route);
+$bu_og_title   = !empty($bu_seo['og_title']) ? $bu_seo['og_title'] : $bu_page_title;
+$bu_og_desc    = !empty($bu_seo['og_description']) ? $bu_seo['og_description'] : $bu_meta_desc;
+$bu_og_image   = !empty($bu_seo['og_image']) ? $bu_seo['og_image'] : (defined('URL_IMG') ? URL_IMG . 'logo.png' : 'https://www.bhabhauniversity.edu.in/images/logo.png');
+
+// Global vs Page-specific Robots Indexing setting
+$bu_global_robot = isset($aryForm['seo_global_index']) ? $aryForm['seo_global_index'] : 'noindex, nofollow';
+$bu_robots_tag = ($bu_seo && !empty($bu_seo['robots_tag']) && $bu_seo['robots_tag'] !== 'inherit') ? $bu_seo['robots_tag'] : $bu_global_robot;
+?>
+<title><?php echo htmlspecialchars($bu_page_title); ?></title>
+<meta name="description" content="<?php echo htmlspecialchars($bu_meta_desc); ?>">
+<meta name="keywords" content="<?php echo htmlspecialchars($bu_meta_keys); ?>">
+<link rel="canonical" href="<?php echo htmlspecialchars($bu_canonical); ?>">
+<meta name="robots" content="<?php echo htmlspecialchars($bu_robots_tag); ?>">
+<meta name="googlebot" content="<?php echo htmlspecialchars($bu_robots_tag); ?>">
+
+<!-- Open Graph / Facebook / WhatsApp Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="<?php echo htmlspecialchars($bu_canonical); ?>">
+<meta property="og:title" content="<?php echo htmlspecialchars($bu_og_title); ?>">
+<meta property="og:description" content="<?php echo htmlspecialchars($bu_og_desc); ?>">
+<meta property="og:image" content="<?php echo htmlspecialchars($bu_og_image); ?>">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="<?php echo htmlspecialchars($bu_canonical); ?>">
+<meta name="twitter:title" content="<?php echo htmlspecialchars($bu_og_title); ?>">
+<meta name="twitter:description" content="<?php echo htmlspecialchars($bu_og_desc); ?>">
+<meta name="twitter:image" content="<?php echo htmlspecialchars($bu_og_image); ?>">
+
+<?php if (!empty($bu_seo['custom_schema'])): ?>
+<script type="application/ld+json">
+<?php echo $bu_seo['custom_schema']; ?>
+</script>
+<?php endif; ?>
  <link rel="icon" href="<?php echo URL_IMG;?>favicon.png" type="image/gif" sizes="16x16"> 
 <!-- Modern Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -42,7 +42,7 @@ if(is_array($events ) && count($events )>0)
           <h3>Welcome To Bhabha University</h3>
           <p style="text-align:justify">We are a renowned educational group in central India established in 2003. Now BHABHA Group of Institutions has become "BHABHA UNIVERSITY”. Established by the Act of Madhya Pradesh Legislature and is notified in the Official Gazette of the State Government. </p>
         </div>
-        <!-- INTERO DES START--><a href="<?php echo href("page.php","id=21");?>">
+        <!-- INTERO DES START--><a href="<?php echo href("hbkportal.php");?>">
         <div class="kf_intro_des">
           <div class="kf_intro_des_caption"> <span style="padding-top:15px;"><img src="<?php echo URL_IMG?>books.png" width="50" alt=""/></span>
             <h6>BOOKS & LIBRARY</h6>

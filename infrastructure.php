@@ -59,7 +59,7 @@
           <?php
           $facilities = [
             ['icon'=>'fa-flask','name'=>'120+ Research Labs','desc'=>'Cutting-edge laboratories for engineering, pharmacy, biotech, and applied sciences.'],
-            ['icon'=>'fa-book','name'=>'Central Library','desc'=>'50,000+ books, e-journals, digital resources and INFLIBNET access.'],
+            ['icon'=>'fa-users','name'=>'Open Auditorium','desc'=>'Spacious open-air auditorium for student events, fests, gatherings and cultural activities.'],
             ['icon'=>'fa-wifi','name'=>'Wi-Fi Campus','desc'=>'24x7 high-speed internet connectivity across the entire 32-acre campus.'],
             ['icon'=>'fa-home','name'=>'Boys & Girls Hostels','desc'=>'Secure, comfortable accommodation with modern amenities for resident students.'],
             ['icon'=>'fa-tv','name'=>'Smart Classrooms','desc'=>'Digital classrooms with projectors, audio-visual aids and e-learning tools.'],

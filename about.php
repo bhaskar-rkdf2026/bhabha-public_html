@@ -1275,7 +1275,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
               Active research culture with 120+ labs, patents and international collaborations
             </li>
           </ul>
-          <a href="<?php echo href('page.php','id=20');?>" class="bu-overview-link">
+          <a href="<?php echo href('university.php');?>" class="bu-overview-link">
             Read Full Overview <i class="fa fa-arrow-right"></i>
           </a>
         </div>
@@ -1673,7 +1673,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
       </div>
       <div class="bu-subpages-grid">
 
-        <a href="<?php echo href('page.php','id=20');?>" class="bu-subpage-card">
+        <a href="<?php echo href('university.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
             <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/bhabha-engineering-building.jpg" alt="University Overview" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-university"></i></div>
@@ -1701,7 +1701,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           </div>
         </a>
 
-        <a href="<?php echo href('page.php','id=18');?>" class="bu-subpage-card">
+        <a href="<?php echo href('values.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
             <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/bhabha-core-values.jpeg" alt="Core Values" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-heart"></i></div>
@@ -1729,7 +1729,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           </div>
         </a>
 
-        <a href="<?php echo href('page.php','id=19');?>" class="bu-subpage-card">
+        <a href="<?php echo href('why-us.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
             <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/why-choose-bhabha.jpeg" alt="Why Choose Bhabha" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-star"></i></div>

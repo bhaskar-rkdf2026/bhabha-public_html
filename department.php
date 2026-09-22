@@ -747,52 +747,90 @@ section.bu-section-block {
 .bu-prog-card-footer {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding-top: 10px;
-  border-top: 1px solid #F1F5F9;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #EEF2F6;
   margin-top: auto;
   flex-wrap: wrap;
 }
 
-.bu-prog-btn {
-  font-size: 11.5px;
+.bu-prog-btn,
+.bu-btn-primary-sm,
+.bu-btn-outline-sm {
+  font-size: 12px;
   font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 5px;
-  text-decoration: none !important;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  transition: all 0.2s ease;
-}
-
-.bu-prog-btn-primary {
-  background: var(--bu-navy-primary);
-  color: #ffffff !important;
-}
-
-.bu-prog-btn-primary:hover {
-  background: var(--bu-navy-dark);
-  color: var(--bu-gold-primary) !important;
-}
-
-.bu-prog-btn-outline {
-  background: #F8FAFC;
-  border: 1px solid #CBD5E1;
-  border-radius: 5px;
-  text-align: center;
+  padding: 8px 16px;
+  border-radius: 6px;
   text-decoration: none !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  transition: all 0.2s;
+  gap: 6px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: all 0.22s ease-in-out;
+  box-sizing: border-box;
 }
 
-.bu-btn-outline-sm:hover {
+/* Primary Button (Apply Online) */
+.bu-prog-btn-primary,
+.bu-btn-primary-sm {
   background: var(--bu-navy-primary);
-  color: #ffffff !important;
+  color: #FFFFFF !important;
+  border: 1px solid var(--bu-navy-primary);
+  box-shadow: 0 2px 6px rgba(6, 29, 124, 0.16);
+}
+
+.bu-prog-btn-primary i,
+.bu-btn-primary-sm i {
+  color: var(--bu-gold-primary);
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.bu-prog-btn-primary:hover,
+.bu-btn-primary-sm:hover {
+  background: var(--bu-navy-dark);
+  color: var(--bu-gold-primary) !important;
+  border-color: var(--bu-navy-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(6, 29, 124, 0.25);
+}
+
+.bu-prog-btn-primary:hover i,
+.bu-btn-primary-sm:hover i {
+  color: var(--bu-gold-primary);
+  transform: scale(1.1);
+}
+
+/* Outline / Secondary Button (Syllabus) */
+.bu-prog-btn-outline,
+.bu-btn-outline-sm {
+  background: #F8FAFC;
+  color: var(--bu-navy-primary) !important;
+  border: 1px solid #CBD5E1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.bu-prog-btn-outline i,
+.bu-btn-outline-sm i {
+  color: #64748B;
+  font-size: 12px;
+  transition: color 0.2s ease;
+}
+
+.bu-prog-btn-outline:hover,
+.bu-btn-outline-sm:hover {
+  background: #EEF2FF;
+  color: var(--bu-navy-dark) !important;
   border-color: var(--bu-navy-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(6, 29, 124, 0.10);
+}
+
+.bu-prog-btn-outline:hover i,
+.bu-btn-outline-sm:hover i {
+  color: var(--bu-navy-primary);
 }
 
 /* ================================================================
@@ -2247,11 +2285,11 @@ section.bu-section-block {
               </div>
 
               <div class="bu-prog-card-footer">
-                <a href="<?php echo href(!empty($prog['apply_url']) ? $prog['apply_url'] : 'admissions.php');?>" class="bu-btn-primary-sm">
+                <a href="<?php echo href(!empty($prog['apply_url']) ? $prog['apply_url'] : 'admissions.php');?>" class="bu-prog-btn bu-prog-btn-primary">
                   <i class="fa fa-pencil-square-o"></i> Apply Online
                 </a>
                 <?php if(!empty($prog['secondary_url'])): ?>
-                <a href="<?php echo href($prog['secondary_url']);?>" class="bu-btn-outline-sm">
+                <a href="<?php echo href($prog['secondary_url']);?>" class="bu-prog-btn bu-prog-btn-outline">
                   <i class="fa fa-file-text-o"></i> <?php echo htmlspecialchars(!empty($prog['secondary_label']) ? $prog['secondary_label'] : 'Syllabus');?>
                 </a>
                 <?php endif; ?>
