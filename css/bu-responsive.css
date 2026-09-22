@@ -538,7 +538,8 @@ table { max-width: 100% !important; }
   }
   .bu-voices-img-wrap {
     width: 160px !important;
-    height: 190px !important;
+    height: 160px !important;
+    border-radius: 50% !important;
     margin: 0 auto !important;
   }
   .bu-voices-text {
@@ -554,13 +555,14 @@ table { max-width: 100% !important; }
   .bu-voices-title { font-size: 26px !important; }
   .bu-voices-img-wrap {
     width: 130px !important;
-    height: 160px !important;
+    height: 130px !important;
+    border-radius: 50% !important;
   }
   .bu-voices-text { font-size: 16px !important; line-height: 1.55 !important; }
   .bu-voices-card { padding: 18px 14px !important; }
 }
 @media (max-width: 380px) {
-  .bu-voices-img-wrap { width: 110px !important; height: 130px !important; }
+  .bu-voices-img-wrap { width: 110px !important; height: 110px !important; border-radius: 50% !important; }
   .bu-voices-text { font-size: 15px !important; }
 }
 

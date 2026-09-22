@@ -13,6 +13,7 @@ $insti = $db->get('institute');
 
 // Fetch gallery
 $db->where('department', $id);
+$db->orderBy('id', 'DESC');
 $gallery = $db->get('gallery');
 
 $is_engineering = ($id == 1 || stripos($aryData['title'], 'engineering') !== false);
@@ -1689,6 +1690,178 @@ section.bu-section-block {
 .bu-gallery-prev { left: 6px; }
 .bu-gallery-next { right: 6px; }
 
+/* Department Gallery Lightbox */
+.bu-dept-lightbox {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+.bu-dept-lightbox.active {
+  display: flex !important;
+  opacity: 1 !important;
+}
+.bu-dept-lightbox-bg {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(4, 15, 74, 0.94) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  cursor: pointer;
+}
+.bu-dept-lightbox-box {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 96vw !important;
+  max-width: 1140px !important;
+  max-height: 94vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  pointer-events: auto;
+}
+.bu-dept-lightbox-topbar {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 10px 10px !important;
+  box-sizing: border-box !important;
+}
+.bu-dept-lightbox-counter {
+  color: #FFC107 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.6px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  padding: 5px 14px !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 193, 7, 0.4) !important;
+}
+.bu-dept-lightbox-close {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #FFFFFF !important;
+  font-size: 26px !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+  transition: all 0.2s ease !important;
+}
+.bu-dept-lightbox-close:hover {
+  background: #EF4444 !important;
+  border-color: #EF4444 !important;
+  transform: rotate(90deg) scale(1.08) !important;
+}
+.bu-dept-lightbox-stage {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+.bu-dept-lightbox-img-wrap {
+  max-width: calc(100% - 130px) !important;
+  max-height: 72vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  border-radius: 8px !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  background: #000000 !important;
+}
+.bu-dept-lightbox-img {
+  max-width: 100% !important;
+  max-height: 72vh !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  transition: opacity 0.22s ease, transform 0.22s ease !important;
+}
+.bu-dept-lightbox-img.changing {
+  opacity: 0.2 !important;
+  transform: scale(0.97) !important;
+}
+.bu-dept-lightbox-nav {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  background: rgba(10, 27, 84, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  color: #FFFFFF !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.22s ease !important;
+}
+.bu-dept-lightbox-prev { left: 0 !important; }
+.bu-dept-lightbox-next { right: 0 !important; }
+.bu-dept-lightbox-nav:hover {
+  background: #FFC107 !important;
+  color: #0A1B54 !important;
+  border-color: #FFC107 !important;
+  transform: translateY(-50%) scale(1.1) !important;
+}
+.bu-dept-lightbox-caption-wrap {
+  margin-top: 14px !important;
+  text-align: center !important;
+  max-width: 85% !important;
+}
+.bu-dept-lightbox-caption {
+  color: #FFFFFF !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.3px !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+}
+
+@media (max-width: 768px) {
+  .bu-dept-lightbox-img-wrap {
+    max-width: 100% !important;
+    max-height: 64vh !important;
+  }
+  .bu-dept-lightbox-img {
+    max-height: 64vh !important;
+  }
+  .bu-dept-lightbox-nav {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 14px !important;
+    background: rgba(10, 27, 84, 0.9) !important;
+  }
+  .bu-dept-lightbox-prev { left: 4px !important; }
+  .bu-dept-lightbox-next { right: 4px !important; }
+  .bu-dept-lightbox-caption {
+    font-size: 15px !important;
+  }
+  .bu-dept-lightbox-counter {
+    font-size: 11.5px !important;
+    padding: 4px 10px !important;
+  }
+}
+
 /* ================================================================
    9. ADMISSIONS CTA STRIP
    ================================================================ */
@@ -2479,16 +2652,21 @@ section.bu-section-block {
           
           <div class="bu-gallery-slider-wrapper" id="buGalleryWrapper">
             <div class="bu-gallery-track" id="buGalleryTrack">
-              <?php foreach($gallery as $igallery): ?>
+              <?php foreach($gallery as $igallery): 
+                $gImg = !empty($igallery['image']) ? $igallery['image'] : '';
+                $imgSrc = !empty($gImg) ? (file_exists(PATH_ROOT . DS . 'upload' . DS . 'gallery' . DS . 'thumb' . DS . $gImg) ? URL_UPLOAD . 'gallery/thumb/' . $gImg : URL_UPLOAD . 'gallery/' . $gImg) : URL_ROOT . 'extra-images/home-gallery1.jpg';
+                $largeSrc = !empty($gImg) ? (file_exists(PATH_ROOT . DS . 'upload' . DS . 'gallery' . DS . 'large' . DS . $gImg) ? URL_UPLOAD . 'gallery/large/' . $gImg : URL_UPLOAD . 'gallery/' . $gImg) : $imgSrc;
+                $caption = !empty($igallery['title']) ? htmlspecialchars($igallery['title']) : 'Faculty Photo Gallery';
+              ?>
               <div class="bu-gallery-slide">
-                <div class="bu-gallery-item">
-                  <img src="<?php echo URL_UPLOAD;?>gallery/thumb/<?php echo $igallery['image'];?>" 
-                       alt="<?php echo htmlspecialchars($igallery['title']);?>" 
+                <div class="bu-gallery-item" data-large="<?php echo $largeSrc;?>" data-caption="<?php echo $caption;?>" style="cursor: pointer;">
+                  <img src="<?php echo $imgSrc;?>" 
+                       alt="<?php echo $caption;?>" 
                        class="bu-gallery-img"
                        loading="lazy"
                        onerror="this.src='<?php echo URL_ROOT;?>extra-images/home-gallery1.jpg';">
                   <div class="bu-gallery-overlay">
-                    <span><?php echo htmlspecialchars($igallery['title']);?></span>
+                    <span><?php echo $caption;?></span>
                   </div>
                 </div>
               </div>
@@ -2547,6 +2725,35 @@ section.bu-section-block {
         <a href="<?php echo href('admissions.php');?>" class="bu-read-more-btn" style="padding: 9px 18px; font-size: 12.5px;">
           <i class="fa fa-pencil-square-o"></i> Apply for Admission
         </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Department Gallery Lightbox Modal -->
+  <div class="bu-dept-lightbox" id="buDeptLightbox" role="dialog" aria-modal="true" aria-label="Department Photo Gallery Viewer">
+    <div class="bu-dept-lightbox-bg" id="buDeptLightboxBg"></div>
+    <div class="bu-dept-lightbox-box">
+      <div class="bu-dept-lightbox-topbar">
+        <span class="bu-dept-lightbox-counter" id="buDeptLightboxCounter">Photo 1 of 1</span>
+        <button type="button" class="bu-dept-lightbox-close" id="buDeptLightboxClose" aria-label="Close Lightbox">&times;</button>
+      </div>
+
+      <div class="bu-dept-lightbox-stage">
+        <button type="button" class="bu-dept-lightbox-nav bu-dept-lightbox-prev" id="buDeptLightboxPrev" aria-label="Previous Photo">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+
+        <div class="bu-dept-lightbox-img-wrap" id="buDeptLightboxImgWrap">
+          <img loading="lazy" src="" alt="" id="buDeptLightboxImg" class="bu-dept-lightbox-img">
+        </div>
+
+        <button type="button" class="bu-dept-lightbox-nav bu-dept-lightbox-next" id="buDeptLightboxNext" aria-label="Next Photo">
+          <i class="fa fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="bu-dept-lightbox-caption-wrap">
+        <div class="bu-dept-lightbox-caption" id="buDeptLightboxCaption"></div>
       </div>
     </div>
   </div>
@@ -2775,6 +2982,123 @@ section.bu-section-block {
   }
 
   startAuto();
+
+  // Department Gallery Interactive Lightbox Controller
+  const deptModal = document.getElementById('buDeptLightbox');
+  const deptModalImg = document.getElementById('buDeptLightboxImg');
+  const deptModalCaption = document.getElementById('buDeptLightboxCaption');
+  const deptModalCounter = document.getElementById('buDeptLightboxCounter');
+  const deptCloseBtn = document.getElementById('buDeptLightboxClose');
+  const deptBgOverlay = document.getElementById('buDeptLightboxBg');
+  const deptPrevBtn = document.getElementById('buDeptLightboxPrev');
+  const deptNextBtn = document.getElementById('buDeptLightboxNext');
+  const galleryItems = document.querySelectorAll('#buGalleryTrack .bu-gallery-item');
+
+  let deptItems = [];
+  let deptCurrentIndex = 0;
+
+  galleryItems.forEach(item => {
+    deptItems.push({
+      large: item.getAttribute('data-large') || item.querySelector('img')?.src,
+      caption: item.getAttribute('data-caption') || item.querySelector('.bu-gallery-overlay span')?.textContent || 'Photo Gallery'
+    });
+  });
+
+  function showDeptImage(index) {
+    if (!deptItems.length || !deptModalImg) return;
+
+    if (index < 0) {
+      index = deptItems.length - 1;
+    } else if (index >= deptItems.length) {
+      index = 0;
+    }
+
+    deptCurrentIndex = index;
+    const cur = deptItems[deptCurrentIndex];
+
+    deptModalImg.classList.add('changing');
+    setTimeout(() => {
+      deptModalImg.src = cur.large;
+      if (deptModalCaption) deptModalCaption.textContent = cur.caption;
+      if (deptModalCounter) {
+        deptModalCounter.textContent = 'Photo ' + (deptCurrentIndex + 1) + ' of ' + deptItems.length;
+      }
+      deptModalImg.onload = () => deptModalImg.classList.remove('changing');
+      setTimeout(() => deptModalImg.classList.remove('changing'), 150);
+    }, 100);
+  }
+
+  function openDeptModal(largeSrc) {
+    if (!deptModal) return;
+    const foundIdx = deptItems.findIndex(it => it.large === largeSrc);
+    deptCurrentIndex = (foundIdx !== -1) ? foundIdx : 0;
+    showDeptImage(deptCurrentIndex);
+    deptModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDeptModal() {
+    if (deptModal) {
+      deptModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  galleryItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      openDeptModal(item.getAttribute('data-large'));
+    });
+  });
+
+  if (deptPrevBtn) {
+    deptPrevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showDeptImage(deptCurrentIndex - 1);
+    });
+  }
+
+  if (deptNextBtn) {
+    deptNextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showDeptImage(deptCurrentIndex + 1);
+    });
+  }
+
+  if (deptCloseBtn) deptCloseBtn.addEventListener('click', closeDeptModal);
+  if (deptBgOverlay) deptBgOverlay.addEventListener('click', closeDeptModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (!deptModal || !deptModal.classList.contains('active')) return;
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      showDeptImage(deptCurrentIndex - 1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      showDeptImage(deptCurrentIndex + 1);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      closeDeptModal();
+    }
+  });
+
+  const deptStage = document.querySelector('.bu-dept-lightbox-stage');
+  if (deptStage) {
+    let tStartX = 0;
+    let tEndX = 0;
+    deptStage.addEventListener('touchstart', (e) => {
+      tStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    deptStage.addEventListener('touchend', (e) => {
+      tEndX = e.changedTouches[0].screenX;
+      if (tStartX - tEndX > 45) {
+        showDeptImage(deptCurrentIndex + 1);
+      } else if (tEndX - tStartX > 45) {
+        showDeptImage(deptCurrentIndex - 1);
+      }
+    }, { passive: true });
+  }
 })();
 </script>
 </body>

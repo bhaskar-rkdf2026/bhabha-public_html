@@ -1,6 +1,74 @@
 <?php 
 include('config.php');
 $portalPage = function_exists('getPortalPage') ? getPortalPage('academic') : null;
+
+// Fetch Academic Settings & Dynamic Calendars from database
+$db->where('field', array('about_title', 'content'), 'IN');
+$acad_records = $db->get('academic');
+$acad_settings = [];
+if (!empty($acad_records) && is_array($acad_records)) {
+    foreach ($acad_records as $ar) {
+        $acad_settings[$ar['field']] = $ar['value'];
+    }
+}
+$db_title = trim($acad_settings['about_title'] ?? '');
+$db_content = trim($acad_settings['content'] ?? '');
+
+$dynamic_calendars = [];
+if (!empty($db_content)) {
+    $dom = new DOMDocument();
+    @$dom->loadHTML('<?xml encoding="utf-8" ?>' . $db_content);
+    $links = $dom->getElementsByTagName('a');
+    foreach ($links as $index => $a) {
+        $href = trim($a->getAttribute('href'));
+        $title = trim($a->textContent);
+        if (empty($href) || empty($title) || $title === '#') continue;
+
+        // Session year extraction
+        $session = '';
+        if (preg_match('/(20\d\d\s*[-–]\s*\d{2,4})/', $title, $m)) {
+            $session = $m[1];
+        }
+
+        // Check if URL is full or filename
+        $file_url = $href;
+        $file_base = basename($href);
+        if (!preg_match('#^https?://#i', $href)) {
+            $file_url = URL_UPLOAD . 'media/' . $href;
+        }
+
+        $is_img = (preg_match('/\.(jpg|jpeg|png)$/i', $file_base) === 1);
+
+        $dynamic_calendars[] = [
+            'title' => $title,
+            'session' => $session ?: 'Official Schedule',
+            'is_current' => ($index === 0),
+            'url' => $file_url,
+            'file' => $file_base,
+            'is_img' => $is_img,
+            'desc' => ($index === 0) ? 'Current active university calendar for all UG, PG & Diploma programs.' : 'Annual academic schedule and examination roadmap.'
+        ];
+    }
+}
+
+// Fallback in case table has no links
+if (empty($dynamic_calendars)) {
+    $dynamic_calendars = [
+        [
+            'title' => 'Academic & Activities Calendar 2026 - 27',
+            'session' => '2026 - 27',
+            'is_current' => true,
+            'url' => URL_UPLOAD . 'media/7d991d249d84e341262b9dbef5f996ff.pdf',
+            'file' => '7d991d249d84e341262b9dbef5f996ff.pdf',
+            'is_img' => false,
+            'desc' => 'Current active university calendar for all UG, PG & Diploma programs.'
+        ]
+    ];
+}
+
+$active_cal = $dynamic_calendars[0];
+$active_download_url = $active_cal['url'];
+$active_session_title = $active_cal['session'] ?: '2026 – 2027';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -570,7 +638,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('academic') : nul
 
   <?php
   $page_title    = 'Academic <em>Calendar &amp; Schedule</em>';
-  $page_subtitle = 'Official schedule for academic sessions, semester timelines, examination schedules, teaching days, and institutional events at Bhabha University.';
+  $page_subtitle = !empty($db_title) ? htmlspecialchars($db_title) : 'Official schedule for academic sessions, semester timelines, examination schedules, teaching days, and institutional events at Bhabha University.';
   $page_icon     = 'fa-calendar';
   $breadcrumbs   = [
     ['label' => 'Home',      'url' => URL_ROOT],
@@ -644,9 +712,9 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('academic') : nul
 
       <!-- Quick Download CTA -->
       <div class="bu-sidebar-cta">
-        <h4>Session 2026-27</h4>
+        <h4>Session <?php echo htmlspecialchars($active_session_title); ?></h4>
         <p>Get the complete official calendar with semester breakdown, exam weeks and university holidays.</p>
-        <a href="<?php echo URL_UPLOAD;?>media/7d991d249d84e341262b9dbef5f996ff.pdf" target="_blank" class="bu-sidebar-btn">
+        <a href="<?php echo $active_download_url; ?>" target="_blank" class="bu-sidebar-btn">
           <i class="fa fa-file-pdf-o"></i> Download Calendar
         </a>
       </div>
@@ -671,14 +739,14 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('academic') : nul
     <!-- RIGHT MAIN CONTENT -->
     <main class="bu-acad-content">
 
-      <!-- 1. FEATURED ACTIVE CALENDAR (2026-27) -->
+      <!-- 1. FEATURED ACTIVE CALENDAR -->
       <section class="bu-featured-calendar-card">
         <div class="bu-featured-badge-row">
           <span class="bu-active-pill"><i class="fa fa-circle"></i> Active Academic Session</span>
-          <span class="bu-session-indicator"><i class="fa fa-check-circle"></i> 2026 – 2027 Approved</span>
+          <span class="bu-session-indicator"><i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($active_session_title); ?> Approved</span>
         </div>
         
-        <h2 class="bu-featured-title">Academic &amp; Activities Calendar <em>2026 – 2027</em></h2>
+        <h2 class="bu-featured-title"><?php echo htmlspecialchars($active_cal['title'] ?? 'Academic & Activities Calendar'); ?></h2>
         <p class="bu-featured-desc">
           Official institutional roadmap approved by the Academic Council. It outlines teaching timelines, internal assessments, semester-end examinations, cultural festivals, sports meets, and statutory university holidays.
         </p>
@@ -690,7 +758,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('academic') : nul
               <i class="fa fa-calendar-check-o"></i>
               <span class="bu-ms-title">Odd Semester</span>
             </div>
-            <span class="bu-ms-val">July – Dec 2026</span>
+            <span class="bu-ms-val">July – Dec</span>
             <p class="bu-ms-sub">Commencement of classes &amp; orientation</p>
           </div>
 
@@ -699,7 +767,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('academic') : nul
               <i class="fa fa-pencil-square-o"></i>
               <span class="bu-ms-title">Mid-Term (CIE)</span>
             </div>
-            <span class="bu-ms-val">Sept &amp; Oct 2026</span>
+            <span class="bu-ms-val">Sept &amp; Oct</span>
             <p class="bu-ms-sub">Continuous Internal Evaluation tests</p>
           </div>
 
@@ -708,7 +776,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('academic') : nul
               <i class="fa fa-refresh"></i>
               <span class="bu-ms-title">Even Semester</span>
             </div>
-            <span class="bu-ms-val">Jan – June 2027</span>
+            <span class="bu-ms-val">Jan – June</span>
             <p class="bu-ms-sub">Spring semester teaching &amp; labs</p>
           </div>
 
@@ -724,8 +792,8 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('academic') : nul
 
         <!-- Download & Action Buttons -->
         <div class="bu-featured-actions">
-          <a href="<?php echo URL_UPLOAD;?>media/7d991d249d84e341262b9dbef5f996ff.pdf" target="_blank" class="bu-btn-download-primary">
-            <i class="fa fa-file-pdf-o" style="font-size:16px;"></i> Download 2026-27 Calendar (PDF)
+          <a href="<?php echo $active_download_url; ?>" target="_blank" class="bu-btn-download-primary">
+            <i class="fa fa-file-pdf-o" style="font-size:16px;"></i> Download Official Calendar (PDF)
           </a>
           <a href="#archives" class="bu-btn-secondary-link">
             <i class="fa fa-history"></i> Browse Previous Calendars
@@ -742,82 +810,11 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('academic') : nul
           Access and download verified academic schedules for current and past academic sessions:
         </p>
 
-        <?php
-        $calendars = [
-          [
-            'title' => 'Academic & Activities Calendar 2026 - 27',
-            'session' => '2026 - 27',
-            'is_current' => true,
-            'file' => '7d991d249d84e341262b9dbef5f996ff.pdf',
-            'desc' => 'Current active university calendar for all UG, PG & Diploma programs.'
-          ],
-          [
-            'title' => 'Academic & Activities Calendar 2025 - 26',
-            'session' => '2025 - 26',
-            'is_current' => false,
-            'file' => '7d991d249d84e341262b9dbef5f996ff.pdf',
-            'desc' => 'Annual academic schedule and examination roadmap.'
-          ],
-          [
-            'title' => 'Academic & Activities Calendar 2024 - 25',
-            'session' => '2024 - 25',
-            'is_current' => false,
-            'file' => '8393985259ce81e430c3800cab9c06aa.pdf',
-            'desc' => 'Comprehensive teaching timeline and institutional events.'
-          ],
-          [
-            'title' => 'Academic & Activities Calendar 2023 - 24',
-            'session' => '2023 - 24',
-            'is_current' => false,
-            'file' => '8393985259ce81e430c3800cab9c06aa.pdf',
-            'desc' => 'Odd & Even semester instructional timeline and holidays.'
-          ],
-          [
-            'title' => 'Academic & Activities Calendar 2022 - 23',
-            'session' => '2022 - 23',
-            'is_current' => false,
-            'file' => '11c1027a79be880df2ac7c4dc0e57aa9.pdf',
-            'desc' => 'University examination dates and term schedules.'
-          ],
-          [
-            'title' => 'Academic & Activities Calendar 2021 - 22',
-            'session' => '2021 - 22',
-            'is_current' => false,
-            'file' => 'f452a52e74927037d78db2988a0cfc71.pdf',
-            'desc' => 'Teaching plan and university assessment timeline.'
-          ],
-          [
-            'title' => 'Academic & Activities Calendar 2020 - 21',
-            'session' => '2020 - 21',
-            'is_current' => false,
-            'file' => 'be330abf61960e61f679ba785fa7c5d0.pdf',
-            'desc' => 'Academic roadmap and digital examination guidelines.'
-          ],
-          [
-            'title' => 'Academic Calendar — UG, PG & Diploma (2019-20)',
-            'session' => '2019 - 20',
-            'is_current' => false,
-            'file' => '5141428b78ed9cf856766c9cf251bd88.jpg',
-            'desc' => 'Annual schedule for Under Graduate, Post Graduate and Diploma courses.'
-          ],
-          [
-            'title' => 'First Year Yearly System Calendar (2019-20)',
-            'session' => '2019 - 20',
-            'is_current' => false,
-            'file' => 'be2f9ab15f1722be264d53eb9ac4144b.jpg',
-            'desc' => 'First Year yearly programs (B.Sc / BA / B.Com / BBA / BCA / D.Pharm).'
-          ],
-        ];
-        ?>
-
         <div class="bu-calendar-grid">
-          <?php foreach($calendars as $cal): 
-            $file_url = URL_UPLOAD . 'media/' . rawurlencode($cal['file']);
-            $is_img = (substr($cal['file'], -4) === '.jpg' || substr($cal['file'], -5) === '.jpeg');
-          ?>
-          <a href="<?php echo $file_url; ?>" target="_blank" class="bu-cal-card">
+          <?php foreach($dynamic_calendars as $cal): ?>
+          <a href="<?php echo $cal['url']; ?>" target="_blank" class="bu-cal-card">
             <div class="bu-cal-icon-box">
-              <i class="fa <?php echo $is_img ? 'fa-file-image-o' : 'fa-file-pdf-o'; ?>"></i>
+              <i class="fa <?php echo !empty($cal['is_img']) ? 'fa-file-image-o' : 'fa-file-pdf-o'; ?>"></i>
             </div>
             <div class="bu-cal-info">
               <div class="bu-cal-title-row">

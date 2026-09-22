@@ -2,11 +2,11 @@
 error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
 date_default_timezone_set('Asia/Kolkata');
 @session_start();
-define("DS",DIRECTORY_SEPARATOR);
-define("PATH_ROOT",dirname(__FILE__));
-define("PATH_LIB",PATH_ROOT.DS."library".DS);
+define("DS", DIRECTORY_SEPARATOR);
+define("PATH_ROOT", dirname(__FILE__));
+define("PATH_LIB", PATH_ROOT . DS . "library" . DS);
 
-require_once(dirname(PATH_ROOT).DS."db_config.php");
+require_once(dirname(PATH_ROOT) . DS . "db_config.php");
 
 if (!defined("URL_ROOT")) {
     if (isset($_SERVER['HTTP_HOST'])) {
@@ -27,22 +27,23 @@ if (!defined("URL_ROOT")) {
     }
 }
 
-define("URL_ADMIN",URL_ROOT.'admin/');
-define("URL_CSS",URL_ADMIN.'assets/css/');
-define("URL_IMG",URL_ADMIN.'assets/images/');
-define("URL_JS",URL_ADMIN.'assets/js/');
-define("URL_PLUG",URL_ADMIN.'plugins/');
-define("URL_ADMIN_IMG",URL_ADMIN.'img/');
+define("URL_ADMIN", URL_ROOT . 'admin/');
+define("URL_UPLOAD", URL_ROOT . 'upload/');
+define("URL_CSS", URL_ADMIN . 'assets/css/');
+define("URL_IMG", URL_ADMIN . 'assets/images/');
+define("URL_JS", URL_ADMIN . 'assets/js/');
+define("URL_PLUG", URL_ADMIN . 'plugins/');
+define("URL_ADMIN_IMG", URL_ADMIN . 'img/');
 
-require_once(PATH_LIB."MysqliDb.php");
-require_once(PATH_LIB."functions.php");
-require_once(PATH_LIB."validations.php");
+require_once(PATH_LIB . "MysqliDb.php");
+require_once(PATH_LIB . "functions.php");
+require_once(PATH_LIB . "validations.php");
 
 try {
-    $db = new MysqliDb($host, $user, $pass, $dbName);
+    $db = new MysqliDb($host, $user, $pass, $dbName, null, 'utf8mb4');
 } catch (\Throwable $e) {
     error_log("Admin DB Connection Error: " . $e->getMessage());
 }
-define("LOGIN_ADMIN","");
-define("LOGIN_USER","");
+define("LOGIN_ADMIN", "");
+define("LOGIN_USER", "");
 ?>
