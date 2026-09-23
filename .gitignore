@@ -1,4 +1,3 @@
-
 # Exclude log files
 error_log
 logs.txt
