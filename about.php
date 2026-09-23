@@ -375,69 +375,179 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
   margin: 0;
 }
 
-/* ---- VISION MISSION SECTION ---- */
+/* ---- VISION & MISSION SHOWCASE (PRESTIGIOUS & INSTITUTIONAL) ---- */
+.bu-vm-section {
+  width: 100%;
+  float: left;
+  clear: both;
+  box-sizing: border-box;
+  background: radial-gradient(circle at 50% 15%, #081B5E 0%, #030C28 65%, #010617 100%) !important;
+  position: relative;
+  overflow: hidden;
+  padding: 95px 24px 85px;
+  border-top: 1px solid rgba(255, 193, 7, 0.15);
+  border-bottom: 1px solid rgba(255, 193, 7, 0.15);
+}
+.bu-vm-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    radial-gradient(rgba(255, 193, 7, 0.05) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px, 16px 16px;
+  background-position: 0 0, 16px 16px;
+  pointer-events: none;
+}
 .bu-vm-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  margin-top: 48px;
+  gap: 32px;
+  margin-top: 45px;
+  position: relative;
+  z-index: 2;
 }
 .bu-vm-card {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 8px;
-  padding: 0 0 32px 0;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 38px 34px 34px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.bu-vm-card-img-wrap {
-  width: 100%;
-  height: 170px;
-  overflow: hidden;
-  position: relative;
-}
-.bu-vm-card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-.bu-vm-card:hover .bu-vm-card-img {
-  transform: scale(1.06);
-}
-.bu-vm-card-body {
-  padding: 24px 32px 0 32px;
-}
-.bu-vm-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
 }
 .bu-vm-card::before {
   content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 4px; height: 100%;
-  background: #FFC107;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FFC107, #FFE082, transparent);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+.bu-vm-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 193, 7, 0.4);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 193, 7, 0.12);
+}
+.bu-vm-card:hover::before {
+  opacity: 1;
+  background: linear-gradient(90deg, #FFC107, #FFE082, #FFC107);
+}
+.bu-vm-watermark {
+  position: absolute;
+  right: 16px;
+  bottom: -15px;
+  font-size: 130px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.03);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+.bu-vm-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  position: relative;
   z-index: 2;
 }
-.bu-vm-icon {
-  font-size: 28px;
+.bu-vm-icon-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 193, 7, 0.06));
+  border: 1px solid rgba(255, 193, 7, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #FFC107;
-  margin-bottom: 14px;
-}
-.bu-vm-card h3 {
-  font-family: 'Playfair Display', Georgia, serif;
   font-size: 22px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 14px 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
 }
-.bu-vm-card p {
-  font-size: 14px;
+.bu-vm-card:hover .bu-vm-icon-box {
+  background: #FFC107;
+  color: #0A1B54;
+  transform: scale(1.05);
+}
+.bu-vm-tag {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #FFC107;
+  background: rgba(255, 193, 7, 0.12);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 193, 7, 0.25);
+}
+.bu-vm-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 25px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 14px 0;
+  line-height: 1.25;
+  position: relative;
+  z-index: 2;
+}
+.bu-vm-title em {
+  font-style: italic;
+  color: #FFC107;
+}
+.bu-vm-quote-lead {
+  font-size: 14.5px;
   line-height: 1.75;
-  color: rgba(255,255,255,0.72);
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0 0 22px 0;
+  position: relative;
+  z-index: 2;
+}
+.bu-vm-pillars {
+  list-style: none;
+  padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 20px;
+  position: relative;
+  z-index: 2;
+}
+.bu-vm-pillar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+}
+.bu-vm-pillar-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 193, 7, 0.15);
+  color: #FFC107;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.bu-vm-pillar-item strong {
+  color: #FFFFFF;
+  font-weight: 700;
 }
 
 /* ---- CAMPUS HIGHLIGHTS GRID ---- */
@@ -530,14 +640,14 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
 /* ---- SUB-PAGES QUICK LINKS (EXPLORE FURTHER) ---- */
 .bu-subpages-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  margin-top: 48px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-top: 40px;
 }
 .bu-subpage-card {
   background: #ffffff;
   border: 1px solid #E2E8F0;
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 0;
   text-decoration: none !important;
   display: flex;
@@ -554,7 +664,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
 }
 .bu-subpage-img-wrap {
   width: 100%;
-  height: 185px;
+  height: 155px;
   overflow: hidden;
   position: relative;
   background: #0A1B54;
@@ -576,18 +686,18 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
 /* Floating Icon Badge over Image */
 .bu-subpage-icon-badge {
   position: absolute;
-  bottom: 12px;
-  right: 14px;
-  width: 44px;
-  height: 44px;
+  bottom: 10px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
   background: #0A1B54;
   color: #FFC107;
   border: 2px solid #ffffff;
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 16px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
   z-index: 3;
@@ -599,7 +709,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
 }
 
 .bu-subpage-body {
-  padding: 22px 24px;
+  padding: 18px 18px 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -607,7 +717,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
   justify-content: space-between;
 }
 .bu-subpage-card h4 {
-  font-size: 17px;
+  font-size: 15.5px;
   font-weight: 700;
   color: #061D7C;
   margin: 0 0 6px 0;
@@ -615,8 +725,8 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
   line-height: 1.35;
 }
 .bu-subpage-card p {
-  font-size: 13.5px;
-  line-height: 1.6;
+  font-size: 12.5px;
+  line-height: 1.55;
   color: #6B7280;
   margin: 0;
 }
@@ -1154,18 +1264,18 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
             </li>
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
-              Wi-Fi enabled 150-acre green campus with modern labs, library and hostels
+              Wi-Fi enabled 32-acre lush green campus with modern labs, library and hostels
             </li>
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
-              Strong Industry Connect with 500+ companies visiting for campus placements
+              Strong Industry Connect with 300+ companies visiting for campus placements
             </li>
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
               Active research culture with 120+ labs, patents and international collaborations
             </li>
           </ul>
-          <a href="<?php echo href('page.php','id=20');?>" class="bu-overview-link">
+          <a href="<?php echo href('university.php');?>" class="bu-overview-link">
             Read Full Overview <i class="fa fa-arrow-right"></i>
           </a>
         </div>
@@ -1196,48 +1306,82 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
   </div>
 
 
-  <!-- =================== VISION & MISSION =================== -->
-  <section class="bu-about-section bu-about-section-dark">
+  <!-- =================== VISION & MISSION SHOWCASE =================== -->
+  <section class="bu-about-section bu-vm-section">
     <div class="bu-about-container">
-      <div style="text-align:center; margin-bottom:40px;">
-        <span class="bu-section-label-light">Our Purpose</span>
-        <h2 class="bu-section-title-light">Vision & <em>Mission</em></h2>
+      <div style="text-align:center; max-width:760px; margin:0 auto 20px;">
+        <span class="bu-section-label-light">Institutional Purpose &amp; Core Identity</span>
+        <h2 class="bu-section-title-light">Guiding Principles That <em>Shape The Future</em></h2>
+        <p style="color:rgba(255,255,255,0.72); font-size:15px; line-height:1.7; margin:0 auto;">
+          Rooted in scientific inquiry and national progress, Bhabha University stands as a beacon of progressive higher education, research excellence, and inclusive social transformation.
+        </p>
       </div>
 
       <div class="bu-vm-grid">
+
+        <!-- Vision Card -->
         <div class="bu-vm-card">
-          <div class="bu-vm-card-img-wrap">
-            <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/vision.jpeg" alt="Our Vision" class="bu-vm-card-img">
+          <div class="bu-vm-watermark">01</div>
+          <div class="bu-vm-card-header">
+            <div class="bu-vm-icon-box">
+              <i class="fa fa-compass"></i>
+            </div>
+            <span class="bu-vm-tag">Strategic Aspiration</span>
           </div>
-          <div class="bu-vm-card-body">
-            <div class="bu-vm-icon"><i class="fa fa-eye"></i></div>
-            <h3>Our Vision</h3>
-            <p>
-              To be a globally recognised university that provides transformative, high-quality education across 
-              disciplines — producing innovative graduates and leaders who contribute to society, drive 
-              sustainability, and shape the future of India and the world.
-            </p>
-          </div>
+          <h3 class="bu-vm-title">Our <em>Vision</em></h3>
+          <p class="bu-vm-quote-lead">
+            &ldquo;To be a premier globally recognised university that imparts transformative, multi-disciplinary education — cultivating visionary leaders, innovators, and scholars who champion sustainability, ethical governance, and the advancement of humanity.&rdquo;
+          </p>
+          <ul class="bu-vm-pillars">
+            <li class="bu-vm-pillar-item">
+              <span class="bu-vm-pillar-icon"><i class="fa fa-check"></i></span>
+              <span><strong>Global Academic Rigour:</strong> Industry-aligned curricula fostering critical thinking, research acumen, and 21st-century problem solving.</span>
+            </li>
+            <li class="bu-vm-pillar-item">
+              <span class="bu-vm-pillar-icon"><i class="fa fa-check"></i></span>
+              <span><strong>Innovation &amp; Enterprise:</strong> Promoting patents, start-ups, state-of-the-art incubation, and interdisciplinary breakthroughs.</span>
+            </li>
+            <li class="bu-vm-pillar-item">
+              <span class="bu-vm-pillar-icon"><i class="fa fa-check"></i></span>
+              <span><strong>Sustainable Impact:</strong> Preparing graduates who drive technological growth while protecting social and ecological equilibrium.</span>
+            </li>
+          </ul>
         </div>
+
+        <!-- Mission Card -->
         <div class="bu-vm-card">
-          <div class="bu-vm-card-img-wrap">
-            <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/mission.jpeg" alt="Our Mission" class="bu-vm-card-img">
+          <div class="bu-vm-watermark">02</div>
+          <div class="bu-vm-card-header">
+            <div class="bu-vm-icon-box">
+              <i class="fa fa-rocket"></i>
+            </div>
+            <span class="bu-vm-tag">Action Imperative</span>
           </div>
-          <div class="bu-vm-card-body">
-            <div class="bu-vm-icon"><i class="fa fa-rocket"></i></div>
-            <h3>Our Mission</h3>
-            <p>
-              To provide greater access to higher education — especially for socially and economically 
-              disadvantaged youth — through excellence in teaching, research, and community engagement. 
-              To foster creativity, critical thinking, and interdisciplinary collaboration that prepares 
-              students for the challenges of the 21st century.
-            </p>
-          </div>
+          <h3 class="bu-vm-title">Our <em>Mission</em></h3>
+          <p class="bu-vm-quote-lead">
+            &ldquo;To democratise access to quality higher education through inclusive pedagogy, cutting-edge infrastructure, impactful community engagement, and collaborative partnerships that bridge academic discovery with real-world societal solutions.&rdquo;
+          </p>
+          <ul class="bu-vm-pillars">
+            <li class="bu-vm-pillar-item">
+              <span class="bu-vm-pillar-icon"><i class="fa fa-check"></i></span>
+              <span><strong>Inclusive Access &amp; Equity:</strong> Providing opportunities and merit-based financial aid for learners from diverse socio-economic backgrounds.</span>
+            </li>
+            <li class="bu-vm-pillar-item">
+              <span class="bu-vm-pillar-icon"><i class="fa fa-check"></i></span>
+              <span><strong>Experiential &amp; Applied Learning:</strong> Fostering industry immersion through 300+ recruiters, live projects, and advanced simulation labs.</span>
+            </li>
+            <li class="bu-vm-pillar-item">
+              <span class="bu-vm-pillar-icon"><i class="fa fa-check"></i></span>
+              <span><strong>Character &amp; Social Responsibility:</strong> Nurturing moral integrity, civic awareness, national pride, and lifelong ethical leadership.</span>
+            </li>
+          </ul>
         </div>
+
       </div>
-      <div style="text-align:center; margin-top:32px;">
-        <a href="<?php echo href('mission-vision.php');?>" style="display:inline-flex;align-items:center;gap:8px;color:#FFC107;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;text-decoration:none;border:2px solid rgba(255,193,7,0.4);padding:12px 28px;border-radius:4px;transition:all 0.25s;" onmouseover="this.style.borderColor='#FFC107';this.style.background='rgba(255,193,7,0.1)';" onmouseout="this.style.borderColor='rgba(255,193,7,0.4)';this.style.background='transparent';">
-          Read Full Vision & Mission <i class="fa fa-arrow-right"></i>
+
+      <div style="text-align:center; margin-top:40px;">
+        <a href="<?php echo href('mission-vision.php');?>" style="display:inline-flex;align-items:center;gap:10px;color:#FFC107;font-size:12.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;text-decoration:none;border:2px solid rgba(255,193,7,0.45);padding:14px 32px;border-radius:30px;transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);background:rgba(10,27,84,0.4);box-shadow:0 8px 24px rgba(0,0,0,0.25);" onmouseover="this.style.borderColor='#FFC107';this.style.background='#FFC107';this.style.color='#0A1B54';this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='rgba(255,193,7,0.45)';this.style.background='rgba(10,27,84,0.4)';this.style.color='#FFC107';this.style.transform='translateY(0)';">
+          Explore Institutional Charter &amp; Governance <i class="fa fa-arrow-right"></i>
         </a>
       </div>
     </div>
@@ -1267,7 +1411,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2010</span>
             <h4>Multi-Discipline Expansion</h4>
-            <p>Expanded to include Engineering, Pharmacy, Dental Sciences, Nursing, and Management schools on the 150-acre Narmadapuram Road campus.</p>
+            <p>Expanded to include Engineering, Pharmacy, Dental Sciences, Nursing, and Management schools on the 32-acre Narmadapuram Road campus.</p>
           </div>
         </div>
 
@@ -1297,7 +1441,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2024+</span>
             <h4>Global Research Excellence</h4>
-            <p>120+ research labs, 60+ international MoUs, 1,200+ publications, and placements exceeding ₹52 LPA — setting new benchmarks every year.</p>
+            <p>120+ research labs, 60+ international MoUs, 2,500+ publications, and placements exceeding ₹52 LPA — setting new benchmarks every year.</p>
           </div>
         </div>
       </div>
@@ -1316,7 +1460,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
         </span>
         <h2 class="bu-vt-title">Virtual Tour of <em>Bhabha Campus</em></h2>
         <p class="bu-vt-desc">
-          Take a visual journey through our 150-acre lush green campus in Bhopal. Explore modern academic blocks, research facilities, sports arenas, and vibrant student life.
+          Take a visual journey through our 32-acre lush green campus in Bhopal. Explore modern academic blocks, research facilities, sports arenas, and vibrant student life.
         </p>
       </div>
 
@@ -1375,15 +1519,15 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-vt-info-card">
             <div class="bu-vt-icon-box"><i class="fa fa-tree"></i></div>
             <div class="bu-vt-card-content">
-              <h4>150-Acre Green Campus</h4>
-              <p>Eco-friendly campus with solar energy, botanical gardens, and spacious plazas.</p>
+              <h4>32-Acre Green Campus</h4>
+              <p>Eco-friendly lush green campus with solar energy, botanical gardens, and spacious plazas.</p>
             </div>
           </div>
 
           <div class="bu-vt-info-card">
             <div class="bu-vt-icon-box"><i class="fa fa-university"></i></div>
             <div class="bu-vt-card-content">
-              <h4>15 Schools &amp; Institutes</h4>
+              <h4>25 Schools &amp; Institutes</h4>
               <p>Engineering, Medical, Dental, Pharmacy, Law, Agriculture &amp; Management blocks.</p>
             </div>
           </div>
@@ -1529,7 +1673,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
       </div>
       <div class="bu-subpages-grid">
 
-        <a href="<?php echo href('page.php','id=20');?>" class="bu-subpage-card">
+        <a href="<?php echo href('university.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
             <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/bhabha-engineering-building.jpg" alt="University Overview" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-university"></i></div>
@@ -1543,20 +1687,6 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           </div>
         </a>
 
-        <a href="<?php echo href('mission-vision.php');?>" class="bu-subpage-card">
-          <div class="bu-subpage-img-wrap">
-            <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/vision.jpeg" alt="Vision & Mission" class="bu-subpage-img">
-            <div class="bu-subpage-icon-badge"><i class="fa fa-eye"></i></div>
-          </div>
-          <div class="bu-subpage-body">
-            <div>
-              <h4>Vision &amp; Mission</h4>
-              <p>Understand the core purpose that drives every decision and initiative at Bhabha University.</p>
-            </div>
-            <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
-          </div>
-        </a>
-
         <a href="<?php echo href('infrastructure.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
             <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/bhabha-campus-infrastucture.jpeg" alt="Campus & Infrastructure" class="bu-subpage-img">
@@ -1565,13 +1695,13 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-subpage-body">
             <div>
               <h4>Campus &amp; Infrastructure</h4>
-              <p>Discover our 150-acre green campus — smart classrooms, labs, hostels, library and more.</p>
+              <p>Discover our 32-acre lush green campus — smart classrooms, labs, hostels, library and more.</p>
             </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
         </a>
 
-        <a href="<?php echo href('page.php','id=18');?>" class="bu-subpage-card">
+        <a href="<?php echo href('values.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
             <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/bhabha-core-values.jpeg" alt="Core Values" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-heart"></i></div>
@@ -1599,7 +1729,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           </div>
         </a>
 
-        <a href="<?php echo href('page.php','id=19');?>" class="bu-subpage-card">
+        <a href="<?php echo href('why-us.php');?>" class="bu-subpage-card">
           <div class="bu-subpage-img-wrap">
             <img loading="lazy" src="<?php echo URL_ROOT;?>new-media/image/why-choose-bhabha.jpeg" alt="Why Choose Bhabha" class="bu-subpage-img">
             <div class="bu-subpage-icon-badge"><i class="fa fa-star"></i></div>

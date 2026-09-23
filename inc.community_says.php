@@ -201,30 +201,37 @@ if (empty($testimonials_list)) {
   pointer-events: auto !important;
 }
 
-/* 2-Column Split Grid Card with Compact Image Size */
+/* 2-Column Split Grid Card with Circular Student Portrait */
 .bu-voices-card {
   display: grid !important;
-  grid-template-columns: 240px 1fr !important;
+  grid-template-columns: 210px 1fr !important;
   gap: 40px !important;
   align-items: center !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  background-color: rgba(255, 255, 255, 0.02) !important;
-  padding: 30px !important;
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  padding: 36px 40px !important;
   border-radius: 20px !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Left: Compact Student Image (240px x 280px) */
+/* Left: Circular Student Image with Gold Border */
 .bu-voices-img-wrap {
-  width: 240px !important;
-  height: 280px !important;
-  border-radius: 16px !important;
+  width: 190px !important;
+  height: 190px !important;
+  border-radius: 50% !important;
   overflow: hidden !important;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
   background-color: #0b173c !important;
   flex-shrink: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border: 4px solid #D99B00 !important;
+  padding: 4px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
 }
 
 .bu-voices-img {
@@ -233,7 +240,7 @@ if (empty($testimonials_list)) {
   object-fit: cover !important;
   object-position: center top !important;
   display: block !important;
-  border-radius: 16px !important;
+  border-radius: 50% !important;
 }
 
 /* Right: Content */
@@ -333,11 +340,12 @@ if (empty($testimonials_list)) {
   .bu-voices-card {
     grid-template-columns: 1fr !important;
     gap: 25px !important;
-    padding: 24px !important;
+    padding: 28px 20px !important;
+    text-align: center !important;
   }
   .bu-voices-img-wrap {
-    width: 180px !important;
-    height: 210px !important;
+    width: 160px !important;
+    height: 160px !important;
     margin: 0 auto !important;
   }
   .bu-voices-text {
@@ -358,11 +366,11 @@ if (empty($testimonials_list)) {
     font-size: 28px !important;
   }
   .bu-voices-img-wrap {
-    width: 150px !important;
-    height: 180px !important;
+    width: 130px !important;
+    height: 130px !important;
   }
   .bu-voices-text {
-    font-size: 17px !important;
+    font-size: 16px !important;
     line-height: 1.5 !important;
   }
 }

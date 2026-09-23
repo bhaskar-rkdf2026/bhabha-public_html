@@ -47,7 +47,7 @@ require_once(PATH_LIB."class.mailer.php");
 
 $aryForm = [];
 try {
-    $db = new MysqliDb($host, $user, $pass, $dbName);
+    $db = new MysqliDb($host, $user, $pass, $dbName, null, 'utf8mb4');
     $aryFormTemp = $db->get("settings");
     if (!is_null($aryFormTemp) && is_array($aryFormTemp) && count($aryFormTemp) > 0) {
         foreach ($aryFormTemp as $iFormTemp) {

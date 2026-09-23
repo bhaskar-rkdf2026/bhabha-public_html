@@ -70,7 +70,7 @@
             <a href="<?php echo href('about.php');?>" class="bu-nav-link">About <i class="fa fa-angle-down"></i></a>
             <ul class="bu-dropdown bu-dropdown-2col">
               <li><a href="<?php echo href('about.php');?>">About Us</a></li>
-              <li><a href="<?php echo href("page.php","id=20");?>">University Overview</a></li>
+              <li><a href="<?php echo href("university.php");?>">University Overview</a></li>
               <li><a href="<?php echo href("mission-vision.php");?>">Vision &amp; Mission</a></li>
               <li><a href="<?php echo href("infrastructure.php")?>">Campus & Infrastructure</a></li>
               <li><a href="<?php echo href('values.php'); ?>">Core Values</a></li>
@@ -184,15 +184,15 @@
             <a href="#" class="bu-nav-link">Admissions <i class="fa fa-angle-down"></i></a>
             <ul class="bu-dropdown bu-dropdown-2col">
               <li><a href="<?php echo href("enquiry.php")?>">Admission Enquiry & Eligibility</a></li>
-              <li><a href="<?php echo href("page.php","id=12");?>">Admission Process</a></li>
+              <li><a href="<?php echo href("admission-process.php");?>">Admission Process</a></li>
               <li><a href="<?php echo href("course.php")?>">Courses, Intake & Eligibility</a></li>
               <li><a href="<?php echo href("fees.php")?>">Fee Structure</a></li>
               <li><a href="<?php echo href("page.php","id=1");?>">University Bank Account Details</a></li>
               <li><a href="<?php echo href("online-admission.php")?>">Online Registration Form</a></li>
-              <li><a href="<?php echo href("page.php","id=13");?>">Scholarships</a></li>
+              <li><a href="<?php echo href("scholarship.php");?>">Scholarships</a></li>
               <li><a href="<?php echo href("page.php","id=24");?>">Admission Helpline Numbers</a></li>
               <li><a href="<?php echo href("page.php","id=6");?>">Vocational Courses - Media</a></li>
-              <li><a href="<?php echo href("page.php","id=7");?>">Vocational Courses - Hotel Mgmt</a></li>
+              <li><a href="<?php echo href("hotel.php");?>">Vocational Courses - Hotel Mgmt</a></li>
             </ul>
           </li>
 

@@ -9,7 +9,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('why-us') : null;
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo portalVal($portalPage, 'page_title', 'Why Choose Bhabha University - Bhabha University Bhopal'); ?></title>
-<meta name="description" content="Discover why Bhabha University is the right choice — NAAC accreditation, 98% placements, global MoUs, research excellence and a 150-acre green campus.">
+<meta name="description" content="Discover why Bhabha University is the right choice — NAAC accreditation, 98% placements, global MoUs, research excellence and a 32-acre lush green campus.">
 <?php include('inc.meta.php');?>
 </head>
 <body>
@@ -70,12 +70,12 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('why-us') : null;
           <?php
           $reasons = [
             ['icon'=>'fa-certificate','title'=>'NAAC & UGC Recognised','desc'=>'Accredited by NAAC; UGC recognised under 2(f) & 12(B) — ensuring the credibility and value of every degree awarded.'],
-            ['icon'=>'fa-flask','title'=>'Research Excellence','desc'=>'120+ research labs, 250+ patents and 1,200+ publications make Bhabha a hub for academic and applied research.'],
+            ['icon'=>'fa-flask','title'=>'Research Excellence','desc'=>'120+ research labs, 250+ patents and 2,500+ publications make Bhabha a hub for academic and applied research.'],
             ['icon'=>'fa-globe','title'=>'Global Collaborations','desc'=>'MoUs with 60+ international universities across 4 continents for student exchanges, joint research, and faculty development.'],
-            ['icon'=>'fa-mortar-board','title'=>'Outstanding Placements','desc'=>'98% placement rate with 500+ recruiters visiting campus. Highest package of ₹52 LPA across all schools.'],
-            ['icon'=>'fa-building','title'=>'Smart Campus','desc'=>'150-acre Wi-Fi-enabled green campus with smart classrooms, air-conditioned labs, hostels and sports infrastructure.'],
+            ['icon'=>'fa-mortar-board','title'=>'Outstanding Placements','desc'=>'98% placement rate with 300+ recruiters visiting campus. Highest package of ₹52 LPA across all schools.'],
+            ['icon'=>'fa-building','title'=>'Smart Campus','desc'=>'32-acre Wi-Fi-enabled green campus with smart classrooms, air-conditioned labs, hostels and sports infrastructure.'],
             ['icon'=>'fa-rocket','title'=>'Innovation Ecosystem','desc'=>'Active incubation centre, student startup support, hackathons and industry mentoring programmes.'],
-            ['icon'=>'fa-users','title'=>'Expert Faculty','desc'=>'500+ highly qualified faculty members from premier institutions with rich industry and research experience.'],
+            ['icon'=>'fa-users','title'=>'Expert Faculty','desc'=>'750+ highly qualified faculty members from premier institutions with rich industry and research experience.'],
             ['icon'=>'fa-money','title'=>'Affordable Education','desc'=>'Quality education at competitive fee structures with scholarships, fee waivers, and easy EMI facilities available.'],
             ['icon'=>'fa-shield','title'=>'Safe & Secure Campus','desc'=>'24x7 security with CCTV surveillance, safe hostel accommodation, and dedicated campus police presence.'],
             ['icon'=>'fa-heart','title'=>'Student Welfare','desc'=>'Medical centre, mental health counselling, sports programmes and cultural events for holistic student development.'],

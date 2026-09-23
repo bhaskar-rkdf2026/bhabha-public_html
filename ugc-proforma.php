@@ -45,20 +45,80 @@ if (strpos($pdfUrl, 'http') !== 0) $pdfUrl = URL_ROOT . ltrim($pdfUrl, '/');
             These documents are available for download below.
           </p>
         </div>
+        <style>
+        .bu-doc-card {
+          display: flex !important;
+          align-items: center !important;
+          gap: 16px !important;
+          padding: 20px 24px !important;
+          background: #F8FAFC !important;
+          border: 1px solid #E5E7EB !important;
+          border-radius: 8px !important;
+          border-left: 4px solid #FFC107 !important;
+          text-decoration: none !important;
+          transition: all 0.25s ease !important;
+        }
+        .bu-doc-card .bu-doc-title {
+          font-size: 15px !important;
+          font-weight: 700 !important;
+          color: #0A1B54 !important;
+          display: block !important;
+          margin-bottom: 3px !important;
+          transition: color 0.25s ease !important;
+        }
+        .bu-doc-card .bu-doc-sub {
+          font-size: 11px !important;
+          font-weight: 600 !important;
+          color: #64748B !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.5px !important;
+          display: block !important;
+          transition: color 0.25s ease !important;
+        }
+        .bu-doc-card .bu-doc-icon {
+          font-size: 20px !important;
+          color: #D99B00 !important;
+          transition: color 0.25s ease !important;
+        }
+        .bu-doc-card .bu-doc-dl {
+          font-size: 16px !important;
+          color: #D99B00 !important;
+          flex-shrink: 0 !important;
+          transition: color 0.25s ease !important;
+        }
+
+        /* Hover State */
+        .bu-doc-card:hover {
+          background: #0A1B54 !important;
+          border-color: #0A1B54 !important;
+          border-left-color: #FFC107 !important;
+          transform: translateY(-2px) !important;
+          box-shadow: 0 6px 18px rgba(10, 27, 84, 0.22) !important;
+        }
+        .bu-doc-card:hover .bu-doc-title {
+          color: #FFFFFF !important;
+        }
+        .bu-doc-card:hover .bu-doc-sub {
+          color: #FFC107 !important;
+        }
+        .bu-doc-card:hover .bu-doc-icon,
+        .bu-doc-card:hover .bu-doc-dl {
+          color: #FFC107 !important;
+        }
+        </style>
+
         <div style="display:grid;gap:12px;margin-top:24px;">
           <a href="<?php echo $pdfUrl;?>" 
              target="_blank"
-             style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:8px;border-left:3px solid #FFC107;text-decoration:none;transition:all 0.25s;"
-             onmouseover="this.style.background='#0A1B54'; this.style.color='#ffffff';"
-             onmouseout="this.style.background='#F8FAFC'; this.style.color='';">
+             class="bu-doc-card">
             <div style="width:44px;height:44px;background:rgba(217,155,0,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa fa-file-pdf-o" style="font-size:20px;color:#D99B00;"></i>
+              <i class="fa fa-file-pdf-o bu-doc-icon"></i>
             </div>
             <div style="flex:1;">
-              <span style="font-size:15px;font-weight:700;color:inherit;display:block;margin-bottom:3px;"><?php echo portalVal($portalPage, 'pdf_title', 'Filled UGC Proforma Information in Prescribed Format'); ?></span>
-              <span style="font-size:11px;font-weight:600;color:inherit;opacity:0.55;text-transform:uppercase;letter-spacing:0.5px;">PDF Document &bull; University Grants Commission</span>
+              <span class="bu-doc-title"><?php echo portalVal($portalPage, 'pdf_title', 'Filled UGC Proforma Information in Prescribed Format'); ?></span>
+              <span class="bu-doc-sub">PDF Document &bull; University Grants Commission</span>
             </div>
-            <i class="fa fa-download" style="font-size:16px;color:#D99B00;flex-shrink:0;"></i>
+            <i class="fa fa-download bu-doc-dl"></i>
           </a>
         </div>
       </div>

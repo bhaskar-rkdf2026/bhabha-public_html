@@ -17,7 +17,7 @@ $res_img = !empty($res_sec['media_url']) ? (strpos($res_sec['media_url'], 'http'
 $res_extra = !empty($res_sec['extra_data']) ? json_decode($res_sec['extra_data'], true) : [];
 $res_metrics = !empty($res_extra['metrics']) ? $res_extra['metrics'] : [
     ['target' => 250, 'value' => '250', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'PATENTS FILED'],
-    ['target' => 1200, 'value' => '1200', 'suffix' => '+', 'prefix' => '', 'commas' => true, 'label' => 'PUBLICATIONS'],
+    ['target' => 2500, 'value' => '2500', 'suffix' => '+', 'prefix' => '', 'commas' => true, 'label' => 'PUBLICATIONS'],
     ['target' => 85, 'value' => '85', 'suffix' => ' Cr', 'prefix' => '₹', 'commas' => false, 'label' => 'ACTIVE GRANTS'],
     ['target' => 60, 'value' => '60', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'GLOBAL MOUS']
 ];

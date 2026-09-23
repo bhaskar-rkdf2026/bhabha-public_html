@@ -13,6 +13,7 @@ $insti = $db->get('institute');
 
 // Fetch gallery
 $db->where('department', $id);
+$db->orderBy('id', 'DESC');
 $gallery = $db->get('gallery');
 
 $is_engineering = ($id == 1 || stripos($aryData['title'], 'engineering') !== false);
@@ -49,7 +50,9 @@ $attributes    = !empty($aryData['attributes_data']) ? json_decode($aryData['att
   --bu-border: #E2E8F0;
   --bu-bg-soft: #F8FAFC;
   --bu-bg-card: #FFFFFF;
-}.bu-dept-wrapper {
+}
+
+.bu-dept-wrapper {
   background-color: #F8F9FD;
   font-family: 'Plus Jakarta Sans', sans-serif;
   color: var(--bu-text-dark);
@@ -66,13 +69,16 @@ $attributes    = !empty($aryData['attributes_data']) ? json_decode($aryData['att
 
 @media(max-width: 991px) {
   .bu-dept-container {
-    padding: 0 30px;
+    padding: 0 20px;
   }
 }
 
-@media(max-width: 767px) {
+@media(max-width: 768px) {
+  .bu-dept-wrapper {
+    padding: 5px !important;
+  }
   .bu-dept-container {
-    padding: 0 15px;
+    padding: 0 5px !important;
   }
 }
 
@@ -116,6 +122,17 @@ $attributes    = !empty($aryData['attributes_data']) ? json_decode($aryData['att
   }
   .bu-dept-hero-card {
     padding: 20px 16px;
+  }
+}
+
+@media(max-width: 768px) {
+  .bu-dept-hero-card {
+    padding: 14px 12px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+  }
+  .bu-dept-hero-grid {
+    gap: 14px;
   }
 }
 
@@ -169,6 +186,12 @@ $attributes    = !empty($aryData['attributes_data']) ? json_decode($aryData['att
 .bu-dept-title em {
   font-style: normal;
   color: var(--bu-navy-primary);
+}
+
+@media(max-width: 768px) {
+  .bu-dept-title {
+    font-size: 21px;
+  }
 }
 
 .bu-dept-subtitle {
@@ -303,6 +326,12 @@ $attributes    = !empty($aryData['attributes_data']) ? json_decode($aryData['att
   transition: transform 0.4s ease;
 }
 
+@media(max-width: 768px) {
+  .bu-hero-image-wrap img {
+    height: 200px;
+  }
+}
+
 .bu-hero-image-wrap:hover img {
   transform: scale(1.03);
 }
@@ -385,6 +414,14 @@ section.bu-section-block {
   margin-bottom: 18px;
 }
 
+@media(max-width: 768px) {
+  .bu-section-block,
+  section.bu-section-block {
+    padding: 6px 0 !important;
+    margin-bottom: 14px;
+  }
+}
+
 .bu-sec-header {
   margin-bottom: 10px;
 }
@@ -431,7 +468,10 @@ section.bu-section-block {
 }
 
 @media(max-width: 768px) {
-  .bu-dual-grid { grid-template-columns: 1fr; }
+  .bu-dual-grid { 
+    grid-template-columns: 1fr; 
+    gap: 10px;
+  }
 }
 
 .bu-vm-card {
@@ -445,6 +485,13 @@ section.bu-section-block {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+@media(max-width: 768px) {
+  .bu-vm-card {
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
 }
 
 .bu-vm-card::before {
@@ -556,7 +603,7 @@ section.bu-section-block {
 @media(max-width: 860px) {
   .bu-programs-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
   }
 }
 
@@ -572,6 +619,13 @@ section.bu-section-block {
   transition: all 0.28s ease;
   position: relative;
   overflow: hidden;
+}
+
+@media(max-width: 768px) {
+  .bu-program-card {
+    padding: 14px 12px;
+    border-radius: 10px;
+  }
 }
 
 .bu-program-card::before {
@@ -694,55 +748,90 @@ section.bu-section-block {
 .bu-prog-card-footer {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding-top: 10px;
-  border-top: 1px solid #F1F5F9;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #EEF2F6;
   margin-top: auto;
+  flex-wrap: wrap;
 }
 
-.bu-btn-primary-sm {
-  flex: 1;
-  background: var(--bu-navy-primary);
-  color: #ffffff !important;
+.bu-prog-btn,
+.bu-btn-primary-sm,
+.bu-btn-outline-sm {
+  font-size: 12px;
   font-weight: 700;
-  font-size: 11.5px;
-  padding: 7px 10px;
-  border-radius: 5px;
-  text-align: center;
+  padding: 8px 16px;
+  border-radius: 6px;
   text-decoration: none !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  transition: all 0.2s;
+  gap: 6px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: all 0.22s ease-in-out;
+  box-sizing: border-box;
 }
 
+/* Primary Button (Apply Online) */
+.bu-prog-btn-primary,
+.bu-btn-primary-sm {
+  background: var(--bu-navy-primary);
+  color: #FFFFFF !important;
+  border: 1px solid var(--bu-navy-primary);
+  box-shadow: 0 2px 6px rgba(6, 29, 124, 0.16);
+}
+
+.bu-prog-btn-primary i,
+.bu-btn-primary-sm i {
+  color: var(--bu-gold-primary);
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.bu-prog-btn-primary:hover,
 .bu-btn-primary-sm:hover {
   background: var(--bu-navy-dark);
   color: var(--bu-gold-primary) !important;
+  border-color: var(--bu-navy-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(6, 29, 124, 0.25);
 }
 
+.bu-prog-btn-primary:hover i,
+.bu-btn-primary-sm:hover i {
+  color: var(--bu-gold-primary);
+  transform: scale(1.1);
+}
+
+/* Outline / Secondary Button (Syllabus) */
+.bu-prog-btn-outline,
 .bu-btn-outline-sm {
   background: #F8FAFC;
   color: var(--bu-navy-primary) !important;
   border: 1px solid #CBD5E1;
-  font-weight: 700;
-  font-size: 11.5px;
-  padding: 7px 8px;
-  border-radius: 5px;
-  text-align: center;
-  text-decoration: none !important;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
+.bu-prog-btn-outline i,
+.bu-btn-outline-sm i {
+  color: #64748B;
+  font-size: 12px;
+  transition: color 0.2s ease;
+}
+
+.bu-prog-btn-outline:hover,
 .bu-btn-outline-sm:hover {
-  background: var(--bu-navy-primary);
-  color: #ffffff !important;
+  background: #EEF2FF;
+  color: var(--bu-navy-dark) !important;
   border-color: var(--bu-navy-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(6, 29, 124, 0.10);
+}
+
+.bu-prog-btn-outline:hover i,
+.bu-btn-outline-sm:hover i {
+  color: var(--bu-navy-primary);
 }
 
 /* ================================================================
@@ -879,6 +968,12 @@ section.bu-section-block {
   margin-bottom: 22px;
 }
 
+@media(max-width: 768px) {
+  .bu-why-3d-wrapper {
+    margin-bottom: 14px;
+  }
+}
+
 /* Category Pill Tabs Row */
 .bu-why-tabs-row {
   display: flex;
@@ -893,6 +988,14 @@ section.bu-section-block {
 
 .bu-why-tabs-row::-webkit-scrollbar {
   display: none;
+}
+
+@media(max-width: 768px) {
+  .bu-why-tabs-row {
+    gap: 6px;
+    padding: 2px 2px 6px 2px;
+    margin-bottom: 6px;
+  }
 }
 
 .bu-why-tab-btn {
@@ -912,10 +1015,24 @@ section.bu-section-block {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
+@media(max-width: 768px) {
+  .bu-why-tab-btn {
+    padding: 5px 11px;
+    font-size: 11px;
+    gap: 5px;
+  }
+}
+
 .bu-why-tab-btn i {
   font-size: 12px;
   color: var(--bu-navy-primary);
   transition: color 0.2s;
+}
+
+@media(max-width: 768px) {
+  .bu-why-tab-btn i {
+    font-size: 11px;
+  }
 }
 
 .bu-why-tab-btn:hover {
@@ -946,6 +1063,7 @@ section.bu-section-block {
 @media(max-width: 860px) {
   .bu-why-3d-stage {
     min-height: auto;
+    perspective: none;
   }
 }
 
@@ -979,12 +1097,13 @@ section.bu-section-block {
 @media(max-width: 860px) {
   .bu-why-3d-card {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
     height: auto;
-    padding: 18px 16px;
+    padding: 14px 12px;
     position: relative;
     display: none;
     transform: none;
+    border-radius: 10px;
   }
   .bu-why-3d-card.active {
     display: grid;
@@ -1048,11 +1167,26 @@ section.bu-section-block {
   user-select: none;
 }
 
+@media(max-width: 860px) {
+  .bu-why-watermark-num {
+    font-size: 38px;
+    top: -6px;
+    right: 0px;
+  }
+}
+
 .bu-why-hero-top {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 8px;
+}
+
+@media(max-width: 860px) {
+  .bu-why-hero-top {
+    gap: 8px;
+    margin-bottom: 6px;
+  }
 }
 
 .bu-why-hero-badge-icon {
@@ -1064,6 +1198,15 @@ section.bu-section-block {
   justify-content: center;
   font-size: 18px;
   flex-shrink: 0;
+}
+
+@media(max-width: 860px) {
+  .bu-why-hero-badge-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+    border-radius: 7px;
+  }
 }
 
 .bu-icon-navy { background: rgba(6, 29, 124, 0.08); color: var(--bu-navy-primary); }
@@ -1083,6 +1226,13 @@ section.bu-section-block {
   color: var(--bu-navy-primary);
 }
 
+@media(max-width: 860px) {
+  .bu-why-hero-badge-pill {
+    font-size: 9px;
+    padding: 2.5px 7px;
+  }
+}
+
 .bu-why-card-hero h3 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 20px;
@@ -1092,11 +1242,25 @@ section.bu-section-block {
   line-height: 1.25;
 }
 
+@media(max-width: 860px) {
+  .bu-why-card-hero h3 {
+    font-size: 17px;
+    margin-bottom: 3px;
+  }
+}
+
 .bu-why-card-hero p {
   font-size: 12px;
   color: #475569;
   line-height: 1.45;
   margin: 0;
+}
+
+@media(max-width: 860px) {
+  .bu-why-card-hero p {
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
 }
 
 /* Right Feature Grid of the 3D Card */
@@ -1106,10 +1270,13 @@ section.bu-section-block {
   gap: 8px 12px;
 }
 
-@media(max-width: 600px) {
+@media(max-width: 768px) {
   .bu-why-card-points {
     grid-template-columns: 1fr;
-    gap: 7px;
+    gap: 6px;
+  }
+  .bu-why-card-points .bu-why-point-chip {
+    grid-column: span 1 !important;
   }
 }
 
@@ -1125,6 +1292,14 @@ section.bu-section-block {
   line-height: 1.35;
   color: #334155;
   transition: all 0.2s ease;
+}
+
+@media(max-width: 768px) {
+  .bu-why-point-chip {
+    padding: 7px 9px;
+    font-size: 11px;
+    line-height: 1.35;
+  }
 }
 
 .bu-why-point-chip:hover {
@@ -1164,6 +1339,13 @@ section.bu-section-block {
   letter-spacing: 0.5px;
 }
 
+@media(max-width: 768px) {
+  .bu-why-counter-pill {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}
+
 .bu-why-arrow-btn-group {
   display: flex;
   align-items: center;
@@ -1184,6 +1366,14 @@ section.bu-section-block {
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+@media(max-width: 768px) {
+  .bu-why-arrow-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 10px;
+  }
 }
 
 .bu-why-arrow-btn:hover {
@@ -1499,6 +1689,178 @@ section.bu-section-block {
 
 .bu-gallery-prev { left: 6px; }
 .bu-gallery-next { right: 6px; }
+
+/* Department Gallery Lightbox */
+.bu-dept-lightbox {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+.bu-dept-lightbox.active {
+  display: flex !important;
+  opacity: 1 !important;
+}
+.bu-dept-lightbox-bg {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(4, 15, 74, 0.94) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  cursor: pointer;
+}
+.bu-dept-lightbox-box {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 96vw !important;
+  max-width: 1140px !important;
+  max-height: 94vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  pointer-events: auto;
+}
+.bu-dept-lightbox-topbar {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 10px 10px !important;
+  box-sizing: border-box !important;
+}
+.bu-dept-lightbox-counter {
+  color: #FFC107 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.6px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  padding: 5px 14px !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 193, 7, 0.4) !important;
+}
+.bu-dept-lightbox-close {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #FFFFFF !important;
+  font-size: 26px !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+  transition: all 0.2s ease !important;
+}
+.bu-dept-lightbox-close:hover {
+  background: #EF4444 !important;
+  border-color: #EF4444 !important;
+  transform: rotate(90deg) scale(1.08) !important;
+}
+.bu-dept-lightbox-stage {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+.bu-dept-lightbox-img-wrap {
+  max-width: calc(100% - 130px) !important;
+  max-height: 72vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  border-radius: 8px !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  background: #000000 !important;
+}
+.bu-dept-lightbox-img {
+  max-width: 100% !important;
+  max-height: 72vh !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  transition: opacity 0.22s ease, transform 0.22s ease !important;
+}
+.bu-dept-lightbox-img.changing {
+  opacity: 0.2 !important;
+  transform: scale(0.97) !important;
+}
+.bu-dept-lightbox-nav {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  background: rgba(10, 27, 84, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  color: #FFFFFF !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.22s ease !important;
+}
+.bu-dept-lightbox-prev { left: 0 !important; }
+.bu-dept-lightbox-next { right: 0 !important; }
+.bu-dept-lightbox-nav:hover {
+  background: #FFC107 !important;
+  color: #0A1B54 !important;
+  border-color: #FFC107 !important;
+  transform: translateY(-50%) scale(1.1) !important;
+}
+.bu-dept-lightbox-caption-wrap {
+  margin-top: 14px !important;
+  text-align: center !important;
+  max-width: 85% !important;
+}
+.bu-dept-lightbox-caption {
+  color: #FFFFFF !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.3px !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+}
+
+@media (max-width: 768px) {
+  .bu-dept-lightbox-img-wrap {
+    max-width: 100% !important;
+    max-height: 64vh !important;
+  }
+  .bu-dept-lightbox-img {
+    max-height: 64vh !important;
+  }
+  .bu-dept-lightbox-nav {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 14px !important;
+    background: rgba(10, 27, 84, 0.9) !important;
+  }
+  .bu-dept-lightbox-prev { left: 4px !important; }
+  .bu-dept-lightbox-next { right: 4px !important; }
+  .bu-dept-lightbox-caption {
+    font-size: 15px !important;
+  }
+  .bu-dept-lightbox-counter {
+    font-size: 11.5px !important;
+    padding: 4px 10px !important;
+  }
+}
 
 /* ================================================================
    9. ADMISSIONS CTA STRIP
@@ -2096,11 +2458,11 @@ section.bu-section-block {
               </div>
 
               <div class="bu-prog-card-footer">
-                <a href="<?php echo href(!empty($prog['apply_url']) ? $prog['apply_url'] : 'admissions.php');?>" class="bu-btn-primary-sm">
+                <a href="<?php echo href(!empty($prog['apply_url']) ? $prog['apply_url'] : 'admissions.php');?>" class="bu-prog-btn bu-prog-btn-primary">
                   <i class="fa fa-pencil-square-o"></i> Apply Online
                 </a>
                 <?php if(!empty($prog['secondary_url'])): ?>
-                <a href="<?php echo href($prog['secondary_url']);?>" class="bu-btn-outline-sm">
+                <a href="<?php echo href($prog['secondary_url']);?>" class="bu-prog-btn bu-prog-btn-outline">
                   <i class="fa fa-file-text-o"></i> <?php echo htmlspecialchars(!empty($prog['secondary_label']) ? $prog['secondary_label'] : 'Syllabus');?>
                 </a>
                 <?php endif; ?>
@@ -2290,16 +2652,21 @@ section.bu-section-block {
           
           <div class="bu-gallery-slider-wrapper" id="buGalleryWrapper">
             <div class="bu-gallery-track" id="buGalleryTrack">
-              <?php foreach($gallery as $igallery): ?>
+              <?php foreach($gallery as $igallery): 
+                $gImg = !empty($igallery['image']) ? $igallery['image'] : '';
+                $imgSrc = !empty($gImg) ? (file_exists(PATH_ROOT . DS . 'upload' . DS . 'gallery' . DS . 'thumb' . DS . $gImg) ? URL_UPLOAD . 'gallery/thumb/' . $gImg : URL_UPLOAD . 'gallery/' . $gImg) : URL_ROOT . 'extra-images/home-gallery1.jpg';
+                $largeSrc = !empty($gImg) ? (file_exists(PATH_ROOT . DS . 'upload' . DS . 'gallery' . DS . 'large' . DS . $gImg) ? URL_UPLOAD . 'gallery/large/' . $gImg : URL_UPLOAD . 'gallery/' . $gImg) : $imgSrc;
+                $caption = !empty($igallery['title']) ? htmlspecialchars($igallery['title']) : 'Faculty Photo Gallery';
+              ?>
               <div class="bu-gallery-slide">
-                <div class="bu-gallery-item">
-                  <img src="<?php echo URL_UPLOAD;?>gallery/thumb/<?php echo $igallery['image'];?>" 
-                       alt="<?php echo htmlspecialchars($igallery['title']);?>" 
+                <div class="bu-gallery-item" data-large="<?php echo $largeSrc;?>" data-caption="<?php echo $caption;?>" style="cursor: pointer;">
+                  <img src="<?php echo $imgSrc;?>" 
+                       alt="<?php echo $caption;?>" 
                        class="bu-gallery-img"
                        loading="lazy"
                        onerror="this.src='<?php echo URL_ROOT;?>extra-images/home-gallery1.jpg';">
                   <div class="bu-gallery-overlay">
-                    <span><?php echo htmlspecialchars($igallery['title']);?></span>
+                    <span><?php echo $caption;?></span>
                   </div>
                 </div>
               </div>
@@ -2358,6 +2725,35 @@ section.bu-section-block {
         <a href="<?php echo href('admissions.php');?>" class="bu-read-more-btn" style="padding: 9px 18px; font-size: 12.5px;">
           <i class="fa fa-pencil-square-o"></i> Apply for Admission
         </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Department Gallery Lightbox Modal -->
+  <div class="bu-dept-lightbox" id="buDeptLightbox" role="dialog" aria-modal="true" aria-label="Department Photo Gallery Viewer">
+    <div class="bu-dept-lightbox-bg" id="buDeptLightboxBg"></div>
+    <div class="bu-dept-lightbox-box">
+      <div class="bu-dept-lightbox-topbar">
+        <span class="bu-dept-lightbox-counter" id="buDeptLightboxCounter">Photo 1 of 1</span>
+        <button type="button" class="bu-dept-lightbox-close" id="buDeptLightboxClose" aria-label="Close Lightbox">&times;</button>
+      </div>
+
+      <div class="bu-dept-lightbox-stage">
+        <button type="button" class="bu-dept-lightbox-nav bu-dept-lightbox-prev" id="buDeptLightboxPrev" aria-label="Previous Photo">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+
+        <div class="bu-dept-lightbox-img-wrap" id="buDeptLightboxImgWrap">
+          <img loading="lazy" src="" alt="" id="buDeptLightboxImg" class="bu-dept-lightbox-img">
+        </div>
+
+        <button type="button" class="bu-dept-lightbox-nav bu-dept-lightbox-next" id="buDeptLightboxNext" aria-label="Next Photo">
+          <i class="fa fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="bu-dept-lightbox-caption-wrap">
+        <div class="bu-dept-lightbox-caption" id="buDeptLightboxCaption"></div>
       </div>
     </div>
   </div>
@@ -2586,6 +2982,123 @@ section.bu-section-block {
   }
 
   startAuto();
+
+  // Department Gallery Interactive Lightbox Controller
+  const deptModal = document.getElementById('buDeptLightbox');
+  const deptModalImg = document.getElementById('buDeptLightboxImg');
+  const deptModalCaption = document.getElementById('buDeptLightboxCaption');
+  const deptModalCounter = document.getElementById('buDeptLightboxCounter');
+  const deptCloseBtn = document.getElementById('buDeptLightboxClose');
+  const deptBgOverlay = document.getElementById('buDeptLightboxBg');
+  const deptPrevBtn = document.getElementById('buDeptLightboxPrev');
+  const deptNextBtn = document.getElementById('buDeptLightboxNext');
+  const galleryItems = document.querySelectorAll('#buGalleryTrack .bu-gallery-item');
+
+  let deptItems = [];
+  let deptCurrentIndex = 0;
+
+  galleryItems.forEach(item => {
+    deptItems.push({
+      large: item.getAttribute('data-large') || item.querySelector('img')?.src,
+      caption: item.getAttribute('data-caption') || item.querySelector('.bu-gallery-overlay span')?.textContent || 'Photo Gallery'
+    });
+  });
+
+  function showDeptImage(index) {
+    if (!deptItems.length || !deptModalImg) return;
+
+    if (index < 0) {
+      index = deptItems.length - 1;
+    } else if (index >= deptItems.length) {
+      index = 0;
+    }
+
+    deptCurrentIndex = index;
+    const cur = deptItems[deptCurrentIndex];
+
+    deptModalImg.classList.add('changing');
+    setTimeout(() => {
+      deptModalImg.src = cur.large;
+      if (deptModalCaption) deptModalCaption.textContent = cur.caption;
+      if (deptModalCounter) {
+        deptModalCounter.textContent = 'Photo ' + (deptCurrentIndex + 1) + ' of ' + deptItems.length;
+      }
+      deptModalImg.onload = () => deptModalImg.classList.remove('changing');
+      setTimeout(() => deptModalImg.classList.remove('changing'), 150);
+    }, 100);
+  }
+
+  function openDeptModal(largeSrc) {
+    if (!deptModal) return;
+    const foundIdx = deptItems.findIndex(it => it.large === largeSrc);
+    deptCurrentIndex = (foundIdx !== -1) ? foundIdx : 0;
+    showDeptImage(deptCurrentIndex);
+    deptModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDeptModal() {
+    if (deptModal) {
+      deptModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  galleryItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      openDeptModal(item.getAttribute('data-large'));
+    });
+  });
+
+  if (deptPrevBtn) {
+    deptPrevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showDeptImage(deptCurrentIndex - 1);
+    });
+  }
+
+  if (deptNextBtn) {
+    deptNextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showDeptImage(deptCurrentIndex + 1);
+    });
+  }
+
+  if (deptCloseBtn) deptCloseBtn.addEventListener('click', closeDeptModal);
+  if (deptBgOverlay) deptBgOverlay.addEventListener('click', closeDeptModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (!deptModal || !deptModal.classList.contains('active')) return;
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      showDeptImage(deptCurrentIndex - 1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      showDeptImage(deptCurrentIndex + 1);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      closeDeptModal();
+    }
+  });
+
+  const deptStage = document.querySelector('.bu-dept-lightbox-stage');
+  if (deptStage) {
+    let tStartX = 0;
+    let tEndX = 0;
+    deptStage.addEventListener('touchstart', (e) => {
+      tStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    deptStage.addEventListener('touchend', (e) => {
+      tEndX = e.changedTouches[0].screenX;
+      if (tStartX - tEndX > 45) {
+        showDeptImage(deptCurrentIndex + 1);
+      } else if (tEndX - tStartX > 45) {
+        showDeptImage(deptCurrentIndex - 1);
+      }
+    }, { passive: true });
+  }
 })();
 </script>
 </body>

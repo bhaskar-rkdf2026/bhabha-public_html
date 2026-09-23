@@ -43,6 +43,68 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('auditreport') : 
           <p>Bhabha University maintains complete transparency in its financial operations. Below are the official audit reports and balance sheets as submitted to the Finance Officer and regulatory bodies.</p>
           <?php endif; ?>
         </div>
+        <style>
+        .bu-audit-card {
+          display: flex !important;
+          align-items: center !important;
+          gap: 16px !important;
+          padding: 20px 24px !important;
+          background: #F8FAFC !important;
+          border: 1px solid #E5E7EB !important;
+          border-radius: 8px !important;
+          border-left: 4px solid #FFC107 !important;
+          text-decoration: none !important;
+          transition: all 0.25s ease !important;
+        }
+        .bu-audit-card .bu-audit-title {
+          font-size: 15px !important;
+          font-weight: 700 !important;
+          color: #0A1B54 !important;
+          display: block !important;
+          margin-bottom: 3px !important;
+          transition: color 0.25s ease !important;
+        }
+        .bu-audit-card .bu-audit-sub {
+          font-size: 11px !important;
+          font-weight: 600 !important;
+          color: #64748B !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.5px !important;
+          display: block !important;
+          transition: color 0.25s ease !important;
+        }
+        .bu-audit-card .bu-audit-icon {
+          font-size: 20px !important;
+          color: #D99B00 !important;
+          transition: color 0.25s ease !important;
+        }
+        .bu-audit-card .bu-audit-dl {
+          font-size: 16px !important;
+          color: #D99B00 !important;
+          flex-shrink: 0 !important;
+          transition: color 0.25s ease !important;
+        }
+
+        /* Hover State */
+        .bu-audit-card:hover {
+          background: #0A1B54 !important;
+          border-color: #0A1B54 !important;
+          border-left-color: #FFC107 !important;
+          transform: translateY(-2px) !important;
+          box-shadow: 0 6px 18px rgba(10, 27, 84, 0.22) !important;
+        }
+        .bu-audit-card:hover .bu-audit-title {
+          color: #FFFFFF !important;
+        }
+        .bu-audit-card:hover .bu-audit-sub {
+          color: #FFC107 !important;
+        }
+        .bu-audit-card:hover .bu-audit-icon,
+        .bu-audit-card:hover .bu-audit-dl {
+          color: #FFC107 !important;
+        }
+        </style>
+
         <div style="display:grid;gap:12px;margin-top:24px;">
           <?php
           $docs = [
@@ -56,17 +118,15 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('auditreport') : 
             $docUrl = strpos($doc['url'], 'http') === 0 ? $doc['url'] : URL_ROOT . ltrim($doc['url'], '/');
           ?>
           <a href="<?php echo $docUrl;?>" target="_blank" 
-             style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:8px;border-left:3px solid #FFC107;text-decoration:none;transition:all 0.25s;"
-             onmouseover="this.style.background='#0A1B54'; this.style.color='#ffffff';"
-             onmouseout="this.style.background='#F8FAFC'; this.style.color='';">
+             class="bu-audit-card">
             <div style="width:44px;height:44px;background:rgba(217,155,0,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa fa-file-pdf-o" style="font-size:20px;color:#D99B00;"></i>
+              <i class="fa fa-file-pdf-o bu-audit-icon"></i>
             </div>
             <div style="flex:1;">
-              <span style="font-size:15px;font-weight:700;color:inherit;display:block;margin-bottom:3px;"><?php echo $doc['title'];?></span>
-              <span style="font-size:11px;font-weight:600;color:inherit;opacity:0.55;text-transform:uppercase;letter-spacing:0.5px;">Financial Year <?php echo $doc['year'] ?? '';?> &bull; PDF Document</span>
+              <span class="bu-audit-title"><?php echo htmlspecialchars($doc['title']);?></span>
+              <span class="bu-audit-sub">Financial Year <?php echo htmlspecialchars($doc['year'] ?? '');?> &bull; PDF Document</span>
             </div>
-            <i class="fa fa-download" style="font-size:16px;color:#D99B00;flex-shrink:0;"></i>
+            <i class="fa fa-download bu-audit-dl"></i>
           </a>
           <?php endforeach; ?>
         </div>

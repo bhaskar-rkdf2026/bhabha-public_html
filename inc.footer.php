@@ -18,6 +18,8 @@
           <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> Anti-Ragging</a></li>
           <li><a href="<?php echo href("research.php"); ?>"><i class="fa fa-angle-right"></i> Research &amp; Innovation</a></li>
           <li><a href="<?php echo href("iqac.php"); ?>"><i class="fa fa-angle-right"></i> IQAC Cell</a></li>
+          <li><a href="<?php echo href("jobs.php"); ?>"><i class="fa fa-angle-right"></i> Job Openings &amp; Recruitment</a></li>
+          <li><a href="<?php echo href("career.php"); ?>"><i class="fa fa-angle-right"></i> Careers at Bhabha</a></li>
           <li><a href="<?php echo href("alumni.php"); ?>"><i class="fa fa-angle-right"></i> Alumni Portal</a></li>
           <li><a href="<?php echo href("newsletter.php"); ?>"><i class="fa fa-angle-right"></i> E-Newsletter</a></li>
           <li><a href="<?php echo href("magazine.php"); ?>"><i class="fa fa-angle-right"></i> University Magazine</a></li>

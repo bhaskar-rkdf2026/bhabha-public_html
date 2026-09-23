@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Bhabha University - Central Database Configuration
@@ -26,10 +27,10 @@ if ($is_localhost) {
 } else {
     // =========================================================================
     // 2. LIVE SERVER (cPanel / Production) CREDENTIALS
-    // Jab aap live cPanel par database create karenge, to uski details yahan dalein:
+    // cPanel MySQL Databases me create kiya gaya Database Name, User aur Password:
     // =========================================================================
-    $host   = "localhost";
-    $dbName = "bhabhaun_mohitdb"; // e.g. bhabhfdt_bhabhadb ya aapka live db name
-    $user   = "root";            // e.g. bhabhfdt_dbuser
-    $pass   = "";                // e.g. Live MySQL password
+    $host   = getenv('DB_HOST') ?: "localhost";
+    $dbName = getenv('DB_NAME') ?: "bhabhaun_mohitdb"; // Apne Live DB ka naam yahan dalein
+    $user   = getenv('DB_USER') ?: "root";             // Apne Live DB User ka naam yahan dalein
+    $pass   = getenv('DB_PASS') ?: "";                 // Apne Live DB User ka password yahan dalein
 }

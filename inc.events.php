@@ -40,7 +40,7 @@
       else:
         // Mock fallback rows matching image exactly
         $mocks = [
-          ['date' => '12 Mar 2026', 'cat' => 'ADMISSIONS', 'title' => 'Applications open for 2026-27 academic session across all 15 schools'],
+          ['date' => '12 Mar 2026', 'cat' => 'ADMISSIONS', 'title' => 'Applications open for 2026-27 academic session across all 25 schools and institutes'],
           ['date' => '08 Mar 2026', 'cat' => 'RESEARCH', 'title' => 'Engineering team secures ₹2.4 Cr DST grant for sustainable energy lab'],
           ['date' => '01 Mar 2026', 'cat' => 'EVENTS', 'title' => "Convergence '26 — annual international research conference returns"],
           ['date' => '24 Feb 2026', 'cat' => 'PLACEMENTS', 'title' => 'Record placement season closes with 98% offers and 12 international roles'],

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Campus & Infrastructure - Bhabha University Bhopal</title>
-<meta name="description" content="Explore Bhabha University's 150-acre green campus in Bhopal — state-of-the-art labs, smart classrooms, central library, hostels and sports facilities.">
+<meta name="description" content="Explore Bhabha University's 32-acre lush green campus in Bhopal — state-of-the-art labs, smart classrooms, central library, hostels and sports facilities.">
 <?php include('inc.meta.php');?>
 </head>
 <body>
@@ -15,7 +15,7 @@
 
   <?php
   $page_title    = 'Campus & <em>Infrastructure</em>';
-  $page_subtitle = 'A 150-acre green campus on Narmadapuram Road, Bhopal — built to inspire learning, innovation and holistic development.';
+  $page_subtitle = 'A 32-acre lush green campus on Narmadapuram Road, Bhopal — built to inspire learning, innovation and holistic development.';
   $page_icon     = 'fa-building';
   $breadcrumbs   = [
     ['label' => 'Home',  'url' => URL_ROOT],
@@ -37,7 +37,7 @@
         <div class="bu-content-divider"></div>
         <div class="bu-content-body">
           <p>
-            Bhabha University is spread across a vast <strong>150-acre green campus</strong> on NH-12, 
+            Bhabha University is spread across a vast <strong>32-acre lush green campus</strong> on NH-12, 
             Narmadapuram Road, Bhopal, Madhya Pradesh. The remarkable aspect of the campus is its 
             avant-garde infrastructure provided for both students and faculty. Fully furnished and 
             well-equipped laboratories grace every school building in the university.
@@ -59,8 +59,8 @@
           <?php
           $facilities = [
             ['icon'=>'fa-flask','name'=>'120+ Research Labs','desc'=>'Cutting-edge laboratories for engineering, pharmacy, biotech, and applied sciences.'],
-            ['icon'=>'fa-book','name'=>'Central Library','desc'=>'50,000+ books, e-journals, digital resources and INFLIBNET access.'],
-            ['icon'=>'fa-wifi','name'=>'Wi-Fi Campus','desc'=>'24x7 high-speed internet connectivity across the entire 150-acre campus.'],
+            ['icon'=>'fa-users','name'=>'Open Auditorium','desc'=>'Spacious open-air auditorium for student events, fests, gatherings and cultural activities.'],
+            ['icon'=>'fa-wifi','name'=>'Wi-Fi Campus','desc'=>'24x7 high-speed internet connectivity across the entire 32-acre campus.'],
             ['icon'=>'fa-home','name'=>'Boys & Girls Hostels','desc'=>'Secure, comfortable accommodation with modern amenities for resident students.'],
             ['icon'=>'fa-tv','name'=>'Smart Classrooms','desc'=>'Digital classrooms with projectors, audio-visual aids and e-learning tools.'],
             ['icon'=>'fa-futbol-o','name'=>'Sports Complex','desc'=>'Cricket, football, basketball, badminton, indoor games and gymnasium.'],

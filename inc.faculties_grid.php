@@ -9,7 +9,7 @@
       <div class="bu-header-left">
         <span class="bu-faculties-label">SCHOOLS & FACULTIES</span>
         <h2 class="bu-faculties-heading">
-          15 schools. One <em>global</em><br>university.
+          25 schools &amp; institutes. One <em>global</em><br>university.
         </h2>
       </div>
       
