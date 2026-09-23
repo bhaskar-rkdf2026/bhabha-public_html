@@ -21,7 +21,7 @@ if ($is_localhost) {
     // 1. LOCALHOST (XAMPP) CREDENTIALS
     // =========================================================================
     $host   = "localhost";
-    $dbName = "bhabhaun_mohitdb";
+    $dbName = "bhabhfdt_bhabha_new";
     $user   = "root";
     $pass   = "";
 } else {

@@ -1,7 +1,3 @@
-# Exclude user uploads and data directories
-enquiry/
-upload/
-admission/
 
 # Exclude log files
 error_log
