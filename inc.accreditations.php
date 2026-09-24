@@ -1,53 +1,85 @@
 <?php
 // Bhabha University – Statutory Approvals Component
+$accred_items = [
+    [
+        'img'  => 'ugc.png',
+        'alt'  => 'UGC',
+        'name' => 'UGC',
+        'desc' => '2(f) & 12(B)'
+    ],
+    [
+        'img'  => 'naac.png',
+        'alt'  => 'NAAC',
+        'name' => 'NAAC',
+        'desc' => 'Accredited'
+    ],
+    [
+        'img'  => 'AICT.png',
+        'alt'  => 'AICTE',
+        'name' => 'AICTE',
+        'desc' => 'Approved'
+    ],
+    [
+        'img'  => 'PCI.png',
+        'alt'  => 'PCI',
+        'name' => 'PCI',
+        'desc' => 'Approved'
+    ],
+    [
+        'img'  => 'bci.png',
+        'alt'  => 'BCI',
+        'name' => 'BCI',
+        'desc' => 'Approved'
+    ],
+    [
+        'img'  => 'dci.png',
+        'alt'  => 'DCI',
+        'name' => 'DCI',
+        'desc' => 'Approved'
+    ],
+    [
+        'img'  => 'nci.png',
+        'alt'  => 'NCTE',
+        'name' => 'NCTE',
+        'desc' => 'Approved'
+    ],
+    [
+        'img'  => 'MPNRC.png',
+        'alt'  => 'MPNRC',
+        'name' => 'MPNRC',
+        'desc' => 'Recognized'
+    ]
+];
 ?>
 <!-- =================== STATUTORY APPROVALS SECTION =================== -->
 <section class="bu-statutory-section">
-  <div class="container" style="max-width:1170px; margin:0 auto; padding:0 15px; text-align:center;">
+  <div class="bu-statutory-container">
     <span class="bu-accred-section-label">Statutory Approvals</span>
     <h2 class="bu-stat-title">Recognised by <em>leading bodies.</em></h2>
-    <div class="bu-accred-grid">
-      <div class="bu-accred-badge">
-        <img src="<?php echo URL_IMG;?>ugc.png" alt="UGC" class="bu-accred-logo" onerror="this.style.display='none';">
-        <span class="bu-accred-badge-name">UGC</span>
-        <span class="bu-accred-badge-desc">2(f) &amp; 12(B)</span>
-      </div>
-      <div class="bu-accred-badge">
-        <img src="<?php echo URL_IMG;?>naac.png" alt="NAAC" class="bu-accred-logo" onerror="this.style.display='none';">
-        <span class="bu-accred-badge-name">NAAC</span>
-        <span class="bu-accred-badge-desc">Accredited</span>
-      </div>
-      <div class="bu-accred-badge">
-        <img src="<?php echo URL_IMG;?>AICT.png" alt="AICTE" class="bu-accred-logo">
-        <span class="bu-accred-badge-name">AICTE</span>
-        <span class="bu-accred-badge-desc">Approved</span>
-      </div>
-      <div class="bu-accred-badge">
-        <img src="<?php echo URL_IMG;?>PCI.png" alt="PCI" class="bu-accred-logo">
-        <span class="bu-accred-badge-name">PCI</span>
-        <span class="bu-accred-badge-desc">Approved</span>
-      </div>
-      <div class="bu-accred-badge">
-        <img src="<?php echo URL_IMG;?>bci.png" alt="BCI" class="bu-accred-logo">
-        <span class="bu-accred-badge-name">BCI</span>
-        <span class="bu-accred-badge-desc">Approved</span>
-      </div>
-      <div class="bu-accred-badge">
-        <img src="<?php echo URL_IMG;?>dci.png" alt="DCI" class="bu-accred-logo">
-        <span class="bu-accred-badge-name">DCI</span>
-        <span class="bu-accred-badge-desc">Approved</span>
-      </div>
-      <div class="bu-accred-badge">
-        <img src="<?php echo URL_IMG;?>nci.png" alt="NCTE" class="bu-accred-logo">
-        <span class="bu-accred-badge-name">NCTE</span>
-        <span class="bu-accred-badge-desc">Approved</span>
-      </div>
-      <div class="bu-accred-badge">
-        <img src="<?php echo URL_IMG;?>MPNRC.png" alt="MPNRC" class="bu-accred-logo">
-        <span class="bu-accred-badge-name">MPNRC</span>
-        <span class="bu-accred-badge-desc">Recognized</span>
+    
+    <!-- Marquee Slider Container (Auto-slides on mobile, 8-col grid on desktop) -->
+    <div class="bu-accred-slider-wrap">
+      <div class="bu-accred-track">
+        <!-- Set 1 -->
+        <?php foreach ($accred_items as $item): ?>
+          <div class="bu-accred-badge">
+            <img src="<?php echo URL_IMG . $item['img']; ?>" alt="<?php echo htmlspecialchars($item['alt']); ?>" class="bu-accred-logo" onerror="this.style.display='none';">
+            <span class="bu-accred-badge-name"><?php echo htmlspecialchars($item['name']); ?></span>
+            <span class="bu-accred-badge-desc"><?php echo htmlspecialchars($item['desc']); ?></span>
+          </div>
+        <?php endforeach; ?>
+
+        <!-- Set 2 (Duplicate for Seamless Infinite Auto-Scroll on Mobile) -->
+        <?php foreach ($accred_items as $item): ?>
+          <div class="bu-accred-badge bu-accred-duplicate">
+            <img src="<?php echo URL_IMG . $item['img']; ?>" alt="<?php echo htmlspecialchars($item['alt']); ?>" class="bu-accred-logo" onerror="this.style.display='none';">
+            <span class="bu-accred-badge-name"><?php echo htmlspecialchars($item['name']); ?></span>
+            <span class="bu-accred-badge-desc"><?php echo htmlspecialchars($item['desc']); ?></span>
+          </div>
+        <?php endforeach; ?>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -55,12 +87,19 @@
 <style>
 .bu-statutory-section {
   background: #FFFFFF;
-  padding: 70px 20px 80px 20px;
+  padding: 65px 20px 75px 20px;
   width: 100%;
   float: left;
   clear: both;
   box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow: hidden;
+}
+.bu-statutory-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
+  text-align: center;
 }
 .bu-accred-section-label {
   display: inline-block;
@@ -77,22 +116,32 @@
 }
 .bu-stat-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(30px, 4vw, 48px);
+  font-size: clamp(28px, 3.8vw, 46px);
   font-weight: 800;
   color: #061D7C;
-  margin: 0 0 35px 0;
+  margin: 0 0 32px 0;
   line-height: 1.15;
 }
 .bu-stat-title em {
   font-style: italic;
   color: #D99B00;
 }
-.bu-accred-grid {
+
+/* DESKTOP (8-Column Grid) */
+.bu-accred-slider-wrap {
+  width: 100%;
+  overflow: visible;
+}
+.bu-accred-track {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 12px;
   width: 100%;
 }
+.bu-accred-duplicate {
+  display: none !important;
+}
+
 .bu-accred-badge {
   background: #ffffff;
   border: 1px solid #E2E8F0;
@@ -136,22 +185,69 @@
   line-height: 1;
 }
 .bu-accred-badge-desc {
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 800;
   letter-spacing: 1px;
   color: #9CA3AF;
   text-transform: uppercase;
 }
+
+/* MOBILE & TABLET (Smooth Continuous Auto-Slide Marquee) */
 @media (max-width: 991px) {
-  .bu-accred-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+  .bu-statutory-section {
+    padding: 42px 0 48px 0 !important;
+  }
+  .bu-stat-title {
+    margin-bottom: 24px !important;
+    padding: 0 16px !important;
+  }
+  .bu-accred-slider-wrap {
+    overflow: hidden !important;
+    width: 100% !important;
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    padding: 8px 0 !important;
+  }
+  .bu-accred-track {
+    display: flex !important;
+    width: max-content !important;
+    gap: 14px !important;
+    animation: buAccredMarquee 18s linear infinite !important;
+    will-change: transform !important;
+  }
+  .bu-accred-track:hover,
+  .bu-accred-track:active {
+    animation-play-state: paused !important;
+  }
+  .bu-accred-duplicate {
+    display: flex !important;
+  }
+  .bu-accred-badge {
+    width: 135px !important;
+    min-width: 135px !important;
+    max-width: 135px !important;
+    flex-shrink: 0 !important;
+    padding: 14px 6px !important;
+    border-radius: 12px !important;
+  }
+  .bu-accred-logo {
+    height: 44px !important;
+    max-width: 75px !important;
+  }
+  .bu-accred-badge-name {
+    font-size: 14px !important;
+  }
+  .bu-accred-badge-desc {
+    font-size: 8.5px !important;
   }
 }
-@media (max-width: 575px) {
-  .bu-accred-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+
+@keyframes buAccredMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 7px));
   }
 }
 </style>
