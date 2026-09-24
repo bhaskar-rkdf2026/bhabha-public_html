@@ -16,7 +16,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>India's Best University in Bhopal - Bhabha University Bhopal</title>
-<link rel="icon" href="https://www.bhabhauniversity.edu.in/images/fav-icon.png">
+<link rel="icon" href="<?php echo URL_IMG;?>fav-icon.png">
 <!-- Bootstrap core CSS -->
 <?php include('inc.meta.php');?>
 

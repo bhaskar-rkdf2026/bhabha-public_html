@@ -108,10 +108,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('auditreport') : 
         <div style="display:grid;gap:12px;margin-top:24px;">
           <?php
           $docs = [
-            ['title'=>'Audit Report 2023-24','url'=>'https://www.bhabhauniversity.edu.in/upload/media/a0bae7c93fe4ef327d1e52224c1b8ee8.pdf','year'=>'2023-24'],
-            ['title'=>'Audit Report — Ayushmati Education Society 2023','url'=>'https://www.bhabhauniversity.edu.in/upload/media/6f7c8abe8bbf0031ca3051545b2eac18.pdf','year'=>'2022-23'],
-            ['title'=>'Balance Sheet 2023-24','url'=>'https://www.bhabhauniversity.edu.in/upload/media/c0ca03c0cd958e2bd34d2c186ac3d5c4.pdf','year'=>'2023-24'],
-            ['title'=>'Balance Sheet 2021-22 — Ayushmati Education Society','url'=>'https://www.bhabhauniversity.edu.in/upload/media/18a8b68a5dcc6fdc4682eb26d790d238.pdf','year'=>'2021-22'],
+            ['title'=>'Audit Report 2023-24','url'=>'<?php echo URL_ROOT;?>upload/media/a0bae7c93fe4ef327d1e52224c1b8ee8.pdf','year'=>'2023-24'],
+            ['title'=>'Audit Report — Ayushmati Education Society 2023','url'=>'<?php echo URL_ROOT;?>upload/media/6f7c8abe8bbf0031ca3051545b2eac18.pdf','year'=>'2022-23'],
+            ['title'=>'Balance Sheet 2023-24','url'=>'<?php echo URL_ROOT;?>upload/media/c0ca03c0cd958e2bd34d2c186ac3d5c4.pdf','year'=>'2023-24'],
+            ['title'=>'Balance Sheet 2021-22 — Ayushmati Education Society','url'=>'<?php echo URL_ROOT;?>upload/media/18a8b68a5dcc6fdc4682eb26d790d238.pdf','year'=>'2021-22'],
           ];
           $display_docs = (!empty($portalPage['data']['docs']) && is_array($portalPage['data']['docs'])) ? $portalPage['data']['docs'] : $docs;
           foreach($display_docs as $doc): 

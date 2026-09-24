@@ -35,7 +35,7 @@ $chanc_recogs = !empty($chanc_extra['recognitions']) ? $chanc_extra['recognition
             <i class="fa fa-volume-off"></i>
           </button>
         <?php else: ?>
-          <img loading="lazy" src="<?php echo URL_IMG;?>vcpic.jpg" alt="Dr. Sadhna Kapoor, Chancellor Bhabha University" class="bu-chancellor-img" onerror="this.src='https://www.bhabhauniversity.edu.in/images/vcpic.jpg'">
+          <img loading="lazy" src="<?php echo URL_IMG;?>vcpic.jpg" alt="Dr. Sadhna Kapoor, Chancellor Bhabha University" class="bu-chancellor-img" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
         <?php endif; ?>
         <div class="bu-chancellor-quote-card">
           <p class="bu-quote-text"><?php echo htmlspecialchars($chanc_quote); ?></p>

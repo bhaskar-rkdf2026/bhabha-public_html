@@ -192,7 +192,7 @@ if(is_array($course) && count($course)>0)
       <!-- HEADING 2 START-->
       <div class="col-md-3" align="center"> <img style=" -webkit-box-shadow: 0px 0px 8px 2px #000000;
        -moz-box-shadow: 0px 0px 8px 2px #000000;
-            box-shadow: 0px 0px 8px 2px #000000;" src="https://www.bhabhauniversity.edu.in/images/vcpic.jpg"> </div><br>
+            box-shadow: 0px 0px 8px 2px #000000;" src="<?php echo URL_IMG;?>vcpic.jpg"> </div><br>
       <div class="col-md-9">
         <p style="text-align: justify;"><strong>“Dr. Sadhna Kapoor is the Chancellor of BHABHA University. A visionary and a selfless leader with exceptional entrepreneurial, interpersonal, social and administrative skills; Dr. Sadhna Kapoor is passionate about technology and innovation, community development, social service, and interdisciplinary teaching and research. She has been awarded by “Honorary Professor” of the academic union oxford, UK.” </strong></p>
         <h3>Dr. Sadhna Kapoor, Chancellor </h3>

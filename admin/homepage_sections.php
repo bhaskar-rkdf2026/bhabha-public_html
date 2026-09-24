@@ -179,9 +179,16 @@ if (isset($_POST['submit'])) {
             $tagsRaw = trim($_POST['glob_tags'] ?? '');
             $tags = array_filter(array_map('trim', explode(',', $tagsRaw)));
             $extraArray = [
-                'tags'        => array_values($tags),
-                'button_text' => trim($_POST['glob_btn_text'] ?? 'APPLY NOW →'),
-                'button_url'  => trim($_POST['glob_btn_url'] ?? 'enquiry.php')
+                'tags'           => array_values($tags),
+                'button_text'    => trim($_POST['glob_btn_text'] ?? 'APPLY NOW →'),
+                'button_url'     => trim($_POST['glob_btn_url'] ?? 'enquiry.php'),
+                'yt_is_live'     => isset($_POST['yt_is_live']) ? 1 : 0,
+                'yt_live_url'    => trim($_POST['yt_live_url'] ?? ''),
+                'yt_video_url'   => trim($_POST['yt_video_url'] ?? ''),
+                'yt_title'       => trim($_POST['yt_title'] ?? ''),
+                'yt_desc'        => trim($_POST['yt_desc'] ?? ''),
+                'yt_channel_url' => trim($_POST['yt_channel_url'] ?? ''),
+                'yt_channel_btn' => trim($_POST['yt_channel_btn'] ?? '')
             ];
         } elseif ($secKey == 'insta_reels') {
             $reels = [];
@@ -713,13 +720,22 @@ if (isset($_POST['submit'])) {
                   </div>
                   <?php endif; ?>
 
-                  <!-- 6. GLOBAL NETWORK & MOUS -->
+                  <!-- 6. GLOBAL NETWORK & YOUTUBE LIVE SECTION -->
                   <?php if ($aryData['section_key'] == 'global_network'): 
-                    $tagsList = !empty($extra['tags']) && is_array($extra['tags']) ? implode(', ', $extra['tags']) : '';
+                    $tagsList = !empty($extra['tags']) && is_array($extra['tags']) ? implode(', ', $extra['tags']) : 'University of Toronto, TU Munich, NUS Singapore, Monash, Curtin, UPenn, Sheffield, Kyoto University, ETH Zürich';
+                    $ytIsLive = !empty($extra['yt_is_live']) ? 1 : 0;
+                    $ytLiveUrl = $extra['yt_live_url'] ?? '';
+                    $ytVideoUrl = $extra['yt_video_url'] ?? 'https://www.youtube.com/watch?v=zUsj1r_9wuM';
+                    $ytTitle = $extra['yt_title'] ?? 'Bhabha University Broadcast & Official Events';
+                    $ytDesc = $extra['yt_desc'] ?? 'Watch live broadcasts of convocation, expert guest lectures, campus fests & university events.';
+                    $ytChannelUrl = $extra['yt_channel_url'] ?? 'https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g';
+                    $ytChannelBtn = $extra['yt_channel_btn'] ?? 'Watch on YouTube →';
                   ?>
+                  
+                  <!-- Left Side Settings: International / Global Network -->
                   <div class="simple-card-group">
                     <div class="simple-card-title">
-                      <i class="fa fa-globe"></i> Global Partner Universities &amp; Apply Button
+                      <i class="fa fa-globe text-primary"></i> Column 1: International Partner Universities &amp; Button
                     </div>
                     <div class="form-group">
                       <label>Partner Universities (Comma Separated)</label>
@@ -734,6 +750,69 @@ if (isset($_POST['submit'])) {
                       <div class="col-md-6">
                         <label>Button Link / URL</label>
                         <input type="text" name="glob_btn_url" class="form-control" value="<?php echo htmlspecialchars($extra['button_url'] ?? 'enquiry.php'); ?>">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Right Side Settings: YouTube Live Telecast & Video -->
+                  <div class="simple-card-group" style="background:#fff7f7; border-color:#f5c6cb;">
+                    <div class="simple-card-title" style="color:#c82333; border-bottom-color:#f5c6cb;">
+                      <i class="fa fa-youtube-play text-danger"></i> Column 2: YouTube Live Telecast &amp; Video Broadcast
+                    </div>
+                    
+                    <!-- Live Stream Switch -->
+                    <div class="form-group bg-white p-3 border rounded mb-3" style="border-color:#f5c6cb !important;">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="ytLiveSwitch" name="yt_is_live" value="1" <?php echo ($ytIsLive == 1) ? 'checked' : ''; ?>>
+                        <label class="custom-control-label font-weight-bold text-danger" for="ytLiveSwitch">
+                          <span class="badge badge-danger p-1 mr-1">🔴 LIVE</span> Enable YouTube Live Telecast Mode (Currently Streaming Live)
+                        </label>
+                      </div>
+                      <small class="help-tip">Check this when a live event or telecast is running. The section will display the live telecast stream with a pulsing <strong>🔴 LIVE NOW</strong> indicator.</small>
+                    </div>
+
+                    <div class="row">
+                      <!-- Live Stream URL / ID -->
+                      <div class="col-md-6 form-group">
+                        <label class="text-danger font-weight-bold"><i class="fa fa-video-camera"></i> YouTube Live Telecast URL / ID</label>
+                        <input type="text" name="yt_live_url" class="form-control" value="<?php echo htmlspecialchars($ytLiveUrl); ?>" placeholder="e.g. https://www.youtube.com/watch?v=... or https://www.youtube.com/live/...">
+                        <small class="help-tip">Live video link or ID (used when Live Mode is checked above).</small>
+                      </div>
+
+                      <!-- Fallback / Featured Video URL / ID -->
+                      <div class="col-md-6 form-group">
+                        <label class="font-weight-bold"><i class="fa fa-play-circle text-primary"></i> YouTube Regular / Featured Video URL (Fallback)</label>
+                        <input type="text" name="yt_video_url" class="form-control" value="<?php echo htmlspecialchars($ytVideoUrl); ?>" placeholder="e.g. https://www.youtube.com/watch?v=zUsj1r_9wuM">
+                        <small class="help-tip">Displayed when Live Telecast is OFF or as default university video.</small>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <!-- Video Card Title -->
+                      <div class="col-md-6 form-group">
+                        <label>Video Card Title</label>
+                        <input type="text" name="yt_title" class="form-control" value="<?php echo htmlspecialchars($ytTitle); ?>" placeholder="e.g. Bhabha University Broadcast &amp; Official Events">
+                      </div>
+
+                      <!-- Video Card Subtitle -->
+                      <div class="col-md-6 form-group">
+                        <label>Video Card Description</label>
+                        <input type="text" name="yt_desc" class="form-control" value="<?php echo htmlspecialchars($ytDesc); ?>" placeholder="e.g. Watch live broadcasts, convocation, campus fests &amp; expert talks.">
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <!-- YouTube Channel Link -->
+                      <div class="col-md-6 form-group">
+                        <label><i class="fa fa-youtube-play text-danger"></i> Official YouTube Channel URL</label>
+                        <input type="text" name="yt_channel_url" class="form-control" value="<?php echo htmlspecialchars($ytChannelUrl); ?>" placeholder="https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g">
+                        <small class="help-tip">Direct link to Bhabha University YouTube channel.</small>
+                      </div>
+
+                      <!-- YouTube Channel Button Text -->
+                      <div class="col-md-6 form-group">
+                        <label>Channel Button Text</label>
+                        <input type="text" name="yt_channel_btn" class="form-control" value="<?php echo htmlspecialchars($ytChannelBtn); ?>" placeholder="Watch on YouTube →">
                       </div>
                     </div>
                   </div>

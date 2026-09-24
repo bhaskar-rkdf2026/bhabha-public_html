@@ -110,7 +110,7 @@ $reels_footer_btn_url = !empty($reels_sec['media_url']) ? $reels_sec['media_url'
 /* ── Section Wrapper ── */
 .bu-reels-section {
   background: #FAF8F5;
-  padding: 80px 24px 30px !important;
+  padding: 30px 24px 30px !important;
   width: 100%;
   float: left;
   clear: both;

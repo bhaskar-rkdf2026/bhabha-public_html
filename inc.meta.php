@@ -27,7 +27,7 @@ $bu_meta_keys  = !empty($bu_seo['meta_keywords']) ? $bu_seo['meta_keywords'] : '
 $bu_canonical  = !empty($bu_seo['canonical_url']) ? $bu_seo['canonical_url'] : (defined('URL_ROOT') ? URL_ROOT . $bu_route : 'https://www.bhabhauniversity.edu.in/' . $bu_route);
 $bu_og_title   = !empty($bu_seo['og_title']) ? $bu_seo['og_title'] : $bu_page_title;
 $bu_og_desc    = !empty($bu_seo['og_description']) ? $bu_seo['og_description'] : $bu_meta_desc;
-$bu_og_image   = !empty($bu_seo['og_image']) ? $bu_seo['og_image'] : (defined('URL_IMG') ? URL_IMG . 'logo.png' : 'https://www.bhabhauniversity.edu.in/images/logo.png');
+$bu_og_image   = !empty($bu_seo['og_image']) ? $bu_seo['og_image'] : (defined('URL_IMG') ? URL_IMG . 'logo.png' : '<?php echo URL_IMG;?>logo.png');
 
 // Global vs Page-specific Robots Indexing setting
 $bu_global_robot = isset($aryForm['seo_global_index']) ? $aryForm['seo_global_index'] : 'noindex, nofollow';

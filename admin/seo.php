@@ -694,7 +694,7 @@ $current_tab = $_GET['tab'] ?? 'all';
                                         </div>
                                         <div class="form-group mb-0">
                                             <label class="font-weight-bold text-dark" style="font-size: 12px;">OG Image URL</label>
-                                            <input type="text" class="form-control form-control-sm" name="og_image" id="input_og_image" placeholder="https://www.bhabhauniversity.edu.in/images/logo-og.png">
+                                            <input type="text" class="form-control form-control-sm" name="og_image" id="input_og_image" placeholder="<?php echo URL_IMG;?>logo-og.png">
                                         </div>
                                     </div>
                                 </div>

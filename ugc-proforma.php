@@ -1,7 +1,7 @@
 <?php 
 include('config.php');
 $portalPage = function_exists('getPortalPage') ? getPortalPage('ugc-proforma') : null;
-$pdfUrl = portalVal($portalPage, 'pdf_url', 'https://www.bhabhauniversity.edu.in/upload/media/8a5cc8e8a663be0f26243b584eab0a19.pdf');
+$pdfUrl = portalVal($portalPage, 'pdf_url', '<?php echo URL_ROOT;?>upload/media/8a5cc8e8a663be0f26243b584eab0a19.pdf');
 if (strpos($pdfUrl, 'http') !== 0) $pdfUrl = URL_ROOT . ltrim($pdfUrl, '/');
 ?>
 <!DOCTYPE html>

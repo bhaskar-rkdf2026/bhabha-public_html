@@ -519,10 +519,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('nirf') : null;
             </div>
           </div>
           <div class="bu-nirf-card-actions">
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/e7499fa68f8c45da5de179244ce06453.pdf" target="_blank" class="bu-nirf-btn-view">
+            <a href="<?php echo URL_ROOT;?>upload/media/e7499fa68f8c45da5de179244ce06453.pdf" target="_blank" class="bu-nirf-btn-view">
               <i class="fa fa-external-link"></i> View Report
             </a>
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/e7499fa68f8c45da5de179244ce06453.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
+            <a href="<?php echo URL_ROOT;?>upload/media/e7499fa68f8c45da5de179244ce06453.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
               <i class="fa fa-download"></i>
             </a>
           </div>
@@ -542,10 +542,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('nirf') : null;
             </div>
           </div>
           <div class="bu-nirf-card-actions">
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/b962b78c485d262ff1e7f07aeb9e4792.pdf" target="_blank" class="bu-nirf-btn-view">
+            <a href="<?php echo URL_ROOT;?>upload/media/b962b78c485d262ff1e7f07aeb9e4792.pdf" target="_blank" class="bu-nirf-btn-view">
               <i class="fa fa-external-link"></i> View Report
             </a>
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/b962b78c485d262ff1e7f07aeb9e4792.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
+            <a href="<?php echo URL_ROOT;?>upload/media/b962b78c485d262ff1e7f07aeb9e4792.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
               <i class="fa fa-download"></i>
             </a>
           </div>
@@ -565,10 +565,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('nirf') : null;
             </div>
           </div>
           <div class="bu-nirf-card-actions">
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/809e6f0f24caae71558512a96eb824ba.pdf" target="_blank" class="bu-nirf-btn-view">
+            <a href="<?php echo URL_ROOT;?>upload/media/809e6f0f24caae71558512a96eb824ba.pdf" target="_blank" class="bu-nirf-btn-view">
               <i class="fa fa-external-link"></i> View Report
             </a>
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/809e6f0f24caae71558512a96eb824ba.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
+            <a href="<?php echo URL_ROOT;?>upload/media/809e6f0f24caae71558512a96eb824ba.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
               <i class="fa fa-download"></i>
             </a>
           </div>
@@ -588,10 +588,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('nirf') : null;
             </div>
           </div>
           <div class="bu-nirf-card-actions">
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/10e4e67d2bd221beb9bd9f25c14beb44.pdf" target="_blank" class="bu-nirf-btn-view">
+            <a href="<?php echo URL_ROOT;?>upload/media/10e4e67d2bd221beb9bd9f25c14beb44.pdf" target="_blank" class="bu-nirf-btn-view">
               <i class="fa fa-external-link"></i> View Report
             </a>
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/10e4e67d2bd221beb9bd9f25c14beb44.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
+            <a href="<?php echo URL_ROOT;?>upload/media/10e4e67d2bd221beb9bd9f25c14beb44.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
               <i class="fa fa-download"></i>
             </a>
           </div>
@@ -611,10 +611,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('nirf') : null;
             </div>
           </div>
           <div class="bu-nirf-card-actions">
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/d67c5238d424c629091bc9d04f151c1f.pdf" target="_blank" class="bu-nirf-btn-view">
+            <a href="<?php echo URL_ROOT;?>upload/media/d67c5238d424c629091bc9d04f151c1f.pdf" target="_blank" class="bu-nirf-btn-view">
               <i class="fa fa-external-link"></i> View Report
             </a>
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/d67c5238d424c629091bc9d04f151c1f.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
+            <a href="<?php echo URL_ROOT;?>upload/media/d67c5238d424c629091bc9d04f151c1f.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
               <i class="fa fa-download"></i>
             </a>
           </div>
@@ -634,10 +634,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('nirf') : null;
             </div>
           </div>
           <div class="bu-nirf-card-actions">
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/4d6fe79475b028260ee9c2d26e5e13eb.pdf" target="_blank" class="bu-nirf-btn-view">
+            <a href="<?php echo URL_ROOT;?>upload/media/4d6fe79475b028260ee9c2d26e5e13eb.pdf" target="_blank" class="bu-nirf-btn-view">
               <i class="fa fa-external-link"></i> View Report
             </a>
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/4d6fe79475b028260ee9c2d26e5e13eb.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
+            <a href="<?php echo URL_ROOT;?>upload/media/4d6fe79475b028260ee9c2d26e5e13eb.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
               <i class="fa fa-download"></i>
             </a>
           </div>
@@ -657,10 +657,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('nirf') : null;
             </div>
           </div>
           <div class="bu-nirf-card-actions">
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/57d360d54612fee3c65985bc9ad0eba0.pdf" target="_blank" class="bu-nirf-btn-view">
+            <a href="<?php echo URL_ROOT;?>upload/media/57d360d54612fee3c65985bc9ad0eba0.pdf" target="_blank" class="bu-nirf-btn-view">
               <i class="fa fa-external-link"></i> View Report
             </a>
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/57d360d54612fee3c65985bc9ad0eba0.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
+            <a href="<?php echo URL_ROOT;?>upload/media/57d360d54612fee3c65985bc9ad0eba0.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
               <i class="fa fa-download"></i>
             </a>
           </div>
@@ -680,10 +680,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('nirf') : null;
             </div>
           </div>
           <div class="bu-nirf-card-actions">
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/609d5cf76b83a259a1ba4eac912aa03e.pdf" target="_blank" class="bu-nirf-btn-view">
+            <a href="<?php echo URL_ROOT;?>upload/media/609d5cf76b83a259a1ba4eac912aa03e.pdf" target="_blank" class="bu-nirf-btn-view">
               <i class="fa fa-external-link"></i> View Report
             </a>
-            <a href="https://www.bhabhauniversity.edu.in/upload/media/609d5cf76b83a259a1ba4eac912aa03e.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
+            <a href="<?php echo URL_ROOT;?>upload/media/609d5cf76b83a259a1ba4eac912aa03e.pdf" download target="_blank" class="bu-nirf-btn-dl" title="Download PDF">
               <i class="fa fa-download"></i>
             </a>
           </div>

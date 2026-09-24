@@ -94,7 +94,7 @@ $homeGallery = $db->get('gallery', 8);
    ============================================================ */
 .bu-home-gallery-section {
   background-color: #FAF7F2 !important; /* Warm creamy background */
-  padding: 85px 20px 95px !important;
+  padding: 30px 20px 30px !important;
   width: 100% !important;
   float: left !important;
   clear: both !important;

@@ -76,23 +76,23 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('mandatory-disclo
       <?php endforeach; ?>
     <?php else: ?>
 		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
+			<td><img src="<?php echo URL_ROOT;?>upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
 			<td><a href="#" target="_blank"><span style="color:#cc6600">- </span></a></td>
 		</tr>
 	    <tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
+			<td><img src="<?php echo URL_ROOT;?>upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
 			<td><a href="#" target="_blank"><span style="color:#cc6600">-</span></a></td>
 		</tr> 
 		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
+			<td><img src="<?php echo URL_ROOT;?>upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
 			<td><a href="#" target="_blank"><span style="color:#cc6600">- </span></a></td>
 		</tr>
 		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
+			<td><img src="<?php echo URL_ROOT;?>upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
 			<td><a href="#" target="_blank"><span style="color:#cc6600">- </span></a></td>
 		</tr>
 		<tr>
-			<td><img src="https://www.bhabhauniversity.edu.in/upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
+			<td><img src="<?php echo URL_ROOT;?>upload/media/6922d10c4a182131bad863d95a4b7010.gif" /></td>
 			<td><a href="#" target="_blank"><span style="color:#cc6600">- </span></a></td>
 		</tr>
     <?php endif; ?>

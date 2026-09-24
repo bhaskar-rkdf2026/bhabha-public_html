@@ -40,6 +40,19 @@ if (isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'], 'localhost') 
 }
 define("URL_ADMIN_IMG",URL_ROOT.'img/');
 
+// Dynamic output filter to ensure all media/PDF/image links resolve to local URL_ROOT on localhost
+if (!function_exists('bu_filter_live_assets')) {
+    function bu_filter_live_assets($buffer) {
+        if (defined('URL_ROOT') && (strpos(URL_ROOT, 'localhost') !== false || strpos(URL_ROOT, '127.0.0.1') !== false)) {
+            $buffer = preg_replace('/https?:\/\/(?:www\.)?bhabhauniversity\.edu\.in\/(upload|images|css|js|extra-images)\//i', URL_ROOT . '$1/', $buffer);
+        }
+        return $buffer;
+    }
+}
+if (!headers_sent() && php_sapi_name() !== 'cli') {
+    ob_start('bu_filter_live_assets');
+}
+
 require_once(PATH_LIB."MysqliDb.php");
 require_once(PATH_LIB."functions.php");
 require_once(PATH_LIB."validations.php");

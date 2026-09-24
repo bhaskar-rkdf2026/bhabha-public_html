@@ -1022,9 +1022,9 @@ function getLeaderImgUrl($imgName) {
           <div class="bu-chancellor-left-col">
             <div class="bu-chancellor-portrait-wrap">
               <?php if (!empty($chancellor_img)): ?>
-                <img src="<?php echo $chancellor_img; ?>" alt="<?php echo htmlspecialchars($chancellor['name']); ?>" onerror="this.src='https://www.bhabhauniversity.edu.in/images/vcpic.jpg'">
+                <img src="<?php echo $chancellor_img; ?>" alt="<?php echo htmlspecialchars($chancellor['name']); ?>" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
               <?php else: ?>
-                <img src="<?php echo URL_ROOT; ?>images/vcpic.jpg" alt="<?php echo htmlspecialchars($chancellor['name']); ?>" onerror="this.src='https://www.bhabhauniversity.edu.in/images/vcpic.jpg'">
+                <img src="<?php echo URL_ROOT; ?>images/vcpic.jpg" alt="<?php echo htmlspecialchars($chancellor['name']); ?>" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
               <?php endif; ?>
               <div class="bu-chancellor-badge-tag"><?php echo htmlspecialchars($chancellor['title'] ?: 'Chancellor'); ?></div>
             </div>
