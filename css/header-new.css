@@ -165,17 +165,16 @@ body {
   padding: 10px 20px;
 }
 
-/* Logo Brand Styling */
 .bu-brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   text-decoration: none;
-  padding: 4px 0;
+  padding: 2px 0;
 }
 
 .bu-brand-logo {
-  height: 52px;
+  height: 65px;
   width: auto;
   object-fit: contain;
 }
@@ -183,11 +182,32 @@ body {
 .bu-brand-text {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+
+.bu-brand-name-1 {
+  font-family: var(--bu-font-title, 'Playfair Display', Georgia, serif);
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--bu-navy);
+  line-height: 1.05;
+  letter-spacing: -0.3px;
+  display: block;
+}
+
+.bu-brand-name-2 {
+  font-family: var(--bu-font-title, 'Playfair Display', Georgia, serif);
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--bu-navy);
+  line-height: 1.05;
+  letter-spacing: -0.2px;
+  display: block;
 }
 
 .bu-brand-title {
   font-family: var(--bu-font-title);
-  font-size: 23px;
+  font-size: 24px;
   font-weight: 800;
   color: var(--bu-navy);
   line-height: 1.1;
@@ -195,12 +215,7 @@ body {
 }
 
 .bu-brand-subtitle {
-  font-size: 10.5px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: var(--bu-gold-dark);
-  text-transform: uppercase;
-  margin-top: 3px;
+  display: none;
 }
 
 /* Main Navigation Menu */

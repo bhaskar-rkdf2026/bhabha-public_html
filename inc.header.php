@@ -46,20 +46,23 @@
       <a href="<?php echo URL_ROOT;?>" class="bu-brand">
         <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Bhabha University Emblem" class="bu-brand-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
         <div class="bu-brand-text">
-          <span class="bu-brand-title">Bhabha University</span>
-          <span class="bu-brand-subtitle">Bhopal &bull; Since 2004</span>
+          <span class="bu-brand-name-1">Bhabha</span>
+          <span class="bu-brand-name-2">University</span>
         </div>
       </a>
 
-      <!-- Mobile Menu Toggle Button -->
-      <button class="bu-mobile-toggle" id="buMobileToggle" aria-label="Toggle Navigation">
-        <i class="fa fa-bars"></i>
-      </button>
       <!-- Mobile Nav Backdrop -->
       <div id="buNavBackdrop" class="bu-nav-backdrop"></div>
 
       <!-- Main Navigation Menu -->
       <nav class="bu-navbar" id="buNavbar">
+        <div class="bu-mobile-drawer-head">
+          <div class="bu-drawer-brand">
+            <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Logo" class="bu-drawer-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
+            <span>Bhabha University</span>
+          </div>
+          <button type="button" class="bu-drawer-close" id="buDrawerCloseBtn" aria-label="Close Menu">&times;</button>
+        </div>
         <ul class="bu-nav-menu">
           <li class="bu-nav-item">
             <a href="<?php echo href('index.php'); ?>" class="bu-nav-link">Home</a>
@@ -234,6 +237,11 @@
         <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-navy">Apply</a>
       </div>
 
+      <!-- Mobile Menu Toggle Button (extreme right corner) -->
+      <button class="bu-mobile-toggle" id="buMobileToggle" aria-label="Toggle Navigation">
+        <i class="fa fa-bars"></i>
+      </button>
+
     </div>
   </div>
 
@@ -278,8 +286,9 @@
       });
     }
 
-    /* ---- Mobile Toggle ---- */
+    /* ---- Mobile Toggle & Drawer ---- */
     var mobileToggle = document.getElementById('buMobileToggle');
+    var drawerClose  = document.getElementById('buDrawerCloseBtn');
     var navbar       = document.getElementById('buNavbar');
     var backdrop     = document.getElementById('buNavBackdrop');
 
@@ -297,47 +306,48 @@
     }
 
     if (mobileToggle) {
-      mobileToggle.addEventListener('click', function () {
+      mobileToggle.addEventListener('click', function (e) {
+        e.preventDefault();
         navbar && navbar.classList.contains('mobile-open') ? closeMenu() : openMenu();
+      });
+    }
+    if (drawerClose) {
+      drawerClose.addEventListener('click', function (e) {
+        e.preventDefault();
+        closeMenu();
       });
     }
     if (backdrop) {
       backdrop.addEventListener('click', closeMenu);
     }
 
-    /* ---- Mobile Accordion Dropdowns ---- */
-    function setupMobileAccordion() {
-      var navItems = document.querySelectorAll('.bu-nav-item');
-      navItems.forEach(function (item) {
-        var link     = item.querySelector('.bu-nav-link');
+    /* ---- Mobile Accordion Dropdowns (Event Delegation) ---- */
+    if (navbar) {
+      navbar.addEventListener('click', function (e) {
+        if (window.innerWidth > 991) return;
+        var link = e.target.closest('.bu-nav-link');
+        if (!link) return;
+        var item = link.closest('.bu-nav-item');
+        if (!item) return;
         var dropdown = item.querySelector('.bu-dropdown');
-        if (!dropdown || !link) return;
-
-        // Remove old listeners by cloning
-        var newLink = link.cloneNode(true);
-        link.parentNode.replaceChild(newLink, link);
-
-        if (window.innerWidth <= 991) {
-          newLink.addEventListener('click', function (e) {
-            e.preventDefault();
-            var isOpen = item.classList.contains('open');
-            // Close all siblings
-            navItems.forEach(function (i) { i.classList.remove('open'); });
-            if (!isOpen) item.classList.add('open');
+        if (dropdown) {
+          e.preventDefault();
+          e.stopPropagation();
+          var isOpen = item.classList.contains('open');
+          document.querySelectorAll('.bu-nav-item.open').forEach(function (openItem) {
+            if (openItem !== item) openItem.classList.remove('open');
           });
+          item.classList.toggle('open', !isOpen);
         }
       });
     }
 
-    setupMobileAccordion();
-
-    // Re-run on resize
+    // Auto close menu on resize up
     var resizeTimer;
     window.addEventListener('resize', function () {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(function () {
         if (window.innerWidth > 991) closeMenu();
-        setupMobileAccordion();
       }, 200);
     });
   });

@@ -48,28 +48,45 @@ table { max-width: 100% !important; }
   .bu-btn-navy { padding: 8px 16px !important; font-size: 11px !important; }
 }
 @media (max-width: 991px) {
-  .bu-mobile-toggle { display: flex !important; }
-  .bu-header-container { padding: 10px 16px !important; }
-  .bu-brand-title { font-size: 19px !important; }
-  .bu-brand-logo { height: 46px !important; }
+  .bu-mobile-toggle { 
+    display: flex !important; 
+    margin-left: auto !important; 
+    order: 99 !important;
+  }
+  .bu-header-actions {
+    margin-left: auto !important;
+    order: 98 !important;
+  }
+  .bu-header-container { 
+    padding: 10px 16px !important; 
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+  .bu-brand-title, .bu-brand-name-1 { font-size: 20px !important; }
+  .bu-brand-name-2 { font-size: 17px !important; }
+  .bu-brand-logo { height: 52px !important; }
 }
 @media (max-width: 767px) {
-  .bu-brand-title { font-size: 17px !important; }
-  .bu-brand-subtitle { font-size: 9px !important; letter-spacing: 1.5px !important; }
-  .bu-brand-logo { height: 42px !important; }
+  .bu-brand-title, .bu-brand-name-1 { font-size: 18px !important; }
+  .bu-brand-name-2 { font-size: 15px !important; }
+  .bu-brand-subtitle { display: none !important; }
+  .bu-brand-logo { height: 46px !important; }
   .bu-header-container { gap: 8px !important; padding: 8px 12px !important; }
 }
 @media (max-width: 480px) {
   .bu-brand-subtitle { display: none !important; }
-  .bu-brand-title { font-size: 15px !important; }
-  .bu-brand-logo { height: 36px !important; }
+  .bu-brand-title, .bu-brand-name-1 { font-size: 16px !important; }
+  .bu-brand-name-2 { font-size: 13.5px !important; }
+  .bu-brand-logo { height: 40px !important; }
   .bu-btn-navy { display: none !important; }
   .bu-brand { gap: 8px !important; }
 }
 @media (max-width: 360px) {
-  .bu-brand-title { font-size: 14px !important; }
-  .bu-brand-logo { height: 32px !important; }
-  .bu-mobile-toggle { font-size: 18px !important; padding: 4px 8px !important; }
+  .bu-brand-title, .bu-brand-name-1 { font-size: 14px !important; }
+  .bu-brand-name-2 { font-size: 12px !important; }
+  .bu-brand-logo { height: 34px !important; }
+  .bu-mobile-toggle { font-size: 22px !important; padding: 4px 6px !important; }
 }
 
 /* ================================================================
@@ -80,15 +97,15 @@ table { max-width: 100% !important; }
     position: fixed !important;
     top: 0 !important;
     left: -310px !important;
-    width: 290px !important;
+    width: 295px !important;
     height: 100vh !important;
-    background: #0A1B54 !important;
-    box-shadow: 4px 0 30px rgba(0,0,0,0.35) !important;
-    transition: left 0.32s cubic-bezier(0.4,0,0.2,1) !important;
+    background: #081745 !important;
+    box-shadow: 6px 0 30px rgba(0,0,0,0.4) !important;
+    transition: left 0.3s cubic-bezier(0.4,0,0.2,1) !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     z-index: 9998 !important;
-    padding: 72px 0 40px !important;
+    padding: 0 0 40px !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
@@ -103,42 +120,62 @@ table { max-width: 100% !important; }
   }
   .bu-nav-item {
     width: 100% !important;
-    border-bottom: 1px solid rgba(255,255,255,0.09) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   }
   .bu-nav-link {
-    color: rgba(255,255,255,0.9) !important;
+    color: #FFFFFF !important;
     width: 100% !important;
     justify-content: space-between !important;
     padding: 14px 20px !important;
-    font-size: 13px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
     white-space: normal !important;
+    transition: all 0.2s ease !important;
+  }
+  .bu-nav-link:hover,
+  .bu-nav-link:focus,
+  .bu-nav-link:active,
+  .bu-nav-item:hover > .bu-nav-link,
+  .bu-nav-item.open > .bu-nav-link {
+    color: #FFC107 !important;
+    background: rgba(255, 255, 255, 0.08) !important;
   }
   .bu-nav-link::after { display: none !important; }
+  .bu-nav-link:hover i.fa-angle-down,
+  .bu-nav-item.open > .bu-nav-link i.fa-angle-down {
+    color: #FFC107 !important;
+  }
   .bu-dropdown {
     position: static !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
-    background: rgba(0,0,0,0.22) !important;
-    box-shadow: none !important;
+    background: #040e2e !important;
+    box-shadow: inset 0 3px 10px rgba(0,0,0,0.35) !important;
     border: none !important;
     border-radius: 0 !important;
     display: none !important;
     width: 100% !important;
-    padding: 4px 0 !important;
+    padding: 6px 0 !important;
     min-width: 0 !important;
   }
   .bu-nav-item.open > .bu-dropdown { display: block !important; }
   .bu-dropdown li a {
-    color: rgba(255,255,255,0.75) !important;
-    padding: 7px 20px 7px 30px !important;
-    font-size: 12px !important;
-    border-left: none !important;
+    color: #FFFFFF !important;
+    padding: 10px 20px 10px 30px !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    border-left: 3px solid transparent !important;
+    display: block !important;
+    transition: all 0.2s ease !important;
   }
-  .bu-dropdown li a:hover {
-    background: rgba(255,255,255,0.07) !important;
+  .bu-dropdown li a:hover,
+  .bu-dropdown li a:focus,
+  .bu-dropdown li a:active {
+    background: rgba(255,255,255,0.12) !important;
     color: #FFC107 !important;
-    padding-left: 34px !important;
+    border-left-color: #FFC107 !important;
+    padding-left: 36px !important;
   }
   .bu-nav-item.open > .bu-nav-link i.fa-angle-down { transform: rotate(180deg) !important; }
   /* Nav Backdrop */
