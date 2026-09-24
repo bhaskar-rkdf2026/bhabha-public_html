@@ -304,8 +304,8 @@
             <span class="bu-content-label">Student Success Stories</span>
             <h2 class="bu-content-h2" style="margin-bottom:0;">Recent <em>Placed Students</em></h2>
           </div>
-          <a href="<?php echo URL_ROOT;?>upload/media/9018b4daec2ac10a45dfd539260998f5.pdf" target="_blank" style="background:#0A1B54; color:#FFC107; font-weight:800; font-size:13px; letter-spacing:1px; text-transform:uppercase; padding:12px 24px; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; box-shadow:0 4px 16px rgba(10,27,84,0.2); transition:transform 0.25s ease;">
-             <i class="fa fa-download" style="margin-right:8px; font-size:16px;"></i> Placement Record
+          <a href="<?php echo URL_ROOT;?>upload/media/9018b4daec2ac10a45dfd539260998f5.pdf" target="_blank" class="bu-btn">
+             <i class="fa fa-download"></i> Placement Record
           </a>
         </div>
         <div class="bu-content-divider" style="margin-top:20px;"></div>
@@ -350,8 +350,8 @@
             <span class="bu-content-label">Corporate Partners</span>
             <h2 class="bu-content-h2" style="margin-bottom:0;">Our Major <em>Recruiters</em></h2>
           </div>
-          <a href="<?php echo URL_ROOT;?>upload/media/f27e76c6a5c21432282101555c225b35.jpg" target="_blank" style="background:#0A1B54; color:#FFC107; font-weight:800; font-size:13px; letter-spacing:1px; text-transform:uppercase; padding:12px 24px; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; box-shadow:0 4px 16px rgba(10,27,84,0.2); transition:transform 0.25s ease;">
-             <i class="fa fa-picture-o" style="margin-right:8px; font-size:16px;"></i> View All Recruiters
+          <a href="<?php echo URL_ROOT;?>upload/media/f27e76c6a5c21432282101555c225b35.jpg" target="_blank" class="bu-btn">
+             <i class="fa fa-picture-o"></i> View All Recruiters
           </a>
         </div>
         <div class="bu-content-divider" style="margin-top:20px;"></div>

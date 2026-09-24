@@ -18,63 +18,47 @@
       <!--HEADER START-->
       <?php include('inc.header.php');?>
       <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>Virtual Tour</h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#">Virtual Tour</a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
-        </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>Bhabha University</h5>
-                <h3>Virtual Tour</h3>
+      <?php
+      $page_title    = 'Virtual <em>Tour</em>';
+      $page_subtitle = 'Experience Bhabha University Campus from Anywhere';
+      $page_icon     = 'fa-video-camera';
+      $breadcrumbs   = [
+        ['label' => 'Home', 'url' => URL_ROOT],
+        ['label' => 'About Us', 'url' => href('about.php')],
+        ['label' => 'Virtual Tour', 'url' => '#']
+      ];
+      include('inc.page-banner.php');
+      ?>
+      
+      <div class="bu-inner-layout">
+        <?php 
+        $active_page = 'virtual';
+        include('inc.about-sidebar.php');
+        ?>
+
+        <main class="bu-inner-content">
+          <div class="bu-content-card">
+            <span class="bu-content-label">Campus Walkthrough</span>
+            <h2 class="bu-content-h2">Explore Bhabha University</h2>
+            <div class="bu-content-divider"></div>
+            <div class="bu-content-body" style="padding-top:15px;">
+              <p style="font-size:15px;color:#475569;margin-bottom:20px;">
+                Take a comprehensive virtual walkthrough of our lush green campus, modern research laboratories, academic blocks, auditoriums, and world-class student facilities.
+              </p>
+              <div style="border-radius:12px; overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,0.12); background:#000;">
+                <video width="100%" controls style="display:block; max-height:560px; outline:none;">
+                  <source src="<?php echo URL_UPLOAD?>video/bhabha_video.mp4" type="video/mp4">
+                  Your browser does not support HTML video.
+                </video>
               </div>
-                  <!-- HEADING 1 END-->
-                  <div class="abt_univ_des"> 
-                  <video width="100%" controls>
-  <source src="<?php echo URL_UPLOAD?>video/bhabha_video.mp4" type="video/mp4">
-  Your browser does not support HTML video.
-</video>
-                  </div>
-                </div>
-          </div>
             </div>
+          </div>
+        </main>
       </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
-  </div>
+
       <!--FOOTER START-->
       <?php include('inc.footer.php');?>
-      
       <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
     </div>
 <!--KF KODE WRAPPER WRAP END--> 
 <!--Bootstrap core JavaScript-->

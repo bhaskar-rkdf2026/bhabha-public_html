@@ -17,60 +17,67 @@
       <!--HEADER START-->
       <?php include('inc.header.php');?>
       <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>Solar Plant</h3>
+      <?php
+      $page_title    = 'Solar <em>Plant</em>';
+      $page_subtitle = 'Clean & Renewable Energy Initiative at Bhabha University';
+      $page_icon     = 'fa-sun-o';
+      $breadcrumbs   = [
+        ['label' => 'Home', 'url' => URL_ROOT],
+        ['label' => 'About Us', 'url' => href('about.php')],
+        ['label' => 'Solar Plant', 'url' => '#']
+      ];
+      include('inc.page-banner.php');
+      ?>
+
+      <div class="bu-inner-layout">
+        <?php 
+        $active_page = 'solar';
+        include('inc.about-sidebar.php');
+        ?>
+
+        <main class="bu-inner-content">
+          <div class="bu-content-card">
+            <span class="bu-content-label">Green Campus Initiative</span>
+            <h2 class="bu-content-h2">100 KW Solar Power Plant</h2>
+            <div class="bu-content-divider"></div>
+            <div class="bu-content-body" style="padding-top:15px;">
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:16px; margin-bottom:28px;">
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-top:3px solid #0A1B54; border-radius:8px; padding:18px 16px; text-align:center;">
+                  <div style="font-size:24px; font-weight:800; color:#0A1B54; font-family:'Playfair Display',serif;">100 KW</div>
+                  <div style="font-size:12px; font-weight:700; color:#FFC107; text-transform:uppercase; margin-top:4px;">Installed Capacity</div>
                 </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#">Solar Plant</a></li>
-              </ul>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-top:3px solid #0A1B54; border-radius:8px; padding:18px 16px; text-align:center;">
+                  <div style="font-size:24px; font-weight:800; color:#0A1B54; font-family:'Playfair Display',serif;">500 kWh</div>
+                  <div style="font-size:12px; font-weight:700; color:#FFC107; text-transform:uppercase; margin-top:4px;">Daily Clean Energy</div>
                 </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
-        </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>Solar Plant</h3>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-top:3px solid #0A1B54; border-radius:8px; padding:18px 16px; text-align:center;">
+                  <div style="font-size:24px; font-weight:800; color:#0A1B54; font-family:'Playfair Display',serif;">136 Tonnes</div>
+                  <div style="font-size:12px; font-weight:700; color:#FFC107; text-transform:uppercase; margin-top:4px;">Annual CO2 Offset</div>
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-top:3px solid #0A1B54; border-radius:8px; padding:18px 16px; text-align:center;">
+                  <div style="font-size:24px; font-weight:800; color:#0A1B54; font-family:'Playfair Display',serif;">1,980 m²</div>
+                  <div style="font-size:12px; font-weight:700; color:#FFC107; text-transform:uppercase; margin-top:4px;">Rooftop Panel Area</div>
+                </div>
               </div>
-                  <!-- HEADING 1 END-->
-                  <div class="abt_univ_des" >
-                  <p>BHABHA UNIVERSITY, Bhopal has set up a 100kw solar power plant on the campus to reduce dependence on non-renewable forms of energy. University vice-chancellor Dr. M.C.Kishore inaugurated the solar plant installed at the Centre for Nanoscience and Technology on the A C Tech campus of the university. </p><p>The solar power plant, donated by an alumnus, is fabricated with polycrystalline silicon modules and can produce electricity at an average of 500 kwh(units) a day. Carbon foot print reduction 136 tones annul   Solar PV Panels 295 watt each,339 nos. Roof top area1980sq m. </p><p> University officials said part of the power requirements of the Centre for Nanoscience and Technology would be met using solar energy from the plant. The centre has been conducting research on concentrated solar photovoltaic’s to reduce the panel area while considering higher capacity plants. mandates that 6% of the total power consumption in all educational institutions should be met by solar energy</p>
-              </div>
-                </div>
-          </div>
+
+              <p style="font-size:15px; line-height:1.8; color:#334155; margin-bottom:16px;">
+                <strong>Bhabha University, Bhopal</strong> has commissioned a state-of-the-art 100 kW solar power plant across its campus rooftops to reduce dependence on conventional non-renewable energy sources and foster sustainable, eco-friendly campus operations.
+              </p>
+              <p style="font-size:15px; line-height:1.8; color:#334155; margin-bottom:16px;">
+                The solar power installation is fabricated with high-efficiency polycrystalline silicon modules and produces an average of 500 kWh (units) of electricity every single day. The system consists of 339 advanced Solar PV panels (295W each), spreading across 1,980 square meters of rooftop area, achieving a carbon footprint reduction of 136 tonnes annually.
+              </p>
+              <p style="font-size:15px; line-height:1.8; color:#334155; margin-bottom:16px;">
+                Part of the electricity needs of the academic and laboratory blocks are directly supplied by this plant. The university also conducts active student research on concentrated photovoltaic systems to enhance energy yield while advancing green technologies in education.
+              </p>
             </div>
+          </div>
+        </main>
       </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
-  </div>
+
       <!--FOOTER START-->
       <?php include('inc.footer.php');?>
-      
       <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
     </div>
 <!--KF KODE WRAPPER WRAP END--> 
 <!--Bootstrap core JavaScript-->

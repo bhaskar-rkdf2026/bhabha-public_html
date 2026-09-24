@@ -55,51 +55,32 @@ ul, #myUL {
 <body>
 <div class="kode_wrapper"> 
       <!-- register Modal --> 
-      <!--HEADER START-->
-      <?php include('inc.header.php');?>
-      <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>Question Papers</h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="https://www.bhabhauniversity.edu.in/BUQuestionPapers_demo.php">Previous Year Question Papers</a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
-        </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>Exam Papers</h3>
-              </div>
-                  <!-- HEADING 1 END-->
-                   
-    
-       
-	                  <h2>Engineering</h2>
+<!--HEADER START-->
+<?php include('inc.header.php');?>
+<!--HEADER END-->
 
-                           <p>Click on the arrow(s) to open or close the tree branches.</p>
+<?php
+$page_title    = 'Engineering <em>Branches Papers</em>';
+$page_subtitle = 'Course Directory &amp; Exam Papers for Engineering Departments';
+$page_icon     = 'fa-cogs';
+$breadcrumbs   = [
+  ['label' => 'Home', 'url' => URL_ROOT],
+  ['label' => 'Question Papers', 'url' => href('BUQuestionPapers_demo.php')],
+  ['label' => 'Engineering Branches', 'url' => '#']
+];
+include('inc.page-banner.php');
+?>
+
+<div class="container" style="padding:40px 15px 60px 15px;">
+  <div class="bu-content-card" style="background:#fff; border-radius:12px; border:1px solid #E2E8F0; padding:35px 30px; box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+    <a href="<?php echo href('BUQuestionPapers_demo.php');?>" class="bu-btn" style="margin-bottom:24px;">
+      <i class="fa fa-arrow-left"></i> Back to All Question Papers
+    </a>
+    
+    <span class="bu-content-label" style="display:block; font-size:11px; font-weight:800; color:#FFC107; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px;">Faculty of Engineering &amp; Technology</span>
+    <h2 class="bu-content-h2" style="font-size:24px; font-weight:800; color:#0A1B54; margin:0 0 16px 0;">Engineering Branches Structure</h2>
+    <div style="height:3px; width:45px; background:#FFC107; border-radius:2px; margin-bottom:20px;"></div>
+    <p style="color:#64748B; font-size:14px; margin-bottom:20px;">Click on the arrow(s) to expand or collapse course and branch papers.</p>
 
                                <ul id="myUL">
                                         <li><span class="caret">BTech</span>
@@ -170,17 +151,13 @@ ul, #myUL {
   
 </ul>
 
+  </div>
+</div>
 
- </div>
-  </div>                   
-    <!--ABOUT UNIVERSITY END--> 
-    
-  
-      <!--FOOTER START-->
-      <?php include('inc.footer.php');?>
-      
-      <!--FOOTER END--> 
-    
+<!--FOOTER START-->
+<?php include('inc.footer.php');?>
+<!--FOOTER END--> 
+</div>
 <!--KF KODE WRAPPER WRAP END--> 
 <!--Bootstrap core JavaScript-->
 <?php include('inc.footer.js.php');?>

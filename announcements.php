@@ -20,60 +20,53 @@ $aryData = $db->getOne('news_and_announcement');
       <!--HEADER START-->
       <?php include('inc.header.php');?>
       <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3><?php echo $aryData['title']?></h3>
+      <?php
+      $page_title    = $aryData['title'] ?? 'Official Announcement';
+      $page_subtitle = 'University Circular &amp; Public Notice';
+      $page_icon     = 'fa-bullhorn';
+      $breadcrumbs   = [
+        ['label' => 'Home', 'url' => URL_ROOT],
+        ['label' => 'Notice Board', 'url' => href('notice.php')],
+        ['label' => 'Announcement', 'url' => '#']
+      ];
+      include('inc.page-banner.php');
+      ?>
+
+      <div class="bu-inner-layout">
+        <?php 
+        $active_page = 'announcements';
+        include('inc.about-sidebar.php');
+        ?>
+
+        <main class="bu-inner-content">
+          <div class="bu-content-card">
+            <span class="bu-content-label">Official Announcement</span>
+            <h2 class="bu-content-h2"><?php echo htmlspecialchars($aryData['title'] ?? 'Announcement Details'); ?></h2>
+            <div class="bu-content-divider"></div>
+            <div class="bu-content-body" style="padding-top:15px; font-size:15px; line-height:1.8; color:#334155;">
+                  <?php if (!empty($aryData['date'])): ?>
+                    <div style="margin-bottom:15px; font-size:13px; color:#64748B;">
+                      <i class="fa fa-calendar" style="color:#0A1B54; margin-right:6px;"></i> Posted on: <?php echo date('F d, Y', strtotime($aryData['date'])); ?>
+                    </div>
+                  <?php endif; ?>
+                  
+                  <div>
+                    <?php echo $aryData['description'] ?? '<p>No details found for this announcement.</p>'; ?>
+                  </div>
+                  
+                  <div style="margin-top:30px; padding-top:20px; border-top:1px solid #E2E8F0;">
+                    <a href="<?php echo href('notice.php');?>" class="bu-table-dl">
+                      <i class="fa fa-arrow-left"></i> Back to Notices &amp; Announcements
+                    </a>
+                  </div>
                 </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#"><?php echo $aryData['title']?></a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
-        </div>
-  </div>
-      <!--NEWS LETTERS END--> 
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3><?php echo $aryData['title']?></h3>
               </div>
-                  <!-- HEADING 1 END-->
-                  <div class="abt_univ_des">
-               <p><?php echo $aryData['description']?></p>
-              </div>
-                </div>
+            </main>
           </div>
-            </div>
-      </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
-  </div>
+
       <!--FOOTER START-->
       <?php include('inc.footer.php');?>
-      
       <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
     </div>
 <!--KF KODE WRAPPER WRAP END--> 
 <!--Bootstrap core JavaScript-->

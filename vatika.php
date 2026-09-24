@@ -17,87 +17,85 @@
       <!--HEADER START-->
       <?php include('inc.header.php');?>
       <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>VATIKA</h3>
+      <?php
+      $page_title    = 'Botanical <em>Vatika</em>';
+      $page_subtitle = 'Herbal & Ayurvedic Gardens at Bhabha University Campus';
+      $page_icon     = 'fa-leaf';
+      $breadcrumbs   = [
+        ['label' => 'Home', 'url' => URL_ROOT],
+        ['label' => 'About Us', 'url' => href('about.php')],
+        ['label' => 'Vatika', 'url' => '#']
+      ];
+      include('inc.page-banner.php');
+      ?>
+
+      <div class="bu-inner-layout">
+        <?php 
+        $active_page = 'vatika';
+        include('inc.about-sidebar.php');
+        ?>
+
+        <main class="bu-inner-content">
+          <div class="bu-content-card">
+            <span class="bu-content-label">Campus Biodiversity &amp; Ayurveda</span>
+            <h2 class="bu-content-h2">Traditional &amp; Herbal Vatika Collections</h2>
+            <div class="bu-content-divider"></div>
+            <div class="bu-content-body" style="padding-top:15px;">
+              <p style="font-size:15px; line-height:1.8; color:#334155; margin-bottom:24px;">
+                Bhabha University maintains specialized astrological, medicinal, and ecological botanical gardens across its campus to promote biodiversity, environmental sustainability, and research in Ayurvedic sciences and botany.
+              </p>
+
+              <div style="display:flex; flex-direction:column; gap:16px;">
+                <?php
+                $vatika_list = [
+                  [
+                    'title' => 'Navgrah Vatika',
+                    'desc'  => 'Botanical layout dedicated to the nine celestial planetary flora and traditional medicinal trees.',
+                    'pdf'   => URL_UPLOAD . 'media/9ace0ddc31bab9c2cd740ebb0501a138.pdf',
+                    'icon'  => 'fa-tree'
+                  ],
+                  [
+                    'title' => 'Nakshatra Vatika',
+                    'desc'  => 'Specially curated 27 sacred floral species corresponding to cosmic Nakshatras and planetary astrology.',
+                    'pdf'   => URL_UPLOAD . 'media/5152b2ae2930adf0067e9bca01ceca0e.pdf',
+                    'icon'  => 'fa-star-o'
+                  ],
+                  [
+                    'title' => 'Panchtatva Vatika',
+                    'desc'  => 'Garden embodying the 5 primordial elements (Prithvi, Jal, Agni, Vayu, Akash) for environmental balance.',
+                    'pdf'   => URL_UPLOAD . 'media/62971404675378a264e5505ce58dc2aa.pdf',
+                    'icon'  => 'fa-globe'
+                  ]
+                ];
+
+                foreach($vatika_list as $vat):
+                ?>
+                <div class="bu-doc-banner">
+                  <div style="flex:1; min-width:240px;">
+                    <h4 style="margin:0 0 6px 0; font-size:16px; font-weight:700; color:#0A1B54; display:flex; align-items:center; gap:8px;">
+                      <i class="fa <?php echo $vat['icon']; ?>" style="color:#D99B00; font-size:18px;"></i>
+                      <?php echo htmlspecialchars($vat['title']); ?>
+                    </h4>
+                    <p style="margin:0; font-size:13.5px; color:#64748B; line-height:1.6;">
+                      <?php echo htmlspecialchars($vat['desc']); ?>
+                    </p>
+                  </div>
+                  <div>
+                    <a href="<?php echo $vat['pdf']; ?>" target="_blank" class="bu-btn">
+                      <i class="fa fa-file-pdf-o"></i> View Document
+                    </a>
+                  </div>
                 </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="https://www.bhabhauniversity.edu.in/vatika.php">VATIKA</a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
-        </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>VATIKA</h3>
+                <?php endforeach; ?>
               </div>
-                  <!-- HEADING 1 END-->
-                   <div class="abt_univ_des" > <table class="course-list-table table">
-	<tbody>
-		
-		<tr>
-					<td><a href="<?php echo URL_UPLOAD;?>media/9ace0ddc31bab9c2cd740ebb0501a138.pdf" target="_blank"><span style="color:#cc6600">Navgrah vatika </span></a></td>
-		</tr>
-		
-		<tr>	
-		            <td><a href="<?php echo URL_UPLOAD;?>media/5152b2ae2930adf0067e9bca01ceca0e.pdf" target="_blank"><span style="color:#cc6600">Nakshatra Vatika </span></a></td>
-		</tr>
-		
-		<tr>	
-		            <td><a href="<?php echo URL_UPLOAD;?>media/62971404675378a264e5505ce58dc2aa.pdf" target="_blank"><span style="color:#cc6600">Panchtatva Vatika </span></a></td>
-		            
-		</tr>
-		
-		<!--
-		<tr>	
-		            <td><a href="#" target="_blank"><span style="color:#cc6600">---- </span></a></td>
-			
-		</tr>
--->
-		
-	</tbody>
-</table>
- </div>
-                      
-                  </ul>
-                    </div>
-              </div>
-                </div>
-          </div>
             </div>
+          </div>
+        </main>
       </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
-  </div>
+
       <!--FOOTER START-->
       <?php include('inc.footer.php');?>
-      
       <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
     </div>
 <!--KF KODE WRAPPER WRAP END--> 
 <!--Bootstrap core JavaScript-->

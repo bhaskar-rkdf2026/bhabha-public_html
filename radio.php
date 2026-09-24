@@ -17,81 +17,87 @@
       <!--HEADER START-->
       <?php include('inc.header.php');?>
       <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>Campus Radio</h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#">Campus Radio</a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
-        </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>Solar Plant</h3>
-              </div>
-                  <!-- HEADING 1 END-->
-                  <div class="abt_univ_des" > 
-                  <h4>Radio Popcorn Presents by- (BHABHA UNIVERSITY BHOPAL)</h4><br>
-                  <p>
-                  Launched On- 14th February 2008 and was set up by BHABHA Institute of Science and Technology in Bhopal, Madhya Pradesh.</p><p>
-Radio Popcorn 90.4fm is the first Campus Radio in state of Madhya Pradesh. The CRS broadcasts for 10 hours every day and primarily focuses on providing information about educational opportunities and career guidance. Have you ever seen how popcorn is made? Each corn pops up bulging in size, same way the young mind is bubbling with energy and this Campus Radio gives a vent for this energy.</p>
-<strong>Mission and Vision</strong><p> "The vision is to provide a medium of communication by giving voice to the community. The focus is on communities living within the transmission zone of the radio station. It reaches out to every section of the society with special efforts focused towards communities that are marginalized to ensure that the less privileged sections of the community also find a voice through the radio".</p>
-<strong>RKDF Institutes</strong><p> aim to develop multi talented students along with faculties and local communities by spreading valuable information and knowledge through powerful, easy and affordable modes of communication. The Community Radio Station was established in the campus in order to benefit students and local people.
-The way maize grain has potential of popping up when given heat, Community if given a voice bubbles like popcorn. It is this energy we need from the community through our Community Radio initiative. Let us ignite the souls of the community by lending them a voice.
-Good Ambience: We have a good ambience and there is ample space. We have a canteen, stores, rooms for Station Head and the whole office is well furnished. The floor in office has vinyl flooring to minimize dust. The Studios have carpets and sound proofing is done with panels, perforated gypsum sheets.</p>
-<strong>Some Programs themes are:</strong><p>
-Interviews on various Health issues like Health tips in rainy season, Tips for healthy , Interaction with veterans of community, interaction with NGO's in the community, issues like skill development , AIDS, Environment.</p>
-<strong>We have done several events with NGO's</strong> <p>on issues like AIDS Awareness, Cycling for Pollution Control and protecting Environment, Talent hunt in schools and colleges in close proximity of the Campus,</p>
-<strong>Initiate activities involving NGO's , Community Radio, for the following:</strong>
-<ul>
-	<li>Women Empowerment</li>
-	<li>Drop out girl child</li>
-	<li>Self employment skills</li>
-	<li>Alcoholism among men folk and follow-up</li>
-	<li>Education Modules for school level</li>
-	<li>Modules on Health Awareness</li>
-</ul>
-<p>Work with resource convergence approach to exchange experience & expertise among community radio stations. For making Community Radio a success lot of field work is required and support for field work from agencies like DST would help to form groups who can not only create good content but also ensure that listener-ship increases and the desired impact is achieved.</p>
+      <?php
+      $page_title    = 'Campus <em>Radio</em>';
+      $page_subtitle = 'Radio Popcorn 90.4 FM - Voice of the Community';
+      $page_icon     = 'fa-microphone';
+      $breadcrumbs   = [
+        ['label' => 'Home', 'url' => URL_ROOT],
+        ['label' => 'About Us', 'url' => href('about.php')],
+        ['label' => 'Campus Radio', 'url' => '#']
+      ];
+      include('inc.page-banner.php');
+      ?>
 
-                  </div>
+      <div class="bu-inner-layout">
+        <?php 
+        $active_page = 'radio';
+        include('inc.about-sidebar.php');
+        ?>
+
+        <main class="bu-inner-content">
+          <div class="bu-content-card">
+            <span class="bu-content-label">Community Radio Station</span>
+            <h2 class="bu-content-h2">Radio Popcorn 90.4 FM</h2>
+            <div class="bu-content-divider"></div>
+            <div class="bu-content-body" style="padding-top:15px;">
+              
+              <div style="background:linear-gradient(135deg, #0A1B54, #061D7C); color:#fff; border-radius:10px; padding:20px 24px; margin-bottom:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+                <div>
+                  <div style="color:#FFC107; font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">First Campus Radio in MP</div>
+                  <div style="font-size:22px; font-weight:800; font-family:'Playfair Display',serif;">Radio Popcorn 90.4 MHz</div>
+                  <div style="font-size:13px; opacity:0.85; margin-top:4px;">Launched On 14th February 2008 &bull; Broadcasts 10 Hours Daily</div>
                 </div>
-          </div>
+                <div>
+                  <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); padding:8px 16px; border-radius:30px; font-size:13px; font-weight:700;">
+                    <i class="fa fa-wifi" style="color:#FFC107;"></i> On-Air 90.4 FM
+                  </span>
+                </div>
+              </div>
+
+              <p style="font-size:15px; line-height:1.8; color:#334155; margin-bottom:16px;">
+                <strong>Radio Popcorn 90.4 FM</strong> is the first campus community radio station established in the state of Madhya Pradesh, launched on 14th February 2008 by Bhabha Institute of Science and Technology, Bhopal. The station broadcasts 10 hours every day, prioritizing educational opportunities, talent showcases, scientific awareness, and community career guidance.
+              </p>
+
+              <h3 style="font-size:18px; font-weight:800; color:#0A1B54; margin:24px 0 10px 0;">Mission &amp; Vision</h3>
+              <blockquote style="border-left:4px solid #FFC107; background:#F8FAFC; padding:16px 20px; font-style:italic; color:#475569; border-radius:0 8px 8px 0; margin-bottom:20px;">
+                "To provide an inclusive, grassroots medium of communication by giving voice to the community. Special focus is directed towards communities living within the transmission radius to empower marginalized sections and ensure every voice is heard."
+              </blockquote>
+
+              <h3 style="font-size:18px; font-weight:800; color:#0A1B54; margin:24px 0 10px 0;">Studio &amp; Infrastructure</h3>
+              <p style="font-size:15px; line-height:1.8; color:#334155; margin-bottom:16px;">
+                The station houses professional acoustic studios engineered with soundproof acoustic panelling, perforated gypsum insulation, and advanced broadcast mixing consoles. It also maintains production suites, an audio archive library, and student workstation facilities.
+              </p>
+
+              <h3 style="font-size:18px; font-weight:800; color:#0A1B54; margin:24px 0 12px 0;">Community Outreach &amp; Program Themes</h3>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:20px;">
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:6px; font-size:13.5px; color:#334155;">
+                  <i class="fa fa-check-circle" style="color:#0A1B54; margin-right:8px;"></i> Women Empowerment &amp; Rights
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:6px; font-size:13.5px; color:#334155;">
+                  <i class="fa fa-check-circle" style="color:#0A1B54; margin-right:8px;"></i> Drop-out Girl Child Education
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:6px; font-size:13.5px; color:#334155;">
+                  <i class="fa fa-check-circle" style="color:#0A1B54; margin-right:8px;"></i> Self-Employment &amp; Rural Skills
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:6px; font-size:13.5px; color:#334155;">
+                  <i class="fa fa-check-circle" style="color:#0A1B54; margin-right:8px;"></i> Health, Hygiene &amp; Monsoon Care
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:6px; font-size:13.5px; color:#334155;">
+                  <i class="fa fa-check-circle" style="color:#0A1B54; margin-right:8px;"></i> Environmental Protection &amp; Cycling
+                </div>
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px 16px; border-radius:6px; font-size:13.5px; color:#334155;">
+                  <i class="fa fa-check-circle" style="color:#0A1B54; margin-right:8px;"></i> Local School Talent Competitions
+                </div>
+              </div>
             </div>
+          </div>
+        </main>
       </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
-  </div>
+
       <!--FOOTER START-->
       <?php include('inc.footer.php');?>
-      
       <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
     </div>
 <!--KF KODE WRAPPER WRAP END--> 
 <!--Bootstrap core JavaScript-->

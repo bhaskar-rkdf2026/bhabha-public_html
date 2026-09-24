@@ -20,43 +20,30 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('admissions') : n
       <!--HEADER START-->
       <?php include('inc.header.php');?>
       <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3><?php echo strip_tags(portalVal($portalPage, 'heading', 'Admissions')); ?></h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#"><?php echo strip_tags(portalVal($portalPage, 'heading', 'Admissions')); ?></a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
-        </div>
-  </div>
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5><?php echo portalVal($portalPage, 'badge', 'BHABHA UNIVERSITY'); ?></h5>
-                <h3><?php echo portalVal($portalPage, 'heading', 'ADMISSION RULES/PROCEDURES/GUIDELINES'); ?></h3>
-              </div>
-                  <!-- HEADING 1 END-->
-                  
-                  <div class="abt_univ_des"> 
+      <?php
+      $page_title    = portalVal($portalPage, 'heading', 'Admissions <em>Guidelines</em>');
+      $page_subtitle = 'Rules, Eligibility Criteria &amp; Counseling Procedures for Academic Admissions';
+      $page_icon     = 'fa-graduation-cap';
+      $breadcrumbs   = [
+        ['label' => 'Home', 'url' => URL_ROOT],
+        ['label' => 'Admissions', 'url' => href('admission-process.php')],
+        ['label' => strip_tags(portalVal($portalPage, 'heading', 'Admissions')), 'url' => '#']
+      ];
+      include('inc.page-banner.php');
+      ?>
+
+      <div class="bu-inner-layout">
+        <?php 
+        $active_page = 'admissions';
+        include('inc.admissions-sidebar.php');
+        ?>
+
+        <main class="bu-inner-content">
+          <div class="bu-content-card">
+            <span class="bu-content-label"><?php echo portalVal($portalPage, 'badge', 'BHABHA UNIVERSITY'); ?></span>
+            <h2 class="bu-content-h2"><?php echo portalVal($portalPage, 'heading', 'Admission Rules, Procedures &amp; Guidelines'); ?></h2>
+            <div class="bu-content-divider"></div>
+            <div class="bu-content-body" style="padding-top:15px;"> 
                     <?php if (!empty($portalPage['data']['steps']) && is_array($portalPage['data']['steps'])): ?>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:20px 0 35px 0;">
                       <?php foreach ($portalPage['data']['steps'] as $st): ?>
@@ -122,25 +109,17 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('admissions') : n
                       <li>Permanent address proof</li>
                       <li>Aadhar Card</li>
                     </ol>
-                <strong>On recommendation of respective Councils/ Govt. of Madhya Pradesh/ Madhya Pradesh Private University Regulatory Commission, there can be change in University Admission Guidelines 2020-21 for Seat intake capacity, courses, Admission dates and procedure and minimum eligibility criteria. The changes shall be updated regularly and could be seen on University website, from time to time. </strong><br> <strong>In case of any dispute, the final decision will be of the Vice Chancellor of Bhabha University Bhopal</strong>
+                <strong>On recommendation of respective Councils / Govt. of Madhya Pradesh / Madhya Pradesh Private University Regulatory Commission, there can be change in University Admission Guidelines for seat intake capacity, courses, admission dates, procedure and minimum eligibility criteria. The changes shall be updated regularly on the University website.</strong>
+                <p style="margin-top:12px;"><strong>In case of any dispute, the final decision will rest with the Hon'ble Vice Chancellor of Bhabha University, Bhopal.</strong></p>
                 <?php endif; ?>
-              </div>
                 </div>
+              </div>
+            </main>
           </div>
-            </div>
-      </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
-  </div>
-      <!--NEWS LETTERS END--> 
+
       <!--FOOTER START-->
       <?php include('inc.footer.php');?>
-      
       <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
     </div>
 <!--KF KODE WRAPPER WRAP END--> 
 <!--Bootstrap core JavaScript-->

@@ -15,57 +15,34 @@
 <div class="kode_wrapper"> 
       <!-- register Modal --> 
       <!--HEADER START-->
+      <!--HEADER START-->
       <?php include('inc.header.php');?>
       <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>Bhabha University, Bhopal, for Whatsapp group joining</h3>
-                </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="https://bhabhauniversity.edu.in/wgform.php">Bhabha University, Bhopal, for Whatsapp group joining</a></li>
-              </ul>
-                </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
-        </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>Bhabha University, Bhopal, for Whatsapp group joining</h3>
-                <!--<h5>UNDERTAKING
-                            : I swear that I am joining this WhatsApp group, I will share/ post  the information related to the university on this, if I share / post other information, I will be responsible for it and the university is free to take legal action against me.		
-	                </h5>-->
-              </div>
-                  <!-- HEADING 1 END-->
-                   <div class="abt_univ_des" > <table class="course-list-table table">
-	
-	
-	<!-- courses start -->
-    <div class="advisors-area gray-bg pt-95 pb-70">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-8 offset-xl-2">
-                    <div class="events-details-form faq-area-form mb-30 p-0">
-                        <form action="wgsendmail.php" method="post" name="rfqfrm" id="rfqfrm" enctype="multipart/form-data">
+      <?php
+      $page_title    = 'WhatsApp <em>Group Joining</em>';
+      $page_subtitle = 'Official Faculty &amp; Student Communication Network Registration';
+      $page_icon     = 'fa-whatsapp';
+      $breadcrumbs   = [
+        ['label' => 'Home', 'url' => URL_ROOT],
+        ['label' => 'About Us', 'url' => href('about.php')],
+        ['label' => 'WhatsApp Group', 'url' => '#']
+      ];
+      include('inc.page-banner.php');
+      ?>
+
+      <div class="bu-inner-layout">
+        <?php 
+        $active_page = 'wgform';
+        include('inc.about-sidebar.php');
+        ?>
+
+        <main class="bu-inner-content">
+          <div class="bu-content-card">
+            <span class="bu-content-label">Official University Communications</span>
+            <h2 class="bu-content-h2">WhatsApp Group Joining Form</h2>
+            <div class="bu-content-divider"></div>
+            <div class="bu-content-body" style="padding-top:15px;">
+              <form action="wgsendmail.php" method="post" name="rfqfrm" id="rfqfrm" enctype="multipart/form-data">
 						<!--<form action="mail_handlers.php" method="post" name="form" >
                             <div class="row">
                                 <div class="col-xl-8 offset-xl-2">
@@ -133,70 +110,28 @@
                       </div>
                     </div>	
 					-->		
-					<div class="col-sm-12">		
-					<div>
-					    <b>UNDERTAKING</b>
-                                          : I swear that I am joining this WhatsApp group, I will share/ post  the information related to the university on this, if I share / post other information, I will be responsible for it and the university is free to take legal action against me.		
-	                </div>
-	                </div>
+					<div class="col-sm-12" style="margin-top:16px;">		
+					  <div style="background:#FFFBEB; border:1px solid #FDE68A; border-left:4px solid #F59E0B; padding:14px 18px; border-radius:6px; font-size:13.5px; color:#92400E; line-height:1.6;">
+					    <strong>UNDERTAKING:</strong> I affirm that upon joining this official WhatsApp communication channel, I will only access and share university-related announcements and academic information. If I distribute inappropriate or unauthorized content, I understand that the university reserves the right to take appropriate disciplinary/administrative action.
+					  </div>
+					</div>
 						
-						
-                                <div class="row" style="margin-top:20px;">
-                    <div class="">
+                    <div class="col-sm-12" style="margin-top:24px;">
                       <div class="contact_des">
-                                        <button name="Submit2" class="" >submit now</button><!--<input type="reset" name="Reset" value="Clear"><input type="button" name="Submit2" value="Submit" />-->
-                                    </div>
-					 <!-- <p><b>Note:</b> Please mail pay slip and documents : <b>@gmail.com</b></p>
-					  <p>For best convenience reply within <b>4 hours</b></p>
-					 <!-- <p>(All fields marked with * are required.)</p>-->
-                                </div>
-                            </div>
-                            
-                          <!--  <script>
-$( function() {
-$( ".datepicker" ).datepicker({
-  changeMonth: true,
-  changeYear: true,
-  yearRange: '1950:2020'
-});
-} );
-</script>
--->
-                        </form>
+                        <button name="Submit2" type="submit" class="bu-btn" style="padding:12px 30px; font-size:15px; border-radius:8px; border:none; cursor:pointer;">
+                          <i class="fa fa-paper-plane" style="margin-right:6px;"></i> Submit Registration
+                        </button>
+                      </div>
                     </div>
+                  </form>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- courses end -->
-	
-	
-	
-	
-	
-	
-	
-</table>
- </div>
-                      
-                  </ul>
-                    </div>
               </div>
-                </div>
+            </main>
           </div>
-            </div>
-      </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
-  </div>
+
       <!--FOOTER START-->
       <?php include('inc.footer.php');?>
-      
       <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
     </div>
 <!--KF KODE WRAPPER WRAP END--> 
 <!--Bootstrap core JavaScript-->

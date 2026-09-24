@@ -17,63 +17,55 @@
       <!--HEADER START-->
       <?php include('inc.header.php');?>
       <!--HEADER END-->
-      <div class="kf_inr_banner">
-    <div class="container">
-          <div class="row">
-        <div class="col-md-12"> 
-              <!--KF INR BANNER DES Wrap Start-->
-              <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-                  <h3>Media</h3>
+      <?php
+      $page_title    = 'Media &amp; <em>Press</em>';
+      $page_subtitle = 'Print, Digital &amp; Television Coverage of Bhabha University';
+      $page_icon     = 'fa-newspaper-o';
+      $breadcrumbs   = [
+        ['label' => 'Home', 'url' => URL_ROOT],
+        ['label' => 'About Us', 'url' => href('about.php')],
+        ['label' => 'Media Coverage', 'url' => '#']
+      ];
+      include('inc.page-banner.php');
+      ?>
+
+      <div class="bu-inner-layout">
+        <?php 
+        $active_page = 'media';
+        include('inc.about-sidebar.php');
+        ?>
+
+        <main class="bu-inner-content">
+          <div class="bu-content-card">
+            <span class="bu-content-label">Press &amp; Media Releases</span>
+            <h2 class="bu-content-h2">University News In The Media</h2>
+            <div class="bu-content-divider"></div>
+            <div class="bu-content-body" style="padding-top:15px;">
+              <p style="font-size:15px; line-height:1.8; color:#334155; margin-bottom:24px;">
+                Read about Bhabha University’s academic breakthroughs, faculty achievements, campus events, and university milestones featured across national and regional press publications.
+              </p>
+
+              <div style="display:flex; flex-direction:column; gap:28px;">
+                <div style="background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.06); padding:16px;">
+                  <img src="<?php echo URL_IMG;?>media-two.jpg" alt="Bhabha University Media Coverage" style="width:100%; height:auto; display:block; border-radius:8px;">
                 </div>
-            <div class="kf_inr_breadcrumb">
-                  <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#">Media</a></li>
-              </ul>
+
+                <div style="background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.06); padding:16px;">
+                  <img src="<?php echo URL_IMG;?>media-one.jpg" alt="Bhabha University Press Release" style="width:100%; height:auto; display:block; border-radius:8px;">
                 </div>
-          </div>
-              <!--KF INR BANNER DES Wrap End--> 
-            </div>
-      </div>
-        </div>
-  </div>
-      <!--NEWS LETTERS END-->
-      <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-          <div class="container">
-        <div class="row">
-              <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-                  <!-- HEADING 1 START-->
-                  <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>Media</h3>
+
+                <div style="background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.06); padding:16px;">
+                  <img src="<?php echo URL_IMG;?>school-media.jpg" alt="School &amp; Faculty In Media" style="width:100%; height:auto; display:block; border-radius:8px;">
+                </div>
               </div>
-                  <!-- HEADING 1 END-->
-                  <div class="abt_univ_des" align="center">
-                   <img src="<?php echo URL_IMG;?>media-two.jpg"><br><br>
-                  <img src="<?php echo URL_IMG;?>media-one.jpg"><br><br>
-                 
-               <div align="center"> <img src="<?php echo URL_IMG;?>school-media.jpg"></div>
-              </div>
-                </div>
-          </div>
             </div>
+          </div>
+        </main>
       </div>
-        </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
-  </div>
+
       <!--FOOTER START-->
       <?php include('inc.footer.php');?>
-      
       <!--FOOTER END--> 
-      <!--COPYRIGHTS START--> 
-      
-      <!--COPYRIGHTS START--> 
     </div>
 <!--KF KODE WRAPPER WRAP END--> 
 <!--Bootstrap core JavaScript-->

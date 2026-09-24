@@ -132,45 +132,32 @@ if(isset($_FILES['tenth']) && count($_FILES['tenth']['name']) > 0 && $_FILES['te
   <!--HEADER START-->
   <?php include('inc.header.php');?>
   <!--HEADER END-->
-  <div class="kf_inr_banner">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12"> 
-          <!--KF INR BANNER DES Wrap Start-->
-          <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-              <h3>Admission Enquiry</h3>
-            </div>
-            <div class="kf_inr_breadcrumb">
-              <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#">Admission Enquiry</a></li>
-              </ul>
-            </div>
-          </div>
-          <!--KF INR BANNER DES Wrap End--> 
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--NEWS LETTERS END-->
-  <div class="kf_content_wrap"> 
-    
-    <!--ABOUT UNIVERSITY START-->
-    <section>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="abt_univ_wrap"> 
-              <!-- HEADING 1 START-->
-              <div class="kf_edu2_heading1">
-                <h5>BHABHA UNIVERSITY</h5>
-                <h3>Admission Enquiry Form </h3>
-              </div>
-              <!-- HEADING 1 END-->
-              <div class="abt_univ_des" id="validation">
-                <div style="margin-left:10px; margin-right:10px;"> <?php echo msg($stat);?></div>
-                <form action="" method="post" enctype="multipart/form-data">
+  <?php
+  $page_title    = 'Admission <em>Enquiry</em>';
+  $page_subtitle = 'Submit Your Application &amp; Academic Documents Online';
+  $page_icon     = 'fa-pencil-square-o';
+  $breadcrumbs   = [
+    ['label' => 'Home', 'url' => URL_ROOT],
+    ['label' => 'Admissions', 'url' => href('admission-process.php')],
+    ['label' => 'Admission Enquiry', 'url' => '#']
+  ];
+  include('inc.page-banner.php');
+  ?>
+
+  <div class="bu-inner-layout">
+    <?php 
+    $active_page = 'enquiry';
+    include('inc.admissions-sidebar.php');
+    ?>
+
+    <main class="bu-inner-content">
+      <div class="bu-content-card">
+        <span class="bu-content-label">Online Application</span>
+        <h2 class="bu-content-h2">Admission Enquiry Form</h2>
+        <div class="bu-content-divider"></div>
+        <div class="bu-content-body" style="padding-top:15px;" id="validation">
+              <div style="margin-bottom:15px;"> <?php echo msg($stat);?></div>
+              <form action="" method="post" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-sm-4">
                       <div class="inputs_des"> <span>Full Name</span>
@@ -253,23 +240,15 @@ if(is_array($course) && count($course)>0)
                       </div>
                     </div>
                   </div>
-                </form>
-              </div>
+              </form>
             </div>
           </div>
-        </div>
+        </main>
       </div>
-    </section>
-    <!--ABOUT UNIVERSITY END--> 
-    
-  </div>
+
   <!--FOOTER START-->
   <?php include('inc.footer.php');?>
-  
   <!--FOOTER END--> 
-  <!--COPYRIGHTS START--> 
-  
-  <!--COPYRIGHTS START--> 
 </div>
 <!--KF KODE WRAPPER WRAP END--> 
 <!--Bootstrap core JavaScript-->

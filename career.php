@@ -19,50 +19,62 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('career') : null;
   <!--HEADER START-->
   <?php include('inc.header.php');?>
   <!--HEADER END-->
-  <div class="kf_inr_banner">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="kf_inr_ban_des">
-            <div class="inr_banner_heading">
-              <h3><?php echo strip_tags(portalVal($portalPage, 'heading', 'Careers &amp; Opportunities')); ?></h3>
-            </div>
-            <div class="kf_inr_breadcrumb">
-              <ul>
-                <li><a href="<?php echo URL_ROOT;?>">Home</a></li>
-                <li><a href="#"><?php echo strip_tags(portalVal($portalPage, 'heading', 'Careers')); ?></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php
+  $page_title    = portalVal($portalPage, 'heading', 'Careers &amp; <em>Opportunities</em>');
+  $page_subtitle = 'Join Our Distinguished Academic &amp; Research Community';
+  $page_icon     = 'fa-briefcase';
+  $breadcrumbs   = [
+    ['label' => 'Home', 'url' => URL_ROOT],
+    ['label' => 'About Us', 'url' => href('about.php')],
+    ['label' => strip_tags(portalVal($portalPage, 'heading', 'Careers')), 'url' => '#']
+  ];
+  include('inc.page-banner.php');
+  ?>
 
-  <div class="kf_content_wrap">
-    <section style="padding:60px 0;">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="abt_univ_wrap">
-              <div class="kf_edu2_heading1">
-                <h5><?php echo portalVal($portalPage, 'badge', 'WORK WITH US'); ?></h5>
-                <h3><?php echo portalVal($portalPage, 'heading', 'Careers at Bhabha University'); ?></h3>
-              </div>
-              <div class="abt_univ_des" style="font-size:15px;line-height:1.8;color:#475569;">
-                <?php if (!empty($portalPage['data']['body'])): ?>
+  <div class="bu-inner-layout">
+    <?php 
+    $active_page = 'career';
+    include('inc.about-sidebar.php');
+    ?>
+
+    <main class="bu-inner-content">
+      <div class="bu-content-card">
+        <span class="bu-content-label"><?php echo portalVal($portalPage, 'badge', 'WORK WITH US'); ?></span>
+        <h2 class="bu-content-h2"><?php echo portalVal($portalPage, 'heading', 'Careers at Bhabha University'); ?></h2>
+        <div class="bu-content-divider"></div>
+        <div class="bu-content-body" style="padding-top:15px;">
+              <?php if (!empty($portalPage['data']['body'])): ?>
+                <div style="font-size:15px;line-height:1.8;color:#475569;">
                   <?php echo $portalPage['data']['body']; ?>
-                <?php else: ?>
-                  <p>Bhabha University offers competitive compensation, research incentives, sabbatical leaves, and health coverage for teaching and non-teaching personnel. We are committed to attracting distinguished faculty and dynamic administrators who are passionate about student success and groundbreaking research.</p>
-                  <p>Interested candidates may forward their updated curriculum vitae to <strong>info@bhabhauniversity.edu.in</strong> or apply directly through our HR portal.</p>
-                <?php endif; ?>
-              </div>
+                </div>
+              <?php else: ?>
+                <p style="font-size:15px;line-height:1.8;color:#334155;margin-bottom:18px;">
+                  Bhabha University offers competitive compensation, comprehensive research funding, state-of-the-art laboratory infrastructure, sabbatical study allowances, and medical coverage for distinguished academic faculty and administrative professionals.
+                </p>
+                <p style="font-size:15px;line-height:1.8;color:#334155;margin-bottom:24px;">
+                  We are actively seeking visionary educators, research scholars, and academic leaders across disciplines in Engineering, Pharmacy, Management, Medicine, Nursing, Law, and Applied Sciences.
+                </p>
+
+                <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-left:4px solid #0A1B54; border-radius:8px; padding:20px 24px; margin-bottom:24px;">
+                  <h4 style="margin:0 0 8px 0; font-size:17px; font-weight:700; color:#0A1B54;">How To Apply</h4>
+                  <p style="margin:0 0 14px 0; font-size:14px; color:#64748B; line-height:1.6;">
+                    Interested candidates may forward an updated curriculum vitae, copy of recent publications, and credentials directly to the Registrar / HR recruitment desk:
+                  </p>
+                  <div style="display:flex; align-items:center; gap:12px; font-size:15px; font-weight:700; color:#061D7C;">
+                    <i class="fa fa-envelope" style="color:#FFC107;"></i> info@bhabhauniversity.edu.in
+                  </div>
+                </div>
+
+                <div>
+                  <a href="<?php echo href('jobs.php');?>" class="bu-table-dl" style="padding:12px 24px; font-size:14.5px;">
+                    <i class="fa fa-list-alt"></i> View Current Job Vacancies &amp; Openings
+                  </a>
+                </div>
+              <?php endif; ?>
             </div>
           </div>
-        </div>
+        </main>
       </div>
-    </section>
-  </div>
 
   <!--FOOTER START-->
   <?php include('inc.footer.php');?>
