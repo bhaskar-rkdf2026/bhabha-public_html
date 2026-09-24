@@ -72,21 +72,21 @@
       <!-- Column 4: Contact -->
       <div class="bu-footer-col bu-footer-info-col">
         <div class="bu-footer-logo-wrap">
-          <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Bhabha University Logo" class="bu-footer-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
+          <img src="<?php echo URL_IMG;?>bhabha-university-logo-hd.png" alt="Bhabha University Logo" class="bu-footer-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
           <div class="bu-footer-title-wrap">
             <h3 class="bu-footer-main-title">Bhabha University</h3>
             <span class="bu-footer-subtitle">BHOPAL &nbsp;·&nbsp; INDIA</span>
           </div>
         </div>
         <p class="bu-footer-desc">
-          A globally recognized centre of excellence in teaching, research and innovation. Chartered under the State Private University Act.
+          23+ years of excellence in education. A globally recognized centre of learning, research and innovation chartered under the Madhya Pradesh State Private University Act.
         </p>
         
         <!-- Contact details -->
         <div class="bu-footer-contact-details">
           <div class="bu-contact-row">
             <i class="fa fa-map-marker"></i>
-            <span>Jatkhedi, NH-12, Hoshangabad Road, Bhopal, Madhya Pradesh Pin-462026</span>
+            <span>Jatkhedi, NH-12, Narmadapuram Road, Bhopal, Madhya Pradesh Pin-462047</span>
           </div>
           <div class="bu-contact-row">
             <i class="fa fa-phone"></i>

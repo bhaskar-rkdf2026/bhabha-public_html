@@ -54,8 +54,8 @@
     "addressCountry": "IN",
     "addressLocality": "Bhopal",
     "addressRegion": "IN",
-    "postalCode": "462026",
-    "streetAddress": "Jatkhedi, NH 12, Narmadapuram Road"
+    "postalCode": "462047",
+    "streetAddress": "Jatkhedi, NH-12, Narmadapuram Road"
   },
   "aggregateRating": {
     "@type": "AggregateRating",

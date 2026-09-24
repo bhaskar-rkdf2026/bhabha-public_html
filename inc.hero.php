@@ -113,8 +113,8 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
   background:
     linear-gradient(
       to top,
-      rgba(4, 15, 74, 0.92) 0%,
-      rgba(4, 15, 74, 0.60) 35%,
+      rgba(4, 15, 74, 0.1) 0%,
+      rgba(4, 15, 74, 0.2) 35%,
       rgba(4, 15, 74, 0.15) 70%,
       transparent 100%
     ),

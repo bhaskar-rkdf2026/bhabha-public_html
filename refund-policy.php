@@ -22,21 +22,112 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('refund-policy') 
       <!--HEADER END-->
       <style>
       /* Policy Page Premium Theme */
-      .bu-policy-hero { background: linear-gradient(135deg, var(--bu-navy, #040F4A) 0%, #0a1b5c 100%); padding: 80px 0 60px; text-align: center; color: white; margin-bottom: 50px; }
-      .bu-policy-hero h1 { font-size: 42px; font-weight: 700; margin-bottom: 15px; color: #fff; letter-spacing: -0.5px; }
-      .bu-policy-breadcrumb { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 15px; }
-      .bu-policy-breadcrumb a { color: var(--bu-gold, #D4AF37); text-decoration: none; transition: 0.3s ease; }
-      .bu-policy-breadcrumb a:hover { color: #fff; }
-      .bu-policy-container { max-width: 900px; margin: 0 auto; padding: 0 20px 80px; }
-      .bu-policy-content { background: #fff; padding: 50px 60px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.05); }
-      .bu-policy-content p { font-size: 16px; line-height: 1.8; color: #475569; margin-bottom: 20px; }
-      .bu-policy-content h4 { font-size: 20px; font-weight: 700; color: var(--bu-navy, #040F4A); margin-top: 35px; margin-bottom: 15px; }
-      .bu-policy-content ul { padding-left: 20px; margin-bottom: 25px; }
-      .bu-policy-content li { font-size: 16px; line-height: 1.8; color: #475569; margin-bottom: 12px; }
-      .bu-policy-content strong { color: var(--bu-navy, #040F4A); }
+      .bu-policy-hero {
+        background: linear-gradient(135deg, #051235 0%, #0A1B54 60%, #061D7C 100%);
+        padding: 95px 20px 65px 20px;
+        text-align: center;
+        color: white;
+        margin-bottom: 45px;
+        position: relative;
+        overflow: hidden;
+      }
+      .bu-policy-hero::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: rgba(255, 193, 7, 0.08);
+        pointer-events: none;
+      }
+      .bu-policy-hero h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: clamp(32px, 4vw, 44px);
+        font-weight: 800;
+        margin-top: 10px;
+        margin-bottom: 14px;
+        color: #ffffff;
+        letter-spacing: -0.3px;
+      }
+      .bu-policy-breadcrumb {
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.7);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+      .bu-policy-breadcrumb a {
+        color: #FFC107;
+        text-decoration: none;
+        transition: 0.3s ease;
+      }
+      .bu-policy-breadcrumb a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+      }
+      .bu-policy-container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 20px 90px;
+      }
+      .bu-policy-content {
+        background: #ffffff;
+        padding: 50px 60px;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(6, 29, 124, 0.06);
+        border: 1px solid #E2E8F0;
+      }
+      .bu-policy-content h2,
+      .bu-policy-content h3,
+      .bu-policy-content h4 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 22px;
+        font-weight: 800;
+        color: #061D7C;
+        margin-top: 36px;
+        margin-bottom: 16px;
+        padding-top: 24px;
+        border-top: 1px solid #F1F5F9;
+      }
+      .bu-policy-content h2:first-of-type,
+      .bu-policy-content h3:first-of-type,
+      .bu-policy-content h4:first-of-type {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+      }
+      .bu-policy-content p {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #475569;
+        margin-bottom: 20px;
+      }
+      .bu-policy-content ul,
+      .bu-policy-content ol {
+        padding-left: 22px;
+        margin-bottom: 25px;
+      }
+      .bu-policy-content li {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #475569;
+        margin-bottom: 12px;
+      }
+      .bu-policy-content strong {
+        color: #061D7C;
+      }
       @media (max-width: 768px) {
-        .bu-policy-hero h1 { font-size: 32px; }
-        .bu-policy-content { padding: 30px; }
+        .bu-policy-hero {
+          padding: 80px 16px 50px;
+        }
+        .bu-policy-hero h1 {
+          font-size: 28px;
+        }
+        .bu-policy-content {
+          padding: 30px 20px;
+        }
       }
       </style>
 

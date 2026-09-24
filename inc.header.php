@@ -44,7 +44,7 @@
       
       <!-- Brand Logo -->
       <a href="<?php echo URL_ROOT;?>" class="bu-brand">
-        <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Bhabha University Emblem" class="bu-brand-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
+        <img src="<?php echo URL_IMG;?>bhabha-university-logo-hd.png?v=<?php echo time(); ?>" alt="Bhabha University Emblem" class="bu-brand-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
         <div class="bu-brand-text">
           <span class="bu-brand-name-1">Bhabha</span>
           <span class="bu-brand-name-2">University</span>
@@ -58,7 +58,7 @@
       <nav class="bu-navbar" id="buNavbar">
         <div class="bu-mobile-drawer-head">
           <div class="bu-drawer-brand">
-            <img src="<?php echo URL_IMG;?>Bhabha university logo.png" alt="Logo" class="bu-drawer-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
+            <img src="<?php echo URL_IMG;?>bhabha-university-logo-hd.png?v=<?php echo time(); ?>" alt="Logo" class="bu-drawer-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
             <span>Bhabha University</span>
           </div>
           <button type="button" class="bu-drawer-close" id="buDrawerCloseBtn" aria-label="Close Menu">&times;</button>
@@ -350,6 +350,30 @@
         if (window.innerWidth > 991) closeMenu();
       }, 200);
     });
+
+    /* ---- Sticky Header on Scroll ---- */
+    var headerWrap = document.querySelector('.bu-header-wrapper');
+    if (headerWrap) {
+      var isStickyActive = false;
+      var handleStickyHeader = function () {
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        var threshold = window.innerWidth <= 991 ? 10 : 45;
+        if (scrollY > threshold) {
+          if (!isStickyActive) {
+            headerWrap.classList.add('bu-is-sticky');
+            isStickyActive = true;
+          }
+        } else {
+          if (isStickyActive) {
+            headerWrap.classList.remove('bu-is-sticky');
+            isStickyActive = false;
+          }
+        }
+      };
+      window.addEventListener('scroll', handleStickyHeader, { passive: true });
+      window.addEventListener('load', handleStickyHeader);
+      handleStickyHeader();
+    }
   });
 })();
 </script>

@@ -532,8 +532,8 @@ $jobs = $db->orderBy('id', 'DESC')->get('jobs');
         </h4>
         <p style="font-size:12.5px;color:#64748B;line-height:1.6;margin:0;">
           <strong>Bhabha University Campus</strong><br>
-          Jatkhedi, NH-12, Hoshangabad Road,<br>
-          Bhopal, Madhya Pradesh - 462026
+          Jatkhedi, NH-12, Narmadapuram Road,<br>
+          Bhopal, Madhya Pradesh Pin-462047
         </p>
       </div>
 

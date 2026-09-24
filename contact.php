@@ -236,7 +236,7 @@ if(isset($_POST['submit']))
               <div class="bu-contact-icon"><i class="fa fa-map-marker"></i></div>
               <div class="bu-contact-details">
                 <h5>University Campus Address</h5>
-                <p><?php echo isset($aryForm['address']) ? $aryForm['address'] : 'NH-12, Hoshangabad Road, Jatkhedi, Bhopal, Madhya Pradesh - 462026';?></p>
+                <p><?php echo isset($aryForm['address']) ? $aryForm['address'] : 'Jatkhedi, NH-12, Narmadapuram Road, Bhopal, Madhya Pradesh Pin-462047';?></p>
               </div>
             </div>
 

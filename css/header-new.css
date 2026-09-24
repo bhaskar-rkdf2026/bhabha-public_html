@@ -151,9 +151,12 @@ body {
 .bu-main-header {
   background-color: var(--bu-bg-header);
   border-bottom: 1px solid var(--bu-border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
   z-index: 1000;
+  transition: box-shadow 0.3s ease;
 }
 
 .bu-header-container {

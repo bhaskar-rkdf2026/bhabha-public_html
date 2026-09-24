@@ -9,7 +9,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo portalVal($portalPage, 'page_title', 'About Us - Bhabha University Bhopal | Best University in MP'); ?></title>
-<meta name="description" content="Learn about Bhabha University Bhopal – our history, vision, mission, leadership, accreditations and campus. One of the best private universities in Madhya Pradesh, established in 2004.">
+<meta name="description" content="Learn about Bhabha University Bhopal – 23+ years of excellence in education. Bhabha campus established in 2003, University established in 2018. Explore history, vision, leadership, and campus.">
 <meta name="keywords" content="About Bhabha University, Bhabha University history, best university bhopal, bhabha university overview, chancellor bhabha university">
 <?php include('inc.meta.php');?>
 
@@ -1241,17 +1241,17 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
                alt="Bhabha University Bhopal Campus" 
                class="bu-overview-img">
           <div class="bu-overview-badge">
-            <span class="bu-overview-badge-num">2004</span>
-            <span class="bu-overview-badge-lbl">Established</span>
+            <span class="bu-overview-badge-num">2003</span>
+            <span class="bu-overview-badge-lbl">Campus Estd.</span>
           </div>
         </div>
         <!-- Text Side -->
         <div class="bu-overview-text-wrap">
           <span class="bu-section-label">University Overview</span>
-          <h2 class="bu-section-title">A university built<br>for <em>real-world impact.</em></h2>
+          <h2 class="bu-section-title">23+ Years of<br><em>Excellence in Education.</em></h2>
           <div class="bu-section-divider"></div>
           <div class="bu-section-text">
-            <?php echo !empty($portalPage['data']['overview_text']) ? $portalPage['data']['overview_text'] : '<p>Bhabha University, located on NH-12 Narmadapuram Road, Bhopal, Madhya Pradesh, was established by the Ayushmati Education and Social Society. Over two decades, it has grown into a vibrant multi-disciplinary university offering programmes in Engineering, Pharmacy, Dental Sciences, Nursing, Management, Law, Agriculture, Science, Commerce, Education, and Hotel Management.</p>'; ?>
+            <?php echo !empty($portalPage['data']['overview_text']) ? $portalPage['data']['overview_text'] : '<p>Bhabha campus was established in 2003 by the Ayushmati Education and Social Society, located on NH-12 Narmadapuram Road, Bhopal, Madhya Pradesh. Continuing its 23-year legacy of educational excellence, Bhabha University was established in 2018 under the Madhya Pradesh Niji Vishwavidyalaya Act. Today, it stands as a premier multi-disciplinary campus offering world-class programmes in Engineering, Pharmacy, Dental Sciences, Nursing, Management, Law, Agriculture, Science, Commerce, Education, and Hotel Management.</p>'; ?>
           </div>
           <ul class="bu-overview-points">
             <li>
@@ -1399,9 +1399,9 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
         <div class="bu-timeline-item">
           <div class="bu-timeline-dot"></div>
           <div class="bu-timeline-item-content">
-            <span class="bu-timeline-year">2004</span>
-            <h4>Foundation Established</h4>
-            <p>Bhabha University was founded by Ayushmati Education and Social Society with a vision to provide quality higher education in Central India.</p>
+            <span class="bu-timeline-year">2003</span>
+            <h4>Bhabha Campus Established</h4>
+            <p>Bhabha Campus was founded by Ayushmati Education and Social Society, initiating 23+ years of dedicated service in higher education.</p>
           </div>
         </div>
 
@@ -1411,7 +1411,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2010</span>
             <h4>Multi-Discipline Expansion</h4>
-            <p>Expanded to include Engineering, Pharmacy, Dental Sciences, Nursing, and Management schools on the 32-acre Narmadapuram Road campus.</p>
+            <p>Expanded across Engineering, Pharmacy, Dental Sciences, Nursing, and Management on the 32-acre Narmadapuram Road campus.</p>
           </div>
         </div>
 
@@ -1419,9 +1419,9 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
         <div class="bu-timeline-item">
           <div class="bu-timeline-dot"></div>
           <div class="bu-timeline-item-content">
-            <span class="bu-timeline-year">2015</span>
-            <h4>National Accreditation</h4>
-            <p>Achieved NAAC accreditation and UGC recognition under 2(f) &amp; 12(B), marking a major milestone in quality assurance and credibility.</p>
+            <span class="bu-timeline-year">2018</span>
+            <h4>State University Charter</h4>
+            <p>Established as a full-fledged University under the Madhya Pradesh Niji Vishwavidyalaya Act with recognition from UGC, AICTE, PCI, DCI, BCI, and NCTE.</p>
           </div>
         </div>
 
@@ -1429,9 +1429,9 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
         <div class="bu-timeline-item">
           <div class="bu-timeline-dot"></div>
           <div class="bu-timeline-item-content">
-            <span class="bu-timeline-year">2020</span>
-            <h4>Digital Transformation</h4>
-            <p>Launched smart classrooms, online examination systems, ERP portal, and digital library resources — empowering students in the digital era.</p>
+            <span class="bu-timeline-year">2022</span>
+            <h4>Research &amp; Smart Campus</h4>
+            <p>Equipped 120+ research laboratories, smart digital classrooms, centralized ERP portals, and extensive international academic linkages.</p>
           </div>
         </div>
 
