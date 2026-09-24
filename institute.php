@@ -23,6 +23,7 @@ $sub_department = $db->get('sub_department');
 $programs_list   = !empty($aryData['programs_data']) ? json_decode($aryData['programs_data'], true) : [];
 $activities_list = !empty($aryData['activities_data']) ? json_decode($aryData['activities_data'], true) : [];
 $placements_data = !empty($aryData['placements_data']) ? json_decode($aryData['placements_data'], true) : [];
+$vision_mission  = !empty($aryData['vision_mission_data']) ? json_decode($aryData['vision_mission_data'], true) : [];
 
 // Icon class fallback
 $inst_icon = !empty($aryData['icon']) ? $aryData['icon'] : 'fa-university';
@@ -566,96 +567,170 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
 }
 
 /* ================================================================
-   3. PRINCIPAL / LEADERSHIP SPOTLIGHT
+   3. PRINCIPAL / LEADERSHIP SPOTLIGHT (TOP-CENTERED EXECUTIVE CARD)
    ================================================================ */
 .bu-leadership-card {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 24px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #F8FAFF 0%, #EEF2FF 100%);
-  border: 1px solid #DCE4FC;
-  border-radius: 12px;
-  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 36px 32px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+  position: relative;
+  overflow: hidden;
 }
 
-@media(max-width: 650px) {
-  .bu-leadership-card {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
+.bu-leadership-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #0A2699 0%, #D97706 50%, #0A2699 100%);
+}
+
+.bu-lead-header {
+  text-align: center;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 650px;
 }
 
 .bu-lead-avatar-wrap {
-  text-align: center;
+  position: relative;
+  margin-bottom: 14px;
 }
 
 .bu-lead-avatar {
-  width: 130px;
-  height: 130px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid #ffffff;
-  box-shadow: 0 6px 16px rgba(6, 29, 124, 0.15);
-  margin: 0 auto 10px;
+  box-shadow: 0 8px 24px rgba(10, 38, 153, 0.18), 0 0 0 2px #E2E8F0;
   display: block;
   background: #E2E8F0;
+  transition: transform 0.3s ease;
+}
+
+.bu-lead-avatar:hover {
+  transform: scale(1.03);
 }
 
 .bu-lead-avatar-dummy {
-  width: 130px;
-  height: 130px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   background: linear-gradient(135deg, #0A2699 0%, #040F4A 100%);
   border: 4px solid #ffffff;
-  box-shadow: 0 6px 16px rgba(6, 29, 124, 0.15);
-  margin: 0 auto 10px;
+  box-shadow: 0 8px 24px rgba(10, 38, 153, 0.18), 0 0 0 2px #E2E8F0;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--bu-gold-primary);
-  font-size: 54px;
+  font-size: 58px;
 }
 
 .bu-lead-name {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 800;
-  color: var(--bu-navy-dark);
-  margin: 0 0 3px 0;
+  color: #0F172A;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.2px;
 }
 
 .bu-lead-designation {
+  display: inline-block;
   font-size: 12px;
   font-weight: 700;
-  color: var(--bu-gold-dark);
+  color: #B45309;
+  background: #FEF3C7;
+  border: 1px solid #FDE68A;
+  padding: 4px 14px;
+  border-radius: 50px;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .bu-lead-qual {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.bu-lead-contacts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.bu-lead-contact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 12px;
-  color: var(--bu-text-muted);
-  margin-bottom: 8px;
+  color: #64748B;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 4px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.bu-lead-contact-pill:hover {
+  color: #0A2699;
+  border-color: #CBD5E1;
+  background: #EFF6FF;
+}
+
+.bu-lead-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #D97706, #F59E0B);
+  border-radius: 2px;
+  margin: 14px auto 0;
 }
 
 .bu-lead-quote {
-  font-size: 13.5px;
-  line-height: 1.7;
+  width: 100%;
+  max-width: 960px;
+  font-size: 14.5px;
+  line-height: 1.85;
   color: #334155;
-  font-style: italic;
+  background: #F8FAFC;
+  border: 1px solid #F1F5F9;
+  border-radius: 12px;
+  padding: 26px 30px;
   position: relative;
-  padding-left: 18px;
-  border-left: 3px solid var(--bu-gold-primary);
 }
 
-@media(max-width: 650px) {
+.bu-lead-quote p {
+  margin-bottom: 14px;
+}
+
+.bu-lead-quote p:last-child {
+  margin-bottom: 0;
+}
+
+@media(max-width: 768px) {
+  .bu-leadership-card {
+    padding: 24px 18px;
+  }
   .bu-lead-quote {
-    padding-left: 0;
-    border-left: none;
-    border-top: 2px solid var(--bu-gold-primary);
-    padding-top: 12px;
+    padding: 18px 16px;
+    font-size: 13.5px;
   }
 }
 
@@ -1280,6 +1355,213 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
   color: #0F172A;
   font-weight: 700;
 }
+
+/* ==========================================================================
+   VISION & MISSION DUAL SPOTLIGHT CARDS
+   ========================================================================== */
+.bu-vm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.bu-vm-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bu-vm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1);
+}
+
+.bu-vm-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+}
+
+.bu-vm-card-vision::before {
+  background: linear-gradient(90deg, #1E3A8A 0%, #3B82F6 100%);
+}
+
+.bu-vm-card-mission::before {
+  background: linear-gradient(90deg, #D97706 0%, #F59E0B 100%);
+}
+
+.bu-vm-card-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.bu-vm-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.bu-vm-card-vision .bu-vm-icon-box {
+  background: rgba(30, 58, 138, 0.08);
+  color: #1E3A8A;
+  border: 1px solid rgba(30, 58, 138, 0.15);
+}
+
+.bu-vm-card-mission .bu-vm-icon-box {
+  background: rgba(217, 119, 6, 0.1);
+  color: #D97706;
+  border: 1px solid rgba(217, 119, 6, 0.2);
+}
+
+.bu-vm-card-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: -0.2px;
+}
+
+.bu-vm-card-vision .bu-vm-card-title {
+  color: #1E3A8A;
+}
+
+.bu-vm-card-mission .bu-vm-card-title {
+  color: #B45309;
+}
+
+.bu-vm-card-subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #64748B;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.bu-vm-statement {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #334155;
+  margin-bottom: 18px;
+  font-style: italic;
+  position: relative;
+  padding-left: 16px;
+  border-left: 3px solid;
+}
+
+.bu-vm-card-vision .bu-vm-statement {
+  border-left-color: #3B82F6;
+}
+
+.bu-vm-card-mission .bu-vm-statement {
+  border-left-color: #F59E0B;
+}
+
+.bu-vm-points-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.bu-vm-points-list li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.bu-vm-points-list li i {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  font-size: 14px;
+}
+
+.bu-vm-card-vision .bu-vm-points-list li i {
+  color: #2563EB;
+}
+
+.bu-vm-card-mission .bu-vm-points-list li i {
+  color: #D97706;
+}
+
+/* Core Values Bar */
+.bu-core-values-wrap {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border-radius: 14px;
+  padding: 18px 24px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+  margin-top: 4px;
+}
+
+.bu-core-values-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #FBBF24;
+}
+
+.bu-core-values-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bu-core-value-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #F8FAFC;
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.bu-core-value-pill:hover {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #FEF3C7;
+  transform: translateY(-1px);
+}
 </style>
 </head>
 
@@ -1417,11 +1699,90 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
            2. FULL-WIDTH CONTENT SECTIONS
            ================================================================ -->
       
-      <!-- A. PRINCIPAL / LEADERSHIP SPOTLIGHT -->
+      <!-- A. INSTITUTIONAL VISION & MISSION -->
+      <?php if(!empty($vision_mission['vision']) || !empty($vision_mission['mission'])): ?>
+      <section class="bu-section-block">
+        <div class="bu-sec-header">
+          <span class="bu-sec-subtitle">Guiding Philosophy &amp; Objectives</span>
+          <h2 class="bu-sec-title">Vision &amp; <em>Mission</em></h2>
+          <div class="bu-sec-divider"></div>
+        </div>
+
+        <div class="bu-vm-grid">
+          <?php if(!empty($vision_mission['vision'])): ?>
+          <div class="bu-vm-card bu-vm-card-vision">
+            <div class="bu-vm-card-head">
+              <div class="bu-vm-icon-box">
+                <i class="fa fa-eye"></i>
+              </div>
+              <div>
+                <span class="bu-vm-card-subtitle">Our Aspiration</span>
+                <h3 class="bu-vm-card-title">Institutional Vision</h3>
+              </div>
+            </div>
+            <div class="bu-vm-statement">
+              "<?php echo htmlspecialchars($vision_mission['vision']);?>"
+            </div>
+            <?php if(!empty($vision_mission['vision_points']) && is_array($vision_mission['vision_points'])): ?>
+            <ul class="bu-vm-points-list">
+              <?php foreach($vision_mission['vision_points'] as $vPt): ?>
+              <li><i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($vPt);?></li>
+              <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+          </div>
+          <?php endif; ?>
+
+          <?php if(!empty($vision_mission['mission'])): ?>
+          <div class="bu-vm-card bu-vm-card-mission">
+            <div class="bu-vm-card-head">
+              <div class="bu-vm-icon-box">
+                <i class="fa fa-bullseye"></i>
+              </div>
+              <div>
+                <span class="bu-vm-card-subtitle">Our Purpose &amp; Action</span>
+                <h3 class="bu-vm-card-title">Institutional Mission</h3>
+              </div>
+            </div>
+            <div class="bu-vm-statement">
+              "<?php echo htmlspecialchars($vision_mission['mission']);?>"
+            </div>
+            <?php if(!empty($vision_mission['mission_points']) && is_array($vision_mission['mission_points'])): ?>
+            <ul class="bu-vm-points-list">
+              <?php foreach($vision_mission['mission_points'] as $mPt): ?>
+              <li><i class="fa fa-arrow-circle-right"></i> <?php echo htmlspecialchars($mPt);?></li>
+              <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+          </div>
+          <?php endif; ?>
+        </div>
+
+        <?php if(!empty($vision_mission['core_values']) && is_array($vision_mission['core_values'])): ?>
+        <div class="bu-core-values-wrap">
+          <div class="bu-core-values-label">
+            <i class="fa fa-diamond"></i> Institutional Core Values
+          </div>
+          <div class="bu-core-values-list">
+            <?php foreach($vision_mission['core_values'] as $val): ?>
+            <span class="bu-core-value-pill"><i class="fa fa-star text-warning"></i> <?php echo htmlspecialchars($val);?></span>
+            <?php endforeach; ?>
+          </div>
+        </div>
+        <?php endif; ?>
+      </section>
+      <?php endif; ?>
+
+      <!-- B. PRINCIPAL / LEADERSHIP SPOTLIGHT -->
       <?php 
         $rawMsg = $aryData['principal_message'] ?? '';
         // Automatically unwrap HTML comments if present
         $rawMsg = preg_replace('/<!--\s*([\s\S]*?)\s*-->/', '$1', $rawMsg);
+        
+        // Strip any <img> tags so images NEVER appear duplicate inside message quote
+        $rawMsg = preg_replace('/<img[^>]*>/i', '', $rawMsg);
+        $rawMsg = preg_replace('/<p>\s*(?:&nbsp;|\s)*<\/p>/i', '', $rawMsg);
+        
         $cleanMsg = trim(strip_tags($rawMsg, '<p><br><strong><b><em>'));
 
         if (empty($cleanMsg) || mb_strlen($cleanMsg, 'UTF-8') < 10) {
@@ -1435,6 +1796,19 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
         $prinQual = !empty($aryData['principal_qualification']) ? $aryData['principal_qualification'] : '';
         $hasPrinImg = !empty($aryData['principal_image']) && (strpos($aryData['principal_image'], 'http') === 0 || file_exists(PATH_ROOT . DS . str_replace('/', DS, $aryData['principal_image'])));
         $prinImg = $hasPrinImg ? (strpos($aryData['principal_image'], 'http') === 0 ? $aryData['principal_image'] : URL_ROOT . $aryData['principal_image']) : '';
+
+        // 120-150 Word Limit Truncation Logic
+        $prinPlain = trim(strip_tags($prinWelcomeMsg));
+        $prinWords = preg_split('/\s+/', $prinPlain, -1, PREG_SPLIT_NO_EMPTY);
+        $totalPrinWords = count($prinWords);
+        $isLongPrinMsg = ($totalPrinWords > 120);
+
+        if ($isLongPrinMsg) {
+            $prinShortText = implode(' ', array_slice($prinWords, 0, 120)) . '...';
+            $prinDisplayMsg = '<p>' . nl2br(htmlspecialchars($prinShortText)) . '</p>';
+        } else {
+            $prinDisplayMsg = $prinWelcomeMsg;
+        }
       ?>
       <section class="bu-section-block">
         <div class="bu-sec-header">
@@ -1444,21 +1818,46 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
         </div>
 
         <div class="bu-leadership-card">
-          <div class="bu-lead-avatar-wrap">
-            <?php if (!empty($prinImg)): ?>
-              <img src="<?php echo $prinImg;?>" alt="<?php echo htmlspecialchars($prinName);?>" class="bu-lead-avatar" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-              <div class="bu-lead-avatar-dummy" style="display:none;"><i class="fa fa-user"></i></div>
-            <?php else: ?>
-              <div class="bu-lead-avatar-dummy"><i class="fa fa-user"></i></div>
-            <?php endif; ?>
-            <h4 class="bu-lead-name"><?php echo htmlspecialchars($prinName);?></h4>
+          <div class="bu-lead-header">
+            <div class="bu-lead-avatar-wrap">
+              <?php if (!empty($prinImg)): ?>
+                <img src="<?php echo $prinImg;?>" alt="<?php echo htmlspecialchars($prinName);?>" class="bu-lead-avatar" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="bu-lead-avatar-dummy" style="display:none;"><i class="fa fa-user"></i></div>
+              <?php else: ?>
+                <div class="bu-lead-avatar-dummy"><i class="fa fa-user"></i></div>
+              <?php endif; ?>
+            </div>
+            
+            <h3 class="bu-lead-name"><?php echo htmlspecialchars($prinName);?></h3>
             <div class="bu-lead-designation"><?php echo htmlspecialchars($prinDesig);?></div>
             <?php if(!empty($prinQual)): ?>
             <div class="bu-lead-qual"><?php echo htmlspecialchars($prinQual);?></div>
             <?php endif; ?>
+
+            <?php if(!empty($aryData['principal_email']) || !empty($aryData['principal_phone'])): ?>
+            <div class="bu-lead-contacts">
+              <?php if(!empty($aryData['principal_email'])): ?>
+              <a href="mailto:<?php echo htmlspecialchars($aryData['principal_email']);?>" class="bu-lead-contact-pill"><i class="fa fa-envelope text-primary"></i> <?php echo htmlspecialchars($aryData['principal_email']);?></a>
+              <?php endif; ?>
+              <?php if(!empty($aryData['principal_phone'])): ?>
+              <span class="bu-lead-contact-pill"><i class="fa fa-phone text-success"></i> <?php echo htmlspecialchars($aryData['principal_phone']);?></span>
+              <?php endif; ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="bu-lead-divider"></div>
           </div>
+
           <div class="bu-lead-quote">
-            <?php echo $prinWelcomeMsg;?>
+            <?php echo $prinDisplayMsg;?>
+
+            <?php if($isLongPrinMsg): ?>
+            <div style="text-align: center; margin-top: 18px;">
+              <button type="button" class="bu-btn-primary" id="btnOpenPrincipalModal" style="padding: 8px 24px; font-size: 13px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px;">
+                <i class="fa fa-envelope-open-o"></i> Read Full Message
+              </button>
+            </div>
+            <?php endif; ?>
           </div>
         </div>
       </section>
@@ -1732,6 +2131,41 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
     </div>
   </div>
 
+  <!-- ================================================================
+       READ FULL PRINCIPAL MESSAGE MODAL POPUP
+       ================================================================ -->
+  <div class="bu-modal-backdrop" id="buPrincipalModal" role="dialog" aria-modal="true" aria-labelledby="buPrinModalTitle">
+    <div class="bu-modal-dialog">
+      <div class="bu-modal-header">
+        <h3 id="buPrinModalTitle"><i class="fa fa-user-circle text-warning mr-2"></i> Message from <?php echo htmlspecialchars($prinName);?></h3>
+        <button type="button" class="bu-modal-close-icon" id="buClosePrincipalModal" aria-label="Close Modal">&times;</button>
+      </div>
+
+      <div class="bu-modal-body">
+        <div style="padding-bottom: 14px; margin-bottom: 20px; border-bottom: 1px solid #E2E8F0;">
+          <h4 style="margin: 0 0 4px 0; font-size: 19px; font-weight: 800; color: #0F172A; font-family: 'Playfair Display', Georgia, serif;"><?php echo htmlspecialchars($prinName);?></h4>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span style="font-size: 12px; font-weight: 700; color: #B45309; background: #FEF3C7; border: 1px solid #FDE68A; padding: 2px 10px; border-radius: 50px; text-transform: uppercase;"><?php echo htmlspecialchars($prinDesig);?></span>
+            <?php if(!empty($prinQual)): ?>
+            <span style="font-size: 12.5px; color: #64748B; font-weight: 600;"><?php echo htmlspecialchars($prinQual);?></span>
+            <?php endif; ?>
+          </div>
+        </div>
+
+        <div style="font-size: 14.5px; line-height: 1.85; color: #334155;">
+          <?php echo $prinWelcomeMsg; ?>
+        </div>
+      </div>
+
+      <div class="bu-modal-footer">
+        <button type="button" class="bu-btn-outline" id="buClosePrincipalModalFooterBtn">Close</button>
+        <a href="<?php echo href('online-admission.php');?>" class="bu-btn-primary">
+          <i class="fa fa-pencil-square-o"></i> Apply for Admission
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <?php include('inc.footer.php');?>
 </div>
@@ -1754,9 +2188,23 @@ $(document).ready(function() {
         }
     });
 
+    // Principal Modal Open / Close Handler
+    $('#btnOpenPrincipalModal').on('click', function(e) {
+        e.preventDefault();
+        $('#buPrincipalModal').css('display', 'flex');
+        $('body').css('overflow', 'hidden');
+    });
+
+    $('#buClosePrincipalModal, #buClosePrincipalModalFooterBtn, #buPrincipalModal').on('click', function(e) {
+        if (e.target === this) {
+            $('#buPrincipalModal').css('display', 'none');
+            $('body').css('overflow', '');
+        }
+    });
+
     $(document).on('keydown', function(e) {
         if (e.key === 'Escape') {
-            $('#buOverviewModal').css('display', 'none');
+            $('#buOverviewModal, #buPrincipalModal').css('display', 'none');
             $('body').css('overflow', '');
         }
     });

@@ -53,9 +53,9 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('mandatory-disclo
                   <table class="course-list-table table" style="margin-top:10px;">
                     <thead>
                       <tr>
-                        <th style="width:50px; text-align:center;">Format</th>
+                        <th style="width:80px; text-align:center;">Type</th>
                         <th style="text-align:left;">Document / Report Title</th>
-                        <th style="width:150px; text-align:center;">Download</th>
+                        <th style="width:160px; text-align:center;">Download</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -64,9 +64,21 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('mandatory-disclo
                           $dUrl = strpos($d['url'], 'http') === 0 ? $d['url'] : URL_ROOT . ltrim($d['url'], '/');
                         ?>
                         <tr>
-                          <td style="width:50px; vertical-align:middle; text-align:center;"><i class="fa fa-file-pdf-o" style="color:#DC2626; font-size:20px;"></i></td>
-                          <td style="vertical-align:middle;"><a href="<?php echo $dUrl;?>" target="_blank" style="color:#0A1B54; font-weight:600; text-decoration:none;"><?php echo htmlspecialchars($d['title']); ?></a></td>
-                          <td style="text-align:center; vertical-align:middle;"><a href="<?php echo $dUrl;?>" target="_blank" download class="bu-table-dl"><i class="fa fa-download"></i> Download</a></td>
+                          <td style="width:80px; text-align:center; vertical-align:middle;">
+                            <span style="display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:6px; background:rgba(220,38,38,0.08); color:#DC2626; font-size:16px;">
+                              <i class="fa fa-file-pdf-o"></i>
+                            </span>
+                          </td>
+                          <td style="vertical-align:middle;">
+                            <a href="<?php echo $dUrl;?>" target="_blank" style="color:#0A1B54; font-weight:700; font-size:14.5px; text-decoration:none;">
+                              <?php echo htmlspecialchars($d['title']); ?>
+                            </a>
+                          </td>
+                          <td style="width:160px; text-align:center; vertical-align:middle;">
+                            <a href="<?php echo $dUrl;?>" target="_blank" download class="bu-table-dl">
+                              <i class="fa fa-download"></i> Download
+                            </a>
+                          </td>
                         </tr>
                         <?php endforeach; ?>
                       <?php else: ?>

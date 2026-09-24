@@ -95,7 +95,20 @@ if (isset($_POST['submit'])) {
         'documents'          => $docItems
     ];
 
-    // 4. Build Master Data Array
+    // 4. Process Vision & Mission JSON
+    $vPointsArr = array_filter(array_map('trim', preg_split('/[\r\n]+/', trim($_POST['vm_vision_points'] ?? ''))));
+    $mPointsArr = array_filter(array_map('trim', preg_split('/[\r\n]+/', trim($_POST['vm_mission_points'] ?? ''))));
+    $coreValuesArr = array_filter(array_map('trim', preg_split('/[\r\n,]+/', trim($_POST['vm_core_values'] ?? ''))));
+
+    $visionMissionData = [
+        'vision'        => trim($_POST['vm_vision'] ?? ''),
+        'vision_points' => array_values($vPointsArr),
+        'mission'       => trim($_POST['vm_mission'] ?? ''),
+        'mission_points'=> array_values($mPointsArr),
+        'core_values'   => array_values($coreValuesArr)
+    ];
+
+    // 5. Build Master Data Array
     $data = [
         "department"              => intval($_POST['department'] ?? 0),
         "institute_name"          => trim($_POST['institute_name'] ?? ''),
@@ -119,6 +132,7 @@ if (isset($_POST['submit'])) {
         "programs_data"           => !empty($programsData) ? json_encode($programsData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : null,
         "activities_data"         => !empty($activitiesData) ? json_encode($activitiesData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : null,
         "placements_data"         => !empty($placementsData) ? json_encode($placementsData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : null,
+        "vision_mission_data"     => (!empty($visionMissionData['vision']) || !empty($visionMissionData['mission'])) ? json_encode($visionMissionData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : null,
         "status"                  => isset($_POST['status']) ? intval($_POST['status']) : 1
     ];
 
@@ -267,6 +281,7 @@ if ($action == "delete") {
             $progs = !empty($aryData['programs_data']) ? json_decode($aryData['programs_data'], true) : [];
             $acts  = !empty($aryData['activities_data']) ? json_decode($aryData['activities_data'], true) : [];
             $plcs  = !empty($aryData['placements_data']) ? json_decode($aryData['placements_data'], true) : [];
+            $vm    = !empty($aryData['vision_mission_data']) ? json_decode($aryData['vision_mission_data'], true) : [];
         ?>
         <div class="row">
           <div class="col-12">
@@ -290,16 +305,19 @@ if ($action == "delete") {
                       <a class="nav-link" id="principal-tab" data-toggle="tab" href="#tab-principal" role="tab"><i class="fa fa-user-circle"></i> 2. Leadership &amp; Principal</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="programs-tab" data-toggle="tab" href="#tab-programs" role="tab"><i class="fa fa-graduation-cap"></i> 3. Programmes &amp; Branches</a>
+                      <a class="nav-link" id="vm-tab" data-toggle="tab" href="#tab-vision-mission" role="tab"><i class="fa fa-bullseye"></i> 3. Vision &amp; Mission</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="activities-tab" data-toggle="tab" href="#tab-activities" role="tab"><i class="fa fa-futbol-o"></i> 4. Student Activities</a>
+                      <a class="nav-link" id="programs-tab" data-toggle="tab" href="#tab-programs" role="tab"><i class="fa fa-graduation-cap"></i> 4. Programmes &amp; Branches</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="placements-tab" data-toggle="tab" href="#tab-placements" role="tab"><i class="fa fa-briefcase"></i> 5. Placements &amp; NIRF</a>
+                      <a class="nav-link" id="activities-tab" data-toggle="tab" href="#tab-activities" role="tab"><i class="fa fa-futbol-o"></i> 5. Student Activities</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="legacy-tab" data-toggle="tab" href="#tab-legacy" role="tab"><i class="fa fa-code"></i> 6. Legacy HTML</a>
+                      <a class="nav-link" id="placements-tab" data-toggle="tab" href="#tab-placements" role="tab"><i class="fa fa-briefcase"></i> 6. Placements &amp; NIRF</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="legacy-tab" data-toggle="tab" href="#tab-legacy" role="tab"><i class="fa fa-code"></i> 7. Legacy HTML</a>
                     </li>
                   </ul>
 
@@ -438,7 +456,72 @@ if ($action == "delete") {
                     </div>
 
                     <!-- ========================================================
-                         TAB 3: PROGRAMMES & SPECIALIZATIONS
+                         TAB 3: VISION & MISSION
+                         ======================================================== -->
+                    <div class="tab-pane fade" id="tab-vision-mission" role="tabpanel">
+                      <div class="alert alert-info">
+                        <i class="fa fa-info-circle"></i> Configure the institutional <strong>Vision, Mission, and Core Values</strong>. These display as a modern dual-card glassmorphism spotlight on the frontend.
+                      </div>
+                      
+                      <div class="card mb-4 border shadow-sm">
+                        <div class="card-header bg-light">
+                          <h5 class="mb-0 text-primary"><i class="fa fa-eye"></i> Institutional Vision</h5>
+                        </div>
+                        <div class="card-body">
+                          <div class="form-group">
+                            <label class="font-weight-bold">Vision Statement</label>
+                            <textarea name="vm_vision" class="form-control" rows="3" placeholder="Enter the primary vision statement for this institute..."><?php echo htmlspecialchars($vm['vision'] ?? $_POST['vm_vision'] ?? '');?></textarea>
+                          </div>
+                          <div class="form-group mb-0">
+                            <label class="font-weight-bold">Vision Key Highlights / Objectives (One per line)</label>
+                            <textarea name="vm_vision_points" class="form-control" rows="3" placeholder="Objective 1&#10;Objective 2&#10;Objective 3"><?php 
+                              $vPts = $vm['vision_points'] ?? [];
+                              echo htmlspecialchars(is_array($vPts) ? implode("\n", $vPts) : ($_POST['vm_vision_points'] ?? ''));
+                            ?></textarea>
+                            <small class="form-text text-muted">Each new line will be displayed as a distinct checkmark bullet under Vision.</small>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="card mb-4 border shadow-sm">
+                        <div class="card-header bg-light">
+                          <h5 class="mb-0 text-primary"><i class="fa fa-bullseye"></i> Institutional Mission</h5>
+                        </div>
+                        <div class="card-body">
+                          <div class="form-group">
+                            <label class="font-weight-bold">Mission Statement</label>
+                            <textarea name="vm_mission" class="form-control" rows="3" placeholder="Enter the mission statement for this institute..."><?php echo htmlspecialchars($vm['mission'] ?? $_POST['vm_mission'] ?? '');?></textarea>
+                          </div>
+                          <div class="form-group mb-0">
+                            <label class="font-weight-bold">Mission Action Points / Pillars (One per line)</label>
+                            <textarea name="vm_mission_points" class="form-control" rows="4" placeholder="Action point 1&#10;Action point 2&#10;Action point 3"><?php 
+                              $mPts = $vm['mission_points'] ?? [];
+                              echo htmlspecialchars(is_array($mPts) ? implode("\n", $mPts) : ($_POST['vm_mission_points'] ?? ''));
+                            ?></textarea>
+                            <small class="form-text text-muted">Each new line will be rendered as a structured mission action pillar.</small>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="card mb-3 border shadow-sm">
+                        <div class="card-header bg-light">
+                          <h5 class="mb-0 text-primary"><i class="fa fa-diamond"></i> Institutional Core Values</h5>
+                        </div>
+                        <div class="card-body">
+                          <div class="form-group mb-0">
+                            <label class="font-weight-bold">Core Values (Comma separated or one per line)</label>
+                            <input type="text" name="vm_core_values" class="form-control" placeholder="e.g. Academic Excellence, Clinical Acumen, Research & Innovation, Compassion & Ethics" value="<?php 
+                              $cVals = $vm['core_values'] ?? [];
+                              echo htmlspecialchars(is_array($cVals) ? implode(", ", $cVals) : ($_POST['vm_core_values'] ?? ''));
+                            ?>"/>
+                            <small class="form-text text-muted">These will be rendered as sleek golden badge pills under the Vision & Mission cards.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- ========================================================
+                         TAB 4: PROGRAMMES & SPECIALIZATIONS
                          ======================================================== -->
                     <div class="tab-pane fade" id="tab-programs" role="tabpanel">
                       <div class="d-flex justify-content-between align-items-center mb-3">

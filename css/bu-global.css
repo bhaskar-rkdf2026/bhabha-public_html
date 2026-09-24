@@ -887,22 +887,22 @@ footer .row:last-child {
 .bu-content-body table td {
   padding: 14px 18px !important;
   border-bottom: 1px solid var(--border) !important;
-  text-align: left !important;
+  text-align: left;
 }
 
 .bu-content-body table tr:not(:first-child) td p,
 .bu-content-body table tr:not(:first-child) td span,
 .bu-content-body table tr:not(:first-child) td div {
-  text-align: left !important;
+  text-align: left;
 }
 
 /* Align bullet/icon/number cells in first column of multi-column tables */
 .bu-content-body table tr:not(:first-child) td:first-child:not(:last-child) {
-  width: 50px !important;
-  text-align: center !important;
+  width: 70px;
+  text-align: center;
 }
 .bu-content-body table tr:not(:first-child) td:first-child:not(:last-child) * {
-  text-align: center !important;
+  text-align: center;
 }
 
 /* Override all CMS inline colors in table cells (except links) */
@@ -924,10 +924,11 @@ footer .row:last-child {
 .bu-content-body table thead td {
   background: var(--navy) !important;
   padding: 14px 18px !important;
-  text-align: center !important;
   border-bottom: none !important;
   color: #ffffff !important;
   font-weight: 700 !important;
+  white-space: nowrap !important;
+  letter-spacing: 0.3px !important;
 }
 
 /* Header text must be white */
