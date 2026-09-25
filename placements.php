@@ -313,27 +313,100 @@
         <div class="bu-placed-grid">
           <?php
           $placed_students = [
-            ['name'=>'Rachana Singh','degree'=>'MBA','company'=>'UFaber Edutech Pvt. Ltd.','pkg'=>'CTC 6.0 - 8.0 LPA','img'=>'<?php echo URL_ROOT;?>upload/placed/Rachna%20singh1.jpg'],
-            ['name'=>'Anjali Maurya','degree'=>'M.Tech (EE)','company'=>'Pentagon Space Pvt. Ltd.','pkg'=>'CTC 3.0 - 12.0 LPA','img'=>'<?php echo URL_ROOT;?>upload/placed/ANJALI%20MAURYA1.jpg'],
-            ['name'=>'Shivam Shukla','degree'=>'M.Tech (EE)','company'=>'Infosys Ltd.','pkg'=>'CTC 3.60 LPA','img'=>'<?php echo URL_ROOT;?>upload/placed/Shivam%20Shukla1.jpg'],
-            ['name'=>'Deepak Patel','degree'=>'B.Tech (CSE)','company'=>'TCS (Tata Consultancy Services)','pkg'=>'CTC 4.50 LPA','img'=>''],
+            [
+              'name'    => 'Mr. Anurag Kumar',
+              'degree'  => 'M.Tech (Thermal Science Engineering) 2025',
+              'company' => 'China Petroleum Pipeline Eng. (CPP)',
+              'pkg'     => 'CTC 60.0 LPA',
+              'img'     => URL_ROOT . 'upload/media/alumni_anurag_kumar_cpp_60lpa.jpg'
+            ],
+            [
+              'name'    => 'Harikesh Singh',
+              'degree'  => 'M.Tech (VLSI Design) 2023–2025',
+              'company' => 'UPSC Indian Engineering Services (IES)',
+              'pkg'     => 'AIR Rank 68',
+              'img'     => URL_ROOT . 'upload/media/alumni_harikesh_singh_ies_rank68.jpg'
+            ],
+            [
+              'name'    => 'Mr. Kamlesh Kumar',
+              'degree'  => 'Engineering Alumnus — Bhabha University',
+              'company' => 'UPSC Indian Engineering Services (IES)',
+              'pkg'     => 'UPSC IES Officer',
+              'img'     => URL_ROOT . 'upload/media/alumni_kamlesh_kumar_ies.jpg'
+            ],
+            [
+              'name'    => 'Mr. Anshuman Rajesh Singh',
+              'degree'  => 'Engineering Alumnus — Bhabha University',
+              'company' => 'UPSC Indian Engineering Services (IES 2023)',
+              'pkg'     => 'UPSC IES 2023 Officer',
+              'img'     => URL_ROOT . 'upload/media/alumni_anshuman_singh_ies.jpg'
+            ],
+            [
+              'name'    => 'Ms. Nidhi Shukla',
+              'degree'  => 'Distinguished Alumna — Bhabha University',
+              'company' => 'Deputy Director, DTE Madhya Pradesh (MPPSC)',
+              'pkg'     => 'Govt. Class-I Officer',
+              'img'     => URL_ROOT . 'upload/media/alumni_nidhi_shukla_dte.jpg'
+            ],
+            [
+              'name'    => 'Shubham Kumar Srivastava',
+              'degree'  => 'M.Tech (Power Systems - Electrical)',
+              'company' => 'National High Speed Rail Corp. (NHSRCL)',
+              'pkg'     => 'CTC 12.0 LPA',
+              'img'     => URL_ROOT . 'upload/media/alumni_shubham_srivastava_nhsrcl.jpg'
+            ],
+            [
+              'name'    => 'Vikash Chandra',
+              'degree'  => 'B.Pharm — BPRI',
+              'company' => 'IIT KANPUR (M.Tech Biomedical Eng.)',
+              'pkg'     => 'Premier IIT Selection',
+              'img'     => URL_ROOT . 'upload/media/alumni_vikash_chandra_iit_kanpur.jpg'
+            ],
+            [
+              'name'    => 'Mr. Rakesh Kumar Roy',
+              'degree'  => 'B.Tech (Civil Engineering) 2025',
+              'company' => 'Dhariwal Buildtech Limited (DBL)',
+              'pkg'     => 'CTC 7.44 LPA',
+              'img'     => URL_ROOT . 'upload/media/alumni_rakesh_roy_dhariwal.jpg'
+            ],
+            [
+              'name'    => 'Rachana Singh',
+              'degree'  => 'MBA',
+              'company' => 'UFaber Edutech Pvt. Ltd.',
+              'pkg'     => 'CTC 6.0 - 8.0 LPA',
+              'img'     => URL_ROOT . 'upload/placed/Rachna%20singh1.jpg'
+            ],
+            [
+              'name'    => 'Anjali Maurya',
+              'degree'  => 'M.Tech (EE)',
+              'company' => 'Pentagon Space Pvt. Ltd.',
+              'pkg'     => 'CTC 3.0 - 12.0 LPA',
+              'img'     => URL_ROOT . 'upload/placed/ANJALI%20MAURYA1.jpg'
+            ],
+            [
+              'name'    => 'Shivam Shukla',
+              'degree'  => 'M.Tech (EE)',
+              'company' => 'Infosys Ltd.',
+              'pkg'     => 'CTC 3.60 LPA',
+              'img'     => URL_ROOT . 'upload/placed/Shivam%20Shukla1.jpg'
+            ],
           ];
           foreach($placed_students as $student): ?>
           <div class="bu-placed-card">
-            <div class="bu-placed-img-wrap">
+            <div class="bu-placed-img-wrap" style="height: 220px;">
               <?php if(!empty($student['img'])): ?>
-                <img src="<?php echo $student['img'];?>" alt="<?php echo $student['name'];?>" class="bu-placed-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/home-gallery1.jpg';">
+                <img src="<?php echo $student['img'];?>" alt="<?php echo htmlspecialchars($student['name']);?>" class="bu-placed-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/home-gallery1.jpg';">
               <?php else: ?>
                 <div style="display:flex;align-items:center;justify-content:center;height:100%;"><i class="fa fa-user" style="font-size:50px;color:rgba(10,27,84,0.3);"></i></div>
               <?php endif; ?>
             </div>
             <div class="bu-placed-body">
               <div>
-                <h4 class="bu-placed-name"><?php echo $student['name'];?></h4>
-                <div class="bu-placed-degree"><?php echo $student['degree'];?></div>
-                <div class="bu-placed-company"><i class="fa fa-building-o"></i> <?php echo $student['company'];?></div>
+                <h4 class="bu-placed-name"><?php echo htmlspecialchars($student['name']);?></h4>
+                <div class="bu-placed-degree"><?php echo htmlspecialchars($student['degree']);?></div>
+                <div class="bu-placed-company"><i class="fa fa-building-o"></i> <?php echo htmlspecialchars($student['company']);?></div>
               </div>
-              <span class="bu-placed-pkg"><?php echo $student['pkg'];?></span>
+              <span class="bu-placed-pkg"><?php echo htmlspecialchars($student['pkg']);?></span>
             </div>
           </div>
           <?php endforeach; ?>

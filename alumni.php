@@ -113,19 +113,20 @@ if(isset($_POST['submit']))
   box-sizing: border-box !important;
 }
 .bu-alumni-container {
-  max-width: 1100px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
 /* Association Intro Card - Crisp White & Gold Theme */
 .bu-buaa-card {
+  max-width: 1060px !important;
+  margin: 0 auto 30px auto !important;
   background: #ffffff !important;
   border: 1px solid var(--bu-border) !important;
   border-top: 4px solid var(--bu-gold) !important;
   border-radius: 14px !important;
   padding: 28px 32px !important;
   color: var(--bu-text-dark) !important;
-  margin-bottom: 30px !important;
   display: flex !important;
   align-items: center !important;
   gap: 24px !important;
@@ -320,6 +321,271 @@ select.bu-input {
   align-items: center;
   gap: 10px;
 }
+
+/* =========================================================
+   ALUMNI SUCCESS STORIES & HALL OF FAME STYLES
+   ========================================================= */
+.bu-alumni-stories-sec {
+  margin-bottom: 45px;
+}
+.bu-alumni-sec-head {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.bu-alumni-sec-subtitle {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--bu-gold-dark);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  display: block;
+  margin-bottom: 4px;
+}
+.bu-alumni-sec-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 800;
+  color: var(--bu-navy);
+  margin: 0 0 8px;
+}
+.bu-alumni-sec-title em {
+  color: var(--bu-gold-dark);
+  font-style: italic;
+}
+.bu-alumni-sec-desc {
+  font-size: 13.5px;
+  color: var(--bu-text-muted);
+  max-width: 680px;
+  margin: 0 auto 18px;
+  line-height: 1.5;
+}
+.bu-alumni-stats-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.bu-alumni-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid var(--bu-border);
+  border-radius: 30px;
+  padding: 5px 13px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--bu-navy);
+  box-shadow: 0 2px 6px rgba(10,27,84,0.03);
+}
+.bu-alumni-stat-pill i {
+  color: var(--bu-gold-dark);
+}
+
+/* 4-Column Grid Layout */
+.bu-alumni-stories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.bu-story-card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--bu-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(10,27,84,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+.bu-story-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px rgba(10,27,84,0.14);
+  border-color: var(--bu-gold);
+}
+
+@media (max-width: 1140px) {
+  .bu-alumni-stories-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (max-width: 860px) {
+  .bu-alumni-stories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 540px) {
+  .bu-alumni-stories-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.bu-story-img-box {
+  width: 100%;
+  height: 250px;
+  background: #F8FAFC;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #F1F5F9;
+}
+.bu-story-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.35s ease;
+  display: block;
+}
+.bu-story-card:hover .bu-story-img {
+  transform: scale(1.03);
+}
+.bu-story-overlay-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(10, 27, 84, 0.88);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(4px);
+  opacity: 0.9;
+  transition: all 0.2s ease;
+}
+.bu-story-card:hover .bu-story-overlay-badge {
+  background: var(--bu-gold-dark);
+  color: #0A1B54;
+  opacity: 1;
+}
+
+.bu-story-body {
+  padding: 14px 15px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: 6px;
+}
+.bu-story-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--bu-navy);
+  margin: 0;
+  line-height: 1.3;
+}
+.bu-story-course {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748B;
+  line-height: 1.45;
+}
+.bu-story-pkg-pill {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.16) 0%, rgba(217, 155, 0, 0.12) 100%);
+  color: #8A5D00;
+  border: 1px solid rgba(217, 155, 0, 0.35);
+  font-weight: 800;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  width: fit-content;
+}
+.bu-story-pkg-pill i {
+  color: #D99B00;
+}
+
+/* Zero-Scroll Perfect Screen Lightbox Modal */
+.bu-alumni-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.9);
+  backdrop-filter: blur(8px);
+  z-index: 999999;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.bu-alumni-modal-overlay.active {
+  display: flex;
+}
+.bu-alumni-modal-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 92vw;
+  max-height: 92vh;
+  animation: buModalPop 0.22s ease-out;
+}
+@keyframes buModalPop {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+.bu-alumni-modal-close {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  background: #EF4444;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+.bu-alumni-modal-close:hover {
+  background: #DC2626;
+  transform: scale(1.1);
+}
+.bu-alumni-modal-img {
+  max-width: 90vw;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: block;
+}
 </style>
 </head>
 
@@ -370,6 +636,121 @@ select.bu-input {
           </p>
         </div>
       </div>
+
+      <!-- =========================================================
+           ALUMNI SUCCESS STORIES & HALL OF FAME
+           ========================================================= -->
+      <section class="bu-alumni-stories-sec">
+        <div class="bu-alumni-sec-head">
+          <span class="bu-alumni-sec-subtitle">Pride of Bhabha University</span>
+          <h2 class="bu-alumni-sec-title">Distinguished Alumni &amp; <em>Star Achievers</em></h2>
+          <p class="bu-alumni-sec-desc">
+            Celebrating remarkable career milestones, prestigious competitive exam ranks, premier institute selections, and high-impact corporate leadership achieved by our distinguished graduates worldwide.
+          </p>
+
+          <div class="bu-alumni-stats-strip">
+            <span class="bu-alumni-stat-pill"><i class="fa fa-globe"></i> <strong>20,000+</strong> Global Alumni Network</span>
+            <span class="bu-alumni-stat-pill"><i class="fa fa-trophy"></i> <strong>₹60.0 LPA</strong> Top Global Package</span>
+            <span class="bu-alumni-stat-pill"><i class="fa fa-star"></i> <strong>AIR 68</strong> UPSC Indian Engineering Services</span>
+            <span class="bu-alumni-stat-pill"><i class="fa fa-institution"></i> <strong>Deputy Director</strong> DTE Madhya Pradesh</span>
+            <span class="bu-alumni-stat-pill"><i class="fa fa-graduation-cap"></i> <strong>IIT Kanpur</strong> M.Tech Selection</span>
+            <span class="bu-alumni-stat-pill"><i class="fa fa-building-o"></i> <strong>500+</strong> Recruiting Partners</span>
+          </div>
+        </div>
+
+        <div class="bu-alumni-stories-grid">
+          <?php
+          $alumni_stories = [
+            [
+              'name'      => 'Mr. Anurag Kumar',
+              'degree'    => 'M.Tech (Thermal Science Engineering) — Batch 2025',
+              'badge'     => '₹60.0 LPA Package',
+              'highlight' => 'China Petroleum Pipeline Engineering Co. Ltd. (CPP)',
+              'role'      => 'Mechanical Engineer - Lead',
+              'desc'      => 'Secured an international milestone package of 60.0 LPA at China Petroleum Pipeline Engineering Co. Ltd., representing the cutting-edge engineering competence cultivated at Bhabha University.',
+              'image'     => 'upload/media/alumni_anurag_kumar_cpp_60lpa.jpg',
+            ],
+            [
+              'name'      => 'Harikesh Singh',
+              'degree'    => 'M.Tech – VLSI Design (Batch 2023–2025)',
+              'badge'     => 'AIR Rank 68 in IES 2025',
+              'highlight' => 'Indian Engineering Services (IES / ESE 2025)',
+              'role'      => 'UPSC Engineering Officer',
+              'desc'      => 'Secured an All India Rank 68 in the prestigious Indian Engineering Services 2025, demonstrating top-tier academic dedication, perseverance, and technical excellence.',
+              'image'     => 'upload/media/alumni_harikesh_singh_ies_rank68.jpg',
+            ],
+            [
+              'name'      => 'Mr. Kamlesh Kumar',
+              'degree'    => 'Engineering Alumnus — Bhabha University',
+              'badge'     => 'UPSC IES Officer',
+              'highlight' => 'Indian Engineering Services (IES / ESE)',
+              'role'      => 'UPSC Engineering Officer',
+              'desc'      => 'Cleared the prestigious Union Public Service Commission (UPSC) Indian Engineering Services examination and selected as an IES Officer in the Government of India.',
+              'image'     => 'upload/media/alumni_kamlesh_kumar_ies.jpg',
+            ],
+            [
+              'name'      => 'Mr. Anshuman Rajesh Singh',
+              'degree'    => 'Engineering Alumnus — Bhabha University',
+              'badge'     => 'UPSC IES 2023 Officer',
+              'highlight' => 'Indian Engineering Services (IES / ESE 2023)',
+              'role'      => 'UPSC Engineering Officer',
+              'desc'      => 'Successfully cracked the prestigious UPSC Indian Engineering Services (IES 2023) examination and appointed as an Engineering Officer in the Government of India.',
+              'image'     => 'upload/media/alumni_anshuman_singh_ies.jpg',
+            ],
+            [
+              'name'      => 'Ms. Nidhi Shukla',
+              'degree'    => 'Distinguished Alumna — Bhabha University',
+              'badge'     => 'Deputy Director, DTE MP',
+              'highlight' => 'Directorate of Technical Education (DTE), Govt. of M.P.',
+              'role'      => 'Deputy Director',
+              'desc'      => 'Selected through MPPSC and appointed as Deputy Director at Directorate of Technical Education (DTE), Government of Madhya Pradesh.',
+              'image'     => 'upload/media/alumni_nidhi_shukla_dte.jpg',
+            ],
+            [
+              'name'      => 'Shubham Kumar Srivastava',
+              'degree'    => 'M.Tech (Power Systems - Electrical)',
+              'badge'     => '₹12.0 LPA Package',
+              'highlight' => 'National High Speed Rail Corporation Ltd. (NHSRCL)',
+              'role'      => 'Junior Technical Manager (Electrical)',
+              'desc'      => 'Selected as Junior Technical Manager (Electrical) for India’s landmark High-Speed Bullet Train project at NHSRCL with an attractive 12 LPA package.',
+              'image'     => 'upload/media/alumni_shubham_srivastava_nhsrcl.jpg',
+            ],
+            [
+              'name'      => 'Vikash Chandra',
+              'degree'    => 'B.Pharm — Bhabha Pharmacy Research Institute (BPRI)',
+              'badge'     => 'IIT Kanpur Selection',
+              'highlight' => 'Indian Institute of Technology (IIT) Kanpur',
+              'role'      => 'M.Tech (Biomedical Engineering)',
+              'desc'      => 'Achieved direct selection at premier institution IIT Kanpur for postgraduate research and M.Tech in Biomedical Engineering after graduating from BPRI.',
+              'image'     => 'upload/media/alumni_vikash_chandra_iit_kanpur.jpg',
+            ],
+            [
+              'name'      => 'Mr. Rakesh Kumar Roy',
+              'degree'    => 'B.Tech – Civil Engineering (Batch 2025)',
+              'badge'     => '₹7.44 LPA Package',
+              'highlight' => 'Dhariwal Buildtech Limited (DBL)',
+              'role'      => 'Material Engineer',
+              'desc'      => 'Selected as Material Engineer at leading infrastructure conglomerate Dhariwal Buildtech Limited (DBL) with a commendable annual CTC of 7.44 LPA.',
+              'image'     => 'upload/media/alumni_rakesh_roy_dhariwal.jpg',
+            ],
+          ];
+          foreach($alumni_stories as $story):
+            $imgUrl = URL_ROOT . $story['image'];
+          ?>
+          <div class="bu-story-card" onclick="openAlumniPoster('<?php echo $imgUrl;?>', '<?php echo htmlspecialchars($story['name']);?>')">
+            <div class="bu-story-img-box">
+              <img src="<?php echo $imgUrl;?>" alt="<?php echo htmlspecialchars($story['name']);?>" class="bu-story-img" loading="lazy">
+              <span class="bu-story-overlay-badge"><i class="fa fa-expand"></i> Click to View</span>
+            </div>
+            <div class="bu-story-body">
+              <h3 class="bu-story-name"><?php echo htmlspecialchars($story['name']);?></h3>
+              <div class="bu-story-course"><?php echo htmlspecialchars($story['degree']);?></div>
+              <span class="bu-story-pkg-pill"><i class="fa fa-trophy"></i> <?php echo htmlspecialchars($story['badge']);?></span>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </section>
 
       <!-- Membership Application Form (Based on Official Physical Form) -->
       <div class="bu-alumni-form-box">
@@ -571,6 +952,39 @@ select.bu-input {
   <?php include('inc.footer.php');?>
   <!-- FOOTER END -->
 </div>
+
+<!-- Alumni Poster Lightbox Modal -->
+<div id="buAlumniModal" class="bu-alumni-modal-overlay" onclick="closeAlumniPoster(event)">
+  <div class="bu-alumni-modal-content" onclick="event.stopPropagation()">
+    <button type="button" class="bu-alumni-modal-close" onclick="closeAlumniPoster(event)" title="Close">&times;</button>
+    <img id="buAlumniModalImg" src="" alt="Alumni Achievement Poster" class="bu-alumni-modal-img">
+  </div>
+</div>
+
+<script>
+function openAlumniPoster(imgSrc, name) {
+  var modal = document.getElementById('buAlumniModal');
+  var modalImg = document.getElementById('buAlumniModalImg');
+  if (modal && modalImg) {
+    modalImg.src = imgSrc;
+    modalImg.alt = name || 'Alumni Achievement';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeAlumniPoster(e) {
+  var modal = document.getElementById('buAlumniModal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeAlumniPoster();
+  }
+});
+</script>
 
 <!-- Scripts -->
 <?php include('inc.footer.js.php');?>

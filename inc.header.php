@@ -239,7 +239,9 @@
 
       <!-- Mobile Menu Toggle Button (extreme right corner) -->
       <button class="bu-mobile-toggle" id="buMobileToggle" aria-label="Toggle Navigation">
-        <i class="fa fa-bars"></i>
+        <span class="bu-toggle-line bu-line-blue"></span>
+        <span class="bu-toggle-line bu-line-orange"></span>
+        <span class="bu-toggle-line bu-line-red"></span>
       </button>
 
     </div>
@@ -295,13 +297,13 @@
     function openMenu() {
       if (navbar) navbar.classList.add('mobile-open');
       if (backdrop) backdrop.classList.add('active');
-      if (mobileToggle) mobileToggle.innerHTML = '<i class="fa fa-times"></i>';
+      if (mobileToggle) mobileToggle.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
     function closeMenu() {
       if (navbar) navbar.classList.remove('mobile-open');
       if (backdrop) backdrop.classList.remove('active');
-      if (mobileToggle) mobileToggle.innerHTML = '<i class="fa fa-bars"></i>';
+      if (mobileToggle) mobileToggle.classList.remove('active');
       document.body.style.overflow = '';
     }
 

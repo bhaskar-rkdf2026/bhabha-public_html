@@ -373,34 +373,35 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
 
 .bu-approvals-bar {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 7px;
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
+  border-left: 3.5px solid #10B981;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   margin-bottom: 14px;
-  flex-wrap: wrap;
 }
 
 .bu-approval-item {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--bu-navy-primary);
+  line-height: 1.45;
 }
 
 .bu-approval-item i {
   color: #10B981;
-  font-size: 13px;
+  font-size: 14px;
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 
 .bu-approval-divider {
-  width: 1px;
-  height: 14px;
-  background: #CBD5E1;
+  display: none;
 }
 
 .bu-hero-btn-row {
@@ -1651,7 +1652,6 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
                 <i class="fa fa-check-circle"></i>
                 <span><?php echo htmlspecialchars(!empty($aryData['approval_text']) ? $aryData['approval_text'] : 'Approved by Statutory Regulatory Bodies');?></span>
               </div>
-              <div class="bu-approval-divider"></div>
               <div class="bu-approval-item">
                 <i class="fa fa-check-circle"></i>
                 <span><?php echo htmlspecialchars(!empty($aryData['affiliation_text']) ? $aryData['affiliation_text'] : 'Constituent Institute of Bhabha University');?></span>
@@ -1956,9 +1956,7 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
           </a>
           <?php endforeach; ?>
         </div>
-        <?php endif; ?>
-
-        <?php if(!empty($aryData['departments'])): ?>
+        <?php elseif(!empty($aryData['departments'])): ?>
         <div style="margin-top: 14px; font-size: 13.5px; color: #334155;">
           <?php echo $aryData['departments'];?>
         </div>

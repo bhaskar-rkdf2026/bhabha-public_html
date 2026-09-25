@@ -47,25 +47,40 @@
       </div>
 
       <!-- Column 3: Rules & Regulations + Socials -->
+      <!-- Column 3: Rules & Regulations -->
       <div class="bu-footer-col">
-        <h4 class="bu-footer-heading">RULES AND REGULATIONS</h4>
+        <h4 class="bu-footer-heading">RULES &amp; GOVERNANCE</h4>
         <ul class="bu-footer-links">
+          <li><a href="<?php echo href("approvals.php"); ?>"><i class="fa fa-angle-right"></i> Approvals &amp; Recognitions</a></li>
+          <li><a href="<?php echo href("mandatory-disclosure.php"); ?>"><i class="fa fa-angle-right"></i> Mandatory Disclosure</a></li>
+          <li><a href="<?php echo href("ugc-proforma.php"); ?>"><i class="fa fa-angle-right"></i> UGC Proforma</a></li>
+          <li><a href="<?php echo href("nirf.php"); ?>"><i class="fa fa-angle-right"></i> NIRF Data</a></li>
+          <li><a href="<?php echo href("grievance.php"); ?>"><i class="fa fa-angle-right"></i> Grievance Redressal</a></li>
           <li><a href="<?php echo href("term-and-condition.php"); ?>"><i class="fa fa-angle-right"></i> Terms &amp; Conditions</a></li>
           <li><a href="<?php echo href("privacy-policy.php"); ?>"><i class="fa fa-angle-right"></i> Privacy Policy</a></li>
-          <li><a href="<?php echo href("refund-policy.php"); ?>"><i class="fa fa-angle-right"></i> Refund And Cancellation Policy</a></li>
+          <li><a href="<?php echo href("refund-policy.php"); ?>"><i class="fa fa-angle-right"></i> Refund &amp; Cancellation</a></li>
           <li><a href="<?php echo URL_ROOT; ?>sitemap.xml" target="_blank"><i class="fa fa-angle-right"></i> Site Map</a></li>
         </ul>
       </div>
 
-      <!-- Column 4: Announcements -->
+      <!-- Column 4: Academics & Admissions (Direct Links) -->
       <div class="bu-footer-col">
-        <h4 class="bu-footer-heading">ANNOUNCEMENTS</h4>
+        <h4 class="bu-footer-heading">ACADEMICS &amp; ADMISSIONS</h4>
         <ul class="bu-footer-links">
-          <li><a href="<?php echo href("announcements.php"); ?>"><i class="fa fa-angle-right"></i> Admissions Open 2026-27</a></li>
-          <li><a href="<?php echo href("announcements.php"); ?>"><i class="fa fa-angle-right"></i> Counselling Schedule</a></li>
-          <li><a href="<?php echo href("announcements.php"); ?>"><i class="fa fa-angle-right"></i> Vice Chancellor (I/C) Appointment Notification (1/7/2026)</a></li>
-          <li><a href="<?php echo href("announcements.php"); ?>"><i class="fa fa-angle-right"></i> Rescheduling Of BSc Nursing 1st Sem (RE) Examination April 2026</a></li>
-          <li><a href="<?php echo href("notice.php"); ?>"><i class="fa fa-angle-right"></i> Notice : Academic Integration Of SWAYAM MOOCs; July Session 2026</a></li>
+          <li><a href="<?php echo href("online-admission.php"); ?>"><i class="fa fa-angle-right"></i> Online Admission 2026-27</a></li>
+          <li><a href="<?php echo href("admission-process.php"); ?>"><i class="fa fa-angle-right"></i> Admission Process</a></li>
+          <li><a href="<?php echo href("all-programs.php"); ?>"><i class="fa fa-angle-right"></i> Courses &amp; Programs</a></li>
+          <li><a href="<?php echo href("fees.php"); ?>"><i class="fa fa-angle-right"></i> Fee Structure</a></li>
+          <li><a href="<?php echo href("examination.php"); ?>"><i class="fa fa-angle-right"></i> Examination Cell</a></li>
+          <li><a href="<?php echo href("time-table.php"); ?>"><i class="fa fa-angle-right"></i> Exam Time Table</a></li>
+          <li><a href="<?php echo href("syllabus.php"); ?>"><i class="fa fa-angle-right"></i> Syllabus &amp; Scheme</a></li>
+          <li><a href="<?php echo href("scholarship.php"); ?>"><i class="fa fa-angle-right"></i> Scholarships &amp; Aid</a></li>
+          <li><a href="<?php echo href("placements.php"); ?>"><i class="fa fa-angle-right"></i> Training &amp; Placements</a></li>
+          <li><a href="<?php echo href("infrastructure.php"); ?>"><i class="fa fa-angle-right"></i> Campus Facilities</a></li>
+          <li><a href="<?php echo href("radio.php"); ?>"><i class="fa fa-angle-right"></i> Radio Bhabha 90.4 FM</a></li>
+          <li><a href="<?php echo href("solar.php"); ?>"><i class="fa fa-angle-right"></i> Solar &amp; Green Energy</a></li>
+          <li><a href="<?php echo href("announcements.php"); ?>"><i class="fa fa-angle-right"></i> Latest Announcements</a></li>
+          <li><a href="<?php echo href("notice.php"); ?>"><i class="fa fa-angle-right"></i> Circulars &amp; Notices</a></li>
         </ul>
       </div>
 

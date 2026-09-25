@@ -68,11 +68,34 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
     <?php foreach($hero_stats as $stat): 
       $rawTarget = preg_replace('/[^0-9]/', '', $stat['number']);
       $formattedNum = !empty($stat['commas']) ? number_format((int)$rawTarget) : $rawTarget;
+
+      // Determine redirect URL based on stat label or custom url key
+      $statUrl = '#';
+      $labelLower = strtolower(trim($stat['label']));
+      if (!empty($stat['url'])) {
+          $statUrl = href($stat['url']);
+      } elseif (strpos($labelLower, 'alumni') !== false) {
+          $statUrl = href('alumni.php');
+      } elseif (strpos($labelLower, 'recruit') !== false || strpos($labelLower, 'placement') !== false) {
+          $statUrl = href('placements.php');
+      } elseif (strpos($labelLower, 'student') !== false || strpos($labelLower, 'admiss') !== false) {
+          $statUrl = href('online-admission.php');
+      } elseif (strpos($labelLower, 'faculty') !== false || strpos($labelLower, 'teacher') !== false) {
+          $statUrl = href('about.php');
+      } elseif (strpos($labelLower, 'program') !== false || strpos($labelLower, 'course') !== false) {
+          $statUrl = href('course.php');
+      } elseif (strpos($labelLower, 'school') !== false || strpos($labelLower, 'department') !== false) {
+          $statUrl = href('department.php');
+      } elseif (strpos($labelLower, 'publicat') !== false || strpos($labelLower, 'research') !== false || strpos($labelLower, 'patent') !== false) {
+          $statUrl = href('research.php');
+      } elseif (strpos($labelLower, 'campus') !== false) {
+          $statUrl = href('about.php');
+      }
     ?>
-    <div class="bu-stat-item">
+    <a href="<?php echo $statUrl; ?>" class="bu-stat-item" title="Explore <?php echo htmlspecialchars($stat['label']); ?> at Bhabha University">
       <span class="bu-stat-number" data-target="<?php echo $rawTarget; ?>" data-suffix="<?php echo htmlspecialchars($stat['suffix']); ?>" <?php if(!empty($stat['commas'])) echo 'data-commas="true"'; ?>><?php echo $formattedNum; ?><sup><?php echo htmlspecialchars($stat['suffix']); ?></sup></span>
       <span class="bu-stat-label"><?php echo htmlspecialchars($stat['label']); ?></span>
-    </div>
+    </a>
     <?php endforeach; ?>
   </div>
 </div>
@@ -251,9 +274,23 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
   flex-direction: column !important;
   align-items: center !important;
   text-align: center !important;
-  padding: 0 8px !important;
+  padding: 8px 10px !important;
   flex: 1 !important;
   min-width: 110px !important;
+  text-decoration: none !important;
+  border-radius: 8px !important;
+  transition: transform 0.25s ease, background 0.25s ease !important;
+  cursor: pointer !important;
+}
+.bu-stat-item:hover {
+  transform: translateY(-4px) !important;
+  background: rgba(8, 24, 78, 0.04) !important;
+}
+.bu-stat-item:hover .bu-stat-number {
+  color: #0047BA !important;
+}
+.bu-stat-item:hover .bu-stat-label {
+  color: #08184E !important;
 }
 .bu-stat-number {
   font-family: 'Playfair Display', Georgia, serif !important;

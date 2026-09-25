@@ -95,7 +95,7 @@ table { max-width: 100% !important; }
   .bu-brand-title, .bu-brand-name-1 { font-size: 14px !important; }
   .bu-brand-name-2 { font-size: 12px !important; }
   .bu-brand-logo { height: 34px !important; }
-  .bu-mobile-toggle { font-size: 22px !important; padding: 4px 6px !important; }
+  .bu-mobile-toggle { width: 36px !important; height: 32px !important; padding: 6px 7px !important; }
 }
 
 /* ================================================================
@@ -1016,7 +1016,7 @@ section, footer, header, main, article, aside, div {
 @media (max-width: 360px) {
   .bu-brand-logo { height: 30px !important; }
   .bu-brand-title { font-size: 13px !important; max-width: 160px !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
-  .bu-mobile-toggle { font-size: 18px !important; }
+  .bu-mobile-toggle { width: 34px !important; height: 30px !important; padding: 5px 6px !important; }
   .bu-inner-hero-title { font-size: 20px !important; }
   .bu-fwslide-heading { font-size: 20px !important; }
   .bu-why-title { font-size: 17px !important; }

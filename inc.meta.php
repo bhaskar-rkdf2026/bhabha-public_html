@@ -710,14 +710,63 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 .bu-mobile-drawer-head { display: none !important; }
 .bu-mobile-toggle {
   display: none !important;
-  background: transparent !important;
-  border: none !important;
-  color: var(--bu-navy) !important;
-  font-size: 26px !important;
+  background: #FFFFFF !important;
+  border: 1.5px solid #E2E8F0 !important;
+  border-radius: 6px !important;
   cursor: pointer !important;
-  padding: 6px 10px !important;
+  padding: 8px 8px !important;
   margin-left: auto !important;
   order: 99 !important;
+  width: 40px !important;
+  height: 36px !important;
+  box-sizing: border-box !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  box-shadow: 0 2px 8px rgba(10, 27, 84, 0.08) !important;
+  transition: all 0.25s ease !important;
+}
+.bu-mobile-toggle:hover {
+  background: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 3px 10px rgba(10, 27, 84, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+.bu-mobile-toggle .bu-toggle-line {
+  display: block !important;
+  width: 100% !important;
+  height: 3px !important;
+  border-radius: 2px !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease !important;
+  transform-origin: center !important;
+}
+/* 3 Logo Colors: Blue, Orange, Red */
+.bu-mobile-toggle .bu-line-blue {
+  background-color: #0047BA !important; /* Logo Royal Blue */
+}
+.bu-mobile-toggle .bu-line-orange {
+  background-color: #FF9900 !important; /* Logo Gold / Orange */
+}
+.bu-mobile-toggle .bu-line-red {
+  background-color: #ED1C24 !important; /* Logo Red / Crimson */
+}
+
+/* Active State (Animated into Close 'X') */
+.bu-mobile-toggle.active {
+  background: #FFFFFF !important;
+  border-color: #0A1B54 !important;
+}
+.bu-mobile-toggle.active .bu-line-blue {
+  transform: translateY(7px) rotate(45deg) !important;
+  background-color: #0047BA !important;
+}
+.bu-mobile-toggle.active .bu-line-orange {
+  opacity: 0 !important;
+  transform: scaleX(0) !important;
+}
+.bu-mobile-toggle.active .bu-line-red {
+  transform: translateY(-7px) rotate(-45deg) !important;
+  background-color: #ED1C24 !important;
 }
 
 /* ---- BLINK ---- */
@@ -757,8 +806,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   }
   .bu-mobile-toggle { 
     display: flex !important; 
-    align-items: center !important; 
-    justify-content: center !important; 
     margin-left: 10px !important;
     order: 99 !important;
   }
@@ -958,8 +1005,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   .bu-header-container { gap: 8px !important; padding: 8px 12px !important; }
   .bu-ticker-label { padding: 0 12px !important; font-size: 9.5px !important; }
 }
-  .bu-ticker-label { padding: 0 12px !important; font-size: 9.5px !important; }
-}
 
 /* ---- BACKDROP for mobile nav ---- */
 .bu-nav-backdrop {
@@ -981,7 +1026,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   .bu-brand { gap: 8px !important; }
   .bu-header-container { padding: 8px 10px !important; gap: 6px !important; }
   .bu-header-actions { gap: 6px !important; }
-  .bu-mobile-toggle { font-size: 20px !important; padding: 4px 6px !important; }
+  .bu-mobile-toggle { width: 38px !important; height: 34px !important; padding: 7px 8px !important; }
 }
 
 /* ---- EXTRA SMALL PHONES (max-width: 360px) ---- */
@@ -989,7 +1034,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   .bu-brand-logo { height: 30px !important; }
   .bu-brand-title { font-size: 13px !important; max-width: 150px !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
   .bu-header-container { padding: 6px 8px !important; gap: 4px !important; }
-  .bu-mobile-toggle { font-size: 18px !important; padding: 4px !important; }
+  .bu-mobile-toggle { width: 36px !important; height: 32px !important; padding: 6px 7px !important; }
 }
 </style>
 

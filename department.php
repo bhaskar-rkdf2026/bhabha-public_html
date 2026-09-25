@@ -225,38 +225,35 @@ $attributes    = !empty($aryData['attributes_data']) ? json_decode($aryData['att
 
 .bu-approvals-bar {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 7px;
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
+  border-left: 3.5px solid #10B981;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   margin-bottom: 12px;
-  flex-wrap: wrap;
 }
 
 .bu-approval-item {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--bu-navy-primary);
+  line-height: 1.45;
 }
 
 .bu-approval-item i {
   color: #10B981;
-  font-size: 13px;
+  font-size: 14px;
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 
 .bu-approval-divider {
-  width: 1px;
-  height: 14px;
-  background: #CBD5E1;
-}
-
-@media(max-width: 768px) {
-  .bu-approval-divider { display: none; }
+  display: none;
 }
 
 .bu-overview-action-row {
@@ -2322,7 +2319,6 @@ section.bu-section-block {
               <div class="bu-dept-badge-row">
                 <span class="bu-badge bu-badge-gold"><i class="fa fa-certificate"></i> AICTE / Recognized</span>
                 <span class="bu-badge bu-badge-navy"><i class="fa fa-university"></i> Bhabha University Bhopal</span>
-                <span class="bu-badge bu-badge-green"><i class="fa fa-check-circle"></i> Industry 4.0 Ready</span>
               </div>
 
               <h1 class="bu-dept-title">Faculty of <em><?php echo htmlspecialchars($aryData['title']);?></em></h1>
@@ -2334,7 +2330,6 @@ section.bu-section-block {
                   <i class="fa fa-check-circle"></i>
                   <span><?php echo !empty($aryData['approval_text']) ? htmlspecialchars($aryData['approval_text']) : 'Approved by Statutory Regulatory Authorities';?></span>
                 </div>
-                <div class="bu-approval-divider"></div>
                 <div class="bu-approval-item">
                   <i class="fa fa-check-circle"></i>
                   <span><?php echo !empty($aryData['affiliation_text']) ? htmlspecialchars($aryData['affiliation_text']) : 'Affiliated with Bhabha University, Bhopal';?></span>
