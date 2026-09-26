@@ -33,8 +33,15 @@ if (is_array($leadership_data)) {
 
 // Helper to get image URL
 function getLeaderImgUrl($imgName) {
-    if (!empty($imgName) && file_exists('upload/leadership/' . $imgName)) {
-        return URL_ROOT . 'upload/leadership/' . $imgName;
+    if (!empty($imgName)) {
+        if (strpos($imgName, 'http') === 0) return $imgName;
+        if (strpos($imgName, 'new-media/') === 0) return URL_ROOT . $imgName;
+        if (file_exists('new-media/leadership/' . $imgName)) {
+            return URL_ROOT . 'new-media/leadership/' . $imgName;
+        }
+        if (file_exists('upload/leadership/' . $imgName)) {
+            return URL_ROOT . 'upload/leadership/' . $imgName;
+        }
     }
     return '';
 }
@@ -207,8 +214,8 @@ function getLeaderImgUrl($imgName) {
 
 .bu-chancellor-grid {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 26px;
+  grid-template-columns: 280px 1fr;
+  gap: 32px;
   align-items: flex-start;
 }
 
@@ -221,12 +228,14 @@ function getLeaderImgUrl($imgName) {
 
 .bu-chancellor-portrait-wrap {
   position: relative;
-  width: 200px;
-  height: 220px;
-  border-radius: 14px;
+  width: 280px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1.08;
+  border-radius: 16px;
   overflow: hidden;
   border: 4px solid #ffffff;
-  box-shadow: 0 10px 28px rgba(6, 29, 124, 0.16), 0 0 0 2.5px var(--bu-lead-gold);
+  box-shadow: 0 12px 32px rgba(6, 29, 124, 0.16), 0 0 0 2.5px var(--bu-lead-gold);
   background: #ffffff;
   margin-bottom: 14px;
 }
@@ -235,7 +244,7 @@ function getLeaderImgUrl($imgName) {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 10%;
+  object-position: center top;
   display: block;
   transition: transform 0.4s ease;
 }
@@ -441,7 +450,7 @@ function getLeaderImgUrl($imgName) {
 
 .bu-council-top {
   display: flex;
-  gap: 18px;
+  gap: 20px;
   align-items: center;
   margin-bottom: 16px;
   padding-bottom: 16px;
@@ -449,12 +458,14 @@ function getLeaderImgUrl($imgName) {
 }
 
 .bu-council-avatar {
-  width: 140px;
-  height: 155px;
-  border-radius: 12px;
+  width: 175px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1.05;
+  border-radius: 14px;
   overflow: hidden;
-  border: 3px solid #ffffff;
-  box-shadow: 0 8px 22px rgba(6, 29, 124, 0.14), 0 0 0 2px var(--bu-lead-gold);
+  border: 3.5px solid #ffffff;
+  box-shadow: 0 10px 26px rgba(6, 29, 124, 0.14), 0 0 0 2px var(--bu-lead-gold);
   background: #ffffff;
   flex-shrink: 0;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -469,7 +480,7 @@ function getLeaderImgUrl($imgName) {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 10%;
+  object-position: center top;
   display: block;
 }
 
@@ -620,12 +631,13 @@ function getLeaderImgUrl($imgName) {
 }
 
 .bu-officer-avatar {
-  width: 85px;
-  height: 95px;
-  border-radius: 10px;
+  width: 120px;
+  height: auto;
+  aspect-ratio: 1 / 1.05;
+  border-radius: 12px;
   overflow: hidden;
-  border: 2.5px solid #ffffff;
-  box-shadow: 0 4px 14px rgba(6, 29, 124, 0.12), 0 0 0 1.5px var(--bu-lead-navy);
+  border: 3px solid #ffffff;
+  box-shadow: 0 6px 18px rgba(6, 29, 124, 0.14), 0 0 0 1.5px var(--bu-lead-navy);
   background: #ffffff;
   flex-shrink: 0;
   transition: transform 0.25s ease;
@@ -639,7 +651,7 @@ function getLeaderImgUrl($imgName) {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 10%;
+  object-position: center top;
   display: block;
 }
 
@@ -864,14 +876,19 @@ function getLeaderImgUrl($imgName) {
 @media(max-width: 991px) {
   .bu-chancellor-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 22px;
   }
   .bu-chancellor-left-col {
     align-items: center;
   }
+  .bu-chancellor-portrait-wrap {
+    width: 280px;
+    max-width: 90%;
+    margin: 0 auto 16px auto;
+  }
   .bu-council-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
   }
   .bu-officers-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -892,7 +909,7 @@ function getLeaderImgUrl($imgName) {
     padding: 0 !important;
   }
   .bu-lead-intro-card {
-    padding: 16px 14px;
+    padding: 18px 16px;
     margin-bottom: 14px;
   }
   .bu-lead-metrics-row {
@@ -900,24 +917,38 @@ function getLeaderImgUrl($imgName) {
     gap: 8px;
   }
   .bu-chancellor-spotlight {
-    padding: 16px 14px;
-    margin-bottom: 16px;
+    padding: 20px 16px;
+    margin-bottom: 18px;
   }
   .bu-chancellor-portrait-wrap {
-    width: 220px;
+    width: 260px;
     max-width: 100%;
-    aspect-ratio: 250 / 140;
     height: auto;
+    aspect-ratio: 1 / 1.08;
+    margin: 0 auto 14px auto;
   }
   .bu-chancellor-right-col h3 {
-    font-size: 21px;
+    font-size: 22px;
+  }
+  .bu-council-top {
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
+  }
+  .bu-council-avatar {
+    width: 200px;
+    max-width: 85%;
+    margin: 0 auto;
+  }
+  .bu-council-header-info {
+    text-align: center;
   }
   .bu-council-card {
-    padding: 16px 14px;
+    padding: 18px 16px;
   }
   .bu-officers-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 12px;
   }
   .bu-gov-pillars-grid {
     grid-template-columns: 1fr;
