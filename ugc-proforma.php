@@ -130,7 +130,7 @@ if (strpos($pdfUrl, 'http') !== 0) $pdfUrl = URL_ROOT . ltrim($pdfUrl, '/');
           <div>
             <h4 style="font-size:14px;font-weight:700;color:#92400E;margin:0 0 4px 0;">Statutory Recognition</h4>
             <p style="font-size:13px;line-height:1.6;color:#78350F;margin:0;">
-              <?php echo portalVal($portalPage, 'note', 'Bhabha University is established under Madhya Pradesh Niji Vishwavidyalaya (Sthapana Avam Sanchalan) Adhiniyam, 2007, and recognised by the UGC under Section 2(f) and 12(B) of the UGC Act, 1956.'); ?>
+              <?php echo portalVal($portalPage, 'note', 'Bhabha University is established under Madhya Pradesh Niji Vishwavidyalaya (Sthapana Avam Sanchalan) Adhiniyam, 2007, and recognised by the UGC under Section 2(f) of the UGC Act, 1956.'); ?>
             </p>
           </div>
         </div>

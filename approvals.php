@@ -36,7 +36,7 @@
         <div style="display:flex;gap:16px;flex-wrap:wrap;">
           <?php
           $badges = [
-            ['name'=>'UGC',  'desc'=>'2(f) & 12(B)'],
+            ['name'=>'UGC',  'desc'=>'Section 2(f)'],
             ['name'=>'AICTE','desc'=>'Approved'],
             ['name'=>'PCI',  'desc'=>'Approved'],
             ['name'=>'BCI',  'desc'=>'Approved'],

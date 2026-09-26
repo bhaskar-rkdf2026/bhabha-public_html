@@ -69,7 +69,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('why-us') : null;
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:10px;">
           <?php
           $reasons = [
-            ['icon'=>'fa-certificate','title'=>'UGC Recognised','desc'=>'UGC recognised under 2(f) & 12(B) with AICTE, PCI, BCI, DCI, and NCTE statutory approvals — ensuring the credibility and value of every degree awarded.'],
+            ['icon'=>'fa-certificate','title'=>'UGC Recognised','desc'=>'UGC recognised under Section 2(f) with AICTE, PCI, BCI, DCI, and NCTE statutory approvals — ensuring the credibility and value of every degree awarded.'],
             ['icon'=>'fa-flask','title'=>'Research Excellence','desc'=>'120+ research labs, 250+ patents and 2,500+ publications make Bhabha a hub for academic and applied research.'],
             ['icon'=>'fa-globe','title'=>'Global Collaborations','desc'=>'MoUs with 60+ international universities across 4 continents for student exchanges, joint research, and faculty development.'],
             ['icon'=>'fa-mortar-board','title'=>'Outstanding Placements','desc'=>'98% placement rate with 300+ recruiters visiting campus. Highest package of ₹60 LPA across all schools.'],

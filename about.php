@@ -1256,11 +1256,11 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <ul class="bu-overview-points">
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
-              Approved by AICTE, PCI, DCI, BCI, NCTE &amp; recognized by UGC under 2(f) &amp; 12(B)
+              Approved by AICTE, PCI, DCI, BCI, NCTE &amp; recognized by UGC under Section 2(f)
             </li>
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
-              UGC 2(f) &amp; 12(B) Recognised &mdash; committed to quality education and continuous improvement
+              UGC Section 2(f) Recognised &mdash; committed to quality education and continuous improvement
             </li>
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
@@ -1798,7 +1798,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
         <div class="bu-accred-badge">
           <img loading="lazy" src="<?php echo URL_IMG;?>ugc_new_logo.jpg" alt="UGC" class="bu-accred-logo" onerror="this.style.display='none';">
           <span class="bu-accred-badge-name">UGC</span>
-          <span class="bu-accred-badge-desc">2(f) &amp; 12(B)</span>
+          <span class="bu-accred-badge-desc">Section 2(f)</span>
         </div>
         <div class="bu-accred-badge">
           <img loading="lazy" src="<?php echo URL_IMG;?>AICT.png" alt="AICTE" class="bu-accred-logo">

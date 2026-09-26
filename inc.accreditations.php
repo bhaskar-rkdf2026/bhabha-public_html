@@ -5,7 +5,7 @@ $accred_items = [
         'img'  => 'ugc_new_logo.jpg',
         'alt'  => 'UGC - University Grants Commission',
         'name' => 'UGC',
-        'desc' => '2(f) & 12(B)'
+        'desc' => 'Section 2(f)'
     ],
     [
         'img'  => 'AICT.png',

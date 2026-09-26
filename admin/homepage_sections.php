@@ -501,7 +501,7 @@ if (isset($_POST['submit'])) {
                   <!-- 3. WHY BHABHA UNIVERSITY (6 FEATURES) -->
                   <?php if ($aryData['section_key'] == 'why_bhabha'): 
                     $defaultFeats = [
-                        ['icon' => 'fa fa-certificate', 'title' => 'UGC Recognised', 'desc' => 'UGC recognised under 2(f) & 12(B) with approvals from AICTE, PCI, BCI, DCI, NCTE.', 'url' => 'approvals.php'],
+                        ['icon' => 'fa fa-certificate', 'title' => 'UGC Recognised', 'desc' => 'UGC recognised under Section 2(f) with approvals from AICTE, PCI, BCI, DCI, NCTE.', 'url' => 'approvals.php'],
                         ['icon' => 'fa fa-flask', 'title' => 'Research Excellence', 'desc' => '120+ research labs, 250+ patents and 2,500+ publications.', 'url' => 'research.php'],
                         ['icon' => 'fa fa-globe', 'title' => 'Global Collaborations', 'desc' => 'MoUs with 60+ international universities across 4 continents.', 'url' => 'page.php?id=9'],
                         ['icon' => 'fa fa-mortar-board', 'title' => 'Outstanding Placements', 'desc' => '98% placement rate with 300+ recruiters and packages up to ₹60 LPA.', 'url' => 'placements.php'],

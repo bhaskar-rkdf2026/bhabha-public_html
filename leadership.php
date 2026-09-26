@@ -1061,7 +1061,7 @@ function getLeaderImgUrl($imgName) {
             </div>
             
             <div class="bu-chancellor-oxford-pill">
-              <i class="fa fa-star"></i> Honorary Professor, Academic Union Oxford, UK
+              <i class="fa fa-star"></i> <?php echo htmlspecialchars(!empty($chancellor['designation']) ? $chancellor['designation'] : 'Honorary Professor, Academic Union Oxford, UK'); ?>
             </div>
           </div>
 
@@ -1110,7 +1110,7 @@ function getLeaderImgUrl($imgName) {
           $lead_img = getLeaderImgUrl($lead['image'] ?? '');
           $lead_chips = !empty($lead['chips']) ? array_map('trim', explode(',', $lead['chips'])) : [];
           $is_vc = (stripos($lead['title'] ?? '', 'vice') !== false || stripos($lead['designation'] ?? '', 'vice') !== false);
-          $pill_text = $is_vc ? 'Academic Leadership & Research Excellence' : 'Executive Stewardship & Strategic Vision';
+          $pill_text = !empty($lead['designation']) ? $lead['designation'] : ($lead['title'] ?: ($is_vc ? 'Vice-Chancellor' : 'Pro-Chancellor'));
           $desk_title = trim($lead['title'] ?: ($is_vc ? 'Vice-Chancellor' : 'Pro-Chancellor'));
       ?>
       <div class="bu-chancellor-spotlight">
@@ -1177,16 +1177,7 @@ function getLeaderImgUrl($imgName) {
           $lead_img = getLeaderImgUrl($lead['image'] ?? '');
           $lead_chips = !empty($lead['chips']) ? array_map('trim', explode(',', $lead['chips'])) : [];
           $title_clean = trim($lead['title'] ?: 'Officer');
-          
-          // Tailored status pills
-          $pill_text = 'Statutory Administration & Governance';
-          if (stripos($title_clean, 'ceo') !== false) {
-              $pill_text = 'Operational Innovation & Corporate Synergy';
-          } elseif (stripos($title_clean, 'registrar') !== false) {
-              $pill_text = 'Statutory Compliance & Administration';
-          } elseif (stripos($title_clean, 'vigilance') !== false || stripos($title_clean, 'cvo') !== false) {
-              $pill_text = 'Institutional Ethics & Vigilance';
-          }
+          $pill_text = !empty($lead['designation']) ? $lead['designation'] : ($lead['title'] ?: 'University Officer');
       ?>
       <div class="bu-chancellor-spotlight">
         <div class="bu-chancellor-grid">

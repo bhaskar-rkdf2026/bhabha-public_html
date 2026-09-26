@@ -46,8 +46,8 @@
       <a href="<?php echo URL_ROOT;?>" class="bu-brand">
         <img src="<?php echo URL_IMG;?>bhabha-university-logo-hd.png?v=20260926" alt="Bhabha University Emblem" class="bu-brand-logo" width="65" height="65" fetchpriority="high" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
         <div class="bu-brand-text">
-          <span class="bu-brand-name-1">Bhabha</span>
-          <span class="bu-brand-name-2">University</span>
+          <span class="bu-brand-name-1">BHABHA</span>
+          <span class="bu-brand-name-2">UNIVERSITY</span>
         </div>
       </a>
 
