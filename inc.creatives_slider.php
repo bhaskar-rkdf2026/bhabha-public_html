@@ -100,7 +100,7 @@ $creative_images = [
 
               <!-- Poster Image Container -->
               <div class="bu-fame-poster-holder">
-                <img src="<?php echo $cimg['src']; ?>" alt="<?php echo htmlspecialchars($cimg['alt']); ?>" class="bu-fame-poster-img" loading="lazy">
+                <img src="<?php echo $cimg['src']; ?>" alt="<?php echo htmlspecialchars($cimg['alt']); ?>" class="bu-fame-poster-img" loading="lazy" decoding="async">
                 
                 <!-- Hover Overlay with Zoom Icon -->
                 <div class="bu-fame-card-overlay">

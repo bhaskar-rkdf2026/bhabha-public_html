@@ -438,16 +438,30 @@ src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
 
 <!-- massanger  -->
 
-<!--Start of Tawk.to Script-->
+<!--Start of Tawk.to Script (Loaded on Idle/Interaction for Peak Core Web Vitals)-->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/602cb0fd9c4f165d47c40ae4/1eun97p1p';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
+  var loaded = false;
+  function loadTawk() {
+    if (loaded) return;
+    loaded = true;
+    window.Tawk_API = window.Tawk_API || {};
+    window.Tawk_LoadStart = new Date();
+    var s1 = document.createElement("script");
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/602cb0fd9c4f165d47c40ae4/1eun97p1p';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin','*');
+    document.body.appendChild(s1);
+  }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(function() { setTimeout(loadTawk, 2500); }, { timeout: 4000 });
+  } else {
+    setTimeout(loadTawk, 3000);
+  }
+  ['scroll', 'mousemove', 'touchstart', 'click'].forEach(function(evt) {
+    window.addEventListener(evt, loadTawk, { once: true, passive: true });
+  });
 })();
 </script>
 <!--End of Tawk.to Script-->

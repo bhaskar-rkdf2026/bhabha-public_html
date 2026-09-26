@@ -60,16 +60,23 @@ $bu_robots_tag = ($bu_seo && !empty($bu_seo['robots_tag']) && $bu_seo['robots_ta
 </script>
 <?php endif; ?>
  <link rel="icon" href="<?php echo URL_IMG;?>favicon.png" type="image/gif" sizes="16x16"> 
-<!-- Modern Google Fonts -->
+<!-- Preconnect & DNS-Prefetch for External CDNs and Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://code.jquery.com">
+<!-- Modern Google Fonts with display=swap -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 <!-- Font Awesome Icons (Instant Local Loading with CDN Fallback) -->
 <link rel="stylesheet" href="<?php echo URL_CSS;?>font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="<?php echo URL_CSS;?>bootstrap.min.css" rel="stylesheet">
 <!-- BU Global Page Redesign CSS -->
-<link href="<?php echo URL_CSS;?>bu-global.css?v=<?php echo time(); ?>" rel="stylesheet">
+<?php 
+$bu_css_ver = @filemtime(__DIR__ . '/css/bu-global.css') ?: '20260926';
+?>
+<link href="<?php echo URL_CSS;?>bu-global.css?v=<?php echo $bu_css_ver; ?>" rel="stylesheet">
 
 <style>
 /* ============================================================
@@ -1045,8 +1052,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 	<!-- Pretty Photo CSS -->
 	<link href="<?php echo URL_CSS;?>prettyPhoto.css" rel="stylesheet">
 	<!-- Bx-Slider StyleSheet CSS -->
-	<!-- Font Awesome StyleSheet CSS -->
-	<link href="<?php echo URL_CSS;?>font-awesome.min.css" rel="stylesheet">
     <!-- DL Menu CSS -->
     <link href="<?php echo URL_JS;?>dl-menu/component.css" rel="stylesheet">
 	<link href="<?php echo URL_SVG;?>style.css" rel="stylesheet">

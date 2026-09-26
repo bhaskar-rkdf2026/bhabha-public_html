@@ -125,13 +125,13 @@
             <!-- FRONT FACE: Original Image + Badge -->
             <div class="bu-flip-face bu-flip-front">
               <span class="bu-card-number"><?php echo $num_str; ?></span>
-              <img src="<?php echo $img_src; ?>" alt="<?php echo htmlspecialchars($idepartment['title']); ?>" class="bu-card-img">
+              <img src="<?php echo $img_src; ?>" alt="<?php echo htmlspecialchars($idepartment['title']); ?>" class="bu-card-img" loading="lazy" decoding="async">
               <div class="bu-flip-hint"><i class="fa fa-refresh"></i> Flip</div>
             </div>
 
             <!-- BACK FACE: Dark Navy Luxury Background with Large Title & Action Button -->
             <div class="bu-flip-face bu-flip-back">
-              <img src="<?php echo $img_src; ?>" alt="" class="bu-flip-bg-img" aria-hidden="true">
+              <img src="<?php echo $img_src; ?>" alt="" class="bu-flip-bg-img" aria-hidden="true" loading="lazy" decoding="async">
               <div class="bu-flip-overlay"></div>
               <div class="bu-flip-content">
                 <span class="bu-hover-badge"><i class="fa fa-graduation-cap"></i> FACULTY OF</span>

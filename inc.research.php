@@ -72,7 +72,7 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
     <!-- RIGHT: Image & Highlight Card -->
     <div class="bu-research-img-col">
       <div class="bu-res-img-wrapper">
-        <img src="<?php echo $res_img; ?>" alt="Research at Bhabha University" class="bu-res-img">
+        <img src="<?php echo $res_img; ?>" alt="Research at Bhabha University" class="bu-res-img" loading="lazy" decoding="async">
         <div class="bu-res-highlight-card">
           <div class="bu-card-icon"><i class="<?php echo htmlspecialchars($res_highlight_icon); ?>"></i></div>
           <p class="bu-card-highlight-text"><?php echo htmlspecialchars($res_highlight); ?></p>

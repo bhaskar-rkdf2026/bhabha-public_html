@@ -1053,9 +1053,9 @@ function getLeaderImgUrl($imgName) {
           <div class="bu-chancellor-left-col">
             <div class="bu-chancellor-portrait-wrap">
               <?php if (!empty($chancellor_img)): ?>
-                <img src="<?php echo $chancellor_img; ?>" alt="<?php echo htmlspecialchars($chancellor['name']); ?>" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
+                <img src="<?php echo $chancellor_img; ?>" alt="<?php echo htmlspecialchars($chancellor['name']); ?>" loading="lazy" decoding="async" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
               <?php else: ?>
-                <img src="<?php echo URL_ROOT; ?>images/vcpic.jpg" alt="<?php echo htmlspecialchars($chancellor['name']); ?>" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
+                <img src="<?php echo URL_ROOT; ?>images/vcpic.jpg" alt="<?php echo htmlspecialchars($chancellor['name']); ?>" loading="lazy" decoding="async" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
               <?php endif; ?>
               <div class="bu-chancellor-badge-tag"><?php echo htmlspecialchars($chancellor['title'] ?: 'Chancellor'); ?></div>
             </div>
@@ -1117,7 +1117,7 @@ function getLeaderImgUrl($imgName) {
             <div class="bu-council-top">
               <div class="bu-council-avatar">
                 <?php if (!empty($lead_img)): ?>
-                  <img src="<?php echo $lead_img; ?>" alt="<?php echo htmlspecialchars($lead['name']); ?>">
+                  <img src="<?php echo $lead_img; ?>" alt="<?php echo htmlspecialchars($lead['name']); ?>" loading="lazy" decoding="async">
                 <?php else: ?>
                   <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#FFC107;font-size:28px;"><i class="fa fa-user"></i></div>
                 <?php endif; ?>
@@ -1170,7 +1170,7 @@ function getLeaderImgUrl($imgName) {
             <div class="bu-officer-top">
               <div class="bu-officer-avatar">
                 <?php if (!empty($lead_img)): ?>
-                  <img src="<?php echo $lead_img; ?>" alt="<?php echo htmlspecialchars($lead['name']); ?>">
+                  <img src="<?php echo $lead_img; ?>" alt="<?php echo htmlspecialchars($lead['name']); ?>" loading="lazy" decoding="async">
                 <?php else: ?>
                   <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#FFC107;font-size:22px;"><i class="fa fa-user"></i></div>
                 <?php endif; ?>

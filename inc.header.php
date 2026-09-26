@@ -44,7 +44,7 @@
       
       <!-- Brand Logo -->
       <a href="<?php echo URL_ROOT;?>" class="bu-brand">
-        <img src="<?php echo URL_IMG;?>bhabha-university-logo-hd.png?v=<?php echo time(); ?>" alt="Bhabha University Emblem" class="bu-brand-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
+        <img src="<?php echo URL_IMG;?>bhabha-university-logo-hd.png?v=20260926" alt="Bhabha University Emblem" class="bu-brand-logo" width="65" height="65" fetchpriority="high" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
         <div class="bu-brand-text">
           <span class="bu-brand-name-1">Bhabha</span>
           <span class="bu-brand-name-2">University</span>
@@ -58,7 +58,7 @@
       <nav class="bu-navbar" id="buNavbar">
         <div class="bu-mobile-drawer-head">
           <div class="bu-drawer-brand">
-            <img src="<?php echo URL_IMG;?>bhabha-university-logo-hd.png?v=<?php echo time(); ?>" alt="Logo" class="bu-drawer-logo" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
+            <img src="<?php echo URL_IMG;?>bhabha-university-logo-hd.png?v=20260926" alt="Logo" class="bu-drawer-logo" width="38" height="38" loading="lazy" decoding="async" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
             <span>Bhabha University</span>
           </div>
           <button type="button" class="bu-drawer-close" id="buDrawerCloseBtn" aria-label="Close Menu">&times;</button>

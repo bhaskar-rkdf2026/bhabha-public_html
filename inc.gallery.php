@@ -30,7 +30,7 @@ $homeGallery = $db->get('gallery', 8);
       ?>
       <div class="bu-hg-card">
         <div class="bu-hg-card-inner">
-          <img loading="lazy" src="<?php echo $thumbImg; ?>" alt="<?php echo $gTitle; ?>" class="bu-hg-img" loading="lazy" onerror="this.src='<?php echo URL_ROOT;?>new-media/image/school-of-engineering.jpg';">
+          <img src="<?php echo $thumbImg; ?>" alt="<?php echo $gTitle; ?>" class="bu-hg-img" loading="lazy" decoding="async" onerror="this.src='<?php echo URL_ROOT;?>new-media/image/school-of-engineering.jpg';">
           <div class="bu-hg-overlay">
             <div class="bu-hg-info">
               <h4 class="bu-hg-item-title"><?php echo $gTitle; ?></h4>

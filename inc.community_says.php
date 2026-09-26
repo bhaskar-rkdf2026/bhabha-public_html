@@ -91,6 +91,8 @@ if (empty($testimonials_list)) {
               <img src="<?php echo $item['img']; ?>" 
                    alt="<?php echo $item['name']; ?>" 
                    class="bu-voices-img" 
+                   loading="lazy"
+                   decoding="async"
                    onerror="this.src='<?php echo URL_ROOT;?>extra-images/author.jpg'">
             </div>
 

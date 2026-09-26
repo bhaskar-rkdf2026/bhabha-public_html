@@ -357,7 +357,7 @@ $main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], '
           </span>
         </div>
 
-        <video id="buHvtVideo" class="bu-hvt-video" autoplay loop muted playsinline
+        <video id="buHvtVideo" class="bu-hvt-video" loop muted playsinline preload="none"
                poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
           <source id="buHvtSource" src="<?php echo $main_video_url; ?>" type="video/mp4">
           Your browser does not support HTML5 video.

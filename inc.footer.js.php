@@ -44,5 +44,8 @@ $( ".datepicker" ).datepicker({
 <!--Side Menu--> 
 <script src="<?php echo URL_JS;?>jquery.sidr.min.js"></script> 
 <!--Custom JavaScript--> 
-<script src="<?php echo URL_JS;?>custom.js?v=<?php echo time();?>"></script>
+<?php 
+$bu_js_ver = @filemtime(__DIR__ . '/js/custom.js') ?: '20260926';
+?>
+<script src="<?php echo URL_JS;?>custom.js?v=<?php echo $bu_js_ver;?>"></script>
 

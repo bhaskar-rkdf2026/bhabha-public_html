@@ -132,6 +132,7 @@ $yt_embed_url = bu_get_youtube_embed($active_raw_url, ($yt_is_live == 1));
                 title="<?php echo htmlspecialchars($yt_title); ?>"
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                loading="lazy"
                 allowfullscreen>
               </iframe>
             <?php else: ?>

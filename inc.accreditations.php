@@ -69,7 +69,7 @@ $accred_items = [
         <!-- Set 1 -->
         <?php foreach ($accred_items as $item): ?>
           <a href="<?php echo function_exists('href') ? href('approvals.php') : 'approvals.php'; ?>" class="bu-accred-badge" title="<?php echo htmlspecialchars($item['alt']); ?>">
-            <img src="<?php echo URL_IMG . $item['img']; ?>" alt="<?php echo htmlspecialchars($item['alt']); ?>" class="bu-accred-logo" onerror="this.style.display='none';">
+            <img src="<?php echo URL_IMG . $item['img']; ?>" alt="<?php echo htmlspecialchars($item['alt']); ?>" class="bu-accred-logo" loading="lazy" decoding="async" onerror="this.style.display='none';">
             <span class="bu-accred-badge-name"><?php echo htmlspecialchars($item['name']); ?></span>
             <span class="bu-accred-badge-desc"><?php echo htmlspecialchars($item['desc']); ?></span>
           </a>
@@ -78,7 +78,7 @@ $accred_items = [
         <!-- Set 2 (Duplicate for Seamless Infinite Auto-Scroll on Desktop & Mobile) -->
         <?php foreach ($accred_items as $item): ?>
           <a href="<?php echo function_exists('href') ? href('approvals.php') : 'approvals.php'; ?>" class="bu-accred-badge bu-accred-duplicate" title="<?php echo htmlspecialchars($item['alt']); ?>" aria-hidden="true" tabindex="-1">
-            <img src="<?php echo URL_IMG . $item['img']; ?>" alt="<?php echo htmlspecialchars($item['alt']); ?>" class="bu-accred-logo" onerror="this.style.display='none';">
+            <img src="<?php echo URL_IMG . $item['img']; ?>" alt="<?php echo htmlspecialchars($item['alt']); ?>" class="bu-accred-logo" loading="lazy" decoding="async" onerror="this.style.display='none';">
             <span class="bu-accred-badge-name"><?php echo htmlspecialchars($item['name']); ?></span>
             <span class="bu-accred-badge-desc"><?php echo htmlspecialchars($item['desc']); ?></span>
           </a>

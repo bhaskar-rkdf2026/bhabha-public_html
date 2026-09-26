@@ -15,7 +15,7 @@
       <!-- Card 1: Central Library -->
       <a href="<?php echo href('infrastructure.php'); ?>#library" class="bu-campus-facility-card">
         <div class="bu-campus-facility-img-wrap">
-          <img loading="lazy" src="<?php echo URL_ROOT;?>images/library.jpg" alt="Central Library" class="bu-campus-facility-img">
+          <img loading="lazy" decoding="async" src="<?php echo URL_ROOT;?>images/library.jpg" alt="Central Library" class="bu-campus-facility-img">
           <span class="bu-campus-facility-badge"><i class="fa fa-book"></i> Central Library</span>
         </div>
         <div class="bu-campus-facility-info">
@@ -28,7 +28,7 @@
       <!-- Card 2: Solar & Green Energy -->
       <a href="<?php echo href('solar.php'); ?>" class="bu-campus-facility-card">
         <div class="bu-campus-facility-img-wrap">
-          <img loading="lazy" src="<?php echo URL_ROOT;?>images/solar.jpg" alt="Solar & Green Energy" class="bu-campus-facility-img">
+          <img loading="lazy" decoding="async" src="<?php echo URL_ROOT;?>images/solar.jpg" alt="Solar & Green Energy" class="bu-campus-facility-img">
           <span class="bu-campus-facility-badge"><i class="fa fa-sun-o"></i> Green Campus</span>
         </div>
         <div class="bu-campus-facility-info">
@@ -41,7 +41,7 @@
       <!-- Card 3: Radio Bhabha 90.4 FM -->
       <a href="<?php echo href('radio.php'); ?>" class="bu-campus-facility-card">
         <div class="bu-campus-facility-img-wrap">
-          <img loading="lazy" src="<?php echo URL_ROOT;?>images/radio.jpg" alt="Radio Bhabha 90.4 FM" class="bu-campus-facility-img">
+          <img loading="lazy" decoding="async" src="<?php echo URL_ROOT;?>images/radio.jpg" alt="Radio Bhabha 90.4 FM" class="bu-campus-facility-img">
           <span class="bu-campus-facility-badge"><i class="fa fa-microphone"></i> Community Radio</span>
         </div>
         <div class="bu-campus-facility-info">
@@ -54,7 +54,7 @@
       <!-- Card 4: Modern Skill Labs -->
       <a href="<?php echo href('infrastructure.php'); ?>#labs" class="bu-campus-facility-card">
         <div class="bu-campus-facility-img-wrap">
-          <img loading="lazy" src="<?php echo URL_ROOT;?>images/skill_lab.jpg" alt="Modern Skill Labs" class="bu-campus-facility-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/col-3-thum5.jpg';">
+          <img loading="lazy" decoding="async" src="<?php echo URL_ROOT;?>images/skill_lab.jpg" alt="Modern Skill Labs" class="bu-campus-facility-img" onerror="this.src='<?php echo URL_ROOT;?>extra-images/col-3-thum5.jpg';">
           <span class="bu-campus-facility-badge"><i class="fa fa-cogs"></i> Skill &amp; Simulation</span>
         </div>
         <div class="bu-campus-facility-info">

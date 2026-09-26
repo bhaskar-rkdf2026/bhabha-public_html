@@ -62,7 +62,8 @@ $loopRecruiters = array_merge($recruiterList, $recruiterList);
         <div class="bu-logo-pill" title="<?php echo htmlspecialchars($irec['name']); ?>">
           <img src="<?php echo URL_UPLOAD;?>recruiters/<?php echo $irec['image'];?>" 
                alt="<?php echo htmlspecialchars($irec['name']);?>" 
-               loading="lazy">
+               loading="lazy"
+               decoding="async">
         </div>
         <?php endforeach; ?>
       </div>
