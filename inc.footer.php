@@ -539,4 +539,338 @@
     display: none !important;
   }
 }
+
+/* =========================================================
+   HIGHEST PACKAGE 60 LPA POPUP MODAL STYLES (COMPACT NO-SCROLL)
+   ========================================================= */
+.bu-hp-modal-backdrop {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(5, 16, 51, 0.88) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 12px !important;
+  box-sizing: border-box !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s ease !important;
+}
+.bu-hp-modal-backdrop.bu-active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+.bu-hp-modal-box {
+  background: #FFFFFF !important;
+  border-radius: 16px !important;
+  width: 100% !important;
+  max-width: 780px !important;
+  max-height: 94vh !important;
+  overflow: hidden !important;
+  position: relative !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 193, 7, 0.3) !important;
+  transform: scale(0.95) translateY(12px) !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  padding: 18px 24px 16px 24px !important;
+  box-sizing: border-box !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+.bu-hp-modal-backdrop.bu-active .bu-hp-modal-box {
+  transform: scale(1) translateY(0) !important;
+}
+.bu-hp-modal-close {
+  position: absolute !important;
+  top: 12px !important;
+  right: 14px !important;
+  width: 32px !important;
+  height: 32px !important;
+  background: #F1F5F9 !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 50% !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  color: #0A1B54 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+  z-index: 10 !important;
+}
+.bu-hp-modal-close:hover {
+  background: #DC2626 !important;
+  color: #FFFFFF !important;
+  border-color: #DC2626 !important;
+  transform: rotate(90deg) !important;
+}
+.bu-hp-modal-header {
+  text-align: center !important;
+  margin-bottom: 12px !important;
+  padding-right: 30px !important;
+  padding-left: 30px !important;
+}
+.bu-hp-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  color: #92400E !important;
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A) !important;
+  border: 1px solid rgba(217, 119, 6, 0.3) !important;
+  padding: 3px 12px !important;
+  border-radius: 20px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  margin-bottom: 4px !important;
+}
+.bu-hp-title {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: clamp(20px, 2.4vw, 24px) !important;
+  font-weight: 800 !important;
+  color: #061D7C !important;
+  margin: 0 0 2px 0 !important;
+  line-height: 1.15 !important;
+}
+.bu-hp-title span {
+  color: #D97706 !important;
+  background: linear-gradient(135deg, #D97706, #B45309) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+.bu-hp-subtitle {
+  font-size: 11.5px !important;
+  color: #64748B !important;
+  margin: 0 auto !important;
+  max-width: 580px !important;
+  line-height: 1.35 !important;
+}
+.bu-hp-modal-body {
+  display: grid !important;
+  grid-template-columns: 240px 1fr !important;
+  gap: 16px !important;
+  align-items: center !important;
+  margin-bottom: 12px !important;
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+}
+.bu-hp-poster-wrap {
+  text-align: center !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 6px 18px rgba(6, 29, 124, 0.1) !important;
+  border: 1.5px solid #E2E8F0 !important;
+  background: #FFFFFF !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.bu-hp-poster-img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 250px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+.bu-hp-details-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+.bu-hp-detail-row {
+  display: flex !important;
+  flex-direction: column !important;
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  padding: 5px 10px !important;
+  border-radius: 8px !important;
+}
+.bu-hp-d-label {
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  color: #64748B !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.7px !important;
+  margin-bottom: 1px !important;
+  line-height: 1 !important;
+}
+.bu-hp-d-val {
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  line-height: 1.25 !important;
+}
+.bu-hp-highlight-row {
+  background: linear-gradient(135deg, rgba(254, 243, 199, 0.7), rgba(253, 230, 138, 0.7)) !important;
+  border-color: rgba(217, 119, 6, 0.35) !important;
+  padding: 6px 10px !important;
+}
+.bu-hp-pkg-val {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 15.5px !important;
+  color: #92400E !important;
+  font-weight: 900 !important;
+}
+.bu-hp-modal-footer {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+.bu-hp-btn-primary {
+  background: linear-gradient(135deg, #061D7C, #0A1B54) !important;
+  color: #FFFFFF !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  padding: 8px 18px !important;
+  border-radius: 6px !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.25s ease !important;
+}
+.bu-hp-btn-primary:hover {
+  background: linear-gradient(135deg, #FFC107, #D99B00) !important;
+  color: #0A1B54 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(6, 29, 124, 0.18) !important;
+}
+.bu-hp-btn-secondary {
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+  border: 1px solid #CBD5E1 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+.bu-hp-btn-secondary:hover {
+  background: #E2E8F0 !important;
+  color: #0F172A !important;
+}
+@media (max-width: 767px) {
+  .bu-hp-modal-box {
+    padding: 16px 12px !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+  .bu-hp-modal-header {
+    padding-right: 20px !important;
+    padding-left: 20px !important;
+  }
+  .bu-hp-modal-body {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 10px !important;
+  }
+  .bu-hp-poster-img {
+    max-height: 200px !important;
+  }
+  .bu-hp-modal-footer {
+    justify-content: center !important;
+  }
+  .bu-hp-btn-primary, .bu-hp-btn-secondary {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
 </style>
+
+<!-- =================== HIGHEST PACKAGE MODAL MARKUP =================== -->
+<div id="buHighestPkgModal" class="bu-hp-modal-backdrop" onclick="closeHighestPkgModal(event)" role="dialog" aria-modal="true" aria-labelledby="buHpModalTitle">
+  <div class="bu-hp-modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="bu-hp-modal-close" onclick="closeHighestPkgModal()" aria-label="Close modal">&times;</button>
+    
+    <div class="bu-hp-modal-header">
+      <div class="bu-hp-badge">
+        <i class="fa fa-trophy"></i> HIGHEST CAMPUS PLACEMENT RECORD
+      </div>
+      <h3 id="buHpModalTitle" class="bu-hp-title">
+        Highest Package: <span>₹60.0 LPA</span>
+      </h3>
+      <p class="bu-hp-subtitle">Congratulations to Mr. Anurag Kumar on securing ₹60.0 LPA at China Petroleum Pipeline Engineering Co. Ltd. (CPP)!</p>
+    </div>
+
+    <div class="bu-hp-modal-body">
+      <div class="bu-hp-poster-wrap">
+        <img src="<?php echo URL_ROOT;?>new-media/image/highest-package-60lpa.png" 
+             alt="Highest Package 60 LPA - Mr. Anurag Kumar at China Petroleum Pipeline Engineering Co. Ltd." 
+             class="bu-hp-poster-img" 
+             loading="eager"
+             onerror="this.src='<?php echo URL_ROOT;?>upload/media/highest-package-60lpa.png'">
+      </div>
+      
+      <div class="bu-hp-details-card">
+        <div class="bu-hp-detail-row">
+          <span class="bu-hp-d-label">Candidate Name</span>
+          <strong class="bu-hp-d-val">Mr. Anurag Kumar</strong>
+        </div>
+        <div class="bu-hp-detail-row">
+          <span class="bu-hp-d-label">Faculty &amp; Programme</span>
+          <strong class="bu-hp-d-val">Faculty of Engineering &amp; Technology<br><span style="font-size:11.5px;font-weight:600;color:#64748B;">M.Tech (Thermal Science Engineering) — 2025</span></strong>
+        </div>
+        <div class="bu-hp-detail-row">
+          <span class="bu-hp-d-label">Designation / Role</span>
+          <strong class="bu-hp-d-val" style="color:#061D7C;">MECHANICAL ENGINEER - LEAD</strong>
+        </div>
+        <div class="bu-hp-detail-row">
+          <span class="bu-hp-d-label">Recruiting Company</span>
+          <strong class="bu-hp-d-val">CHINA PETROLEUM PIPELINE ENGINEERING CO. LTD. (CPP)</strong>
+        </div>
+        <div class="bu-hp-detail-row bu-hp-highlight-row">
+          <span class="bu-hp-d-label">Offered Package (CTC)</span>
+          <strong class="bu-hp-d-val bu-hp-pkg-val">₹ 60.0 Lakhs Per Annum (LPA)</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="bu-hp-modal-footer">
+      <a href="<?php echo href('placements.php'); ?>" class="bu-hp-btn-primary">
+        <i class="fa fa-graduation-cap"></i> Explore Training &amp; Placements Cell
+      </a>
+      <button type="button" class="bu-hp-btn-secondary" onclick="closeHighestPkgModal()">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== HIGHEST PACKAGE POPUP GLOBAL SCRIPT =================== -->
+<script>
+function openHighestPkgModal() {
+  var modal = document.getElementById('buHighestPkgModal');
+  if (modal) {
+    modal.classList.add('bu-active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeHighestPkgModal(e) {
+  if (e && e.target && e.target !== e.currentTarget && !e.target.classList.contains('bu-hp-modal-close')) {
+    return;
+  }
+  var modal = document.getElementById('buHighestPkgModal');
+  if (modal) {
+    modal.classList.remove('bu-active');
+    document.body.style.overflow = '';
+  }
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeHighestPkgModal();
+  }
+});
+</script>
+

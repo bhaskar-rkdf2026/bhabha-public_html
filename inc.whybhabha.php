@@ -11,13 +11,13 @@ if ($why_sec && isset($why_sec['status']) && $why_sec['status'] == 0) {
 
 $why_label = !empty($why_sec['title']) ? $why_sec['title'] : 'WHY BHABHA';
 $why_heading = !empty($why_sec['heading']) ? $why_sec['heading'] : "A university built<br>\n          for <em>impact.</em>";
-$why_intro = !empty($why_sec['subheading']) ? $why_sec['subheading'] : "From accreditation to ecosystem — every dimension of the Bhabha experience is \n          engineered for academic depth, global mobility and lifelong opportunity.";
+$why_intro = !empty($why_sec['subheading']) ? $why_sec['subheading'] : "From academic excellence to ecosystem — every dimension of the Bhabha experience is \n          engineered for academic depth, global mobility and lifelong opportunity.";
 
 $default_features = [
-    ['icon' => 'fa fa-certificate', 'title' => 'NAAC & UGC Recognised', 'desc' => 'Accredited by NAAC; UGC recognised under 2(f) & 12(B).', 'url' => 'approvals.php'],
+    ['icon' => 'fa fa-certificate', 'title' => 'UGC Recognised', 'desc' => 'UGC recognised under 2(f) & 12(B) with approvals from AICTE, PCI, BCI, DCI, NCTE.', 'url' => 'approvals.php'],
     ['icon' => 'fa fa-flask', 'title' => 'Research Excellence', 'desc' => '120+ research labs, 250+ patents and 2,500+ publications.', 'url' => 'research.php'],
     ['icon' => 'fa fa-globe', 'title' => 'Global Collaborations', 'desc' => 'MoUs with 60+ international universities across 4 continents.', 'url' => 'page.php?id=9'],
-    ['icon' => 'fa fa-mortar-board', 'title' => 'Outstanding Placements', 'desc' => '98% placement rate with 300+ recruiters and packages up to ₹52 LPA.', 'url' => 'placements.php'],
+    ['icon' => 'fa fa-mortar-board', 'title' => 'Outstanding Placements', 'desc' => '98% placement rate with 300+ recruiters and packages up to ₹60 LPA.', 'url' => 'placements.php'],
     ['icon' => 'fa fa-building-o', 'title' => 'Smart Campus', 'desc' => '32-acre wifi-enabled green campus with smart classrooms.', 'url' => 'infrastructure.php'],
     ['icon' => 'fa fa-rocket', 'title' => 'Innovation Ecosystem', 'desc' => 'Incubation centre, student startups and industry mentoring.', 'url' => 'research.php#incubation-edc']
 ];
@@ -33,7 +33,7 @@ if (!function_exists('bu_resolve_feature_url')) {
 
         // If no explicit URL is stored, match based on title or fallback to default
         if (empty($rawUrl)) {
-            if (stripos($title, 'NAAC') !== false || stripos($title, 'UGC') !== false || stripos($title, 'Recognis') !== false || stripos($title, 'Accredit') !== false) {
+            if (stripos($title, 'UGC') !== false || stripos($title, 'Recognis') !== false || stripos($title, 'Accredit') !== false || stripos($title, 'Approval') !== false) {
                 $rawUrl = 'approvals.php';
             } elseif (stripos($title, 'Research') !== false || stripos($title, 'Patent') !== false || stripos($title, 'Publication') !== false) {
                 $rawUrl = 'research.php';

@@ -405,6 +405,7 @@ src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
     <?php include('inc.campus_life.php');?>
     <?php include('inc.placements.php');?>
     <?php include('inc.research.php');?>
+    <?php include('inc.creatives_slider.php');?>
 
 <?php include('inc.events.php');?>
 

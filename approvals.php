@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Approvals & Recognitions - Bhabha University Bhopal</title>
-<meta name="description" content="Bhabha University holds approvals from UGC, AICTE, PCI, BCI, DCI, NCTE, INC and is NAAC accredited. Explore all official recognitions.">
+<meta name="description" content="Bhabha University holds approvals from UGC, AICTE, PCI, BCI, DCI, NCTE, INC and MPNRC. Explore all official recognitions.">
 <?php include('inc.meta.php');?>
 </head>
 <body>
@@ -36,7 +36,6 @@
         <div style="display:flex;gap:16px;flex-wrap:wrap;">
           <?php
           $badges = [
-            ['name'=>'NAAC', 'desc'=>'Accredited'],
             ['name'=>'UGC',  'desc'=>'2(f) & 12(B)'],
             ['name'=>'AICTE','desc'=>'Approved'],
             ['name'=>'PCI',  'desc'=>'Approved'],

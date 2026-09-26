@@ -15,7 +15,7 @@ $vt_desc = !empty($vt_sec['subheading']) ? $vt_sec['subheading'] : 'Experience o
 
 $vt_extra = !empty($vt_sec['extra_data']) ? json_decode($vt_sec['extra_data'], true) : [];
 $vt_tabs = !empty($vt_extra['video_tabs']) ? $vt_extra['video_tabs'] : [
-    ['label' => 'Aerial Drone', 'icon' => 'fa fa-plane', 'video_url' => 'new-media/image/hero/bhabha_1.mp4'],
+    ['label' => 'Aerial Drone', 'icon' => 'fa fa-plane', 'video_url' => 'upload/video/bhabha_video.mp4'],
     ['label' => 'Campus Tour Video', 'icon' => 'fa fa-film', 'video_url' => 'new-media/image/hero/bhabha_2.mp4'],
     ['label' => 'Academic & Labs', 'icon' => 'fa fa-flask', 'video_url' => 'new-media/image/hero/academic-lab.mp4'],
     ['label' => 'Student Life', 'icon' => 'fa fa-graduation-cap', 'video_url' => 'new-media/image/hero/bhabha_4.mp4']
@@ -32,7 +32,7 @@ if (strpos($vt_cta_url, 'http') !== 0 && strpos($vt_cta_url, '/') !== 0 && strpo
     $vt_cta_url = URL_ROOT . $vt_cta_url;
 }
 
-$main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], 'http') === 0 ? $vt_sec['media_url'] : URL_ROOT . ltrim($vt_sec['media_url'], '/')) : URL_ROOT . 'new-media/image/hero/bhabha_1.mp4';
+$main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], 'http') === 0 ? $vt_sec['media_url'] : URL_ROOT . ltrim($vt_sec['media_url'], '/')) : URL_ROOT . 'upload/video/bhabha_video.mp4';
 ?>
 
 <style>

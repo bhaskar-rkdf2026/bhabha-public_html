@@ -42,8 +42,8 @@ $loopRecruiters = array_merge($recruiterList, $recruiterList);
           <span class="bu-place-number" data-target="98" data-suffix="%">0</span>
           <span class="bu-place-sub">PLACEMENTS</span>
         </div>
-        <div class="bu-place-counter-item">
-          <span class="bu-place-number" data-target="52" data-prefix="₹" data-suffix=" LPA">0</span>
+        <div class="bu-place-counter-item" onclick="openHighestPkgModal()" style="cursor:pointer;" title="Click to view 60 LPA Placement Record">
+          <span class="bu-place-number" data-target="60" data-prefix="₹" data-suffix=" LPA">0</span>
           <span class="bu-place-sub">HIGHEST PKG</span>
         </div>
         <div class="bu-place-counter-item">

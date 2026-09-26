@@ -747,7 +747,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
 /* ---- ACCREDITATIONS & STATUTORY APPROVAL LOGOS (ALL IN 1 ROW) ---- */
 .bu-accred-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 12px;
   margin-top: 40px;
   width: 100%;
@@ -1260,7 +1260,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
             </li>
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
-              NAAC Accredited &mdash; committed to quality education and continuous improvement
+              UGC 2(f) &amp; 12(B) Recognised &mdash; committed to quality education and continuous improvement
             </li>
             <li>
               <span class="bu-pt-icon"><i class="fa fa-check"></i></span>
@@ -1298,9 +1298,9 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
         <span class="bu-stat-number">60+</span>
         <span class="bu-stat-label">Global MoUs</span>
       </div>
-      <div class="bu-stat-cell">
-        <span class="bu-stat-number">₹52L</span>
-        <span class="bu-stat-label">Highest Package</span>
+      <div class="bu-stat-cell bu-highest-pkg-trigger" onclick="openHighestPkgModal()" style="cursor:pointer;" title="Click to view 60 LPA Placement Record">
+        <span class="bu-stat-number">₹60 LPA</span>
+        <span class="bu-stat-label">Highest Package <i class="fa fa-info-circle" style="font-size:11px;color:#D99B00;"></i></span>
       </div>
     </div>
   </div>
@@ -1441,7 +1441,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-timeline-item-content">
             <span class="bu-timeline-year">2024+</span>
             <h4>Global Research Excellence</h4>
-            <p>120+ research labs, 60+ international MoUs, 2,500+ publications, and placements exceeding ₹52 LPA — setting new benchmarks every year.</p>
+            <p>120+ research labs, 60+ international MoUs, 2,500+ publications, and placements reaching ₹60 LPA — setting new benchmarks every year.</p>
           </div>
         </div>
       </div>
@@ -1497,7 +1497,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
             </div>
             
             <div class="bu-vt-tabs">
-              <button class="bu-vt-tab-btn active" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_1.mp4', this)">
+              <button class="bu-vt-tab-btn active" onclick="switchVtVideo('<?php echo URL_ROOT;?>upload/video/bhabha_video.mp4', this)">
                 <i class="fa fa-plane"></i> Aerial Drone
               </button>
               <button class="bu-vt-tab-btn" onclick="switchVtVideo('<?php echo URL_ROOT;?>new-media/image/hero/bhabha_2.mp4', this)">
@@ -1737,7 +1737,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-subpage-body">
             <div>
               <h4>Why Choose Bhabha</h4>
-              <p>From NAAC accreditation to global placements — the reasons that make us the right choice.</p>
+              <p>From comprehensive statutory approvals to global placements — the reasons that make us the right choice.</p>
             </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
@@ -1779,7 +1779,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-subpage-body">
             <div>
               <h4>Approvals &amp; Recognitions</h4>
-              <p>Official approvals from UGC, AICTE, PCI, DCI, BCI, NCTE and NAAC accreditation details.</p>
+              <p>Official approvals from UGC, AICTE, PCI, DCI, BCI, NCTE and MPNRC.</p>
             </div>
             <div class="bu-subpage-arrow">Explore <i class="fa fa-arrow-right"></i></div>
           </div>
@@ -1796,14 +1796,9 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
       <h2 class="bu-section-title">Recognised by <em>leading bodies.</em></h2>
       <div class="bu-accred-grid">
         <div class="bu-accred-badge">
-          <img loading="lazy" src="<?php echo URL_IMG;?>ugc.png" alt="UGC" class="bu-accred-logo" onerror="this.style.display='none';">
+          <img loading="lazy" src="<?php echo URL_IMG;?>ugc_new_logo.jpg" alt="UGC" class="bu-accred-logo" onerror="this.style.display='none';">
           <span class="bu-accred-badge-name">UGC</span>
           <span class="bu-accred-badge-desc">2(f) &amp; 12(B)</span>
-        </div>
-        <div class="bu-accred-badge">
-          <img loading="lazy" src="<?php echo URL_IMG;?>naac.png" alt="NAAC" class="bu-accred-logo" onerror="this.style.display='none';">
-          <span class="bu-accred-badge-name">NAAC</span>
-          <span class="bu-accred-badge-desc">Accredited</span>
         </div>
         <div class="bu-accred-badge">
           <img loading="lazy" src="<?php echo URL_IMG;?>AICT.png" alt="AICTE" class="bu-accred-logo">
@@ -1834,6 +1829,16 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <img loading="lazy" src="<?php echo URL_IMG;?>MPNRC.png" alt="MPNRC" class="bu-accred-logo">
           <span class="bu-accred-badge-name">MPNRC</span>
           <span class="bu-accred-badge-desc">Recognized</span>
+        </div>
+        <div class="bu-accred-badge">
+          <img loading="lazy" src="<?php echo URL_IMG;?>mp_govt_logo.jpg" alt="MP Govt." class="bu-accred-logo">
+          <span class="bu-accred-badge-name">MP Govt.</span>
+          <span class="bu-accred-badge-desc">Recognized</span>
+        </div>
+        <div class="bu-accred-badge">
+          <img loading="lazy" src="<?php echo URL_IMG;?>mppurc_logo.jpg" alt="MPPURC" class="bu-accred-logo">
+          <span class="bu-accred-badge-name">MPPURC</span>
+          <span class="bu-accred-badge-desc">Approved</span>
         </div>
       </div>
     </div>

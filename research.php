@@ -32,7 +32,7 @@ if (!function_exists('isPortalSecActive')) {
 $portal_metrics = [
     ['target' => 250, 'value' => '250', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'Patents Filed'],
     ['target' => 2500, 'value' => '2500', 'suffix' => '+', 'prefix' => '', 'commas' => true, 'label' => 'Scopus / UGC Papers'],
-    ['target' => 85, 'value' => '85', 'suffix' => ' Cr', 'prefix' => '₹', 'commas' => false, 'label' => 'Active Grants'],
+    ['target' => '2.4', 'value' => '2.4', 'suffix' => ' Cr', 'prefix' => '₹', 'commas' => false, 'label' => 'Active Grants'],
     ['target' => 60, 'value' => '60', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'Global & Ind. MoUs']
 ];
 ?>
@@ -957,12 +957,13 @@ $portal_metrics = [
           <div class="bu-hero-stats-grid">
             <?php foreach ($portal_milestones as $pm): 
               $rawVal = !empty($pm['target']) ? $pm['target'] : ($pm['value'] ?? 0);
-              $targetNum = (int)preg_replace('/[^0-9]/', '', (string)$rawVal);
+              $displayValStr = is_numeric($rawVal) ? $rawVal : preg_replace('/[^0-9.]/', '', (string)$rawVal);
               $pPrefix = $pm['prefix'] ?? '';
               $pSuffix = $pm['suffix'] ?? '';
-              $useCommas = !empty($pm['commas']) || ($targetNum >= 1000);
+              $useCommas = !empty($pm['commas']) && is_numeric($displayValStr) && (float)$displayValStr >= 1000;
+              $formattedNum = $useCommas ? number_format((float)$displayValStr) : $displayValStr;
               $cleanSuffix = (preg_match('/^[a-zA-Z]/', $pSuffix)) ? ' ' . $pSuffix : $pSuffix;
-              $displayVal = $pPrefix . ($useCommas ? number_format($targetNum) : $targetNum) . $cleanSuffix;
+              $displayVal = $pPrefix . $formattedNum . $cleanSuffix;
             ?>
             <div class="bu-hero-stat-box">
               <div class="bu-hero-stat-num"><?php echo htmlspecialchars($displayVal); ?></div>

@@ -249,7 +249,7 @@ function parseAwardDescription($descHtml) {
           <?php 
           $default_awards = [
             ['icon'=>'fa-trophy','title'=>'Best Private University Award','org'=>'MP Education Excellence Awards 2023','desc'=>'Recognised as the Best Private University in Madhya Pradesh for academic innovation and placement excellence.'],
-            ['icon'=>'fa-star','title'=>'NAAC Accreditation','org'=>'National Assessment & Accreditation Council','desc'=>'Accredited by NAAC with a grade reflecting quality in teaching, research, and governance.'],
+            ['icon'=>'fa-star','title'=>'Academic Excellence Award','org'=>'National Higher Education Forum','desc'=>'Recognised for holistic academic infrastructure, curriculum design, and student learning outcomes.'],
             ['icon'=>'fa-globe','title'=>'Excellence in Research','org'=>'India Research Summit 2022','desc'=>'Honoured for 120+ active research labs, 250+ patents, and 1,200+ international publications.'],
             ['icon'=>'fa-graduation-cap','title'=>'Top Placement University','org'=>'India Education Congress 2023','desc'=>'Awarded for achieving 98% placement rate with top recruiters like Infosys, TCS, and Amazon.'],
           ];

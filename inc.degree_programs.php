@@ -41,49 +41,10 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>4 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 PCM 60%</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>240</strong></div>
           </div>
         </div>
 
-        <!-- Card 2: MBBS -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">MBBS</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>5.5 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>NEET-UG</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>150</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 3: MBA Finance -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">MBA Finance</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>Graduation 50%</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>120</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 4: B.Pharm -->
+        <!-- Card 2: B.Pharm -->
         <div class="bu-deg-card">
           <div class="bu-deg-card-top">
             <span class="bu-deg-card-icon">
@@ -98,7 +59,42 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>4 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 PCB/PCM</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>100</strong></div>
+          </div>
+        </div>
+
+        <!-- Card 3: BDS (Dental Surgery) -->
+        <div class="bu-deg-card">
+          <div class="bu-deg-card-top">
+            <span class="bu-deg-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+            </span>
+            <span class="bu-deg-card-tag">FEATURED</span>
+          </div>
+          <h3 class="bu-deg-card-title">BDS (Dental)</h3>
+          <div class="bu-deg-card-details">
+            <div class="bu-detail-row"><span>Duration</span><strong>5 yrs</strong></div>
+            <div class="bu-detail-row"><span>Eligibility</span><strong>NEET-UG / 10+2 PCB</strong></div>
+          </div>
+        </div>
+
+        <!-- Card 4: BCA -->
+        <div class="bu-deg-card">
+          <div class="bu-deg-card-top">
+            <span class="bu-deg-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+            </span>
+            <span class="bu-deg-card-tag">FEATURED</span>
+          </div>
+          <h3 class="bu-deg-card-title">BCA</h3>
+          <div class="bu-deg-card-details">
+            <div class="bu-detail-row"><span>Duration</span><strong>3 yrs</strong></div>
+            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 Any Stream</strong></div>
           </div>
         </div>
 
@@ -117,7 +113,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>5 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 50%</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>60</strong></div>
           </div>
         </div>
 
@@ -136,7 +131,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>3 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 50%</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>180</strong></div>
           </div>
         </div>
 
@@ -155,11 +149,10 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>4 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 PCB</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>60</strong></div>
           </div>
         </div>
 
-        <!-- Card 8: Ph.D Engineering -->
+        <!-- Card 8: B.Com (Hons) -->
         <div class="bu-deg-card">
           <div class="bu-deg-card-top">
             <span class="bu-deg-card-icon">
@@ -170,11 +163,10 @@
             </span>
             <span class="bu-deg-card-tag">FEATURED</span>
           </div>
-          <h3 class="bu-deg-card-title">Ph.D Engineering</h3>
+          <h3 class="bu-deg-card-title">B.Com (Hons)</h3>
           <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>3-5 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>M.Tech / equiv.</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>30</strong></div>
+            <div class="bu-detail-row"><span>Duration</span><strong>3 yrs</strong></div>
+            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 Commerce/Any</strong></div>
           </div>
         </div>
 
@@ -183,7 +175,7 @@
       <!-- ============ 2. POSTGRADUATE GRID ============ -->
       <div class="bu-deg-grid" id="postgraduate">
         
-        <!-- Card 1: MBA Finance -->
+        <!-- Card 1: MBA -->
         <div class="bu-deg-card">
           <div class="bu-deg-card-top">
             <span class="bu-deg-card-icon">
@@ -194,11 +186,10 @@
             </span>
             <span class="bu-deg-card-tag">FEATURED</span>
           </div>
-          <h3 class="bu-deg-card-title">MBA Finance</h3>
+          <h3 class="bu-deg-card-title">MBA</h3>
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>Graduation 50%</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>120</strong></div>
           </div>
         </div>
 
@@ -217,7 +208,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>B.Tech/B.E. CSE</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>18</strong></div>
           </div>
         </div>
 
@@ -236,7 +226,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>BCA / Graduation</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>60</strong></div>
           </div>
         </div>
 
@@ -255,7 +244,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>B.Pharm 55%</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>36</strong></div>
           </div>
         </div>
 
@@ -274,7 +262,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>B.Sc 50%</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>30</strong></div>
           </div>
         </div>
 
@@ -293,7 +280,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>1 yr</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>LL.B 50%</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>30</strong></div>
           </div>
         </div>
 
@@ -312,7 +298,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>B.Sc Nursing</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>25</strong></div>
           </div>
         </div>
 
@@ -331,7 +316,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>B.Com 50%</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>60</strong></div>
           </div>
         </div>
 
@@ -355,7 +339,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>3 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10th Pass</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>60</strong></div>
           </div>
         </div>
 
@@ -374,7 +357,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 PCB/PCM</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>60</strong></div>
           </div>
         </div>
 
@@ -393,7 +375,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 Science</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>50</strong></div>
           </div>
         </div>
 
@@ -412,7 +393,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>1 yr</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10th/12th Pass</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>40</strong></div>
           </div>
         </div>
 
@@ -436,7 +416,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>3-5 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>M.Tech / equiv.</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>30</strong></div>
           </div>
         </div>
 
@@ -455,7 +434,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>3-5 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>M.Pharm Pass</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>10</strong></div>
           </div>
         </div>
 
@@ -474,7 +452,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>3-5 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>MBA / Master</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>15</strong></div>
           </div>
         </div>
 
@@ -493,7 +470,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>3-5 yrs</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>M.Sc 55%</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>20</strong></div>
           </div>
         </div>
 
@@ -517,7 +493,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>6 months</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 Pass</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>40</strong></div>
           </div>
         </div>
 
@@ -536,7 +511,6 @@
           <div class="bu-deg-card-details">
             <div class="bu-detail-row"><span>Duration</span><strong>6 months</strong></div>
             <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 / IT</strong></div>
-            <div class="bu-detail-row"><span>Seats</span><strong>30</strong></div>
           </div>
         </div>
 

@@ -1,7 +1,7 @@
 <?php
 // Bhabha University - Homepage Photo Gallery Section
 $db->where('is_home', 1);
-$db->orderBy("RAND ()");
+$db->orderBy('id', 'desc');
 $homeGallery = $db->get('gallery', 8);
 ?>
 <section class="bu-home-gallery-section" id="buHomeGallery">

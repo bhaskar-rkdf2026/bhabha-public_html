@@ -9,7 +9,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('why-us') : null;
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo portalVal($portalPage, 'page_title', 'Why Choose Bhabha University - Bhabha University Bhopal'); ?></title>
-<meta name="description" content="Discover why Bhabha University is the right choice — NAAC accreditation, 98% placements, global MoUs, research excellence and a 32-acre lush green campus.">
+<meta name="description" content="Discover why Bhabha University is the right choice — UGC recognition, 98% placements, global MoUs, research excellence and a 32-acre lush green campus.">
 <?php include('inc.meta.php');?>
 </head>
 <body>
@@ -18,7 +18,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('why-us') : null;
 
   <?php
   $page_title    = portalVal($portalPage, 'heading', 'Why Choose <em>Bhabha University</em>');
-  $page_subtitle = portalVal($portalPage, 'subheading', 'From accreditation to career outcomes — every dimension of the Bhabha experience is designed for your success.');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'From statutory recognition to career outcomes — every dimension of the Bhabha experience is designed for your success.');
   $page_icon     = (!empty($portalPage['data']['page_icon'])) ? $portalPage['data']['page_icon'] : 'fa-star';
   $breadcrumbs   = [
     ['label' => 'Home',  'url' => URL_ROOT],
@@ -69,10 +69,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('why-us') : null;
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:10px;">
           <?php
           $reasons = [
-            ['icon'=>'fa-certificate','title'=>'NAAC & UGC Recognised','desc'=>'Accredited by NAAC; UGC recognised under 2(f) & 12(B) — ensuring the credibility and value of every degree awarded.'],
+            ['icon'=>'fa-certificate','title'=>'UGC Recognised','desc'=>'UGC recognised under 2(f) & 12(B) with AICTE, PCI, BCI, DCI, and NCTE statutory approvals — ensuring the credibility and value of every degree awarded.'],
             ['icon'=>'fa-flask','title'=>'Research Excellence','desc'=>'120+ research labs, 250+ patents and 2,500+ publications make Bhabha a hub for academic and applied research.'],
             ['icon'=>'fa-globe','title'=>'Global Collaborations','desc'=>'MoUs with 60+ international universities across 4 continents for student exchanges, joint research, and faculty development.'],
-            ['icon'=>'fa-mortar-board','title'=>'Outstanding Placements','desc'=>'98% placement rate with 300+ recruiters visiting campus. Highest package of ₹52 LPA across all schools.'],
+            ['icon'=>'fa-mortar-board','title'=>'Outstanding Placements','desc'=>'98% placement rate with 300+ recruiters visiting campus. Highest package of ₹60 LPA across all schools.'],
             ['icon'=>'fa-building','title'=>'Smart Campus','desc'=>'32-acre Wi-Fi-enabled green campus with smart classrooms, air-conditioned labs, hostels and sports infrastructure.'],
             ['icon'=>'fa-rocket','title'=>'Innovation Ecosystem','desc'=>'Active incubation centre, student startup support, hackathons and industry mentoring programmes.'],
             ['icon'=>'fa-users','title'=>'Expert Faculty','desc'=>'750+ highly qualified faculty members from premier institutions with rich industry and research experience.'],
@@ -88,6 +88,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('why-us') : null;
           }
           foreach($items as $r): 
             $icon = $r['icon'] ?? 'fa-check-circle';
+            $isPlace = (stripos($r['title'] ?? '', 'Placement') !== false || stripos($r['desc'] ?? '', '60 LPA') !== false);
           ?>
           <div style="display:flex;gap:14px;align-items:flex-start;padding:20px;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:8px;transition:all 0.25s;" onmouseover="this.style.background='#fff';this.style.boxShadow='0 8px 24px rgba(6,29,124,0.1)';this.style.transform='translateY(-2px)';" onmouseout="this.style.background='#F8FAFC';this.style.boxShadow='none';this.style.transform='none';">
             <div style="width:42px;height:42px;background:rgba(10,27,84,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">

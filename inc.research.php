@@ -18,7 +18,7 @@ $res_extra = !empty($res_sec['extra_data']) ? json_decode($res_sec['extra_data']
 $res_metrics = !empty($res_extra['metrics']) ? $res_extra['metrics'] : [
     ['target' => 250, 'value' => '250', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'PATENTS FILED'],
     ['target' => 2500, 'value' => '2500', 'suffix' => '+', 'prefix' => '', 'commas' => true, 'label' => 'PUBLICATIONS'],
-    ['target' => 85, 'value' => '85', 'suffix' => ' Cr', 'prefix' => '₹', 'commas' => false, 'label' => 'ACTIVE GRANTS'],
+    ['target' => '2.4', 'value' => '2.4', 'suffix' => ' Cr', 'prefix' => '₹', 'commas' => false, 'label' => 'ACTIVE GRANTS'],
     ['target' => 60, 'value' => '60', 'suffix' => '+', 'prefix' => '', 'commas' => false, 'label' => 'GLOBAL MOUS']
 ];
 $res_highlight = !empty($res_extra['highlight_text']) ? $res_extra['highlight_text'] : 'Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.';
@@ -47,11 +47,11 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
       <div class="bu-res-metrics">
         <?php foreach ($res_metrics as $m): 
           $rawNum = !empty($m['target']) ? $m['target'] : ($m['value'] ?? 0);
-          $targetVal = (int)preg_replace('/[^0-9]/', '', (string)$rawNum);
+          $targetVal = is_numeric($rawNum) ? $rawNum : preg_replace('/[^0-9.]/', '', (string)$rawNum);
           $prefix = $m['prefix'] ?? '';
           $suffix = $m['suffix'] ?? '';
-          $useCommas = !empty($m['commas']) || ($targetVal >= 1000);
-          $formattedNum = $useCommas ? number_format($targetVal) : $targetVal;
+          $useCommas = !empty($m['commas']) && is_numeric($targetVal) && (float)$targetVal >= 1000;
+          $formattedNum = $useCommas ? number_format((float)$targetVal) : $targetVal;
           $cleanSuffix = (preg_match('/^[a-zA-Z]/', $suffix)) ? ' ' . $suffix : $suffix;
           $displayText = $prefix . $formattedNum . $cleanSuffix;
         ?>
@@ -341,7 +341,9 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
     
     function startResearchCounters() {
       rCounters.forEach(function (counter) {
-        var target = parseInt(counter.getAttribute('data-target'), 10);
+        var targetStr = counter.getAttribute('data-target') || '';
+        var isFloat = targetStr.indexOf('.') !== -1;
+        var target = isFloat ? parseFloat(targetStr) : parseInt(targetStr, 10);
         if (isNaN(target) || target <= 0) return;
         var prefix = counter.getAttribute('data-prefix') || '';
         var suffix = counter.getAttribute('data-suffix') || '';
@@ -351,7 +353,7 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
         var duration = 1800;
         var steps = 40;
         var stepTime = duration / steps;
-        var stepValue = Math.ceil(target / steps);
+        var stepValue = target / steps;
         
         var timer = setInterval(function () {
           current += stepValue;
@@ -359,9 +361,9 @@ if (strpos($raw_btn_url, 'http') === 0 || strpos($raw_btn_url, '#') === 0) {
             current = target;
             clearInterval(timer);
           }
-          var valStr = current;
-          if (useCommas) {
-            valStr = current.toLocaleString('en-IN');
+          var valStr = isFloat ? current.toFixed(1) : Math.floor(current);
+          if (useCommas && !isFloat) {
+            valStr = Math.floor(current).toLocaleString('en-IN');
           }
           counter.textContent = prefix + valStr + suffix;
         }, stepTime);

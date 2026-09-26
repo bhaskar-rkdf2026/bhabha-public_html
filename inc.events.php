@@ -20,13 +20,13 @@
       
       <?php
       // Fetch only 5 latest events from database
+      $db->orderBy('id', 'desc');
       $events = $db->get('events', 5);
       if(is_array($events) && count($events) > 0):
-        $categories = ['ADMISSIONS', 'RESEARCH', 'EVENTS', 'PLACEMENTS'];
-        $dates = ['12 Mar 2026', '08 Mar 2026', '01 Mar 2026', '24 Feb 2026'];
+        $dates = ['24 Sep 2026', '23 Sep 2026', '17 Sep 2026', '17 Sep 2026', '15 Sep 2026'];
         
         foreach($events as $idx => $ievent):
-          $cat = $categories[$idx % count($categories)];
+          $cat = !empty($ievent['category']) ? strtoupper($ievent['category']) : 'EVENTS';
           $date = isset($dates[$idx]) ? $dates[$idx] : date('d M Y', strtotime("-".($idx * 5)." days"));
       ?>
       <a href="<?php echo href("events.php","id=".$ievent['id']."");?>" class="bu-event-row">

@@ -1,6 +1,29 @@
 <?php
 include('config.php');
 
+if (!function_exists('bu_get_event_img_url')) {
+    function bu_get_event_img_url($img) {
+        if (empty($img)) return '';
+        if (strpos($img, 'http://') === 0 || strpos($img, 'https://') === 0) {
+            return $img;
+        }
+        $imgClean = ltrim($img, '/\\');
+        if (file_exists(PATH_ROOT . DS . 'upload' . DS . 'events' . DS . $imgClean)) {
+            return URL_ROOT . 'upload/events/' . $imgClean;
+        }
+        if (file_exists(PATH_ROOT . DS . 'upload' . DS . 'media' . DS . $imgClean)) {
+            return URL_ROOT . 'upload/media/' . $imgClean;
+        }
+        if (file_exists(PATH_ROOT . DS . 'new-media' . DS . 'image' . DS . $imgClean)) {
+            return URL_ROOT . 'new-media/image/' . $imgClean;
+        }
+        if (file_exists(PATH_ROOT . DS . 'upload' . DS . $imgClean)) {
+            return URL_ROOT . 'upload/' . $imgClean;
+        }
+        return URL_UPLOAD . 'events/' . $imgClean;
+    }
+}
+
 $event_id = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
 $aryData  = null;
 
@@ -774,9 +797,11 @@ body {
         <!-- Left Main Column -->
         <main>
           <!-- Main Feature Image Banner -->
-          <?php if (!empty($aryData['image'])): ?>
+          <?php 
+          $bannerImg = !empty($aryData['image']) ? bu_get_event_img_url($aryData['image']) : '';
+          if (!empty($bannerImg)): ?>
           <div class="bu-evt-banner-wrap">
-            <img src="<?php echo URL_UPLOAD . 'events/' . $aryData['image']; ?>" alt="<?php echo htmlspecialchars($aryData['title']); ?>" class="bu-evt-banner-img" onerror="this.closest('.bu-evt-banner-wrap').style.display='none';">
+            <img src="<?php echo $bannerImg; ?>" alt="<?php echo htmlspecialchars($aryData['title']); ?>" class="bu-evt-banner-img" onerror="this.closest('.bu-evt-banner-wrap').style.display='none';">
             <span class="bu-evt-badge-overlay"><i class="fa fa-calendar-check-o"></i> Official Campus Event</span>
           </div>
           <?php endif; ?>
@@ -887,14 +912,17 @@ body {
             if (isset($aryData['id'])) {
               $db->where('id', $aryData['id'], '!=');
             }
+            $db->orderBy('id', 'desc');
             $otherEvents = $db->get('events', 4);
             if (is_array($otherEvents) && count($otherEvents) > 0):
               foreach($otherEvents as $oevt):
                 $hasThumb = !empty($oevt['image']);
             ?>
             <a href="<?php echo href('events.php', 'id=' . $oevt['id']); ?>" class="bu-recent-event">
-              <?php if ($hasThumb): ?>
-                <img src="<?php echo URL_UPLOAD . 'events/' . $oevt['image']; ?>" alt="<?php echo htmlspecialchars($oevt['title']); ?>" class="bu-recent-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <?php 
+              $sideImg = !empty($oevt['image']) ? bu_get_event_img_url($oevt['image']) : '';
+              if (!empty($sideImg)): ?>
+                <img src="<?php echo $sideImg; ?>" alt="<?php echo htmlspecialchars($oevt['title']); ?>" class="bu-recent-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="bu-recent-icon-badge" style="display:none;"><i class="fa fa-calendar-check-o"></i></div>
               <?php else: ?>
                 <div class="bu-recent-icon-badge"><i class="fa fa-calendar-check-o"></i></div>
@@ -929,6 +957,7 @@ body {
       </div>
 
       <?php
+      $db->orderBy('id', 'desc');
       $allEvents = $db->get('events');
       $totalEvents = (is_array($allEvents)) ? count($allEvents) : 0;
 
@@ -985,8 +1014,8 @@ body {
           foreach ($allEvents as $evt):
             $cleanTitle = htmlspecialchars($evt['title']);
             $cleanDesc  = !empty($evt['description']) ? strip_tags($evt['description']) : 'Official event and interactive session hosted at Bhabha University Bhopal campus.';
-            $hasImg     = !empty($evt['image']);
-            $imgUrl     = $hasImg ? URL_UPLOAD . 'events/' . $evt['image'] : '';
+            $imgUrl     = !empty($evt['image']) ? bu_get_event_img_url($evt['image']) : '';
+            $hasImg     = !empty($imgUrl);
             $rowCat     = !empty($evt['category']) ? $evt['category'] : 'Campus Event';
         ?>
         <div class="bu-event-row" data-category="<?php echo htmlspecialchars($rowCat); ?>" data-title="<?php echo strtolower($cleanTitle); ?>" data-desc="<?php echo strtolower(htmlspecialchars($cleanDesc)); ?>">

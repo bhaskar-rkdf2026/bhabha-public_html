@@ -468,7 +468,7 @@ if (isset($_POST['submit'])) {
                   <?php if ($aryData['section_key'] == 'chancellor_welcome'): 
                     $recogs = !empty($extra['recognitions']) ? $extra['recognitions'] : [
                         ['title' => 'UGC', 'label' => 'RECOGNISED'],
-                        ['title' => 'NAAC', 'label' => 'A+ GRADE'],
+                        ['title' => 'MPPURC', 'label' => 'APPROVED'],
                         ['title' => 'AICTE', 'label' => 'APPROVED']
                     ];
                   ?>
@@ -484,11 +484,11 @@ if (isset($_POST['submit'])) {
                         <div class="simple-item-box">
                           <label class="text-primary font-weight-bold">Recognition Badge #<?php echo $i + 1; ?></label>
                           <div class="form-group mb-2">
-                            <small class="text-muted">Main Badge (e.g. UGC, NAAC, AICTE)</small>
+                            <small class="text-muted">Main Badge (e.g. UGC, MPPURC, AICTE)</small>
                             <input type="text" name="recog_title[]" class="form-control" value="<?php echo htmlspecialchars($rc['title']); ?>">
                           </div>
                           <div class="form-group mb-0">
-                            <small class="text-muted">Subtitle / Status (e.g. RECOGNISED, A+ GRADE)</small>
+                            <small class="text-muted">Subtitle / Status (e.g. RECOGNISED, APPROVED)</small>
                             <input type="text" name="recog_label[]" class="form-control" value="<?php echo htmlspecialchars($rc['label']); ?>">
                           </div>
                         </div>
@@ -501,10 +501,10 @@ if (isset($_POST['submit'])) {
                   <!-- 3. WHY BHABHA UNIVERSITY (6 FEATURES) -->
                   <?php if ($aryData['section_key'] == 'why_bhabha'): 
                     $defaultFeats = [
-                        ['icon' => 'fa fa-certificate', 'title' => 'NAAC & UGC Recognised', 'desc' => 'Accredited by NAAC; UGC recognised under 2(f) & 12(B).', 'url' => 'approvals.php'],
+                        ['icon' => 'fa fa-certificate', 'title' => 'UGC Recognised', 'desc' => 'UGC recognised under 2(f) & 12(B) with approvals from AICTE, PCI, BCI, DCI, NCTE.', 'url' => 'approvals.php'],
                         ['icon' => 'fa fa-flask', 'title' => 'Research Excellence', 'desc' => '120+ research labs, 250+ patents and 2,500+ publications.', 'url' => 'research.php'],
                         ['icon' => 'fa fa-globe', 'title' => 'Global Collaborations', 'desc' => 'MoUs with 60+ international universities across 4 continents.', 'url' => 'page.php?id=9'],
-                        ['icon' => 'fa fa-mortar-board', 'title' => 'Outstanding Placements', 'desc' => '98% placement rate with 300+ recruiters and packages up to ₹52 LPA.', 'url' => 'placements.php'],
+                        ['icon' => 'fa fa-mortar-board', 'title' => 'Outstanding Placements', 'desc' => '98% placement rate with 300+ recruiters and packages up to ₹60 LPA.', 'url' => 'placements.php'],
                         ['icon' => 'fa fa-building-o', 'title' => 'Smart Campus', 'desc' => '32-acre wifi-enabled green campus with smart classrooms.', 'url' => 'infrastructure.php'],
                         ['icon' => 'fa fa-rocket', 'title' => 'Innovation Ecosystem', 'desc' => 'Incubation centre, student startups and industry mentoring.', 'url' => 'research.php#incubation-edc']
                     ];

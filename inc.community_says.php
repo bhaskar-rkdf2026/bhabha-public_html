@@ -5,11 +5,32 @@
 $testimonials_list = [];
 
 if (isset($db) && is_object($db)) {
-    $db_testimonials = $db->get('testimonial');
+    // Prioritize Mr. Kamlesh Kumar, Mr. Anshuman Rajesh Singh, and Ms. Nidhi Shukla first
+    $db_testimonials = $db->rawQuery("
+        SELECT * FROM testimonial 
+        ORDER BY 
+            CASE 
+                WHEN name LIKE '%Kamlesh%' THEN 1
+                WHEN name LIKE '%Anshuman%' THEN 2
+                WHEN name LIKE '%Nidhi%' THEN 3
+                ELSE 4 
+            END ASC, 
+            id DESC
+    ");
     if (is_array($db_testimonials) && count($db_testimonials) > 0) {
         foreach ($db_testimonials as $t) {
             $imgName = !empty($t['image']) ? trim($t['image']) : '';
-            $imgSrc = !empty($imgName) ? (defined('URL_UPLOAD') ? URL_UPLOAD . 'testimonial/' . $imgName : 'upload/testimonial/' . $imgName) : URL_ROOT . 'extra-images/author.jpg';
+            if (!empty($imgName)) {
+                if (file_exists(__DIR__ . '/upload/testimonial/' . $imgName)) {
+                    $imgSrc = (defined('URL_UPLOAD') ? URL_UPLOAD . 'testimonial/' . $imgName : 'upload/testimonial/' . $imgName);
+                } elseif (file_exists(__DIR__ . '/upload/media/' . $imgName)) {
+                    $imgSrc = (defined('URL_UPLOAD') ? URL_UPLOAD . 'media/' . $imgName : 'upload/media/' . $imgName);
+                } else {
+                    $imgSrc = (defined('URL_UPLOAD') ? URL_UPLOAD . 'testimonial/' . $imgName : 'upload/testimonial/' . $imgName);
+                }
+            } else {
+                $imgSrc = URL_ROOT . 'extra-images/author.jpg';
+            }
             $testimonials_list[] = [
                 'name' => !empty($t['name']) ? htmlspecialchars($t['name']) : '',
                 'desig' => !empty($t['designation']) ? htmlspecialchars($t['designation']) : '',
@@ -23,22 +44,22 @@ if (isset($db) && is_object($db)) {
 if (empty($testimonials_list)) {
     $testimonials_list = [
         [
-            'name' => 'SHIVENDRA KUMAR',
-            'desig' => 'JUNIOR ENGINEER',
-            'text' => "B.E (EE), BATCH 2014 -2018, BIHAR GRID COMPANY LIMITED, JUNIOR ENGINEER, DUMRAO (BIHAR)",
-            'img' => (defined('URL_UPLOAD') ? URL_UPLOAD : 'upload/') . 'testimonial/10327a7ef91dec315337edadc9030af3.jpg'
+            'name' => 'Mr. Kamlesh Kumar',
+            'desig' => 'UPSC IES Officer | Engineering Alumnus',
+            'text' => "My journey at Bhabha University laid the technical foundation and discipline required to clear one of the nation’s toughest examinations. The faculty guidance, laboratory exposure, and encouraging academic atmosphere were instrumental in my selection as a UPSC IES Officer.",
+            'img' => (defined('URL_UPLOAD') ? URL_UPLOAD : 'upload/') . 'testimonial/alumni_kamlesh_kumar_ies.jpg'
         ],
         [
-            'name' => 'VAIBHAV PRAKASH SING',
-            'desig' => 'LOCO PILOT',
-            'text' => "DIPLOMA EE, BATCH 2015-2017, INDIAN RAILWAYS, LOCO PILOT, NAGPUR (MAHARASTRA)",
-            'img' => (defined('URL_UPLOAD') ? URL_UPLOAD : 'upload/') . 'testimonial/3af5957988cf12fe94566d581a72e323.jpg'
+            'name' => 'Mr. Anshuman Rajesh Singh',
+            'desig' => 'UPSC IES 2023 Officer | Engineering Alumnus',
+            'text' => "Bhabha University provided me with the ideal ecosystem to hone my engineering intellect and leadership skills. The rigorous curriculum, state-of-the-art labs, and continuous mentorship by experienced professors empowered me to achieve success in UPSC IES 2023.",
+            'img' => (defined('URL_UPLOAD') ? URL_UPLOAD : 'upload/') . 'testimonial/alumni_anshuman_singh_ies.jpg'
         ],
         [
-            'name' => 'ALOK KUMAR',
-            'desig' => 'ASSISTANT ENGINEER',
-            'text' => "M.TECH (POWER SYSTEM), BATCH 2018 -2020, UTTAR PRADESH POWER CORPORATION LIMITED, ASSISTANT ENGINEER, LUCKNOW (U.P.)",
-            'img' => (defined('URL_UPLOAD') ? URL_UPLOAD : 'upload/') . 'testimonial/50a54e49026ed0761e0855aa0e1fe9f6.jpg'
+            'name' => 'Ms. Nidhi Shukla',
+            'desig' => 'Deputy Director, DTE MP | Distinguished Alumna',
+            'text' => "Studying at Bhabha University transformed my perspective and professional capabilities. The institute’s focus on practical learning, state-of-the-art infrastructure, and continuous encouragement helped me reach the prestigious position of Deputy Director at DTE Madhya Pradesh.",
+            'img' => (defined('URL_UPLOAD') ? URL_UPLOAD : 'upload/') . 'testimonial/alumni_nidhi_shukla_dte.jpg'
         ]
     ];
 }

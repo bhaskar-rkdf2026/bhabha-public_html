@@ -51,6 +51,7 @@ $breadcrumbs   = [
       <!-- Gallery Cards Grid -->
       <div class="bu-gallery-grid" id="buGalleryGrid">
         <?php
+        $db->orderBy('id', 'desc');
         $gallery = $db->get('gallery');
         if(is_array($gallery) && count($gallery) > 0) {
           foreach($gallery as $item) {

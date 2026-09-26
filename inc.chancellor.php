@@ -19,7 +19,7 @@ $chancellor_video_url = !empty($chanc_sec['media_url']) ? (strpos($chanc_sec['me
 $chanc_extra = !empty($chanc_sec['extra_data']) ? json_decode($chanc_sec['extra_data'], true) : [];
 $chanc_recogs = !empty($chanc_extra['recognitions']) ? $chanc_extra['recognitions'] : [
     ['title' => 'UGC', 'label' => 'RECOGNISED'],
-    ['title' => 'NAAC', 'label' => 'A+ GRADE'],
+    ['title' => 'MPPURC', 'label' => 'APPROVED'],
     ['title' => 'AICTE', 'label' => 'APPROVED']
 ];
 ?>

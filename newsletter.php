@@ -432,7 +432,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('newsletter') : n
   $featVolume     = !empty($latest['volume']) ? $latest['volume'] : 'Vol. 6 | Issue 2';
   $featPeriod     = !empty($latest['period']) ? $latest['period'] : 'Apr – Jun 2026';
   $featBadge      = !empty($latest['badge']) ? $latest['badge'] : 'LATEST RELEASE';
-  $featDesc       = !empty($latest['desc']) ? $latest['desc'] : 'Dive into the latest quarterly happenings across all 11 constituent institutes of Bhabha University, featuring major commercial research launches, international academic collaborations, NAAC updates, and our highest placement records.';
+  $featDesc       = !empty($latest['desc']) ? $latest['desc'] : 'Dive into the latest quarterly happenings across all 11 constituent institutes of Bhabha University, featuring major commercial research launches, international academic collaborations, academic accreditations, and our highest placement records.';
   $featHighlights = !empty($latest['highlights']) && is_array($latest['highlights']) ? $latest['highlights'] : [
     'Launch of 14 Commercial Herbal Formulations (15th August)',
     'Record campus placement offers with TCS, Infosys, Sun Pharma',

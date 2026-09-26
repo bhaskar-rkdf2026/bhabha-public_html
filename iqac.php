@@ -9,7 +9,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('iqac') : null;
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo portalVal($portalPage, 'page_title', 'Internal Quality Assurance Cell (IQAC) - Bhabha University Bhopal'); ?></title>
-<meta name="description" content="Internal Quality Assurance Cell (IQAC) of Bhabha University Bhopal. NAAC, AQAR, SSR reports, institutional policies, audits, strategic plans, and best practices.">
+<meta name="description" content="Internal Quality Assurance Cell (IQAC) of Bhabha University Bhopal. Institutional policies, audits, strategic plans, quality assurance, and best practices.">
 <?php include('inc.meta.php');?>
 
 <style>
@@ -349,7 +349,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('iqac') : null;
       </h1>
 
       <p class="bu-hero-desc">
-        <?php echo portalVal($portalPage, 'subheading', 'Institutional mechanism for continuous quality enhancement, academic and administrative audits, NAAC benchmark sustenance, and holistic educational excellence at Bhabha University Bhopal.'); ?>
+        <?php echo portalVal($portalPage, 'subheading', 'Institutional mechanism for continuous quality enhancement, academic and administrative audits, quality benchmark sustenance, and holistic educational excellence at Bhabha University Bhopal.'); ?>
       </p>
     </div>
   </div>
@@ -409,7 +409,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('iqac') : null;
             <h2 class="bu-iqac-heading">Composition of IQAC</h2>
             <div class="bu-iqac-divider"></div>
             <p style="font-size:14.5px;color:var(--bu-text-muted);line-height:1.7;">
-              In accordance with statutory UGC/NAAC guidelines, the IQAC composition comprises senior administration, academic deans, management representatives, external industry experts, and student nominees.
+              In accordance with statutory UGC and regulatory guidelines, the IQAC composition comprises senior administration, academic deans, management representatives, external industry experts, and student nominees.
             </p>
             <div style="overflow-x:auto;">
               <table class="bu-comm-table">
@@ -486,7 +486,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('iqac') : null;
             <h2 class="bu-iqac-heading">Self Study Report (SSR)</h2>
             <div class="bu-iqac-divider"></div>
             <p style="font-size:14.5px;color:var(--bu-text-muted);line-height:1.7;">
-              Comprehensive institutional Self Study Report submitted to the National Assessment and Accreditation Council (NAAC) reflecting curricular aspects, teaching-learning evaluations, and research metrics.
+              Comprehensive institutional Self Study Report reflecting curricular aspects, teaching-learning evaluations, governance, and research metrics.
             </p>
             <div class="bu-doc-grid">
               <a href="#" class="bu-doc-card">

@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="hi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhabha University - Website Launching Soon | Countdown</title>
+  <link rel="icon" type="image/png" href="images/fav-icon.png">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #070b19;
+      --bg-card: rgba(16, 24, 48, 0.75);
+      --primary: #3b82f6;
+      --accent-gold: #f59e0b;
+      --accent-gold-glow: #fbbf24;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-glass: rgba(255, 255, 255, 0.1);
+      --border-highlight: rgba(96, 165, 250, 0.35);
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Background Glows */
+    .ambient-glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.45;
+      animation: floatGlow 12s ease-in-out infinite alternate;
+      transition: all 1s ease;
+    }
+    .glow-1 {
+      top: -10%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, #1e3a8a, transparent 70%);
+    }
+    .glow-2 {
+      bottom: -15%;
+      right: -10%;
+      width: 55vw;
+      height: 55vw;
+      background: radial-gradient(circle, #b45309, transparent 70%);
+      animation-delay: -6s;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, -40px) scale(1.1); }
+      100% { transform: translate(-20px, 30px) scale(0.95); }
+    }
+
+    /* Interactive Canvas Background */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      transition: filter 0.8s ease;
+    }
+
+    /* Grid Overlay */
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: 1;
+      pointer-events: none;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+      -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+    }
+
+    /* Main Container */
+    .launch-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      padding: 3rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.9s ease, filter 0.9s ease;
+    }
+
+    /* When launching state is active */
+    body.is-launching .launch-container {
+      transform: scale(0.75) translateY(-50px);
+      opacity: 0;
+      filter: blur(20px);
+    }
+    body.is-launching #particles-canvas {
+      filter: brightness(2);
+    }
+
+    /* Header / Brand */
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 2rem;
+      animation: fadeInDown 0.8s ease;
+    }
+    .brand-logo {
+      height: 70px;
+      width: auto;
+      filter: drop-shadow(0 0 18px rgba(245, 158, 11, 0.45));
+      transition: transform 0.4s ease;
+    }
+    .brand-logo:hover {
+      transform: scale(1.08) rotate(-3deg);
+    }
+    .brand-info {
+      text-align: left;
+    }
+    .brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff 30%, #93c5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+    }
+    .brand-subtitle {
+      font-size: 0.85rem;
+      color: var(--accent-gold-glow);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Status Badge */
+    .badge-launch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-gold-glow);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.2);
+      backdrop-filter: blur(10px);
+      animation: pulseBadge 2.5s infinite;
+    }
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      background-color: #ef4444;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ef4444;
+      animation: blink 1.2s infinite alternate;
+    }
+
+    @keyframes pulseBadge {
+      0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.15); }
+      50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.4); }
+    }
+    @keyframes blink {
+      0% { opacity: 0.3; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1.15); }
+    }
+
+    /* Hero Heading */
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      letter-spacing: -1px;
+      max-width: 800px;
+    }
+    .title-gradient-gold {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+    }
+    .title-gradient-cyan {
+      background: linear-gradient(135deg, #ffffff 20%, #38bdf8 60%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      color: var(--text-muted);
+      max-width: 620px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+
+    /* 12-Hour Glass Countdown Timer */
+    .timer-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      width: 100%;
+      max-width: 750px;
+      margin-bottom: 2.75rem;
+    }
+
+    .time-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 20px;
+      padding: 1.6rem 1rem;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .time-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-highlight);
+      box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.3),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    .time-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #f59e0b);
+      opacity: 0.8;
+    }
+
+    .time-value {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+      text-shadow: 0 0 20px rgba(96, 165, 250, 0.4);
+    }
+    .time-label {
+      font-size: 0.75rem;
+      color: var(--accent-gold-glow);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Single Centered Launch Button Container */
+    .launch-action-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    /* Big Center Launch Button */
+    .btn-launch-now {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 1.35rem 3.8rem;
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 45%, #d97706 100%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 12px 35px -5px rgba(37, 99, 235, 0.6),
+                  0 0 30px rgba(245, 158, 11, 0.35);
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-launch-now:hover {
+      transform: translateY(-5px) scale(1.06);
+      box-shadow: 0 22px 55px -5px rgba(37, 99, 235, 0.85),
+                  0 0 45px rgba(245, 158, 11, 0.6);
+    }
+    .btn-launch-now:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+    .btn-launch-now .btn-shimmer {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: skewX(-25deg);
+      animation: shimmer 2.8s infinite;
+    }
+    @keyframes shimmer {
+      0% { left: -100%; }
+      35%, 100% { left: 160%; }
+    }
+
+    /* Rocket launch animation inside button */
+    .rocket-icon {
+      display: inline-block;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-launch-now:hover .rocket-icon {
+      transform: translateY(-4px) rotate(15deg) scale(1.2);
+    }
+
+    /* ========================================================
+       CINEMATIC PORTAL / HYPERSPACE TRANSITION OVERLAY
+       ======================================================== */
+    .launch-portal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    /* Active Launching Scene */
+    body.is-launching .launch-portal-overlay {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+    }
+
+    /* Expanding Cosmic Shockwave Rings */
+    .portal-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid rgba(96, 165, 250, 0.8);
+      box-shadow: 0 0 50px rgba(59, 130, 246, 0.8), inset 0 0 40px rgba(245, 158, 11, 0.5);
+      transform: scale(0);
+      opacity: 0;
+    }
+    body.is-launching .portal-ring-1 {
+      animation: expandRing 1.6s 0.1s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    }
+    body.is-launching .portal-ring-2 {
+      animation: expandRing 1.6s 0.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    }
+    body.is-launching .portal-ring-3 {
+      animation: expandRing 1.6s 0.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    }
+
+    @keyframes expandRing {
+      0% {
+        width: 10px;
+        height: 10px;
+        transform: scale(0);
+        opacity: 1;
+      }
+      70% {
+        opacity: 0.9;
+      }
+      100% {
+        width: 250vmax;
+        height: 250vmax;
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Hyperspace Warp Lines */
+    .warp-lines {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 0%, #070b19 80%);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.8s ease;
+    }
+    body.is-launching .warp-lines {
+      opacity: 1;
+      transform: scale(1.5);
+    }
+
+    /* Cinematic Center Hub */
+    .portal-center-hub {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: zoomLaunchHub 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes zoomLaunchHub {
+      0% {
+        transform: scale(0.4);
+        opacity: 0;
+      }
+      40% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+      80% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.6);
+        opacity: 0;
+        filter: blur(10px);
+      }
+    }
+
+    .portal-rocket {
+      font-size: 4.5rem;
+      color: #fbbf24;
+      filter: drop-shadow(0 0 30px #f59e0b) drop-shadow(0 0 60px #3b82f6);
+      animation: rocketTakeoff 1.4s ease-in forwards;
+      margin-bottom: 1.5rem;
+    }
+    @keyframes rocketTakeoff {
+      0% {
+        transform: translateY(40px) scale(0.8) rotate(-45deg);
+      }
+      40% {
+        transform: translateY(0) scale(1.2) rotate(-45deg);
+      }
+      100% {
+        transform: translateY(-200px) scale(2.5) rotate(-45deg);
+        opacity: 0;
+      }
+    }
+
+    .portal-text-title {
+      font-family: var(--font-heading);
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, #60a5fa 50%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(96, 165, 250, 0.8);
+      margin-bottom: 0.5rem;
+    }
+    .portal-text-sub {
+      font-size: 1.15rem;
+      color: #93c5fd;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Final Flash to White/Smooth Screen Cover */
+    .final-flash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #ffffff;
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+    body.is-launching .final-flash.flash-active {
+      opacity: 1;
+    }
+
+    /* Footer */
+    .launch-footer {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      z-index: 2;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .timer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.85rem;
+      }
+      .brand-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .brand-info {
+        text-align: center;
+      }
+      .btn-launch-now {
+        width: 100%;
+        padding: 1.2rem 2rem;
+        font-size: 1.15rem;
+      }
+      .portal-text-title {
+        font-size: 1.8rem;
+      }
+      .launch-footer {
+        position: relative;
+        bottom: auto;
+        margin-top: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow Elements -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Particle Starfield Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Grid Pattern Overlay -->
+  <div class="grid-overlay"></div>
+
+  <!-- Cinematic Launch Portal Overlay -->
+  <div class="launch-portal-overlay">
+    <div class="warp-lines"></div>
+    <div class="portal-ring portal-ring-1"></div>
+    <div class="portal-ring portal-ring-2"></div>
+    <div class="portal-ring portal-ring-3"></div>
+    <div class="portal-center-hub">
+      <div class="portal-rocket">
+        <i class="fa-solid fa-rocket"></i>
+      </div>
+      <div class="portal-text-title">Launching Bhabha University</div>
+      <div class="portal-text-sub">Entering Digital Campus...</div>
+    </div>
+  </div>
+
+  <!-- Final Screen Flash -->
+  <div class="final-flash" id="finalFlash"></div>
+
+  <!-- Main Centered Container -->
+  <div class="launch-container">
+
+    <!-- University Brand Header -->
+    <header class="brand-header">
+      <img src="images/bhabha-university-logo-hd.png" alt="Bhabha University Logo" class="brand-logo" onerror="this.src='images/logo.png'">
+      <div class="brand-info">
+        <h1 class="brand-title">Bhabha University</h1>
+        <p class="brand-subtitle">Bhopal &bull; Madhya Pradesh</p>
+      </div>
+    </header>
+
+    <!-- Status Badge -->
+    <div class="badge-launch">
+      <span class="pulse-dot"></span>
+      <span>Official Launch Countdown</span>
+    </div>
+
+    <!-- Hero Title -->
+    <h2 class="hero-title">
+      <span class="title-gradient-gold">A Grand New Era</span><br>
+      <span class="title-gradient-cyan">Of Digital Learning Begins</span>
+    </h2>
+
+    <p class="hero-desc">
+      We are upgrading our official web ecosystem to bring you an ultra-fast, modern student experience.
+    </p>
+
+    <!-- 12-Hour Live Countdown Timer -->
+    <div class="timer-container" id="countdown-timer">
+      <!-- Hours Card -->
+      <div class="time-card">
+        <div class="time-value" id="hours">12</div>
+        <div class="time-label">Hours</div>
+      </div>
+      <!-- Minutes Card -->
+      <div class="time-card">
+        <div class="time-value" id="minutes">00</div>
+        <div class="time-label">Minutes</div>
+      </div>
+      <!-- Seconds Card -->
+      <div class="time-card">
+        <div class="time-value" id="seconds">00</div>
+        <div class="time-label">Seconds</div>
+      </div>
+      <!-- Milliseconds Card -->
+      <div class="time-card">
+        <div class="time-value" id="millis">99</div>
+        <div class="time-label">Milli Sec</div>
+      </div>
+    </div>
+
+    <!-- Single Centered Launch Button -->
+    <div class="launch-action-center">
+      <button class="btn-launch-now" id="launchHomeBtn" onclick="launchHomePage()">
+        <span class="btn-shimmer"></span>
+        <i class="fa-solid fa-rocket fa-bounce rocket-icon"></i>
+        <span>Launch Now</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="launch-footer">
+    <p>&copy; <span id="currentYear"></span> Bhabha University, Bhopal. All Rights Reserved.</p>
+  </footer>
+
+  <!-- JavaScript Logic -->
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // 12-Hour Countdown Logic with LocalStorage persistence
+    const COUNTDOWN_STORAGE_KEY = 'bu_launch_timer_target_12h';
+    const TWELVE_HOURS_MS = 12 * 60 * 60 * 1000;
+
+    let targetTime = localStorage.getItem(COUNTDOWN_STORAGE_KEY);
+    const now = Date.now();
+
+    if (!targetTime || parseInt(targetTime) <= now) {
+      targetTime = now + TWELVE_HOURS_MS;
+      localStorage.setItem(COUNTDOWN_STORAGE_KEY, targetTime);
+    } else {
+      targetTime = parseInt(targetTime);
+    }
+
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const millisEl = document.getElementById('millis');
+
+    let countdownRunning = true;
+
+    function updateCountdown() {
+      if (!countdownRunning) return;
+
+      const currentTime = Date.now();
+      const diff = targetTime - currentTime;
+
+      if (diff <= 0) {
+        hoursEl.textContent = "00";
+        minutesEl.textContent = "00";
+        secondsEl.textContent = "00";
+        millisEl.textContent = "00";
+        
+        launchHomePage();
+        return;
+      }
+
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      const millis = Math.floor((diff % 1000) / 10);
+
+      hoursEl.textContent = String(hours).padStart(2, '0');
+      minutesEl.textContent = String(minutes).padStart(2, '0');
+      secondsEl.textContent = String(seconds).padStart(2, '0');
+      millisEl.textContent = String(millis).padStart(2, '0');
+
+      requestAnimationFrame(updateCountdown);
+    }
+
+    requestAnimationFrame(updateCountdown);
+
+    // ==========================================
+    // CINEMATIC LAUNCH ANIMATION ON BUTTON CLICK
+    // ==========================================
+    let isLaunching = false;
+
+    function launchHomePage() {
+      if (isLaunching) return;
+      isLaunching = true;
+      countdownRunning = false;
+
+      // 1. Activate Body Launching Class (Triggers zoom, blur & cosmic portal)
+      document.body.classList.add('is-launching');
+
+      // Accelerate particle speed into hyperspace
+      speedUpParticles();
+
+      // 2. Multi-Stage Confetti & Firework Bursts
+      fireMultiStageConfetti();
+
+      // 3. Trigger White Flash just before redirection
+      setTimeout(() => {
+        document.getElementById('finalFlash').classList.add('flash-active');
+      }, 1200);
+
+      // 4. Smooth Redirect to Home Page (index.php)
+      setTimeout(() => {
+        if (window.location.protocol === 'file:') {
+          // If opened locally via file://, automatically route through localhost web server so PHP executes
+          window.location.href = "http://localhost/bhabha-public_html/index.php";
+        } else {
+          window.location.href = "index.php";
+        }
+      }, 1550);
+    }
+
+    // High Impact Multi-Stage Fireworks/Confetti
+    function fireMultiStageConfetti() {
+      if (typeof confetti !== 'function') return;
+
+      // Center blast
+      confetti({
+        particleCount: 120,
+        spread: 100,
+        origin: { y: 0.5 },
+        colors: ['#3b82f6', '#f59e0b', '#10b981', '#ffffff', '#ec4899'],
+        startVelocity: 45
+      });
+
+      // Left cannon
+      setTimeout(() => {
+        confetti({
+          particleCount: 80,
+          angle: 60,
+          spread: 70,
+          origin: { x: 0, y: 0.65 },
+          colors: ['#3b82f6', '#fbbf24', '#ffffff']
+        });
+      }, 250);
+
+      // Right cannon
+      setTimeout(() => {
+        confetti({
+          particleCount: 80,
+          angle: 120,
+          spread: 70,
+          origin: { x: 1, y: 0.65 },
+          colors: ['#38bdf8', '#f59e0b', '#ffffff']
+        });
+      }, 400);
+
+      // Grand finale shower
+      setTimeout(() => {
+        confetti({
+          particleCount: 150,
+          spread: 160,
+          origin: { y: 0.3 },
+          colors: ['#60a5fa', '#fbbf24', '#a855f7', '#ffffff'],
+          startVelocity: 55
+        });
+      }, 700);
+    }
+
+    // Interactive Starfield Canvas & Hyperspace Warp
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let speedMultiplier = 1;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.6;
+        this.baseSpeedX = (Math.random() - 0.5) * 0.4;
+        this.baseSpeedY = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.7 + 0.3;
+      }
+      update() {
+        if (isLaunching) {
+          // Warp outwards from center
+          const centerX = canvas.width / 2;
+          const centerY = canvas.height / 2;
+          const angle = Math.atan2(this.y - centerY, this.x - centerX);
+          this.x += Math.cos(angle) * (speedMultiplier * 2.5);
+          this.y += Math.sin(angle) * (speedMultiplier * 2.5);
+          this.size += 0.05;
+        } else {
+          this.x += this.baseSpeedX;
+          this.y += this.baseSpeedY;
+          if (this.x < 0) this.x = canvas.width;
+          if (this.x > canvas.width) this.x = 0;
+          if (this.y < 0) this.y = canvas.height;
+          if (this.y > canvas.height) this.y = 0;
+        }
+      }
+      draw() {
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.beginPath();
+        if (isLaunching) {
+          // Stretch particles into light trails
+          const centerX = canvas.width / 2;
+          const centerY = canvas.height / 2;
+          const angle = Math.atan2(this.y - centerY, this.x - centerX);
+          ctx.ellipse(this.x, this.y, this.size * 3.5, this.size, angle, 0, Math.PI * 2);
+        } else {
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        }
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const particleCount = Math.min(85, Math.floor(window.innerWidth / 16));
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+    initParticles();
+
+    function speedUpParticles() {
+      let interval = setInterval(() => {
+        speedMultiplier += 1.8;
+        if (speedMultiplier > 25) clearInterval(interval);
+      }, 60);
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
+</body>
+</html>
