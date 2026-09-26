@@ -78,6 +78,7 @@
               <li><a href="<?php echo href("infrastructure.php")?>">Campus & Infrastructure</a></li>
               <li><a href="<?php echo href('values.php'); ?>">Core Values</a></li>
               <li><a href="<?php echo href('leadership.php'); ?>">Administration &amp; Leadership</a></li>
+              <li><a href="<?php echo href('clubs.php'); ?>"><strong>University Clubs &amp; Societies</strong></a></li>
               <li><a href="<?php echo href('why-us.php'); ?>">Why Choose Bhabha University</a></li>
               <li><a href="<?php echo href("awards.php")?>">Awards & Achievements</a></li>
               <li><a href="<?php echo href("advisory.php")?>">Cells & Committees</a></li>

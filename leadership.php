@@ -1098,7 +1098,7 @@ function getLeaderImgUrl($imgName) {
       </div>
       <?php endif; ?>
 
-      <!-- SECTION 3: APEX ACADEMIC & COUNCIL LEADERSHIP (2-COLUMN BALANCED) -->
+      <!-- SECTION 3: APEX ACADEMIC & COUNCIL LEADERSHIP (SPOTLIGHT CARDS) -->
       <?php if (!empty($council_leaders)): ?>
       <div class="bu-lead-sec-heading">
         <span class="bu-sec-label">Executive Stewardship</span>
@@ -1106,53 +1106,66 @@ function getLeaderImgUrl($imgName) {
         <div class="bu-lead-sec-divider"></div>
       </div>
 
-      <div class="bu-council-grid">
-        <?php foreach ($council_leaders as $lead): 
-            $lead_img = getLeaderImgUrl($lead['image'] ?? '');
-            $lead_chips = !empty($lead['chips']) ? array_map('trim', explode(',', $lead['chips'])) : [];
-            $is_vc = (stripos($lead['title'] ?? '', 'vice') !== false || stripos($lead['designation'] ?? '', 'vice') !== false);
-        ?>
-        <div class="bu-council-card">
-          <div>
-            <div class="bu-council-top">
-              <div class="bu-council-avatar">
-                <?php if (!empty($lead_img)): ?>
-                  <img src="<?php echo $lead_img; ?>" alt="<?php echo htmlspecialchars($lead['name']); ?>" loading="lazy" decoding="async">
-                <?php else: ?>
-                  <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#FFC107;font-size:28px;"><i class="fa fa-user"></i></div>
-                <?php endif; ?>
-              </div>
-              <div class="bu-council-header-info">
-                <span class="bu-council-role-badge" <?php if($is_vc) echo 'style="background:rgba(6,29,124,0.1); color:#061D7C;"'; ?>><?php echo htmlspecialchars($lead['title'] ?: 'Council Member'); ?></span>
-                <h4><?php echo htmlspecialchars($lead['name']); ?></h4>
-                <p class="bu-council-desig-text"><?php echo htmlspecialchars($lead['designation']); ?></p>
-              </div>
+      <?php foreach ($council_leaders as $lead): 
+          $lead_img = getLeaderImgUrl($lead['image'] ?? '');
+          $lead_chips = !empty($lead['chips']) ? array_map('trim', explode(',', $lead['chips'])) : [];
+          $is_vc = (stripos($lead['title'] ?? '', 'vice') !== false || stripos($lead['designation'] ?? '', 'vice') !== false);
+          $pill_text = $is_vc ? 'Academic Leadership & Research Excellence' : 'Executive Stewardship & Strategic Vision';
+          $desk_title = trim($lead['title'] ?: ($is_vc ? 'Vice-Chancellor' : 'Pro-Chancellor'));
+      ?>
+      <div class="bu-chancellor-spotlight">
+        <div class="bu-chancellor-grid">
+          
+          <!-- Left Column: Portrait & Sub-Pill Badge -->
+          <div class="bu-chancellor-left-col">
+            <div class="bu-chancellor-portrait-wrap">
+              <?php if (!empty($lead_img)): ?>
+                <img src="<?php echo $lead_img; ?>" alt="<?php echo htmlspecialchars($lead['name']); ?>" loading="lazy" decoding="async" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
+              <?php else: ?>
+                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#F8FAFC;color:var(--bu-lead-navy);font-size:48px;"><i class="fa fa-user"></i></div>
+              <?php endif; ?>
             </div>
+            
+            <div class="bu-chancellor-oxford-pill">
+              <i class="fa fa-star"></i> <?php echo htmlspecialchars($pill_text); ?>
+            </div>
+          </div>
+
+          <!-- Right Column: Executive Statement & Bio -->
+          <div class="bu-chancellor-right-col">
+            <span class="bu-chancellor-desk-label"><i class="fa fa-quote-left"></i> From the <?php echo htmlspecialchars($desk_title); ?>'s Desk</span>
+            <h3><?php echo htmlspecialchars($lead['name']); ?></h3>
+            <span class="bu-chancellor-desig-sub"><?php echo htmlspecialchars($lead['designation']); ?></span>
 
             <?php if (!empty($lead['quote'])): ?>
-            <div class="bu-council-quote" <?php if($is_vc) echo 'style="border-left-color:var(--bu-lead-navy);"'; ?>>
-              “<?php echo htmlspecialchars($lead['quote']); ?>”
+            <div class="bu-chancellor-quote-box">
+              <p>
+                <i class="fa fa-quote-left"></i> 
+                “<?php echo htmlspecialchars($lead['quote']); ?>”
+              </p>
             </div>
             <?php endif; ?>
 
-            <div class="bu-council-body">
+            <div class="bu-chancellor-body-text">
               <?php echo $lead['about']; ?>
             </div>
+
+            <!-- Focus Chips -->
+            <?php if (!empty($lead_chips)): ?>
+            <div class="bu-chancellor-chips-row">
+              <?php foreach ($lead_chips as $chip): ?>
+                <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($chip); ?></span>
+              <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
           </div>
 
-          <?php if (!empty($lead_chips)): ?>
-          <div class="bu-council-chips-footer">
-            <?php foreach ($lead_chips as $chip): ?>
-              <span class="bu-council-chip"><i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($chip); ?></span>
-            <?php endforeach; ?>
-          </div>
-          <?php endif; ?>
         </div>
-        <?php endforeach; ?>
       </div>
+      <?php endforeach; ?>
       <?php endif; ?>
 
-      <!-- SECTION 4: STRATEGIC & ADMINISTRATIVE LEADERSHIP (3-COLUMN BALANCED) -->
+      <!-- SECTION 4: STRATEGIC & ADMINISTRATIVE LEADERSHIP (SPOTLIGHT CARDS) -->
       <?php if (!empty($officers)): ?>
       <div class="bu-lead-sec-heading">
         <span class="bu-sec-label">University Governance</span>
@@ -1160,49 +1173,71 @@ function getLeaderImgUrl($imgName) {
         <div class="bu-lead-sec-divider"></div>
       </div>
 
-      <div class="bu-officers-grid">
-        <?php foreach ($officers as $lead): 
-            $lead_img = getLeaderImgUrl($lead['image'] ?? '');
-            $lead_chips = !empty($lead['chips']) ? array_map('trim', explode(',', $lead['chips'])) : [];
-        ?>
-        <div class="bu-officer-card">
-          <div>
-            <div class="bu-officer-top">
-              <div class="bu-officer-avatar">
-                <?php if (!empty($lead_img)): ?>
-                  <img src="<?php echo $lead_img; ?>" alt="<?php echo htmlspecialchars($lead['name']); ?>" loading="lazy" decoding="async">
-                <?php else: ?>
-                  <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#FFC107;font-size:22px;"><i class="fa fa-user"></i></div>
-                <?php endif; ?>
-              </div>
-              <div class="bu-officer-header-info">
-                <span class="bu-officer-badge"><?php echo htmlspecialchars($lead['title'] ?: 'Officer'); ?></span>
-                <h4><?php echo htmlspecialchars($lead['name']); ?></h4>
-                <p class="bu-officer-desig"><?php echo htmlspecialchars($lead['designation']); ?></p>
-              </div>
+      <?php foreach ($officers as $lead): 
+          $lead_img = getLeaderImgUrl($lead['image'] ?? '');
+          $lead_chips = !empty($lead['chips']) ? array_map('trim', explode(',', $lead['chips'])) : [];
+          $title_clean = trim($lead['title'] ?: 'Officer');
+          
+          // Tailored status pills
+          $pill_text = 'Statutory Administration & Governance';
+          if (stripos($title_clean, 'ceo') !== false) {
+              $pill_text = 'Operational Innovation & Corporate Synergy';
+          } elseif (stripos($title_clean, 'registrar') !== false) {
+              $pill_text = 'Statutory Compliance & Administration';
+          } elseif (stripos($title_clean, 'vigilance') !== false || stripos($title_clean, 'cvo') !== false) {
+              $pill_text = 'Institutional Ethics & Vigilance';
+          }
+      ?>
+      <div class="bu-chancellor-spotlight">
+        <div class="bu-chancellor-grid">
+          
+          <!-- Left Column: Portrait & Sub-Pill Badge -->
+          <div class="bu-chancellor-left-col">
+            <div class="bu-chancellor-portrait-wrap">
+              <?php if (!empty($lead_img)): ?>
+                <img src="<?php echo $lead_img; ?>" alt="<?php echo htmlspecialchars($lead['name']); ?>" loading="lazy" decoding="async" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
+              <?php else: ?>
+                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#F8FAFC;color:var(--bu-lead-navy);font-size:48px;"><i class="fa fa-user"></i></div>
+              <?php endif; ?>
             </div>
             
+            <div class="bu-chancellor-oxford-pill">
+              <i class="fa fa-star"></i> <?php echo htmlspecialchars($pill_text); ?>
+            </div>
+          </div>
+
+          <!-- Right Column: Executive Statement & Bio -->
+          <div class="bu-chancellor-right-col">
+            <span class="bu-chancellor-desk-label"><i class="fa fa-quote-left"></i> From the <?php echo htmlspecialchars($title_clean); ?>'s Desk</span>
+            <h3><?php echo htmlspecialchars($lead['name']); ?></h3>
+            <span class="bu-chancellor-desig-sub"><?php echo htmlspecialchars($lead['designation']); ?></span>
+
             <?php if (!empty($lead['quote'])): ?>
-            <div class="bu-officer-quote-line">
-              “<?php echo htmlspecialchars($lead['quote']); ?>”
+            <div class="bu-chancellor-quote-box">
+              <p>
+                <i class="fa fa-quote-left"></i> 
+                “<?php echo htmlspecialchars($lead['quote']); ?>”
+              </p>
             </div>
             <?php endif; ?>
 
-            <div class="bu-officer-desc">
+            <div class="bu-chancellor-body-text">
               <?php echo $lead['about']; ?>
             </div>
+
+            <!-- Focus Chips -->
+            <?php if (!empty($lead_chips)): ?>
+            <div class="bu-chancellor-chips-row">
+              <?php foreach ($lead_chips as $chip): ?>
+                <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($chip); ?></span>
+              <?php endforeach; ?>
+            </div>
+            <?php endif; ?>
           </div>
 
-          <?php if (!empty($lead_chips)): ?>
-          <div class="bu-officer-chips-footer">
-            <?php foreach ($lead_chips as $chip): ?>
-              <span class="bu-officer-chip"><i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($chip); ?></span>
-            <?php endforeach; ?>
-          </div>
-          <?php endif; ?>
         </div>
-        <?php endforeach; ?>
       </div>
+      <?php endforeach; ?>
       <?php endif; ?>
 
       <!-- SECTION 5: GOVERNANCE & STEWARDSHIP PRINCIPLES (4 PILLARS) -->

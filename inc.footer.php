@@ -25,7 +25,7 @@
           <li><a href="<?php echo href("magazine.php"); ?>"><i class="fa fa-angle-right"></i> University Magazine</a></li>
           <li><a href="<?php echo href("blogs.php"); ?>"><i class="fa fa-angle-right"></i> Research &amp; Tech Blogs</a></li>
           <li><a href="<?php echo href("hbkportal.php"); ?>"><i class="fa fa-angle-right"></i> Dr Homi Bhabha Online Knowledge Portal</a></li>
-          <li><a href="<?php echo href("downlod1.php"); ?>"><i class="fa fa-angle-right"></i> Downloads</a></li>
+          <li><a href="<?php echo href("clubs.php"); ?>"><i class="fa fa-angle-right"></i> University Clubs &amp; Societies</a></li>
           <li><a href="<?php echo href("events.php"); ?>"><i class="fa fa-angle-right"></i> Activities &amp; Events</a></li>
           <li><a href="https://ncte.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> NCTE</a></li>
         </ul>

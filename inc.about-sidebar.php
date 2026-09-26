@@ -41,6 +41,11 @@ $active_page = $active_page ?? '';
         </a>
       </li>
       <li>
+        <a href="<?php echo href('clubs.php');?>" class="<?php echo ($active_page=='clubs') ? 'active' : ''; ?>">
+          <i class="fa fa-cubes"></i> University Clubs &amp; Societies
+        </a>
+      </li>
+      <li>
         <a href="<?php echo href('why-us.php'); ?>" class="<?php echo ($active_page=='why-us') ? 'active' : ''; ?>">
           <i class="fa fa-star"></i> Why Choose Bhabha
         </a>
