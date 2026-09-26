@@ -1,93 +1,63 @@
 <?php
-if(isset($_FILES['upload_domicile']) && count($_FILES['upload_domicile']['name']) > 0 && $_FILES['upload_domicile']['name'] != '')
-	{
-		$file_ext = end(explode('.', strtolower($_FILES['upload_domicile']['name'])));
-		$newfile=md5(microtime()).".".$file_ext;
-		if(move_uploaded_file($_FILES['upload_domicile']['tmp_name'],UPLOAD.$newfile));
-		{
-			$data['upload_domicile'] = $newfile;
-		}
-	}
-if(isset($_FILES['upload_caste']) && count($_FILES['upload_caste']['name']) > 0 && $_FILES['upload_caste']['name'] != '')
-	{
-		$file_ext = end(explode('.', strtolower($_FILES['upload_caste']['name'])));
-		$newfile=md5(microtime()).".".$file_ext;
-		if(move_uploaded_file($_FILES['upload_caste']['tmp_name'],UPLOAD.$newfile));
-		{
-			$data['upload_caste'] = $newfile;
-		}
-	}
-if(isset($_FILES['upload_income']) && count($_FILES['upload_income']['name']) > 0 && $_FILES['upload_income']['name'] != '')
-	{
-		$file_ext = end(explode('.', strtolower($_FILES['upload_income']['name'])));
-		$newfile=md5(microtime()).".".$file_ext;
-		if(move_uploaded_file($_FILES['upload_income']['tmp_name'],UPLOAD.$newfile));
-		{
-			$data['upload_income'] = $newfile;
-		}
-	}
-if(isset($_FILES['upload_high_school']) && count($_FILES['upload_high_school']['name']) > 0 && $_FILES['upload_high_school']['name'] != '')
-	{
-		$file_ext = end(explode('.', strtolower($_FILES['upload_high_school']['name'])));
-		$newfile=md5(microtime()).".".$file_ext;
-		if(move_uploaded_file($_FILES['upload_high_school']['tmp_name'],UPLOAD.$newfile));
-		{
-			$data['upload_high_school'] = $newfile;
-		}
-	}
-if(isset($_FILES['upload_higher_school']) && count($_FILES['upload_higher_school']['name']) > 0 && $_FILES['upload_higher_school']['name'] != '')
-	{
-		$file_ext = end(explode('.', strtolower($_FILES['upload_higher_school']['name'])));
-		$newfile=md5(microtime()).".".$file_ext;
-		if(move_uploaded_file($_FILES['upload_higher_school']['tmp_name'],UPLOAD.$newfile));
-		{
-			$data['upload_higher_school'] = $newfile;
-		}
-	}
-if(isset($_FILES['uploadg']) && count($_FILES['uploadg']['name']) > 0 && $_FILES['uploadg']['name'] != '')
-	{
-		$file_ext = end(explode('.', strtolower($_FILES['uploadg']['name'])));
-		$newfile=md5(microtime()).".".$file_ext;
-		echo $_FILES['uploadg']['tmp_name'],UPLOAD.$newfile;
-		if(move_uploaded_file($_FILES['uploadg']['tmp_name'],UPLOAD.$newfile));
-		{
-			$data['uploadg'] = $newfile;
-		}
-	}
-if(isset($_FILES['uploadpg']) && count($_FILES['uploadpg']['name']) > 0 && $_FILES['uploadpg']['name'] != '')
-	{
-		$file_ext = end(explode('.', strtolower($_FILES['uploadpg']['name'])));
-		$newfile=md5(microtime()).".".$file_ext;
-		if(move_uploaded_file($_FILES['uploadpg']['tmp_name'],UPLOAD.$newfile));
-		{
-			$data['uploadpg'] = $newfile;
-		}
-	}
-if(isset($_FILES['aadhar_card']) && count($_FILES['aadhar_card']['name']) > 0 && $_FILES['aadhar_card']['name'] != '')
-	{
-		$file_ext = end(explode('.', strtolower($_FILES['aadhar_card']['name'])));
-		$newfile=md5(microtime()).".".$file_ext;
-		if(move_uploaded_file($_FILES['aadhar_card']['tmp_name'],UPLOAD.$newfile));
-		{
-			$data['aadhar_card'] = $newfile;
-		}
-	}
-if(isset($_FILES['photo']) && count($_FILES['photo']['name']) > 0 && $_FILES['photo']['name'] != '')
-	{
-		$file_ext = end(explode('.', strtolower($_FILES['photo']['name'])));
-		$newfile=md5(microtime()).".".$file_ext;
-		if(move_uploaded_file($_FILES['photo']['tmp_name'],UPLOAD.$newfile));
-		{
-			$data['photo'] = $newfile;
-		}
-	}
-if(isset($_FILES['otherdocx']) && count($_FILES['otherdocx']['name']) > 0 && $_FILES['otherdocx']['name'] != '')
-	{
-		$file_ext = end(explode('.', strtolower($_FILES['otherdocx']['name'])));
-		$newfile=md5(microtime()).".".$file_ext;
-		if(move_uploaded_file($_FILES['otherdocx']['tmp_name'],UPLOAD.$newfile));
-		{
-			$data['otherdocx'] = $newfile;
-		}
-	}
-?>
+// Strict, secure file upload processor
+if (!function_exists('bu_secure_upload_file')) {
+    function bu_secure_upload_file($file_key, $upload_dir) {
+        if (!isset($_FILES[$file_key]) || empty($_FILES[$file_key]['name']) || !is_uploaded_file($_FILES[$file_key]['tmp_name'])) {
+            return null;
+        }
+
+        $orig_name = basename($_FILES[$file_key]['name']);
+        
+        // Strict whitelist of safe extensions
+        $allowed_exts = ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'doc', 'docx'];
+        
+        // Extract real extension safely
+        $parts = explode('.', strtolower($orig_name));
+        $ext = end($parts);
+        
+        // Block double extension attacks (e.g., shell.php.jpg)
+        if (count($parts) > 2) {
+            foreach ($parts as $p) {
+                if (in_array($p, ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'inc', 'cgi', 'pl', 'sh', 'exe', 'bat'])) {
+                    return null;
+                }
+            }
+        }
+
+        if (!in_array($ext, $allowed_exts, true)) {
+            return null;
+        }
+
+        // Generate secure random filename
+        $new_filename = md5(uniqid(microtime(), true)) . '.' . $ext;
+        $target_path = rtrim($upload_dir, '/\\') . DIRECTORY_SEPARATOR . $new_filename;
+
+        if (move_uploaded_file($_FILES[$file_key]['tmp_name'], $target_path)) {
+            return $new_filename;
+        }
+
+        return null;
+    }
+}
+
+$upload_keys = [
+    'upload_domicile',
+    'upload_caste',
+    'upload_income',
+    'upload_high_school',
+    'upload_higher_school',
+    'uploadg',
+    'uploadpg',
+    'aadhar_card',
+    'photo',
+    'otherdocx'
+];
+
+foreach ($upload_keys as $ukey) {
+    if (isset($_FILES[$ukey]) && !empty($_FILES[$ukey]['name'])) {
+        $uploaded = bu_secure_upload_file($ukey, defined('UPLOAD') ? UPLOAD : (PATH_ROOT . DS . 'upload' . DS));
+        if ($uploaded) {
+            $data[$ukey] = $uploaded;
+        }
+    }
+}

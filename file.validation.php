@@ -1,93 +1,45 @@
-<?php 
-if($_FILES['upload_domicile']['name'] != '')
-		{
-			$filename = basename($_FILES['upload_domicile']['name']);
-			$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-			{
-				$stat["error"] = "Only JPG,PNG,PDF & DOCX Files are allowed.";
-			}
-		}
-if($_FILES['upload_caste']['name'] != '')
-		{
-			$filename = basename($_FILES['upload_caste']['name']);
-			$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-			{
-				$stat["error"] = "Only JPG,PNG,PDF & DOCX Files are allowed.";
-			}
-		}
-if($_FILES['upload_income']['name'] != '')
-		{
-			$filename = basename($_FILES['upload_income']['name']);
-			$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-			{
-				$stat["error"] = "Only JPG,PNG,PDF & DOCX Files are allowed.";
-			}
-		}
-if($_FILES['upload_high_school']['name'] != '')
-		{
-			$filename = basename($_FILES['upload_high_school']['name']);
-			$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-			{
-				$stat["error"] = "Only JPG,PNG,PDF & DOCX Files are allowed.";
-			}
-		}
-if($_FILES['upload_higher_school']['name'] != '')
-		{
-			$filename = basename($_FILES['upload_higher_school']['name']);
-			$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-			{
-				$stat["error"] = "Only JPG,PNG,PDF & DOCX Files are allowed.";
-			}
-		}
-if($_FILES['uploadg']['name'] != '')
-		{
-			$filename = basename($_FILES['uploadg']['name']);
-			$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-			{
-				$stat["error"] = "Only JPG,PNG,PDF & DOCX Files are allowed.";
-			}
-		}
-if($_FILES['uploadpg']['name'] != '')
-		{
-			$filename = basename($_FILES['uploadpg']['name']);
-			$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-			{
-				$stat["error"] = "Only JPG,PNG,PDF & DOCX Files are allowed.";
-			}
-		}
-if($_FILES['aadhar_card']['name'] != '')
-		{
-			$filename = basename($_FILES['aadhar_card']['name']);
-			$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-			{
-				$stat["error"] = "Only JPG,PNG,PDF & DOCX Files are allowed.";
-			}
-		}
-if($_FILES['photo']['name'] != '')
-		{
-			$filename = basename($_FILES['photo']['name']);
-			$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-			{
-				$stat["error"] = "Only JPG,PNG,PDF & DOCX Files are allowed.";
-			}
-		}
-if($_FILES['otherdocx']['name'] != '')
-		{
-			$filename = basename($_FILES['otherdocx']['name']);
-			$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-			if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-			{
-				$stat["error"] = "Only JPG,PNG,PDF & DOCX Files are allowed.";
-			}
-		}
-		
-?>
+<?php
+// Strict file extension and size validation
+$allowed_exts = ['jpeg', 'jpg', 'png', 'webp', 'pdf', 'doc', 'docx'];
+$upload_fields = [
+    'upload_domicile',
+    'upload_caste',
+    'upload_income',
+    'upload_high_school',
+    'upload_higher_school',
+    'uploadg',
+    'uploadpg',
+    'aadhar_card',
+    'photo',
+    'otherdocx'
+];
+
+foreach ($upload_fields as $field) {
+    if (isset($_FILES[$field]) && !empty($_FILES[$field]['name'])) {
+        $filename = basename($_FILES[$field]['name']);
+        $parts = explode('.', strtolower($filename));
+        $ext = end($parts);
+
+        // Check for double extension containing dangerous words
+        $has_dangerous_ext = false;
+        if (count($parts) > 2) {
+            foreach ($parts as $p) {
+                if (in_array($p, ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'inc', 'cgi', 'pl', 'sh', 'exe', 'bat'])) {
+                    $has_dangerous_ext = true;
+                    break;
+                }
+            }
+        }
+
+        if (empty($ext) || !in_array($ext, $allowed_exts, true) || $has_dangerous_ext) {
+            $stat["error"] = "Only JPG, PNG, WEBP, PDF & DOCX files are allowed.";
+            break;
+        }
+
+        // Limit file size to 10MB per file
+        if (!empty($_FILES[$field]['size']) && $_FILES[$field]['size'] > (10 * 1024 * 1024)) {
+            $stat["error"] = "Uploaded file is too large. Maximum allowed size is 10MB.";
+            break;
+        }
+    }
+}

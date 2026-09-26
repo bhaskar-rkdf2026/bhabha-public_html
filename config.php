@@ -1,15 +1,26 @@
 <?php
 error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
 date_default_timezone_set('Asia/Kolkata');
+
+define("DS", DIRECTORY_SEPARATOR);
+define("PATH_ROOT", dirname(__FILE__));
+define("PATH_LIB", PATH_ROOT . DS . "library" . DS);
+
+// Initialize Active Web Application Firewall (SQLi, XSS, RFI/LFI protection)
+if (file_exists(PATH_LIB . "waf.php")) {
+    require_once(PATH_LIB . "waf.php");
+}
+
 @session_start();
 if (!headers_sent()) {
     @header("Permissions-Policy: unload=*");
+    @header("X-Frame-Options: SAMEORIGIN");
+    @header("X-Content-Type-Options: nosniff");
+    @header("X-XSS-Protection: 1; mode=block");
+    @header("Referrer-Policy: strict-origin-when-cross-origin");
 }
-define("DS",DIRECTORY_SEPARATOR);
-define("PATH_ROOT",dirname(__FILE__));
-define("PATH_LIB",PATH_ROOT.DS."library".DS);
 
-require_once(PATH_ROOT.DS."db_config.php");
+require_once(PATH_ROOT . DS . "db_config.php");
 
 if (!defined("URL_ROOT")) {
     if (isset($_SERVER['HTTP_HOST'])) {

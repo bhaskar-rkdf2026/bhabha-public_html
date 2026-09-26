@@ -221,7 +221,8 @@
 				for (var name in data) { // Convert dates
 					var value = data[name];
 					if (typeof value === 'string' && value.match(/^new Date\((.*)\)$/)) {
-						data[name] = eval(value);
+						var dateArgs = value.match(/^new Date\((.*)\)$/)[1];
+						data[name] = new Date(dateArgs.replace(/['"]/g, ''));
 					}
 				}
 				return data;

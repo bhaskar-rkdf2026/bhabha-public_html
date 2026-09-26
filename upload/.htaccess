@@ -1,0 +1,56 @@
+# ==============================================================================
+# BHABHA UNIVERSITY — UPLOAD FOLDER SECURITY QUARANTINE
+# Deny execution of all PHP scripts, CGI, shell scripts, and executables.
+# Only allow static image, document, and media serving.
+# ==============================================================================
+
+# 1. Disable Directory Browsing
+Options -Indexes -ExecCGI
+
+# 2. Disable PHP Engine inside Upload Directory
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+# 3. Remove all script handlers
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .pht .phar .inc .cgi .pl .fcgi .sh .bash .exe .bat
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .pht .phar .inc .cgi .pl .fcgi .sh .bash .exe .bat
+
+# 4. Force default static handler for everything
+<IfModule mod_mime.c>
+    SetHandler default-handler
+</IfModule>
+
+# 5. Deny direct execution or access to executable extensions
+<FilesMatch "(?i)\.(php|phtml|php3|php4|php5|php7|php8|pht|phar|inc|cgi|pl|py|sh|bash|exe|bat|cmd|com|msi|vbs|wsf|scr|dll|so|htaccess|htpasswd|ini|config|bak|sql|env)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 6. Strict allowed file extensions whitelist (Images, PDF, Media, Documents)
+<FilesMatch "(?i)\.(jpg|jpeg|png|gif|webp|svg|ico|pdf|doc|docx|xls|xlsx|ppt|pptx|txt|rtf|mp4|webm|mp3|ogg|wav|zip|rar)$">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Allow from all
+    </IfModule>
+</FilesMatch>
+
+# 7. Add Security Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set Content-Disposition "inline"
+</IfModule>
