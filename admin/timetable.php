@@ -33,49 +33,49 @@ if(isset($_POST['submit']))
 	if($_REQUEST['action']=="add" && count($stat) == 0)	
 	{
 		$data = Array(
-					"title" => $_POST['title']
-					 );
-					 if(isset($_FILES['icon']) && count($_FILES['icon']['name']) > 0 && $_FILES['icon']['name'] != '')
-					{
-						$file_ext = end(explode('.', strtolower($_FILES['icon']['name'])));
-						$newfile=md5(microtime()).".".$file_ext;
-						echo $_FILES['icon']['tmp_name'],UPLOAD.$newfile;
-						if(move_uploaded_file($_FILES['icon']['tmp_name'],UPLOAD.$newfile));
-						{
-							$data['image'] = $newfile;
-						}
-					}
-					$id = $db->insert(DBTAB,$data);
-					unset($_POST);
-					unset($_SESSION['form']);
-					$_SESSION["success"] = 'Add Successfully';
-					redirect(PAGE);
+			"title" => $_POST['title'] ?? ''
+		);
+		if(!empty($_FILES['icon']['name']))
+		{
+			$file_ext = pathinfo($_FILES['icon']['name'], PATHINFO_EXTENSION);
+			$newfile = md5(microtime()).".".$file_ext;
+			if(move_uploaded_file($_FILES['icon']['tmp_name'], UPLOAD.$newfile))
+			{
+				$data['image'] = $newfile;
+			}
+		}
+		$id = $db->insert(DBTAB,$data);
+		unset($_POST);
+		unset($_SESSION['form']);
+		$_SESSION["success"] = 'Added Successfully';
+		redirect(PAGE);
 	}
 	elseif($_REQUEST['action']=="edit" && count($stat) == 0)	
 	{
 		$data = Array(
-					"title" => $_POST['title']
-					 );
-			 if($_FILES['icon']['name'] != '')
-				{
-				$db->where('id',$_REQUEST['id']);
-				$aryData = $db->getOne(DBTAB);
-			
-				unlink(UPLOAD.$aryData['image']."");
-				$file_ext = end(explode('.', strtolower($_FILES['icon']['name'])));
-				$newfile=md5(microtime()).".".$file_ext;
-				if(move_uploaded_file($_FILES['icon']['tmp_name'],UPLOAD.$newfile));
-				{
-					$data['image'] = $newfile;
-				}
-					}
-					$db->where('id',$_REQUEST['id']);
-					$aryData = $db->update(DBTAB,$data);
-					unset($_POST);
-					unset($_SESSION['form']);
-					$_SESSION["success"] = 'Edit Successfully';
-					redirect(PAGE);
+			"title" => $_POST['title'] ?? ''
+		);
+		if(!empty($_FILES['icon']['name']))
+		{
+			$db->where('id',$_REQUEST['id']);
+			$aryData = $db->getOne(DBTAB);
+			if(!empty($aryData['image']) && file_exists(UPLOAD.$aryData['image'])) {
+				@unlink(UPLOAD.$aryData['image']);
 			}
+			$file_ext = pathinfo($_FILES['icon']['name'], PATHINFO_EXTENSION);
+			$newfile = md5(microtime()).".".$file_ext;
+			if(move_uploaded_file($_FILES['icon']['tmp_name'], UPLOAD.$newfile))
+			{
+				$data['image'] = $newfile;
+			}
+		}
+		$db->where('id',$_REQUEST['id']);
+		$aryData = $db->update(DBTAB,$data);
+		unset($_POST);
+		unset($_SESSION['form']);
+		$_SESSION["success"] = 'Updated Successfully';
+		redirect(PAGE);
+	}
 }
 if($action=="delete")
 {

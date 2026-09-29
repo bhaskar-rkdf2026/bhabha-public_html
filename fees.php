@@ -86,7 +86,13 @@ if(!is_null($aryFormAbout) && is_array($aryFormAbout) && count($aryFormAbout) > 
         <div class="bu-content-divider"></div>
 
         <div class="bu-content-body">
-          <?php echo isset($aryAbout['content']) ? $aryAbout['content'] : '<p>Fee details are currently being updated. Please contact the admission helpline for instant details.</p>';?>
+          <?php 
+          $fee_content = isset($aryAbout['content']) ? $aryAbout['content'] : '<p>Fee details are currently being updated. Please contact the admission helpline for instant details.</p>';
+          if (!empty(URL_ROOT) && strpos(URL_ROOT, 'localhost') === false && strpos(URL_ROOT, '127.0.0.1') === false) {
+              $fee_content = preg_replace('#https?://(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', URL_ROOT, $fee_content);
+          }
+          echo $fee_content;
+          ?>
         </div>
       </div>
 

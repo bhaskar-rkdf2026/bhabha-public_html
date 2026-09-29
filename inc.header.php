@@ -59,7 +59,10 @@
         <div class="bu-mobile-drawer-head">
           <div class="bu-drawer-brand">
             <img src="<?php echo URL_IMG;?>bhabha-university-logo-hd.png?v=20260926" alt="Logo" class="bu-drawer-logo" width="38" height="38" loading="lazy" decoding="async" onerror="this.src='<?php echo URL_IMG;?>logo.png'">
-            <span>Bhabha University</span>
+            <div class="bu-brand-text" style="display:flex; flex-direction:column; justify-content:center;">
+              <span class="bu-brand-name-1" style="font-size:18px !important; letter-spacing:1.2px !important; line-height:1 !important;">BHABHA</span>
+              <span class="bu-brand-name-2" style="font-size:10.2px !important; letter-spacing:1.6px !important; line-height:1.15 !important;">UNIVERSITY</span>
+            </div>
           </div>
           <button type="button" class="bu-drawer-close" id="buDrawerCloseBtn" aria-label="Close Menu">&times;</button>
         </div>

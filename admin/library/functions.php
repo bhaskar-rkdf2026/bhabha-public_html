@@ -455,24 +455,20 @@ $fx = 1;
 }
 function smart_resize_image( $file, $width = 0, $height = 0, $proportional = false, $output = 'file', $delete_original = true, $use_linux_commands = false )
   {
+    if ( !function_exists('imagecreatetruecolor') || !function_exists('imagecreatefromjpeg') ) {
+      return false;
+    }
     if ( $height <= 0 && $width <= 0 ) {
       return false;
     }
+    if ( !file_exists($file) ) {
+      return false;
+    }
 	
-//	echo " file : ".$file;
-//	echo "<br />";
-//	echo " width : ".$width;
-//	echo "<br />";
-//	echo " height : ".$height;
-//	echo "<br />";
-	
-    $info = getimagesize($file);
-//	echo " info : ".$info;
-//	echo "<br />";
-//	echo "<pre>";
-//	print_r($info);
-//	echo "</pre>";
-//	exit;
+    $info = @getimagesize($file);
+    if ( !$info || !is_array($info) ) {
+      return false;
+    }
     $image = '';
 
     $final_width = 0;
@@ -495,17 +491,21 @@ function smart_resize_image( $file, $width = 0, $height = 0, $proportional = fal
 
     switch ( $info[2] ) {
       case IMAGETYPE_GIF:
-        $image = imagecreatefromgif($file);
+        if (!function_exists('imagecreatefromgif')) return false;
+        $image = @imagecreatefromgif($file);
       break;
       case IMAGETYPE_JPEG:
-        $image = imagecreatefromjpeg($file);
+        if (!function_exists('imagecreatefromjpeg')) return false;
+        $image = @imagecreatefromjpeg($file);
       break;
       case IMAGETYPE_PNG:
-        $image = imagecreatefrompng($file);
+        if (!function_exists('imagecreatefrompng')) return false;
+        $image = @imagecreatefrompng($file);
       break;
       default:
         return false;
     }
+    if (!$image) return false;
    
     $image_resized = imagecreatetruecolor( $final_width, $final_height );
        
@@ -672,7 +672,16 @@ function daysDifference($startDate,$endDate)
 
 function resizeBySize($file,$width,$height,$path,$proportional)
 {
-	$imgData = getimagesize($path.$file);
+	if (!function_exists('imagecreatetruecolor') || !function_exists('imagecreatefromjpeg')) {
+		return false;
+	}
+	if (!file_exists($path.$file)) {
+		return false;
+	}
+	$imgData = @getimagesize($path.$file);
+	if (!$imgData || !is_array($imgData)) {
+		return false;
+	}
 	
 	$imgReturn = '';
 	if($imgData[0] > $width && $imgData[1] > $height)

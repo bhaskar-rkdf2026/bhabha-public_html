@@ -230,7 +230,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 
 /* ---- LOGO BRAND ---- */
 .bu-brand {
-  display: flex !important;
+  display: inline-flex !important;
   align-items: center !important;
   gap: 12px !important;
   text-decoration: none !important;
@@ -238,23 +238,30 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   padding: 2px 0 !important;
 }
 .bu-brand-logo { height: 65px !important; width: auto !important; object-fit: contain !important; }
-.bu-brand-text { display: flex !important; flex-direction: column !important; justify-content: center !important; }
+.bu-brand-text {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
 .bu-brand-name-1 {
   font-family: 'Playfair Display', Georgia, serif !important;
   font-size: 24px !important;
   font-weight: 900 !important;
   color: var(--bu-navy) !important;
-  line-height: 1.05 !important;
-  letter-spacing: -0.3px !important;
+  line-height: 1 !important;
+  letter-spacing: 1.8px !important;
+  text-transform: uppercase !important;
   display: block !important;
 }
 .bu-brand-name-2 {
   font-family: 'Playfair Display', Georgia, serif !important;
-  font-size: 21px !important;
+  font-size: 13.6px !important;
   font-weight: 800 !important;
   color: var(--bu-navy) !important;
-  line-height: 1.05 !important;
-  letter-spacing: -0.2px !important;
+  line-height: 1.15 !important;
+  letter-spacing: 2.3px !important;
+  text-transform: uppercase !important;
   display: block !important;
 }
 .bu-brand-title {

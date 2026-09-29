@@ -224,7 +224,13 @@ $is_about_page     = false;
         <div class="bu-content-divider"></div>
 
         <div class="bu-content-body">
-          <?php echo $pageData['data'];?>
+          <?php 
+          $page_body = $pageData['data'] ?? '';
+          if (!empty(URL_ROOT) && strpos(URL_ROOT, 'localhost') === false && strpos(URL_ROOT, '127.0.0.1') === false) {
+              $page_body = preg_replace('#https?://(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', URL_ROOT, $page_body);
+          }
+          echo $page_body;
+          ?>
           <div style="clear:both;"></div>
         </div>
 

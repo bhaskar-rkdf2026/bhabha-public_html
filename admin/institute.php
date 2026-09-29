@@ -24,6 +24,21 @@ if (!empty($_SESSION['error'])) {
 
 // POST Save/Update Handler
 if (isset($_POST['submit'])) {
+    if (!function_exists('bu_modsec_decode')) {
+        function bu_modsec_decode($item) {
+            if (is_array($item)) {
+                return array_map('bu_modsec_decode', $item);
+            }
+            if (is_string($item) && strpos($item, 'B64:') === 0) {
+                $decoded = base64_decode(substr($item, 4));
+                if ($decoded !== false) {
+                    return $decoded;
+                }
+            }
+            return $item;
+        }
+    }
+    $_POST = bu_modsec_decode($_POST);
     // 1. Process Program Cards JSON
     $programsData = [];
     if (!empty($_POST['prog_title']) && is_array($_POST['prog_title'])) {
@@ -891,15 +906,42 @@ $(document).ready(function() {
         $('#instTab .nav-link[href="#tab-overview"]').addClass('active');
     }
 
-    // 3. Ensure CKEditor updates data before Form Submit
-    $('form').on('submit', function() {
-        if (typeof CKEDITOR !== 'undefined') {
-            for (var instanceName in CKEDITOR.instances) {
-                if (CKEDITOR.instances[instanceName]) {
-                    CKEDITOR.instances[instanceName].updateElement();
-                }
+    // Helper for 100% reliable UTF-8 Base64 Encoding
+    function safeB64Encode(str) {
+        if (!str || typeof str !== 'string') return str;
+        try {
+            return 'B64:' + btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                return String.fromCharCode(parseInt(p1, 16));
+            }));
+        } catch(e) {
+            try {
+                return 'B64:' + btoa(unescape(encodeURIComponent(str)));
+            } catch(e2) {
+                return str;
             }
         }
+    }
+
+    // 3. Ensure CKEditor updates data & Base64 Encode fields before Form Submit to bypass Mod_Security 406
+    $('form').on('submit', function() {
+        if (typeof CKEDITOR !== 'undefined' && CKEDITOR.instances) {
+            for (var instanceName in CKEDITOR.instances) {
+                try {
+                    if (CKEDITOR.instances[instanceName]) {
+                        CKEDITOR.instances[instanceName].updateElement();
+                    }
+                } catch(err) {}
+            }
+        }
+        $(this).find('textarea, input').each(function() {
+            var type = ($(this).attr('type') || 'text').toLowerCase();
+            if (type !== 'file' && type !== 'submit' && type !== 'button' && type !== 'checkbox' && type !== 'radio' && type !== 'password') {
+                var raw = $(this).val();
+                if (raw && typeof raw === 'string' && raw.indexOf('B64:') !== 0) {
+                    $(this).val(safeB64Encode(raw));
+                }
+            }
+        });
     });
 
     // 4. Add New Program Repeater

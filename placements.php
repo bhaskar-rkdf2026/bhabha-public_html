@@ -246,7 +246,7 @@
     <main>
 
       <!-- Head of Placement Cell -->
-      <div class="bu-content-card">
+      <!-- <div class="bu-content-card">
         <span class="bu-content-label">Cell Leadership</span>
         <h2 class="bu-content-h2">Training &amp; <em>Placement Department</em></h2>
         <div class="bu-content-divider"></div>
@@ -256,8 +256,8 @@
                alt="Mr. Jitendra Karosia" class="bu-tnp-head-img"
                onerror="this.src='<?php echo URL_ROOT;?>extra-images/about-img.jpg';">
           <div class="bu-tnp-head-info">
-            <h3>Mr. Jitendra Karosia</h3>
-            <span class="bu-tnp-head-role">Group Head – Training &amp; Placement Department | 17+ Years Experience</span>
+            <h3>Group Head</h3>
+            <span class="bu-tnp-head-role">Training &amp; Placement Department | 17+ Years Experience</span>
             <div class="bu-tnp-contact-list">
               <div><i class="fa fa-envelope"></i> <strong>Email:</strong> headtnp@bhabhauniversity.edu.in / tpo@bhabhauniversity.edu.in</div>
               <div><i class="fa fa-phone"></i> <strong>Mobile:</strong> +91 7566378153 | +91 7470545827</div>
@@ -270,7 +270,7 @@
           <p>The Training and Placement Cell of Bhabha University, Bhopal plays a pivotal role in creating career opportunities for Under Graduate and Post Graduate passing out students. Operating round the year, the cell facilitates seamless interactions between corporate entities and graduating engineers, managers, scientists, and healthcare professionals.</p>
           <p>Our ingenious alumnae have established exemplary standards across the corporate landscape through their valuable contributions, ensuring top recruiters regularly return to our campus for recruitment drives.</p>
         </div>
-      </div>
+      </div> -->
 
       <!-- Objectives & Career Programs -->
       <div class="bu-content-card">

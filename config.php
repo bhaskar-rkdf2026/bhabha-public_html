@@ -51,11 +51,18 @@ if (isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'], 'localhost') 
 }
 define("URL_ADMIN_IMG",URL_ROOT.'img/');
 
-// Dynamic output filter to ensure all media/PDF/image links resolve to local URL_ROOT on localhost
+// Global Dynamic URL filter to ensure assets/PDFs/links resolve correctly in both local & live environments
 if (!function_exists('bu_filter_live_assets')) {
     function bu_filter_live_assets($buffer) {
-        if (defined('URL_ROOT') && (strpos(URL_ROOT, 'localhost') !== false || strpos(URL_ROOT, '127.0.0.1') !== false)) {
-            $buffer = preg_replace('/https?:\/\/(?:www\.)?bhabhauniversity\.edu\.in\/(upload|images|css|js|extra-images)\//i', URL_ROOT . '$1/', $buffer);
+        if (defined('URL_ROOT')) {
+            if (strpos(URL_ROOT, 'localhost') !== false || strpos(URL_ROOT, '127.0.0.1') !== false) {
+                // On Localhost: Convert live bhabha URLs to localhost URLs
+                $buffer = preg_replace('/https?:\/\/(?:www\.)?bhabhauniversity\.edu\.in\/(upload|images|css|js|extra-images)\//i', URL_ROOT . '$1/', $buffer);
+            } else {
+                // On Live Server: Convert any hardcoded localhost/127.0.0.1 URLs from DB/CKEditor to live URL_ROOT
+                $buffer = preg_replace('#https?://(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/(upload|images|css|js|extra-images|media)/#i', URL_ROOT . '$1/', $buffer);
+                $buffer = preg_replace('#https?://(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', URL_ROOT, $buffer);
+            }
         }
         return $buffer;
     }
