@@ -58,6 +58,24 @@ try {
 } catch (\Throwable $e) {
     error_log("Admin DB Connection Error: " . $e->getMessage());
 }
+if (!function_exists('bu_modsec_decode')) {
+    function bu_modsec_decode($item) {
+        if (is_array($item)) {
+            return array_map('bu_modsec_decode', $item);
+        }
+        if (is_string($item) && strpos($item, 'B64:') === 0) {
+            $decoded = base64_decode(substr($item, 4));
+            if ($decoded !== false) {
+                return $decoded;
+            }
+        }
+        return $item;
+    }
+}
+if (!empty($_POST)) {
+    $_POST = bu_modsec_decode($_POST);
+}
+
 define("LOGIN_ADMIN", "");
 define("LOGIN_USER", "");
 ?>

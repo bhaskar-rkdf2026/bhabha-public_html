@@ -922,26 +922,48 @@ $(document).ready(function() {
         }
     }
 
-    // 3. Ensure CKEditor updates data & Base64 Encode fields before Form Submit to bypass Mod_Security 406
-    $('form').on('submit', function() {
+    function processFormForModSec(form) {
+        if (!form) return;
         if (typeof CKEDITOR !== 'undefined' && CKEDITOR.instances) {
-            for (var instanceName in CKEDITOR.instances) {
+            for (var name in CKEDITOR.instances) {
                 try {
-                    if (CKEDITOR.instances[instanceName]) {
-                        CKEDITOR.instances[instanceName].updateElement();
+                    var inst = CKEDITOR.instances[name];
+                    if (inst) {
+                        var html = inst.getData();
+                        var encoded = safeB64Encode(html);
+                        inst.setData(encoded);
+                        var targetEl = form.querySelector('[name="' + name + '"]') || document.getElementById(name);
+                        if (targetEl) {
+                            targetEl.value = encoded;
+                        }
                     }
-                } catch(err) {}
+                } catch(e) {}
             }
         }
-        $(this).find('textarea, input').each(function() {
-            var type = ($(this).attr('type') || 'text').toLowerCase();
-            if (type !== 'file' && type !== 'submit' && type !== 'button' && type !== 'checkbox' && type !== 'radio' && type !== 'password') {
-                var raw = $(this).val();
-                if (raw && typeof raw === 'string' && raw.indexOf('B64:') !== 0) {
-                    $(this).val(safeB64Encode(raw));
+        var elements = form.elements;
+        if (elements) {
+            for (var i = 0; i < elements.length; i++) {
+                var el = elements[i];
+                var type = (el.type || 'text').toLowerCase();
+                if (type !== 'file' && type !== 'submit' && type !== 'button' && type !== 'checkbox' && type !== 'radio' && type !== 'password') {
+                    var val = el.value;
+                    if (val && typeof val === 'string' && val.indexOf('B64:') !== 0) {
+                        el.value = safeB64Encode(val);
+                    }
                 }
             }
-        });
+        }
+    }
+
+    // 3. Intercept submit click and form submit to bypass Mod_Security 406
+    $(document).on('click', 'input[type="submit"], button[type="submit"]', function() {
+        if (this.form) {
+            processFormForModSec(this.form);
+        }
+    });
+
+    $('form').on('submit', function() {
+        processFormForModSec(this);
     });
 
     // 4. Add New Program Repeater
