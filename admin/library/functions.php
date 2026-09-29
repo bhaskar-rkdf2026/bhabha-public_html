@@ -13,6 +13,16 @@ function redirect($url=NULL)
 	exit;
 }
 
+function clean_localhost_urls($val) {
+    if (is_array($val)) {
+        return array_map('clean_localhost_urls', $val);
+    }
+    if (is_string($val)) {
+        return preg_replace('#(?:https?:)?//(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', 'https://www.bhabhauniversity.edu.in/', $val);
+    }
+    return $val;
+}
+
 function chkHeader()
 {
 	if(strpos($_SERVER['HTTP_REFERER'],URL_ROOT)==0) return true;

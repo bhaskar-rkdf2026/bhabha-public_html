@@ -6,6 +6,9 @@ if(isset($_POST['submit']))
 {
 		foreach($_POST as $field=>$value)
 		{
+            if (is_string($value)) {
+                $value = preg_replace('#(?:https?:)?//(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', 'https://www.bhabhauniversity.edu.in/', $value);
+            }
 			$data = Array (
 				'value' => $value
 			);

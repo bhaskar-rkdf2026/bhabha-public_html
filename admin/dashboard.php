@@ -416,13 +416,36 @@ try {
                   </div>
                 </div>
                 <div class="mt-3 mt-md-0 text-md-right">
-                  <a href="../" target="_blank" class="btn btn-warning btn-sm font-weight-bold px-3 py-2 shadow-sm mb-1">
-                    <i class="fa fa-globe"></i> View Website
+                  <a href="section_hub.php" class="btn btn-warning btn-sm font-weight-bold px-3 py-2 shadow-sm mb-1" style="color: #0A1B54 !important; background: #FFC107 !important; border:none;">
+                    <i class="mdi mdi-apps"></i> Section-wise Page Manager
                   </a>
                   <br>
-                  <a href="../research/" target="_blank" class="btn btn-outline-light btn-sm px-3 py-2 mt-1">
-                    <i class="fa fa-flask"></i> Preview Research Page
+                  <a href="../" target="_blank" class="btn btn-outline-light btn-sm px-3 py-1 mt-1">
+                    <i class="fa fa-globe"></i> View Website
                   </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Navigation Quick Bar -->
+        <div class="row mb-3">
+          <div class="col-12">
+            <div class="card p-3 shadow-sm border-0" style="background: #FFFFFF; border-radius: 10px;">
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                <span class="font-weight-bold" style="color: #0A1B54; font-size: 13px;">
+                  <i class="mdi mdi-compass-outline mr-1 text-warning"></i> Quick Edit By Frontend Section:
+                </span>
+                <div class="d-flex flex-wrap gap-1">
+                  <a href="section_hub.php?section=about" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-bank text-primary"></i> About (9)</a>
+                  <a href="section_hub.php?section=schools" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-school text-info"></i> Schools (5)</a>
+                  <a href="section_hub.php?section=academics" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-book-open-page-variant text-success"></i> Academics (7)</a>
+                  <a href="section_hub.php?section=admissions" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-account-plus text-warning"></i> Admissions (8)</a>
+                  <a href="section_hub.php?section=research" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-flask text-danger"></i> Research (9)</a>
+                  <a href="section_hub.php?section=placements" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-briefcase-check text-primary"></i> Placements (4)</a>
+                  <a href="section_hub.php?section=news" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-bullhorn text-info"></i> News & Media (6)</a>
+                  <a href="section_hub.php?section=student" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-account-group text-success"></i> Student (7)</a>
                 </div>
               </div>
             </div>

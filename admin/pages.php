@@ -392,7 +392,8 @@ if (is_array($allPages)) {
             <?php if($action == "edit" || $action == "add"): ?>
               <a href="<?php echo PAGE; ?>" class="btn btn-sm btn-outline-light"><i class="mdi mdi-arrow-left"></i> Back to Pages List</a>
             <?php else: ?>
-              <a href="<?php echo PAGE; ?>?action=add" class="btn btn-sm btn-bu-gold"><i class="mdi mdi-plus-circle"></i> Add New Page</a>
+              <a href="section_hub.php" class="btn btn-sm btn-bu-gold mr-1" style="font-weight:700;"><i class="mdi mdi-apps"></i> Section-wise Page Manager</a>
+              <a href="<?php echo PAGE; ?>?action=add" class="btn btn-sm btn-outline-light"><i class="mdi mdi-plus-circle"></i> Add New Page</a>
               <a href="dashboard.php" class="btn btn-sm btn-outline-light"><i class="mdi mdi-view-dashboard"></i> Dashboard</a>
             <?php endif; ?>
           </div>

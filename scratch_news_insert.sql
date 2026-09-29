@@ -1,0 +1,4 @@
+INSERT INTO `news` (`title`, `news_date`, `image`, `orders`) VALUES ('भाभा विश्वविद्यालय में AISHE पर कार्यशाला आयोजित', '2026-09-24', 'bac68c4b2e602605af83569da4686681.jpg', 127);
+INSERT INTO `news` (`title`, `news_date`, `image`, `orders`) VALUES ('भाभा विवि में अभियंता दिवस का भव्य आयोजन', '2026-09-15', '0f6365f8877577a5896660c6465a9c06.jpg', 127);
+INSERT INTO `news` (`title`, `news_date`, `image`, `orders`) VALUES ('भाभा विश्वविद्यालय की छात्रा का उप पुलिस अधीक्षक (रेडियो) के पद पर चयन', '2026-09-11', '7a55c4c971c9559aec37ad499cc5d058.jpg', 127);
+INSERT INTO `news` (`title`, `news_date`, `image`, `orders`) VALUES ('भाभा विश्वविद्यालय में शिक्षक दिवस का भव्य एवं यादगार आयोजन', '2026-09-07', '7a603e6f37e7da9ac68951add4bc9685.jpg', 127);

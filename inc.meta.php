@@ -110,7 +110,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   max-width: 1400px !important;
   margin: 0 auto !important;
   padding: 0 16px !important;
-  overflow: hidden !important;
+  overflow: visible !important;
+  position: relative !important;
 }
 .bu-topbar-left {
   display: flex !important;
@@ -118,10 +119,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   flex-wrap: nowrap !important;
   flex-shrink: 1 !important;
   min-width: 0 !important;
-  overflow-x: auto !important;
-  scrollbar-width: none !important;
+  overflow: visible !important;
 }
-.bu-topbar-left::-webkit-scrollbar { display: none !important; }
 .bu-topbar-links {
   display: flex !important;
   align-items: center !important;
@@ -131,6 +130,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   padding: 0 !important;
   flex-wrap: nowrap !important;
   white-space: nowrap !important;
+  overflow: visible !important;
 }
 .bu-topbar-links li { margin: 0 !important; padding: 0 !important; flex-shrink: 0 !important; white-space: nowrap !important; }
 .bu-topbar-links li a {
@@ -149,6 +149,164 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 }
 .bu-topbar-links li:last-child a { border-right: none !important; }
 .bu-topbar-links li a:hover { color: var(--bu-gold) !important; text-decoration: none !important; }
+
+/* Topbar Dropdown Styles */
+.bu-topbar-dropdown {
+  position: relative !important;
+}
+.bu-topbar-drop-toggle {
+  cursor: pointer !important;
+  user-select: none !important;
+}
+.bu-info-corner-badge {
+  background: rgba(255, 193, 7, 0.15) !important;
+  border: 1px solid rgba(255, 193, 7, 0.45) !important;
+  color: #FFC107 !important;
+  border-radius: 4px !important;
+  font-weight: 800 !important;
+  padding: 3px 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+.bu-info-corner-badge:hover {
+  background: rgba(255, 193, 7, 0.28) !important;
+  color: #FFFFFF !important;
+}
+.bu-topbar-drop-menu {
+  display: none !important;
+  position: absolute !important;
+  top: calc(100% + 4px) !important;
+  left: 0 !important;
+  background: linear-gradient(180deg, #071338 0%, #0A1B54 100%) !important;
+  border: 1px solid rgba(255, 193, 7, 0.5) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75) !important;
+  padding: 14px 16px !important;
+  z-index: 9999999 !important;
+}
+.bu-info-menu-topbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 10px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+.bu-info-menu-title {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: #FFFFFF !important;
+  letter-spacing: 0.5px !important;
+}
+.bu-info-close-btn {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #FFC107 !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+.bu-info-close-btn:hover {
+  background: #DC2626 !important;
+  color: #FFFFFF !important;
+  border-color: #DC2626 !important;
+}
+.bu-info-corner-menu {
+  width: 520px !important;
+  max-width: 95vw !important;
+}
+.bu-info-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 16px !important;
+}
+.bu-info-col {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+.bu-info-head {
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  color: #FFC107 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  padding: 2px 4px 6px 4px !important;
+  margin-bottom: 6px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+.bu-topbar-dropdown.active > .bu-topbar-drop-menu {
+  display: block !important;
+}
+.bu-topbar-dropdown:not(.active) > .bu-topbar-drop-menu {
+  display: none !important;
+}
+.bu-info-col a,
+.bu-topbar-drop-menu a {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 10px !important;
+  margin: 1px 0 !important;
+  border-radius: 4px !important;
+  color: #E2E8F0 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0.2px !important;
+  border-right: none !important;
+  line-height: 1.3 !important;
+  transition: all 0.18s ease !important;
+  white-space: nowrap !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+.bu-info-col a:hover,
+.bu-topbar-drop-menu a:hover {
+  background: rgba(255, 193, 7, 0.2) !important;
+  color: #FFC107 !important;
+  padding-left: 14px !important;
+  text-decoration: none !important;
+}
+
+@media (max-width: 991px) {
+  .bu-hide-mobile {
+    display: none !important;
+  }
+  .bu-topbar-dropdown.active > .bu-info-corner-menu {
+    display: block !important;
+    position: fixed !important;
+    top: 36px !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    max-width: calc(100vw - 16px) !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    z-index: 999999999 !important;
+    background: #071338 !important;
+    border: 2px solid #FFC107 !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9) !important;
+  }
+}
+@media (max-width: 575px) {
+  .bu-info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+
 .bu-topbar-right {
   display: flex !important;
   align-items: center !important;
@@ -807,7 +965,82 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 }
 /* ---- TABLET & MOBILE (max-width: 991px) ---- */
 @media (max-width: 991px) {
-  .bu-topbar { display: none !important; }
+  .bu-topbar { 
+    display: block !important; 
+    background: #071338 !important;
+    padding: 5px 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+  .bu-topbar-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 10px !important;
+    gap: 8px !important;
+  }
+  .bu-topbar-left {
+    display: flex !important;
+    align-items: center !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .bu-topbar-left::-webkit-scrollbar { display: none !important; }
+  .bu-topbar-links {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .bu-topbar-links li {
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .bu-topbar-links li a {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    padding: 2px 7px !important;
+    letter-spacing: 0.3px !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+  }
+  .bu-topbar-links li:last-child a { border-right: none !important; }
+  .bu-topbar-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+  .bu-topbar-phone { display: none !important; }
+  .bu-topbar-dropdown.active .bu-info-corner-menu {
+    display: block !important;
+    position: fixed !important;
+    top: 36px !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    max-width: calc(100vw - 16px) !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+    z-index: 999999999 !important;
+    background: #071338 !important;
+    border: 2px solid #FFC107 !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9) !important;
+  }
+  .bu-btn-top-gold {
+    font-size: 9.5px !important;
+    font-weight: 800 !important;
+    padding: 3px 9px !important;
+    border-radius: 3px !important;
+    white-space: nowrap !important;
+  }
   .bu-header-container {
     display: flex !important;
     align-items: center !important;
@@ -1076,7 +1309,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 	<!-- Responsive CSS -->
 	<link href="<?php echo URL_CSS;?>responsive.css" rel="stylesheet">
 	<!-- BU Comprehensive Responsive CSS (All Devices) -->
-	<link href="<?php echo URL_CSS;?>bu-responsive.css" rel="stylesheet">
+	<link href="<?php echo URL_CSS;?>bu-responsive.css?v=<?php echo time(); ?>" rel="stylesheet">
 	<!-- SELECT MENU -->
 	<link href="<?php echo URL_CSS;?>breaking-news-ticker.css" rel="stylesheet">
 	<!-- SIDE MENU -->

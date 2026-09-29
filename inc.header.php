@@ -7,19 +7,63 @@
     <div class="bu-topbar-container">
       <div class="bu-topbar-left">
         <ul class="bu-topbar-links">
-          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Portal</a></li>
-          <li><a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank">Faculty Portal</a></li>
-          <li><a href="<?php echo href('alumni.php'); ?>">Alumni Portal</a></li>
-          <li><a href="<?php echo href('iqac.php'); ?>">IQAC</a></li>
-          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><span class="bu-blink">ERP Login</span></a></li>
-          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Verification</a></li>
-          <li><a href="<?php echo href('page.php','id=25'); ?>">NAD</a></li>
-          <li><a href="https://bhabha.accsofterp.com/OAP/AdminLogin.aspx" target="_blank">OAP Login</a></li>
-          <li><a href="https://webmail.bhabhauniversity.edu.in/" target="_blank">Web Mail</a></li>
-          <li><a href="<?php echo href('nirf.php'); ?>">NIRF</a></li>
-          <li><a href="<?php echo href("news.php")?>">News</a></li>
-          <li><a href="<?php echo href("placements.php")?>">T & P Cell</a></li>
-          <li><a href="<?php echo href("notice.php")?>">Notices</a></li>
+          
+          <!-- Info Corner Master Dropdown -->
+          <li class="bu-topbar-dropdown">
+            <a href="javascript:void(0);" class="bu-topbar-drop-toggle bu-info-corner-badge">
+              <i class="fa fa-th mr-1" style="color: #FFC107;"></i> Info Corner <i class="fa fa-angle-down ml-1"></i>
+            </a>
+            <div class="bu-topbar-drop-menu bu-info-corner-menu">
+              <!-- Mobile / Desktop Close Header -->
+              <div class="bu-info-menu-topbar">
+                <span class="bu-info-menu-title"><i class="fa fa-th text-warning mr-1"></i> Quick Portals &amp; Links</span>
+                <button type="button" class="bu-info-close-btn" id="buInfoCloseBtn" title="Close Panel">&times;</button>
+              </div>
+
+              <div class="bu-info-grid">
+                
+                <!-- Column 1: Logins & Portals -->
+                <div class="bu-info-col">
+                  <div class="bu-info-head"><i class="fa fa-graduation-cap"></i> Student &amp; Staff Logins</div>
+                  <a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-user-graduate text-warning"></i> Student ERP Login</a>
+                  <a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank"><i class="fa fa-chalkboard-teacher text-info"></i> Faculty Portal Login</a>
+                  <a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-id-card text-success"></i> ERP System Login</a>
+                  <a href="https://bhabha.accsofterp.com/OAP/AdminLogin.aspx" target="_blank"><i class="fa fa-shield text-danger"></i> OAP Admin Login</a>
+                  <a href="https://webmail.bhabhauniversity.edu.in/" target="_blank"><i class="fa fa-envelope text-primary"></i> Official Web Mail</a>
+                  <a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-check-circle text-warning"></i> Online Verification</a>
+                  <a href="<?php echo href('page.php','id=25'); ?>"><i class="fa fa-certificate text-danger"></i> NAD (DigiLocker)</a>
+                </div>
+
+                <!-- Column 2: University Links & Compliance -->
+                <div class="bu-info-col">
+                  <div class="bu-info-head"><i class="fa fa-university"></i> Quick University Services</div>
+                  <a href="<?php echo href('auditreport.php'); ?>"><i class="fa fa-file-pdf-o text-danger"></i> Mandatory Public Disclosure</a>
+                  <a href="<?php echo href('nirf.php'); ?>"><i class="fa fa-trophy text-warning"></i> NIRF Rankings &amp; Data</a>
+                  <a href="<?php echo href('iqac.php'); ?>"><i class="fa fa-check-square-o text-success"></i> IQAC Quality Assurance</a>
+                  <a href="<?php echo href('grievance.php'); ?>"><i class="fa fa-balance-scale text-primary"></i> Grievance Redressal Cell</a>
+                  <a href="<?php echo href('enquiry.php'); ?>"><i class="fa fa-phone-square text-warning"></i> Admission Enquiry</a>
+                  <a href="<?php echo href('placements.php'); ?>"><i class="fa fa-briefcase text-info"></i> T &amp; P Placement Cell</a>
+                  <a href="<?php echo href('news.php'); ?>"><i class="fa fa-newspaper-o text-primary"></i> Latest News Updates</a>
+                  <a href="<?php echo href('notice.php'); ?>"><i class="fa fa-bullhorn text-danger"></i> Official Notices</a>
+                  <a href="<?php echo href('alumni.php'); ?>"><i class="fa fa-users text-success"></i> Alumni Network Portal</a>
+                </div>
+
+              </div>
+            </div>
+          </li>
+
+          <!-- Main Visible Strip Links -->
+          <!-- 1 & 2: Visible everywhere (Mobile & Desktop) -->
+          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-user mr-1 text-warning"></i> Student Portal</a></li>
+          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><span class="bu-blink" style="color:#FFC107 !important; font-weight:800;">ERP Login</span></a></li>
+
+          <!-- 3-8: Desktop Only (Cleanly hidden on mobile to avoid any cutoff) -->
+          <li class="bu-hide-mobile"><a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank">Faculty Portal</a></li>
+          <li class="bu-hide-mobile"><a href="<?php echo href('enquiry.php'); ?>" style="color:#38BDF8 !important; font-weight:700;">Admission Enquiry</a></li>
+          <li class="bu-hide-mobile"><a href="<?php echo href('grievance.php'); ?>">Grievance</a></li>
+          <li class="bu-hide-mobile"><a href="<?php echo href('auditreport.php'); ?>">Public Disclosure</a></li>
+          <li class="bu-hide-mobile"><a href="<?php echo href('nirf.php'); ?>">NIRF</a></li>
+          <li class="bu-hide-mobile"><a href="<?php echo href('notice.php'); ?>">Notices</a></li>
         </ul>
       </div>
 
@@ -33,7 +77,6 @@
             <i class="fa fa-phone"></i> +91 755 4936800
           </a>
         <?php endif; ?>
-        <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-top-gold"><span class="bu-blink">Apply Now</span></a>
       </div>
     </div>
   </div>
@@ -347,6 +390,36 @@
         }
       });
     }
+
+    /* ---- Topbar Mobile Dropdown Toggle ---- */
+    document.addEventListener('click', function(e) {
+      var closeBtn = e.target.closest('#buInfoCloseBtn');
+      if (closeBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        document.querySelectorAll('.bu-topbar-dropdown.active').forEach(function(d) {
+          d.classList.remove('active');
+        });
+        return;
+      }
+      var toggle = e.target.closest('.bu-topbar-drop-toggle');
+      if (toggle) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = toggle.closest('.bu-topbar-dropdown');
+        var wasActive = parent.classList.contains('active');
+        document.querySelectorAll('.bu-topbar-dropdown.active').forEach(function(d) {
+          d.classList.remove('active');
+        });
+        if (!wasActive) {
+          parent.classList.add('active');
+        }
+      } else if (!e.target.closest('.bu-topbar-drop-menu')) {
+        document.querySelectorAll('.bu-topbar-dropdown.active').forEach(function(d) {
+          d.classList.remove('active');
+        });
+      }
+    });
 
     // Auto close menu on resize up
     var resizeTimer;

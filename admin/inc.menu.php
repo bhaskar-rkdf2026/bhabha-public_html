@@ -1,11 +1,19 @@
 <?php
 /**
  * inc.menu.php
- * Bhabha University Admin Sidebar - Modern Categorized Layout
+ * Bhabha University Admin Sidebar - Frontend 1-to-1 Section Reorganization
  */
 $currPage = basename($_SERVER['PHP_SELF']);
-function isMenuActive($page, $curr) {
-    return ($page === $curr) ? 'active' : '';
+$secParam = isset($_GET['section']) ? $_GET['section'] : '';
+
+function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
+    if (!empty($targetSec) && $targetSec === $sec && $curr === 'section_hub.php') {
+        return 'active';
+    }
+    if (is_array($pages) && in_array($curr, $pages)) {
+        return 'active';
+    }
+    return '';
 }
 ?>
 <div class="left side-menu">
@@ -13,229 +21,208 @@ function isMenuActive($page, $curr) {
     <div id="sidebar-menu">
       <ul class="metismenu" id="side-menu">
 
-        <!-- =================== CORE PLATFORM =================== -->
-        <li class="bu-menu-category"><span>Core Platform</span></li>
-        <li class="<?php echo isMenuActive('dashboard.php', $currPage); ?>">
-          <a href="dashboard.php" class="waves-effect <?php echo isMenuActive('dashboard.php', $currPage); ?>">
+        <!-- =================== DASHBOARD & OVERVIEW =================== -->
+        <li class="bu-menu-category"><span>Navigation & Hub</span></li>
+        <li class="<?php echo ($currPage === 'dashboard.php') ? 'active' : ''; ?>">
+          <a href="dashboard.php" class="waves-effect <?php echo ($currPage === 'dashboard.php') ? 'active' : ''; ?>">
             <i class="mdi mdi-view-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>
-        <li class="<?php echo isMenuActive('homepage_sections.php', $currPage); ?>">
-          <a href="homepage_sections.php" class="waves-effect <?php echo isMenuActive('homepage_sections.php', $currPage); ?>">
-            <i class="mdi mdi-home"></i> <span>Home Sections</span>
+        <li class="<?php echo ($currPage === 'section_hub.php' && empty($secParam)) ? 'active' : ''; ?>">
+          <a href="section_hub.php" class="waves-effect <?php echo ($currPage === 'section_hub.php' && empty($secParam)) ? 'active' : ''; ?>" style="color: #FFC107 !important; font-weight: 700;">
+            <i class="mdi mdi-apps" style="color: #FFC107 !important;"></i> <span>Page Hub (Directory)</span>
           </a>
         </li>
-        <li class="<?php echo isMenuActive('pages.php', $currPage); ?>">
-          <a href="pages.php" class="waves-effect <?php echo isMenuActive('pages.php', $currPage); ?>">
-            <i class="mdi mdi-file-document-box"></i> <span>Website Pages</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('research.php', $currPage); ?>">
-          <a href="research.php" class="waves-effect <?php echo isMenuActive('research.php', $currPage); ?>">
-            <i class="mdi mdi-flask"></i> <span>Research Portal</span>
+        <li class="<?php echo ($currPage === 'homepage_sections.php') ? 'active' : ''; ?>">
+          <a href="homepage_sections.php" class="waves-effect <?php echo ($currPage === 'homepage_sections.php') ? 'active' : ''; ?>">
+            <i class="mdi mdi-home-outline"></i> <span>Home Sections</span>
           </a>
         </li>
 
-        <!-- =================== DYNAMIC PILLARS =================== -->
-        <li class="bu-menu-category"><span>Dynamic Pillars</span></li>
-        <li class="<?php echo isMenuActive('university_overview.php', $currPage); ?>">
-          <a href="university_overview.php" class="waves-effect <?php echo isMenuActive('university_overview.php', $currPage); ?>">
-            <i class="mdi mdi-bank"></i> <span>University Overview</span>
+        <!-- =================== 1. ABOUT UNIVERSITY =================== -->
+        <li class="bu-menu-category"><span>Frontend Sections</span></li>
+        <?php 
+          $aboutPages = ['university_overview.php', 'leadership.php', 'infrastructure.php', 'approvals.php', 'advisory.php', 'awards.php', 'affiliate.php', 'reports_accreditation.php'];
+          $isAboutActive = isSubActive($aboutPages, $currPage, 'about', $secParam);
+        ?>
+        <li class="<?php echo $isAboutActive; ?>">
+          <a href="javascript:void(0);" class="waves-effect has-arrow <?php echo $isAboutActive; ?>">
+            <i class="mdi mdi-bank"></i> <span>About University</span>
           </a>
-        </li>
-        <li class="<?php echo isMenuActive('reports_accreditation.php', $currPage); ?>">
-          <a href="reports_accreditation.php" class="waves-effect <?php echo isMenuActive('reports_accreditation.php', $currPage); ?>">
-            <i class="mdi mdi-certificate"></i> <span>Reports &amp; Accreditations</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('policies.php', $currPage); ?>">
-          <a href="policies.php" class="waves-effect <?php echo isMenuActive('policies.php', $currPage); ?>">
-            <i class="mdi mdi-scale-balance"></i> <span>Legal &amp; Policies</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('student_publications.php', $currPage); ?>">
-          <a href="student_publications.php" class="waves-effect <?php echo isMenuActive('student_publications.php', $currPage); ?>">
-            <i class="mdi mdi-book-open-page-variant"></i> <span>Student &amp; Publications</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('blogs.php', $currPage); ?>">
-          <a href="blogs.php" class="waves-effect <?php echo isMenuActive('blogs.php', $currPage); ?>">
-            <i class="mdi mdi-newspaper"></i> <span>Blogs &amp; Articles</span>
-          </a>
+          <ul class="submenu">
+            <li><a href="section_hub.php?section=about" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ About Section Hub</a></li>
+            <li><a href="university_overview.php"><i class="mdi mdi-circle-outline"></i> University Overview</a></li>
+            <li><a href="leadership.php"><i class="mdi mdi-circle-outline"></i> Leadership & Admin</a></li>
+            <li><a href="infrastructure.php"><i class="mdi mdi-circle-outline"></i> Campus Infrastructure</a></li>
+            <li><a href="approvals.php"><i class="mdi mdi-circle-outline"></i> Approvals & Recognitions</a></li>
+            <li><a href="advisory.php"><i class="mdi mdi-circle-outline"></i> Cells & Committees</a></li>
+            <li><a href="awards.php"><i class="mdi mdi-circle-outline"></i> Awards & Achievements</a></li>
+            <li><a href="affiliate.php"><i class="mdi mdi-circle-outline"></i> Affiliations</a></li>
+            <li><a href="reports_accreditation.php"><i class="mdi mdi-circle-outline"></i> Reports & Accreditations</a></li>
+          </ul>
         </li>
 
-        <!-- =================== ADMISSIONS & LEADS =================== -->
-        <li class="bu-menu-category"><span>Admissions &amp; Leads</span></li>
-        <li class="<?php echo isMenuActive('admission.php', $currPage); ?>">
-          <a href="admission.php" class="waves-effect <?php echo isMenuActive('admission.php', $currPage); ?>">
-            <i class="mdi mdi-account-plus"></i> <span>Online Applications</span>
+        <!-- =================== 2. SCHOOLS & INSTITUTES =================== -->
+        <?php 
+          $schoolsPages = ['institute.php', 'department.php', 'sub_department.php', 'course.php', 'branch.php'];
+          $isSchoolsActive = isSubActive($schoolsPages, $currPage, 'schools', $secParam);
+        ?>
+        <li class="<?php echo $isSchoolsActive; ?>">
+          <a href="javascript:void(0);" class="waves-effect has-arrow <?php echo $isSchoolsActive; ?>">
+            <i class="mdi mdi-school"></i> <span>Schools & Institutes</span>
           </a>
-        </li>
-        <li class="<?php echo isMenuActive('enquiry.php', $currPage); ?>">
-          <a href="enquiry.php" class="waves-effect <?php echo isMenuActive('enquiry.php', $currPage); ?>">
-            <i class="mdi mdi-help-circle-outline"></i> <span>Course Enquiries</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('inquiry.php', $currPage); ?>">
-          <a href="inquiry.php" class="waves-effect <?php echo isMenuActive('inquiry.php', $currPage); ?>">
-            <i class="mdi mdi-message-text-outline"></i> <span>Contact Inquiries</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('alumni.php', $currPage); ?>">
-          <a href="alumni.php" class="waves-effect <?php echo isMenuActive('alumni.php', $currPage); ?>">
-            <i class="mdi mdi-account-multiple-outline"></i> <span>Alumni Registrations</span>
-          </a>
+          <ul class="submenu">
+            <li><a href="section_hub.php?section=schools" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Schools Hub</a></li>
+            <li><a href="institute.php"><i class="mdi mdi-circle-outline"></i> Faculties & Institutes</a></li>
+            <li><a href="department.php"><i class="mdi mdi-circle-outline"></i> Departments</a></li>
+            <li><a href="sub_department.php"><i class="mdi mdi-circle-outline"></i> Sub Departments</a></li>
+            <li><a href="course.php"><i class="mdi mdi-circle-outline"></i> Courses & Intake</a></li>
+            <li><a href="branch.php"><i class="mdi mdi-circle-outline"></i> Branches & Specializations</a></li>
+          </ul>
         </li>
 
-        <!-- =================== ACADEMICS & FACULTIES =================== -->
-        <li class="bu-menu-category"><span>Academics &amp; Faculties</span></li>
-        <li class="<?php echo isMenuActive('academic.php', $currPage); ?>">
-          <a href="academic.php" class="waves-effect <?php echo isMenuActive('academic.php', $currPage); ?>">
-            <i class="mdi mdi-calendar-clock"></i> <span>Academic Calendar</span>
+        <!-- =================== 3. ACADEMICS & EXAMS =================== -->
+        <?php 
+          $acadPages = ['academic.php', 'syllabus.php', 'timetable.php'];
+          $isAcadActive = isSubActive($acadPages, $currPage, 'academics', $secParam);
+        ?>
+        <li class="<?php echo $isAcadActive; ?>">
+          <a href="javascript:void(0);" class="waves-effect has-arrow <?php echo $isAcadActive; ?>">
+            <i class="mdi mdi-book-open-page-variant"></i> <span>Academics & Exams</span>
           </a>
-        </li>
-        <li class="<?php echo isMenuActive('institute.php', $currPage); ?>">
-          <a href="institute.php" class="waves-effect <?php echo isMenuActive('institute.php', $currPage); ?>">
-            <i class="mdi mdi-city"></i> <span>Institutes</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('department.php', $currPage); ?>">
-          <a href="department.php" class="waves-effect <?php echo isMenuActive('department.php', $currPage); ?>">
-            <i class="mdi mdi-school"></i> <span>Departments</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('sub_department.php', $currPage); ?>">
-          <a href="sub_department.php" class="waves-effect <?php echo isMenuActive('sub_department.php', $currPage); ?>">
-            <i class="mdi mdi-domain"></i> <span>Sub Departments</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('course.php', $currPage); ?>">
-          <a href="course.php" class="waves-effect <?php echo isMenuActive('course.php', $currPage); ?>">
-            <i class="mdi mdi-book-multiple"></i> <span>Courses &amp; Intake</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('branch.php', $currPage); ?>">
-          <a href="branch.php" class="waves-effect <?php echo isMenuActive('branch.php', $currPage); ?>">
-            <i class="mdi mdi-source-branch"></i> <span>Branches</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('fees.php', $currPage); ?>">
-          <a href="fees.php" class="waves-effect <?php echo isMenuActive('fees.php', $currPage); ?>">
-            <i class="mdi mdi-currency-inr"></i> <span>Fee Structure</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('syllabus.php', $currPage); ?>">
-          <a href="syllabus.php" class="waves-effect <?php echo isMenuActive('syllabus.php', $currPage); ?>">
-            <i class="mdi mdi-file-tree"></i> <span>Scheme &amp; Syllabus</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('timetable.php', $currPage); ?>">
-          <a href="timetable.php" class="waves-effect <?php echo isMenuActive('timetable.php', $currPage); ?>">
-            <i class="mdi mdi-calendar-text"></i> <span>Exam Time Table</span>
-          </a>
+          <ul class="submenu">
+            <li><a href="section_hub.php?section=academics" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Academics Hub</a></li>
+            <li><a href="academic.php"><i class="mdi mdi-circle-outline"></i> Academic Calendar</a></li>
+            <li><a href="syllabus.php"><i class="mdi mdi-circle-outline"></i> Scheme & Syllabus</a></li>
+            <li><a href="timetable.php"><i class="mdi mdi-circle-outline"></i> Exam Time Table</a></li>
+            <li><a href="pages.php?action=edit&id=16"><i class="mdi mdi-circle-outline"></i> Online Exam Guidelines</a></li>
+            <li><a href="pages.php?action=edit&id=9"><i class="mdi mdi-circle-outline"></i> MOUs & Collaborations</a></li>
+            <li><a href="pages.php?action=edit&id=8"><i class="mdi mdi-circle-outline"></i> Video Resources</a></li>
+          </ul>
         </li>
 
-        <!-- =================== CAMPUS & GOVERNANCE =================== -->
-        <li class="bu-menu-category"><span>Campus &amp; Governance</span></li>
-        <li class="<?php echo isMenuActive('infrastructure.php', $currPage); ?>">
-          <a href="infrastructure.php" class="waves-effect <?php echo isMenuActive('infrastructure.php', $currPage); ?>">
-            <i class="mdi mdi-image-area"></i> <span>Infrastructure</span>
+        <!-- =================== 4. ADMISSIONS & LEADS =================== -->
+        <?php 
+          $admPages = ['admission.php', 'enquiry.php', 'fees.php', 'inquiry.php'];
+          $isAdmActive = isSubActive($admPages, $currPage, 'admissions', $secParam);
+        ?>
+        <li class="<?php echo $isAdmActive; ?>">
+          <a href="javascript:void(0);" class="waves-effect has-arrow <?php echo $isAdmActive; ?>">
+            <i class="mdi mdi-account-plus"></i> <span>Admissions & Leads</span>
           </a>
-        </li>
-        <li class="<?php echo isMenuActive('leadership.php', $currPage); ?>">
-          <a href="leadership.php" class="waves-effect <?php echo isMenuActive('leadership.php', $currPage); ?>">
-            <i class="mdi mdi-account-star"></i> <span>Leadership</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('approvals.php', $currPage); ?>">
-          <a href="approvals.php" class="waves-effect <?php echo isMenuActive('approvals.php', $currPage); ?>">
-            <i class="mdi mdi-check-circle-outline"></i> <span>Approvals &amp; UGC</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('advisory.php', $currPage); ?>">
-          <a href="advisory.php" class="waves-effect <?php echo isMenuActive('advisory.php', $currPage); ?>">
-            <i class="mdi mdi-account-check"></i> <span>Cells &amp; Committees</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('awards.php', $currPage); ?>">
-          <a href="awards.php" class="waves-effect <?php echo isMenuActive('awards.php', $currPage); ?>">
-            <i class="mdi mdi-trophy-outline"></i> <span>Awards &amp; Achievements</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('affiliate.php', $currPage); ?>">
-          <a href="affiliate.php" class="waves-effect <?php echo isMenuActive('affiliate.php', $currPage); ?>">
-            <i class="mdi mdi-shield"></i> <span>Affiliations</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('grievance.php', $currPage); ?>">
-          <a href="grievance.php" class="waves-effect <?php echo isMenuActive('grievance.php', $currPage); ?>">
-            <i class="mdi mdi-comment-alert-outline"></i> <span>Grievance Cell</span>
-          </a>
+          <ul class="submenu">
+            <li><a href="section_hub.php?section=admissions" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Admissions Hub</a></li>
+            <li><a href="admission.php"><i class="mdi mdi-circle-outline"></i> Online Applications</a></li>
+            <li><a href="enquiry.php"><i class="mdi mdi-circle-outline"></i> Course Enquiries</a></li>
+            <li><a href="fees.php"><i class="mdi mdi-circle-outline"></i> Fee Structure</a></li>
+            <li><a href="pages.php?action=edit&id=1"><i class="mdi mdi-circle-outline"></i> Bank Account Details</a></li>
+            <li><a href="pages.php?action=edit&id=24"><i class="mdi mdi-circle-outline"></i> Helpline Numbers</a></li>
+            <li><a href="pages.php?action=edit&id=2"><i class="mdi mdi-circle-outline"></i> Online Fee Payment</a></li>
+            <li><a href="inquiry.php"><i class="mdi mdi-circle-outline"></i> Contact Inquiries</a></li>
+          </ul>
         </li>
 
-        <!-- =================== MEDIA & ENGAGEMENT =================== -->
-        <li class="bu-menu-category"><span>Media &amp; Engagement</span></li>
-        <li class="<?php echo isMenuActive('announcements.php', $currPage); ?>">
-          <a href="announcements.php" class="waves-effect <?php echo isMenuActive('announcements.php', $currPage); ?>">
-            <i class="mdi mdi-bell-ring-outline"></i> <span>Announcements</span>
+        <!-- =================== 5. RESEARCH & INNOVATION =================== -->
+        <?php 
+          $resPages = ['research.php', 'blogs.php'];
+          $isResActive = isSubActive($resPages, $currPage, 'research', $secParam);
+        ?>
+        <li class="<?php echo $isResActive; ?>">
+          <a href="javascript:void(0);" class="waves-effect has-arrow <?php echo $isResActive; ?>">
+            <i class="mdi mdi-flask"></i> <span>Research & Labs</span>
+          </a>
+          <ul class="submenu">
+            <li><a href="section_hub.php?section=research" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Research Hub</a></li>
+            <li><a href="research.php"><i class="mdi mdi-circle-outline"></i> Research Portal & Labs</a></li>
+            <li><a href="pages.php?action=edit&id=3"><i class="mdi mdi-circle-outline"></i> Research at a Glance</a></li>
+            <li><a href="pages.php?action=edit&id=4"><i class="mdi mdi-circle-outline"></i> Funding Agencies</a></li>
+            <li><a href="pages.php?action=edit&id=5"><i class="mdi mdi-circle-outline"></i> Publications</a></li>
+            <li><a href="pages.php?action=edit&id=15"><i class="mdi mdi-circle-outline"></i> Journals</a></li>
+            <li><a href="pages.php?action=edit&id=14"><i class="mdi mdi-circle-outline"></i> PhD Scholars List</a></li>
+            <li><a href="pages.php?action=edit&id=10"><i class="mdi mdi-circle-outline"></i> Conferences & Seminars</a></li>
+            <li><a href="pages.php?action=edit&id=11"><i class="mdi mdi-circle-outline"></i> Industrial Visits</a></li>
+            <li><a href="blogs.php"><i class="mdi mdi-circle-outline"></i> Research & Tech Blogs</a></li>
+          </ul>
+        </li>
+
+        <!-- =================== 6. PLACEMENTS & CAREERS =================== -->
+        <?php 
+          $placePages = ['recruiters.php', 'testimonial.php', 'jobs.php'];
+          $isPlaceActive = isSubActive($placePages, $currPage, 'placements', $secParam);
+        ?>
+        <li class="<?php echo $isPlaceActive; ?>">
+          <a href="javascript:void(0);" class="waves-effect has-arrow <?php echo $isPlaceActive; ?>">
+            <i class="mdi mdi-briefcase-check"></i> <span>Placements & Careers</span>
+          </a>
+          <ul class="submenu">
+            <li><a href="section_hub.php?section=placements" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Placements Hub</a></li>
+            <li><a href="recruiters.php"><i class="mdi mdi-circle-outline"></i> Placement Recruiters</a></li>
+            <li><a href="testimonial.php"><i class="mdi mdi-circle-outline"></i> Student Testimonials</a></li>
+            <li><a href="jobs.php"><i class="mdi mdi-circle-outline"></i> Career & Job Openings</a></li>
+          </ul>
+        </li>
+
+        <!-- =================== 7. NEWS, MEDIA & EVENTS =================== -->
+        <?php 
+          $newsPages = ['news.php', 'notice.php', 'announcements.php', 'events.php', 'media.php', 'gallery.php'];
+          $isNewsActive = isSubActive($newsPages, $currPage, 'news', $secParam);
+        ?>
+        <li class="<?php echo $isNewsActive; ?>">
+          <a href="javascript:void(0);" class="waves-effect has-arrow <?php echo $isNewsActive; ?>">
+            <i class="mdi mdi-bullhorn"></i> <span>News & Media</span>
+          </a>
+          <ul class="submenu">
+            <li><a href="section_hub.php?section=news" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ News & Media Hub</a></li>
+            <li><a href="news.php"><i class="mdi mdi-circle-outline"></i> News Updates</a></li>
+            <li><a href="notice.php"><i class="mdi mdi-circle-outline"></i> Official Notices</a></li>
+            <li><a href="announcements.php"><i class="mdi mdi-circle-outline"></i> Ticker Announcements</a></li>
+            <li><a href="events.php"><i class="mdi mdi-circle-outline"></i> Events & Fests</a></li>
+            <li><a href="media.php"><i class="mdi mdi-circle-outline"></i> Media Coverage</a></li>
+            <li><a href="gallery.php"><i class="mdi mdi-circle-outline"></i> Photo Gallery</a></li>
+          </ul>
+        </li>
+
+        <!-- =================== 8. STUDENT CORNER & GOVERNANCE =================== -->
+        <?php 
+          $studentPages = ['grievance.php', 'alumni.php', 'policies.php', 'student_publications.php'];
+          $isStudentActive = isSubActive($studentPages, $currPage, 'student', $secParam);
+        ?>
+        <li class="<?php echo $isStudentActive; ?>">
+          <a href="javascript:void(0);" class="waves-effect has-arrow <?php echo $isStudentActive; ?>">
+            <i class="mdi mdi-account-group"></i> <span>Student Corner</span>
+          </a>
+          <ul class="submenu">
+            <li><a href="section_hub.php?section=student" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Student Corner Hub</a></li>
+            <li><a href="grievance.php"><i class="mdi mdi-circle-outline"></i> Grievance Redressal</a></li>
+            <li><a href="alumni.php"><i class="mdi mdi-circle-outline"></i> Alumni Registrations</a></li>
+            <li><a href="policies.php"><i class="mdi mdi-circle-outline"></i> Legal & Policies</a></li>
+            <li><a href="student_publications.php"><i class="mdi mdi-circle-outline"></i> Student Publications</a></li>
+            <li><a href="pages.php?action=edit&id=25"><i class="mdi mdi-circle-outline"></i> NAD Depository</a></li>
+            <li><a href="pages.php?action=edit&id=22"><i class="mdi mdi-circle-outline"></i> Solar Plant & Green</a></li>
+            <li><a href="pages.php?action=edit&id=23"><i class="mdi mdi-circle-outline"></i> Campus Radio</a></li>
+          </ul>
+        </li>
+
+        <!-- =================== 9. SYSTEM & SEO SETTINGS =================== -->
+        <li class="bu-menu-category"><span>System & Settings</span></li>
+        <li class="<?php echo ($currPage === 'pages.php') ? 'active' : ''; ?>">
+          <a href="pages.php" class="waves-effect <?php echo ($currPage === 'pages.php') ? 'active' : ''; ?>">
+            <i class="mdi mdi-file-document-box-multiple"></i> <span>All Website Pages</span>
           </a>
         </li>
-        <li class="<?php echo isMenuActive('news.php', $currPage); ?>">
-          <a href="news.php" class="waves-effect <?php echo isMenuActive('news.php', $currPage); ?>">
-            <i class="mdi mdi-bullhorn"></i> <span>News Updates</span>
+        <li class="<?php echo ($currPage === 'seo.php') ? 'active' : ''; ?>">
+          <a href="seo.php" class="waves-effect <?php echo ($currPage === 'seo.php') ? 'active' : ''; ?>">
+            <i class="mdi mdi-google" style="color: #FFC107 !important;"></i> <span>SEO & Meta Manager</span>
           </a>
         </li>
-        <li class="<?php echo isMenuActive('events.php', $currPage); ?>">
-          <a href="events.php" class="waves-effect <?php echo isMenuActive('events.php', $currPage); ?>">
-            <i class="mdi mdi-calendar-check"></i> <span>Events &amp; Fests</span>
+        <li class="<?php echo ($currPage === 'settings.php') ? 'active' : ''; ?>">
+          <a href="settings.php" class="waves-effect <?php echo ($currPage === 'settings.php') ? 'active' : ''; ?>">
+            <i class="mdi mdi-tune"></i> <span>General Settings</span>
           </a>
         </li>
-        <li class="<?php echo isMenuActive('notice.php', $currPage); ?>">
-          <a href="notice.php" class="waves-effect <?php echo isMenuActive('notice.php', $currPage); ?>">
-            <i class="mdi mdi-clipboard-text"></i> <span>Notices &amp; Circulars</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('media.php', $currPage); ?>">
-          <a href="media.php" class="waves-effect <?php echo isMenuActive('media.php', $currPage); ?>">
-            <i class="mdi mdi-camera"></i> <span>Media Coverage</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('gallery.php', $currPage); ?>">
-          <a href="gallery.php" class="waves-effect <?php echo isMenuActive('gallery.php', $currPage); ?>">
-            <i class="mdi mdi-image-multiple"></i> <span>Photo Gallery</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('testimonial.php', $currPage); ?>">
-          <a href="testimonial.php" class="waves-effect <?php echo isMenuActive('testimonial.php', $currPage); ?>">
-            <i class="mdi mdi-comment-text-outline"></i> <span>Testimonials</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('recruiters.php', $currPage); ?>">
-          <a href="recruiters.php" class="waves-effect <?php echo isMenuActive('recruiters.php', $currPage); ?>">
-            <i class="mdi mdi-briefcase-check"></i> <span>Placement Recruiters</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('jobs.php', $currPage); ?>">
-          <a href="jobs.php" class="waves-effect <?php echo isMenuActive('jobs.php', $currPage); ?>">
-            <i class="mdi mdi-briefcase"></i> <span>Job Openings</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('links.php', $currPage); ?>">
-          <a href="links.php" class="waves-effect <?php echo isMenuActive('links.php', $currPage); ?>">
+        <li class="<?php echo ($currPage === 'links.php') ? 'active' : ''; ?>">
+          <a href="links.php" class="waves-effect <?php echo ($currPage === 'links.php') ? 'active' : ''; ?>">
             <i class="mdi mdi-link-variant"></i> <span>Quick Links</span>
-          </a>
-        </li>
-
-        <!-- =================== SYSTEM =================== -->
-        <li class="bu-menu-category"><span>System &amp; Settings</span></li>
-        <li class="<?php echo isMenuActive('seo.php', $currPage); ?>">
-          <a href="seo.php" class="waves-effect <?php echo isMenuActive('seo.php', $currPage); ?>">
-            <i class="mdi mdi-chart-areaspline" style="color: #FFC107 !important;"></i> <span>SEO &amp; Meta Manager</span>
-          </a>
-        </li>
-        <li class="<?php echo isMenuActive('settings.php', $currPage); ?>">
-          <a href="settings.php" class="waves-effect <?php echo isMenuActive('settings.php', $currPage); ?>">
-            <i class="mdi mdi-settings"></i> <span>General Settings</span>
           </a>
         </li>
         <li>

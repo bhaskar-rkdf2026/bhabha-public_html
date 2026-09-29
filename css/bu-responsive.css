@@ -40,7 +40,67 @@ table { max-width: 100% !important; }
   .bu-topbar-links li a { padding: 0 5px !important; font-size: 9.5px !important; }
 }
 @media (max-width: 991px) {
-  .bu-topbar { display: none !important; }
+  .bu-topbar { 
+    display: block !important; 
+    background: #071338 !important;
+    padding: 5px 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+  .bu-topbar-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 10px !important;
+    gap: 8px !important;
+  }
+  .bu-topbar-left {
+    display: flex !important;
+    align-items: center !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .bu-topbar-left::-webkit-scrollbar { display: none !important; }
+  .bu-topbar-links {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .bu-topbar-links li {
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .bu-topbar-links li a {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    padding: 2px 7px !important;
+    letter-spacing: 0.3px !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: inline-block !important;
+    white-space: nowrap !important;
+  }
+  .bu-topbar-links li:last-child a { border-right: none !important; }
+  .bu-topbar-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+  .bu-topbar-phone { display: none !important; }
+  .bu-btn-top-gold {
+    font-size: 9.5px !important;
+    font-weight: 800 !important;
+    padding: 3px 9px !important;
+    border-radius: 3px !important;
+    white-space: nowrap !important;
+  }
   .bu-header-wrapper { position: -webkit-sticky !important; position: sticky !important; top: 0 !important; z-index: 99999 !important; }
 }
 

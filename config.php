@@ -56,12 +56,13 @@ if (!function_exists('bu_filter_live_assets')) {
     function bu_filter_live_assets($buffer) {
         if (defined('URL_ROOT')) {
             if (strpos(URL_ROOT, 'localhost') !== false || strpos(URL_ROOT, '127.0.0.1') !== false) {
-                // On Localhost: Convert live bhabha URLs to localhost URLs
-                $buffer = preg_replace('/https?:\/\/(?:www\.)?bhabhauniversity\.edu\.in\/(upload|images|css|js|extra-images)\//i', URL_ROOT . '$1/', $buffer);
+                // Local environment
             } else {
                 // On Live Server: Convert any hardcoded localhost/127.0.0.1 URLs from DB/CKEditor to live URL_ROOT
-                $buffer = preg_replace('#https?://(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/(upload|images|css|js|extra-images|media)/#i', URL_ROOT . '$1/', $buffer);
                 $buffer = preg_replace('#https?://(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', URL_ROOT, $buffer);
+                $buffer = preg_replace('#//(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', URL_ROOT, $buffer);
+                $buffer = preg_replace('#(?<=["\'=\s])(?:https?:)?//(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', URL_ROOT, $buffer);
+                $buffer = preg_replace('#(?<=["\'=\s])localhost(?::\d+)?/bhabha-public_html/#i', URL_ROOT, $buffer);
             }
         }
         return $buffer;
