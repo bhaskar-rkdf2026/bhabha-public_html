@@ -1,7 +1,30 @@
 <?php include_once("config.php");
-$stat=array();
-$validate=new Validation();
-if(isset($_POST['login']))
+$stat = array();
+$validate = new Validation();
+
+// 1. Brute-Force Defense & Rate-Limiting
+if (!isset($_SESSION['admin_login_attempts'])) {
+    $_SESSION['admin_login_attempts'] = 0;
+    $_SESSION['admin_last_attempt_time'] = time();
+}
+
+$lockoutDuration = 15 * 60; // 15 minutes lockout
+$maxAttempts = 5;
+$isLockedOut = false;
+
+if ($_SESSION['admin_login_attempts'] >= $maxAttempts) {
+    $timePassed = time() - $_SESSION['admin_last_attempt_time'];
+    if ($timePassed < $lockoutDuration) {
+        $isLockedOut = true;
+        $minutesLeft = ceil(($lockoutDuration - $timePassed) / 60);
+        $stat['error'] = "Too many failed login attempts. Security lockout active. Please wait $minutesLeft minute(s) before trying again.";
+    } else {
+        // Reset after lockout expiry
+        $_SESSION['admin_login_attempts'] = 0;
+    }
+}
+
+if (isset($_POST['login']) && !$isLockedOut)
 {
 	$validate->addRule($_POST['admin_uname'],'','Username',true);
 	$validate->addRule($_POST['admin_pswd'],'','Password',true);
@@ -17,18 +40,29 @@ if(isset($_POST['login']))
 			$aryAdminPwd = $db->get('settings');
 			if(is_array($aryAdminPwd) && count($aryAdminPwd)>0)
 			{
+				// Success: Reset failed attempts & regenerate session ID to prevent fixation
+				$_SESSION['admin_login_attempts'] = 0;
+				if (session_status() === PHP_SESSION_ACTIVE) {
+					session_regenerate_id(true);
+				}
 				$_SESSION[LOGIN_ADMIN]['userName'] = $_POST['admin_uname'];
 				redirect(URL_ADMIN."dashboard.php");
 			}
 			else
 			{
-				$stat['error']='Invalid Password';
+				$_SESSION['admin_login_attempts']++;
+				$_SESSION['admin_last_attempt_time'] = time();
+				$remainingAttempts = max(0, $maxAttempts - $_SESSION['admin_login_attempts']);
+				$stat['error'] = 'Invalid Password.' . ($remainingAttempts > 0 ? " ($remainingAttempts attempts remaining before lockout)" : " Account locked for 15 minutes.");
 			}
 			
 		}
 		else
 		{
-			$stat['error']='Invalid Username';
+			$_SESSION['admin_login_attempts']++;
+			$_SESSION['admin_last_attempt_time'] = time();
+			$remainingAttempts = max(0, $maxAttempts - $_SESSION['admin_login_attempts']);
+			$stat['error'] = 'Invalid Username.' . ($remainingAttempts > 0 ? " ($remainingAttempts attempts remaining before lockout)" : " Account locked for 15 minutes.");
 		}
 	}
 	if(count($stat) == 0)
@@ -36,7 +70,6 @@ if(isset($_POST['login']))
 		$stat["error"]=$validate->errors();
 	}
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

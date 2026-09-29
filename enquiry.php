@@ -8,60 +8,76 @@ if(isset($_SESSION['success']) && $_SESSION['success']!="")
 }
 if(isset($_POST['submit']))
 {
-if(isset($_FILES['tenth']['name']) && $_FILES['tenth']['name'] != '')
-{
-	$filename = basename($_FILES['tenth']['name']);
-	$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-	if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-	{
-	$stat["error"] = "Only JPG, PNG, PDF & DOCX Files are allowed.";
+	// Honeypot spam protection
+	if(!empty($_POST['enquiry_hp_check'])) {
+		$_SESSION["success"] = 'Thank you for your enquiry. We will contact you soon.';
+		redirect(href("enquiry.php"));
+		exit;
 	}
-}
-if(isset($_FILES['twelfth']['name']) && $_FILES['twelfth']['name'] != '')
-{
-	$filename = basename($_FILES['twelfth']['name']);
-	$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-	if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
+
+	$allowed_exts = array('jpeg','jpg','png','pdf','docx');
+
+	if(isset($_FILES['tenth']['name']) && $_FILES['tenth']['name'] != '')
 	{
-	$stat["error"] = "Only JPG, PNG, PDF & DOCX Files are allowed.";
-	}
-}
-if(isset($_FILES['graduation']['name']) && $_FILES['graduation']['name'] != '')
-{
-	$filename = basename($_FILES['graduation']['name']);
-	$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-	if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-	{
-	$stat["error"] = "Only JPG, PNG, PDF & DOCX Files are allowed.";
-	}
-}
-if(isset($_FILES['pgraduation']['name']) && $_FILES['pgraduation']['name'] != '')
-{
-	$filename = basename($_FILES['pgraduation']['name']);
-	$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
-	if($ext != '' && !in_array($ext,array('jpeg','jpg','png','pdf','docx')))
-	{
-	$stat["error"] = "Only JPG, PNG, PDF & DOCX Files are allowed.";
-	}
-}
-if(empty($stat['error'])) {
-	$data = Array(
-			"name" => $_POST['name'],
-			"mobile" => $_POST['mobile'],
-			"email" => $_POST['email'],
-			"course" => $_POST['course'],
-			"branch" => isset($_POST['branch']) ? $_POST['branch'] : '',
-			"place" => $_POST['place']
-			 );
-	if(isset($_FILES['tenth']) && !empty($_FILES['tenth']['name']))
-	{
-		$file_ext = strtolower(pathinfo($_FILES['tenth']['name'], PATHINFO_EXTENSION));
-		$newfile=md5(microtime()).".".$file_ext;
-		if(move_uploaded_file($_FILES['tenth']['tmp_name'], UPLOAD.$newfile))
+		$filename = basename($_FILES['tenth']['name']);
+		$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+		if(!in_array($ext, $allowed_exts) || preg_match('/\.(php|phtml|phar|exe|sh|pl|py|cgi)$/i', $filename))
 		{
-			$data['tenth'] = $newfile;
+			$stat["error"] = "Only JPG, PNG, PDF & DOCX Files are allowed.";
 		}
 	}
+	if(isset($_FILES['twelfth']['name']) && $_FILES['twelfth']['name'] != '')
+	{
+		$filename = basename($_FILES['twelfth']['name']);
+		$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+		if(!in_array($ext, $allowed_exts) || preg_match('/\.(php|phtml|phar|exe|sh|pl|py|cgi)$/i', $filename))
+		{
+			$stat["error"] = "Only JPG, PNG, PDF & DOCX Files are allowed.";
+		}
+	}
+	if(isset($_FILES['graduation']['name']) && $_FILES['graduation']['name'] != '')
+	{
+		$filename = basename($_FILES['graduation']['name']);
+		$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+		if(!in_array($ext, $allowed_exts) || preg_match('/\.(php|phtml|phar|exe|sh|pl|py|cgi)$/i', $filename))
+		{
+			$stat["error"] = "Only JPG, PNG, PDF & DOCX Files are allowed.";
+		}
+	}
+	if(isset($_FILES['pgraduation']['name']) && $_FILES['pgraduation']['name'] != '')
+	{
+		$filename = basename($_FILES['pgraduation']['name']);
+		$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+		if(!in_array($ext, $allowed_exts) || preg_match('/\.(php|phtml|phar|exe|sh|pl|py|cgi)$/i', $filename))
+		{
+			$stat["error"] = "Only JPG, PNG, PDF & DOCX Files are allowed.";
+		}
+	}
+	if(empty($stat['error'])) {
+		$name = strip_tags(trim($_POST['name'] ?? ''));
+		$mobile = preg_replace('/[^0-9+\s-]/', '', $_POST['mobile'] ?? '');
+		$email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+		$course_id = intval($_POST['course'] ?? 0);
+		$branch_id = intval($_POST['branch'] ?? 0);
+		$place = strip_tags(trim($_POST['place'] ?? ''));
+
+		$data = Array(
+				"name" => $name,
+				"mobile" => $mobile,
+				"email" => $email,
+				"course" => $course_id,
+				"branch" => $branch_id,
+				"place" => $place
+				 );
+		if(isset($_FILES['tenth']) && !empty($_FILES['tenth']['name']))
+		{
+			$file_ext = strtolower(pathinfo($_FILES['tenth']['name'], PATHINFO_EXTENSION));
+			$newfile = md5(microtime() . rand(1000, 9999)) . "." . $file_ext;
+			if(move_uploaded_file($_FILES['tenth']['tmp_name'], UPLOAD.$newfile))
+			{
+				$data['tenth'] = $newfile;
+			}
+		}
 	
 	if(isset($_FILES['twelfth']) && !empty($_FILES['twelfth']['name']))
 	{
@@ -333,6 +349,9 @@ if(empty($stat['error'])) {
         <?php echo msg($stat);?>
 
         <form action="" method="post" enctype="multipart/form-data" style="margin-top:20px;">
+          <div style="display:none;" aria-hidden="true">
+            <input type="text" name="enquiry_hp_check" tabindex="-1" autocomplete="off" value="">
+          </div>
           
           <!-- Personal Info -->
           <div class="bu-form-grid">

@@ -1,26 +1,42 @@
 <?php include_once("config.php");
 $stat=array();
-if($_SESSION['success']!="")
+if(!empty($_SESSION['success']))
 {
 	$stat['success']=$_SESSION['success'];
 	unset($_SESSION['success']);
 }
 if(isset($_POST['submit']))
 {
-	$data = Array(
-			"name" => $_POST['name'],
-			"course" => $_POST['course'],
-			"year" => $_POST['year'],
-			"enrollment" => $_POST['enrollment'],
-			"mobile" => $_POST['mobile'],
-			"email" => $_POST['email'],
-			"grievance" => $_POST['grievance']
-			 );
-		$id = $db->insert('grievance',$data);
-		unset($_POST);
-		unset($_SESSION['form']);
-		$_SESSION["success"] = 'Send Successfully';
+	// Honeypot spam check
+	if(!empty($_POST['grievance_hp_check'])) {
+		$_SESSION["success"] = 'Your grievance has been submitted successfully.';
 		redirect(href("grievance.php").'#validation');
+		exit;
+	}
+
+	$name = strip_tags(trim($_POST['name'] ?? ''));
+	$course = strip_tags(trim($_POST['course'] ?? ''));
+	$year = strip_tags(trim($_POST['year'] ?? ''));
+	$enrollment = strip_tags(trim($_POST['enrollment'] ?? ''));
+	$mobile = preg_replace('/[^0-9+\s-]/', '', $_POST['mobile'] ?? '');
+	$email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+	$grievance_text = strip_tags(trim($_POST['grievance'] ?? ''));
+
+	$data = Array(
+			"name" => $name,
+			"course" => $course,
+			"year" => $year,
+			"enrollment" => $enrollment,
+			"mobile" => $mobile,
+			"email" => $email,
+			"grievance" => $grievance_text
+			 );
+	$id = $db->insert('grievance',$data);
+	unset($_POST);
+	unset($_SESSION['form']);
+	$_SESSION["success"] = 'Your grievance has been submitted successfully.';
+	redirect(href("grievance.php").'#validation');
+	exit;
 }
 ?>
 <!DOCTYPE html>
@@ -68,10 +84,13 @@ if(isset($_POST['submit']))
   <div style="background:#fff; border:1px solid #E5E7EB; border-radius:12px; padding:40px; box-shadow:0 8px 24px rgba(6,29,124,0.04);">
     <h2 style="font-size:26px; font-weight:800; color:#061D7C; margin-bottom:30px; font-family:'Playfair Display', serif;">Submit your Grievance</h2>
     <form action="" method="post">
+      <div style="display:none;" aria-hidden="true">
+        <input type="text" name="grievance_hp_check" tabindex="-1" autocomplete="off" value="">
+      </div>
       <div class="bu-form-grid">
         <div class="bu-form-group">
           <label>Full Name</label>
-          <input type="text" name="name" class="bu-form-control" value="<?php echo $_POST['name'];?>" required>
+          <input type="text" name="name" class="bu-form-control" value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '';?>" required>
         </div>
         <div class="bu-form-group">
           <label>Course</label>
@@ -91,28 +110,28 @@ if(isset($_POST['submit']))
         </div>
         <div class="bu-form-group">
           <label>Year</label>
-          <input type="number" name="year" class="bu-form-control" value="<?php echo $_POST['year'];?>" required>
+          <input type="number" name="year" class="bu-form-control" value="<?php echo isset($_POST['year']) ? htmlspecialchars($_POST['year']) : '';?>" required>
         </div>
       </div>
       
       <div class="bu-form-grid">
         <div class="bu-form-group">
           <label>Enrollment Number</label>
-          <input type="text" name="enrollment" class="bu-form-control" value="<?php echo $_POST['enrollment'];?>" required>
+          <input type="text" name="enrollment" class="bu-form-control" value="<?php echo isset($_POST['enrollment']) ? htmlspecialchars($_POST['enrollment']) : '';?>" required>
         </div>
         <div class="bu-form-group">
           <label>Mobile No.</label>
-          <input type="tel" name="mobile" class="bu-form-control" value="<?php echo $_POST['mobile'];?>" required>
+          <input type="tel" name="mobile" class="bu-form-control" value="<?php echo isset($_POST['mobile']) ? htmlspecialchars($_POST['mobile']) : '';?>" required>
         </div>
         <div class="bu-form-group">
           <label>Email ID</label>
-          <input type="email" name="email" class="bu-form-control" value="<?php echo $_POST['email'];?>" required>
+          <input type="email" name="email" class="bu-form-control" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';?>" required>
         </div>
       </div>
       
       <div class="bu-form-group" style="margin-bottom:30px;">
         <label>Grievance Details</label>
-        <textarea name="grievance" class="bu-form-control" rows="5" required><?php echo $_POST['grievance'];?></textarea>
+        <textarea name="grievance" class="bu-form-control" rows="5" required><?php echo isset($_POST['grievance']) ? htmlspecialchars($_POST['grievance']) : '';?></textarea>
       </div>
       
       <button type="submit" name="submit" class="bu-btn-submit">Submit Grievance <i class="fa fa-paper-plane" style="margin-left:6px;"></i></button>

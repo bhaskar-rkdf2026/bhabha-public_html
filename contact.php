@@ -7,18 +7,32 @@ if(isset($_SESSION['success']) && $_SESSION['success']!="")
 }
 if(isset($_POST['submit']))
 {
-	$data = Array(
-			"name" => $_POST['name'],
-			"email" => $_POST['email'],
-			"mobile" => $_POST['mobile'],
-			"subject" => $_POST['subject'],
-			"message" => $_POST['message']
-			 );
+	// Anti-bot honeypot check
+	if(!empty($_POST['contact_hp_check'])) {
+		redirect(href("contact.php"));
+		exit;
+	}
+
+	$name = strip_tags(trim($_POST['name'] ?? ''));
+	$email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+	$mobile = preg_replace('/[^0-9+\s-]/', '', $_POST['mobile'] ?? '');
+	$subject = strip_tags(trim($_POST['subject'] ?? ''));
+	$message = strip_tags(trim($_POST['message'] ?? ''));
+
+	if(!empty($name) && (!empty($email) || !empty($mobile))) {
+		$data = Array(
+			"name" => $name,
+			"email" => $email,
+			"mobile" => $mobile,
+			"subject" => $subject,
+			"message" => $message
+		);
 		$id = $db->insert('inquiry',$data);
-		unset($_POST);
-		unset($_SESSION['form']);
-		$_SESSION["success"] = 'Your message has been sent successfully. Our admission team will contact you shortly.';
-		redirect(href("contact.php").'#validation');
+	}
+	unset($_POST);
+	unset($_SESSION['form']);
+	$_SESSION["success"] = 'Your message has been sent successfully. Our admission team will contact you shortly.';
+	redirect(href("contact.php").'#validation');
 }
 ?>
 <!DOCTYPE html>

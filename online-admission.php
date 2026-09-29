@@ -8,6 +8,13 @@ if(isset($_SESSION['success']) && $_SESSION['success']!="")
 }
 if(isset($_POST['submit']))
 {
+	// Honeypot anti-spam check
+	if(!empty($_POST['admission_hp_check'])) {
+		$_SESSION["success"] = 'Admission registration submitted successfully.';
+		redirect(href("online-admission.php").'#validation');
+		exit;
+	}
+
 	include('file.validation.php');
 	
 	$high_school = 'School : '.(isset($_POST['high-school'])?$_POST['high-school']:'').','.' Board : '.(isset($_POST['high-board'])?$_POST['high-board']:'').','.' Year of Passing : '.(isset($_POST['high-yop'])?$_POST['high-yop']:'').','.' Roll No. : '.(isset($_POST['high-roll-number'])?$_POST['high-roll-number']:'').','.' Total Marks : '.(isset($_POST['high-total-marks'])?$_POST['high-total-marks']:'').','.' Marks Obtained : '.(isset($_POST['high-marks-obtn'])?$_POST['high-marks-obtn']:'').','.' Percentage : '.(isset($_POST['high-persent'])?$_POST['high-persent']:'').','.' Division : '.(isset($_POST['high-division'])?$_POST['high-division']:'').','.' CGPA : '.(isset($_POST['high-cgpa'])?$_POST['high-cgpa']:'');
@@ -604,6 +611,9 @@ textarea.bu-fc { resize: vertical; min-height: 72px; }
         <?php endif; ?>
 
         <form action="" method="post" enctype="multipart/form-data">
+          <div style="display:none;" aria-hidden="true">
+            <input type="text" name="admission_hp_check" tabindex="-1" autocomplete="off" value="">
+          </div>
 
           <!-- ===== 1. PERSONAL INFORMATION ===== -->
           <div class="bu-adm-section"><i class="fa fa-user"></i> 1. Personal Information</div>

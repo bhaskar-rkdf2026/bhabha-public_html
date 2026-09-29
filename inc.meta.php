@@ -468,7 +468,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 }
 .bu-brand-name-2 {
   font-family: 'Playfair Display', Georgia, serif !important;
-  font-size: 13.6px !important;
+  font-size: 15.5px !important;
   font-weight: 800 !important;
   color: var(--bu-navy) !important;
   line-height: 1.15 !important;
