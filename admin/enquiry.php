@@ -39,6 +39,35 @@ if ($action == "delete" && !empty($_REQUEST['id'])) {
     redirect(PAGE);
 }
 
+// CSV Export Handler
+if ($action == "export_csv") {
+    $filename = "bhabha_course_enquiries_" . date('Y-m-d_His') . ".csv";
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename=' . $filename);
+    $output = fopen('php://output', 'w');
+    fputs($output, "\xEF\xBB\xBF");
+    fputcsv($output, ['ID', 'Student Name', 'Mobile Number', 'Email Address', 'Course', 'Branch', 'City / Place', 'Date']);
+
+    $db->orderBy('id', 'DESC');
+    $records = $db->get(DBTAB);
+    foreach ($records as $r) {
+        $cname = isset($course_map[$r['course']]) ? $course_map[$r['course']] : $r['course'];
+        $bname = isset($branch_map[$r['branch']]) ? $branch_map[$r['branch']] : $r['branch'];
+        fputcsv($output, [
+            $r['id'],
+            $r['name'],
+            $r['mobile'],
+            $r['email'],
+            $cname,
+            $bname,
+            $r['place'],
+            $r['date']
+        ]);
+    }
+    fclose($output);
+    exit;
+}
+
 // Pre-fetch all courses & branches in memory (Prevents N+1 Query bottleneck)
 $all_courses = $db->get('course', null, 'id, course');
 $course_map = [];
@@ -430,10 +459,13 @@ $totalEnquiries = $db->getValue(DBTAB, 'count(*)');
             <h4><i class="fa fa-graduation-cap text-warning"></i> <?php echo TITLE; ?> Management</h4>
             <p>Manage prospective student admissions, course inquiries, and attached qualifications.</p>
           </div>
-          <div>
+          <div class="d-flex align-items-center" style="gap:10px;">
             <span class="bu-stat-badge">
               <i class="fa fa-users"></i> Total Enquiries: <strong><?php echo $totalEnquiries; ?></strong>
             </span>
+            <a href="<?php echo PAGE; ?>?action=export_csv" class="btn btn-sm btn-success" style="font-weight:700; padding:7px 14px; border-radius:20px;">
+              <i class="fa fa-file-excel-o"></i> Export CSV
+            </a>
           </div>
         </div>
 

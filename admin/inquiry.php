@@ -26,6 +26,31 @@ if ($action == "delete" && !empty($_REQUEST['id'])) {
     redirect(PAGE);
 }
 
+// CSV Export Handler
+if ($action == "export_csv") {
+    $filename = "bhabha_contact_inquiries_" . date('Y-m-d_His') . ".csv";
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename=' . $filename);
+    $output = fopen('php://output', 'w');
+    fputs($output, "\xEF\xBB\xBF");
+    fputcsv($output, ['ID', 'Name', 'Email Address', 'Mobile Number', 'Subject', 'Message Details']);
+
+    $db->orderBy('id', 'DESC');
+    $records = $db->get(DBTAB);
+    foreach ($records as $r) {
+        fputcsv($output, [
+            $r['id'],
+            $r['name'],
+            $r['email'],
+            $r['mobile'],
+            $r['subject'],
+            $r['message']
+        ]);
+    }
+    fclose($output);
+    exit;
+}
+
 // Fetch total count and latest inquiries sorted by latest first for fast loading
 $totalInquiries = $db->getValue(DBTAB, 'count(*)');
 $db->orderBy('id', 'DESC');
@@ -410,10 +435,13 @@ $inquiryList = $db->get(DBTAB, 1000); // Load latest 1,000 records for instant l
             <h4><i class="fa fa-envelope-open text-warning"></i> <?php echo TITLE; ?> Management</h4>
             <p>View, manage, paginate, and respond to incoming contact requests &amp; student inquiries.</p>
           </div>
-          <div>
+          <div class="d-flex align-items-center" style="gap:10px;">
             <span class="bu-stat-badge">
               <i class="fa fa-comments-o"></i> Total Inquiries: <strong><?php echo $totalInquiries; ?></strong>
             </span>
+            <a href="<?php echo PAGE; ?>?action=export_csv" class="btn btn-sm btn-success" style="font-weight:700; padding:7px 14px; border-radius:20px;">
+              <i class="fa fa-file-excel-o"></i> Export CSV
+            </a>
           </div>
         </div>
 

@@ -26,6 +26,39 @@ if ($action == "delete" && !empty($_REQUEST['id'])) {
     redirect(PAGE);
 }
 
+// CSV Export Handler
+if ($action == "export_csv") {
+    $filename = "bhabha_alumni_registrations_" . date('Y-m-d_His') . ".csv";
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename=' . $filename);
+    $output = fopen('php://output', 'w');
+    fputs($output, "\xEF\xBB\xBF");
+    fputcsv($output, ['ID', 'Full Name', 'Enrollment No', 'Course', 'Branch', 'College', 'Passing Year', 'Mobile Number', 'Email Address', 'Occupation', 'Company', 'Job Title', 'City', 'Date']);
+
+    $db->orderBy('id', 'DESC');
+    $records = $db->get(DBTAB);
+    foreach ($records as $r) {
+        fputcsv($output, [
+            $r['id'],
+            $r['name'],
+            $r['enrollment_no'],
+            $r['course'],
+            $r['branch'],
+            $r['college'],
+            $r['passing_year'],
+            $r['mobile'],
+            $r['email'],
+            $r['occupation'],
+            $r['company'],
+            $r['job_title'],
+            $r['city'],
+            $r['date']
+        ]);
+    }
+    fclose($output);
+    exit;
+}
+
 // Fetch filter parameters
 $filter_name           = trim($_GET['filter_name'] ?? '');
 $filter_college        = trim($_GET['filter_college'] ?? '');
@@ -753,8 +786,13 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .
         
         <!-- Filter Card -->
         <div class="bu-filter-card">
-          <div class="bu-filter-title">
-            <i class="mdi mdi-filter-variant" style="color:var(--bu-gold);font-size:18px;"></i> Search &amp; Filter Alumni Network
+          <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap" style="gap:10px;">
+            <div class="bu-filter-title mb-0">
+              <i class="mdi mdi-filter-variant" style="color:var(--bu-gold);font-size:18px;"></i> Search &amp; Filter Alumni Network (Total: <?php echo number_format($totalAlumni); ?>)
+            </div>
+            <a href="<?php echo PAGE; ?>?action=export_csv" class="btn btn-sm btn-success" style="font-weight:700; border-radius:20px; padding:6px 16px;">
+              <i class="mdi mdi-file-excel"></i> Export All Alumni to CSV
+            </a>
           </div>
           <form method="get" action="alumni.php" class="row">
             <div class="form-group col-lg-3 col-md-6 mb-3">
