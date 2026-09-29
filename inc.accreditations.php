@@ -1,86 +1,58 @@
 <?php
-// Bhabha University – Statutory Approvals Component
-$accred_items = [
-    [
-        'img'  => 'ugc_new_logo.jpg',
-        'alt'  => 'UGC - University Grants Commission',
-        'name' => 'UGC',
-        'desc' => 'Section 2(f)'
-    ],
-    [
-        'img'  => 'AICT.png',
-        'alt'  => 'AICTE - All India Council for Technical Education',
-        'name' => 'AICTE',
-        'desc' => 'Approved'
-    ],
-    [
-        'img'  => 'PCI.png',
-        'alt'  => 'PCI - Pharmacy Council of India',
-        'name' => 'PCI',
-        'desc' => 'Approved'
-    ],
-    [
-        'img'  => 'bci.png',
-        'alt'  => 'BCI - Bar Council of India',
-        'name' => 'BCI',
-        'desc' => 'Approved'
-    ],
-    [
-        'img'  => 'dci.png',
-        'alt'  => 'DCI - Dental Council of India',
-        'name' => 'DCI',
-        'desc' => 'Approved'
-    ],
-    [
-        'img'  => 'nci.png',
-        'alt'  => 'NCTE - National Council for Teacher Education',
-        'name' => 'NCTE',
-        'desc' => 'Approved'
-    ],
-    [
-        'img'  => 'MPNRC.png',
-        'alt'  => 'MPNRC - Madhya Pradesh Nurses Registration Council',
-        'name' => 'MPNRC',
-        'desc' => 'Recognized'
-    ],
-    [
-        'img'  => 'mp_govt_logo.jpg',
-        'alt'  => 'Government of Madhya Pradesh',
-        'name' => 'MP Govt.',
-        'desc' => 'Recognized'
-    ],
-    [
-        'img'  => 'mppurc_logo.jpg',
-        'alt'  => 'MP Private University Regulatory Commission',
-        'name' => 'MPPURC',
-        'desc' => 'Approved'
-    ]
-];
+// Bhabha University – Statutory Approvals Component (Dynamic from Database)
+global $db;
+$db->where('section_key', 'accreditations');
+$accred_sec = $db->getOne('homepage_sections');
+
+if (!$accred_sec || $accred_sec['status'] != 1) {
+    return;
+}
+
+$accred_label = !empty($accred_sec['title']) ? $accred_sec['title'] : 'Statutory Approvals';
+$accred_heading = !empty($accred_sec['heading']) ? $accred_sec['heading'] : 'Recognised by <em>leading bodies.</em>';
+
+$accred_extra = !empty($accred_sec['extra_data']) ? json_decode($accred_sec['extra_data'], true) : [];
+$accred_items = $accred_extra['items'] ?? [];
+
+function bu_resolve_accred_img($img) {
+    if (empty($img)) return URL_IMG . 'ugc_new_logo.jpg';
+    if (strpos($img, 'http://') === 0 || strpos($img, 'https://') === 0) return $img;
+    if (strpos($img, 'images/') === 0 || strpos($img, 'upload/') === 0) return URL_ROOT . ltrim($img, '/');
+    return URL_IMG . ltrim($img, '/');
+}
 ?>
 <!-- =================== STATUTORY APPROVALS SECTION =================== -->
 <section class="bu-statutory-section" id="buStatutoryApprovalsSection">
   <div class="bu-statutory-container">
-    <span class="bu-accred-section-label">Statutory Approvals</span>
-    <h2 class="bu-stat-title">Recognised by <em>leading bodies.</em></h2>
+    <span class="bu-accred-section-label"><?php echo htmlspecialchars($accred_label); ?></span>
+    <h2 class="bu-stat-title"><?php echo $accred_heading; ?></h2>
     
     <!-- Continuous Auto-Sliding Marquee Container (Desktop & Mobile) -->
     <div class="bu-accred-slider-wrap">
       <div class="bu-accred-track">
         <!-- Set 1 -->
-        <?php foreach ($accred_items as $item): ?>
-          <a href="<?php echo function_exists('href') ? href('approvals.php') : 'approvals.php'; ?>" class="bu-accred-badge" title="<?php echo htmlspecialchars($item['alt']); ?>">
-            <img src="<?php echo URL_IMG . $item['img']; ?>" alt="<?php echo htmlspecialchars($item['alt']); ?>" class="bu-accred-logo" loading="lazy" decoding="async" onerror="this.style.display='none';">
-            <span class="bu-accred-badge-name"><?php echo htmlspecialchars($item['name']); ?></span>
-            <span class="bu-accred-badge-desc"><?php echo htmlspecialchars($item['desc']); ?></span>
+        <?php foreach ($accred_items as $item): 
+          $item_link = !empty($item['link']) ? (strpos($item['link'], 'http') === 0 ? $item['link'] : URL_ROOT . ltrim($item['link'], '/')) : href('approvals.php');
+          $item_img = bu_resolve_accred_img($item['img'] ?? '');
+          $item_alt = $item['alt'] ?? $item['name'];
+        ?>
+          <a href="<?php echo $item_link; ?>" class="bu-accred-badge" title="<?php echo htmlspecialchars($item_alt); ?>">
+            <img src="<?php echo $item_img; ?>" alt="<?php echo htmlspecialchars($item_alt); ?>" class="bu-accred-logo" loading="lazy" decoding="async" onerror="this.style.display='none';">
+            <span class="bu-accred-badge-name"><?php echo htmlspecialchars($item['name'] ?? ''); ?></span>
+            <span class="bu-accred-badge-desc"><?php echo htmlspecialchars($item['desc'] ?? ''); ?></span>
           </a>
         <?php endforeach; ?>
 
         <!-- Set 2 (Duplicate for Seamless Infinite Auto-Scroll on Desktop & Mobile) -->
-        <?php foreach ($accred_items as $item): ?>
-          <a href="<?php echo function_exists('href') ? href('approvals.php') : 'approvals.php'; ?>" class="bu-accred-badge bu-accred-duplicate" title="<?php echo htmlspecialchars($item['alt']); ?>" aria-hidden="true" tabindex="-1">
-            <img src="<?php echo URL_IMG . $item['img']; ?>" alt="<?php echo htmlspecialchars($item['alt']); ?>" class="bu-accred-logo" loading="lazy" decoding="async" onerror="this.style.display='none';">
-            <span class="bu-accred-badge-name"><?php echo htmlspecialchars($item['name']); ?></span>
-            <span class="bu-accred-badge-desc"><?php echo htmlspecialchars($item['desc']); ?></span>
+        <?php foreach ($accred_items as $item): 
+          $item_link = !empty($item['link']) ? (strpos($item['link'], 'http') === 0 ? $item['link'] : URL_ROOT . ltrim($item['link'], '/')) : href('approvals.php');
+          $item_img = bu_resolve_accred_img($item['img'] ?? '');
+          $item_alt = $item['alt'] ?? $item['name'];
+        ?>
+          <a href="<?php echo $item_link; ?>" class="bu-accred-badge bu-accred-duplicate" title="<?php echo htmlspecialchars($item_alt); ?>" aria-hidden="true" tabindex="-1">
+            <img src="<?php echo $item_img; ?>" alt="<?php echo htmlspecialchars($item_alt); ?>" class="bu-accred-logo" loading="lazy" decoding="async" onerror="this.style.display='none';">
+            <span class="bu-accred-badge-name"><?php echo htmlspecialchars($item['name'] ?? ''); ?></span>
+            <span class="bu-accred-badge-desc"><?php echo htmlspecialchars($item['desc'] ?? ''); ?></span>
           </a>
         <?php endforeach; ?>
       </div>
@@ -98,169 +70,121 @@ $accred_items = [
   float: left;
   clear: both;
   box-sizing: border-box;
-  font-family: 'Plus Jakarta Sans', sans-serif;
   overflow: hidden;
-  position: relative;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  border-top: 1px solid #EDEDED;
 }
 .bu-statutory-container {
-  max-width: 1240px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 10px;
   text-align: center;
 }
 .bu-accred-section-label {
-  display: inline-block;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
-  letter-spacing: 2.5px;
-  color: #D99B00;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 12px;
-  background: rgba(255, 193, 7, 0.15);
-  padding: 6px 18px;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 193, 7, 0.3);
+  color: #D99B00;
+  display: block;
+  margin-bottom: 8px;
 }
 .bu-stat-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(28px, 3.8vw, 44px);
-  font-weight: 800;
-  color: #061D7C;
-  margin: 0 0 32px 0;
-  line-height: 1.15;
+  font-size: 34px;
+  color: #040F4A;
+  margin: 0 0 40px 0;
+  font-weight: 700;
 }
 .bu-stat-title em {
   font-style: italic;
   color: #D99B00;
 }
 
-/* CONTINUOUS MARQUEE SLIDER (DESKTOP & MOBILE) */
+/* Continuous Auto Slider Wrap */
 .bu-accred-slider-wrap {
   width: 100%;
   overflow: hidden;
   position: relative;
-  padding: 10px 0 18px 0;
-  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  padding: 10px 0;
 }
-
 .bu-accred-track {
-  display: flex !important;
-  width: max-content !important;
-  gap: 16px !important;
-  animation: buAccredMarquee 26s linear infinite !important;
-  will-change: transform !important;
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: buAccredScroll 32s linear infinite;
+}
+.bu-accred-track:hover {
+  animation-play-state: paused;
+}
+@keyframes buAccredScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 12px)); }
 }
 
-.bu-accred-track:hover,
-.bu-accred-track:focus-within {
-  animation-play-state: paused !important;
-}
-
-.bu-accred-duplicate {
-  display: flex !important;
-}
-
+/* Badges */
 .bu-accred-badge {
-  background: #ffffff;
-  border: 1px solid #E2E8F0;
-  border-radius: 14px;
-  padding: 18px 12px;
-  text-align: center;
-  box-shadow: 0 4px 16px rgba(6, 29, 124, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  background: #FFFFFF;
+  border: 1px solid #EAEAEA;
+  border-radius: 12px;
+  padding: 16px 20px;
+  min-width: 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  width: 158px;
-  min-width: 158px;
-  max-width: 158px;
-  flex-shrink: 0;
-  box-sizing: border-box;
   text-decoration: none;
-  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  flex-shrink: 0;
 }
-
 .bu-accred-badge:hover {
-  box-shadow: 0 12px 28px rgba(6, 29, 124, 0.14);
   transform: translateY(-5px);
-  border-color: #FFC107;
+  box-shadow: 0 10px 25px rgba(4, 15, 74, 0.08);
+  border-color: #D99B00;
+  text-decoration: none;
 }
-
 .bu-accred-logo {
-  height: 54px;
+  height: 48px;
   width: auto;
-  max-width: 85px;
+  max-width: 90px;
   object-fit: contain;
-  margin-bottom: 2px;
-  image-rendering: -webkit-optimize-contrast;
-  filter: contrast(1.06) brightness(1.02);
-  transition: transform 0.3s ease;
+  margin-bottom: 12px;
 }
-
-.bu-accred-badge:hover .bu-accred-logo {
-  transform: scale(1.08);
-}
-
 .bu-accred-badge-name {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 15.5px;
+  font-size: 13.5px;
   font-weight: 800;
-  color: #061D7C;
-  display: block;
-  line-height: 1.1;
-  white-space: nowrap;
+  color: #040F4A;
+  margin-bottom: 2px;
 }
-
 .bu-accred-badge-desc {
-  font-size: 9.5px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: #9CA3AF;
+  font-size: 11px;
+  font-weight: 600;
+  color: #D99B00;
   text-transform: uppercase;
-  white-space: nowrap;
+  letter-spacing: 0.5px;
 }
 
-/* MARQUEE ANIMATION */
-@keyframes buAccredMarquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-50% - 8px));
-  }
-}
-
-/* MOBILE & TABLET OPTIMIZATIONS */
-@media (max-width: 991px) {
+@media (max-width: 768px) {
   .bu-statutory-section {
-    padding: 42px 10px 48px 10px !important;
+    padding: 45px 15px 50px 15px;
   }
   .bu-stat-title {
-    margin-bottom: 22px !important;
+    font-size: 26px;
+    margin-bottom: 25px;
   }
   .bu-accred-track {
-    gap: 12px !important;
-    animation-duration: 20s !important;
+    gap: 16px;
+    animation-duration: 22s;
   }
   .bu-accred-badge {
-    width: 135px !important;
-    min-width: 135px !important;
-    max-width: 135px !important;
-    padding: 14px 8px !important;
-    border-radius: 12px !important;
+    padding: 12px 16px;
+    min-width: 115px;
   }
   .bu-accred-logo {
-    height: 46px !important;
-    max-width: 75px !important;
-  }
-  .bu-accred-badge-name {
-    font-size: 14px !important;
-  }
-  .bu-accred-badge-desc {
-    font-size: 8.5px !important;
+    height: 38px;
+    margin-bottom: 8px;
   }
 }
 </style>

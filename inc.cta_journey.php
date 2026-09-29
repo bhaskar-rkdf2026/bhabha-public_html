@@ -1,28 +1,50 @@
 <?php
-// Bhabha University – Journey Starts Now Admissions CTA Section (Exact Design Match)
+// Bhabha University – Journey Starts Now Admissions CTA Section (Dynamic from Database)
+global $db;
+$db->where('section_key', 'cta_journey');
+$cta_sec = $db->getOne('homepage_sections');
+
+if (!$cta_sec || $cta_sec['status'] != 1) {
+    return;
+}
+
+$cta_label = !empty($cta_sec['title']) ? $cta_sec['title'] : 'ADMISSIONS OPEN · 2026-27';
+$cta_heading = !empty($cta_sec['heading']) ? $cta_sec['heading'] : 'Your journey starts now.';
+$cta_sub = !empty($cta_sec['subheading']) ? $cta_sec['subheading'] : 'Applications open across all 25 schools and institutes. Speak to an advisor, download the prospectus, or apply online in minutes.';
+
+$cta_extra = !empty($cta_sec['extra_data']) ? json_decode($cta_sec['extra_data'], true) : [];
+
+$btn1_text = $cta_extra['btn1_text'] ?? 'APPLY NOW';
+$btn1_url  = !empty($cta_extra['btn1_url']) ? (strpos($cta_extra['btn1_url'], 'http') === 0 ? $cta_extra['btn1_url'] : URL_ROOT . ltrim($cta_extra['btn1_url'], '/')) : href("enquiry.php");
+
+$btn2_text = $cta_extra['btn2_text'] ?? 'DOWNLOAD PROSPECTUS';
+$btn2_url  = $cta_extra['btn2_url'] ?? 'https://drive.google.com/file/d/1jhIfUzZbjtOWSCnYu77C0MM5C8U5vumt/view';
+
+$btn3_text = $cta_extra['btn3_text'] ?? 'SCHEDULE CALL';
+$btn3_phone = $cta_extra['btn3_phone'] ?? '07554246498';
 ?>
 <section class="bu-journey-section">
   <div class="bu-journey-container">
     
     <!-- LEFT: Text details -->
     <div class="bu-journey-text-col">
-      <span class="bu-journey-label">ADMISSIONS OPEN · 2026-27</span>
-      <h2 class="bu-journey-heading">Your journey starts now.</h2>
-      <p class="bu-journey-sub">Applications open across all 25 schools and institutes. Speak to an advisor, download the prospectus, or apply online in minutes.</p>
+      <span class="bu-journey-label"><?php echo htmlspecialchars($cta_label); ?></span>
+      <h2 class="bu-journey-heading"><?php echo $cta_heading; ?></h2>
+      <p class="bu-journey-sub"><?php echo htmlspecialchars($cta_sub); ?></p>
     </div>
 
     <!-- RIGHT: 3 stacked buttons -->
     <div class="bu-journey-buttons-col">
-      <a href="<?php echo href("enquiry.php"); ?>" class="bu-journey-btn bu-btn-navy">
-        <span>APPLY NOW</span>
+      <a href="<?php echo $btn1_url; ?>" class="bu-journey-btn bu-btn-navy">
+        <span><?php echo htmlspecialchars($btn1_text); ?></span>
         <i class="fa fa-arrow-right"></i>
       </a>
-      <a href="https://drive.google.com/file/d/1jhIfUzZbjtOWSCnYu77C0MM5C8U5vumt/view" target="_blank" class="bu-journey-btn bu-btn-white">
-        <span>DOWNLOAD PROSPECTUS</span>
+      <a href="<?php echo $btn2_url; ?>" target="_blank" class="bu-journey-btn bu-btn-white">
+        <span><?php echo htmlspecialchars($btn2_text); ?></span>
         <i class="fa fa-file-pdf-o"></i>
       </a>
-      <a href="tel:07554246498" class="bu-journey-btn bu-btn-outline">
-        <span>SCHEDULE CALL</span>
+      <a href="tel:<?php echo htmlspecialchars($btn3_phone); ?>" class="bu-journey-btn bu-btn-outline">
+        <span><?php echo htmlspecialchars($btn3_text); ?></span>
         <i class="fa fa-phone"></i>
       </a>
     </div>
@@ -98,90 +120,63 @@
   font-weight: 800 !important;
   letter-spacing: 1px !important;
   text-transform: uppercase !important;
+  border-radius: 4px !important;
   text-decoration: none !important;
-  border-radius: 3px !important;
-  transition: all 0.22s ease !important;
-  width: 100% !important;
+  transition: all 0.25s ease !important;
+  box-sizing: border-box !important;
 }
 
-/* Button 1: Navy */
-.bu-journey-btn.bu-btn-navy {
+/* Navy Button */
+.bu-btn-navy {
   background-color: #040F4A !important;
   color: #FFFFFF !important;
-  border: none !important;
 }
-.bu-journey-btn.bu-btn-navy span,
-.bu-journey-btn.bu-btn-navy i {
-  border: none !important;
-  outline: none !important;
-  color: #FFFFFF !important;
-}
-.bu-journey-btn.bu-btn-navy:hover {
-  background-color: #0A1B54 !important;
+.bu-btn-navy:hover {
+  background-color: #000830 !important;
+  color: #FFC107 !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px rgba(4, 15, 74, 0.35) !important;
-}
-.bu-journey-btn.bu-btn-navy:hover span,
-.bu-journey-btn.bu-btn-navy:hover i {
-  color: #FFFFFF !important;
+  box-shadow: 0 6px 15px rgba(4, 15, 74, 0.2) !important;
+  text-decoration: none !important;
 }
 
-/* Button 2: White */
-.bu-journey-btn.bu-btn-white {
+/* White Button */
+.bu-btn-white {
   background-color: #FFFFFF !important;
   color: #040F4A !important;
-  border: none !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
 }
-.bu-journey-btn.bu-btn-white span,
-.bu-journey-btn.bu-btn-white i {
-  border: none !important;
-  outline: none !important;
+.bu-btn-white:hover {
+  background-color: #F8F9FA !important;
   color: #040F4A !important;
-}
-.bu-journey-btn.bu-btn-white:hover {
-  background-color: #F8F7F4 !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
-}
-.bu-journey-btn.bu-btn-white:hover span,
-.bu-journey-btn.bu-btn-white:hover i {
-  color: #040F4A !important;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1) !important;
+  text-decoration: none !important;
 }
 
-/* Button 3: Outline */
-.bu-journey-btn.bu-btn-outline {
+/* Outline Button */
+.bu-btn-outline {
   background-color: transparent !important;
+  color: #040F4A !important;
   border: 1.5px solid #040F4A !important;
-  color: #040F4A !important;
-  padding: 16.5px 24px !important;
 }
-.bu-journey-btn.bu-btn-outline span,
-.bu-journey-btn.bu-btn-outline i {
-  border: none !important;
-  outline: none !important;
-  color: #040F4A !important;
-}
-.bu-journey-btn.bu-btn-outline:hover {
-  background-color: rgba(4, 15, 74, 0.06) !important;
+.bu-btn-outline:hover {
+  background-color: #040F4A !important;
+  color: #FFC107 !important;
   transform: translateY(-2px) !important;
-}
-.bu-journey-btn.bu-btn-outline:hover span,
-.bu-journey-btn.bu-btn-outline:hover i {
-  color: #040F4A !important;
+  text-decoration: none !important;
 }
 
-/* ---- RESPONSIVE ---- */
+/* Responsive */
 @media (max-width: 991px) {
   .bu-journey-container {
     flex-direction: column !important;
-    gap: 40px !important;
+    text-align: center !important;
+    gap: 35px !important;
   }
   .bu-journey-text-col {
-    text-align: center !important;
-    display: flex !important;
-    flex-direction: column !important;
     align-items: center !important;
+  }
+  .bu-journey-sub {
+    margin: 0 auto !important;
   }
   .bu-journey-buttons-col {
     max-width: 100% !important;
@@ -189,7 +184,13 @@
 }
 @media (max-width: 575px) {
   .bu-journey-section {
-    padding: 60px 16px !important;
+    padding: 55px 16px !important;
+  }
+  .bu-journey-heading {
+    font-size: 32px !important;
+  }
+  .bu-journey-btn {
+    padding: 15px 20px !important;
   }
 }
 </style>

@@ -262,12 +262,13 @@ src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
     <div class="bu-home-ticker-scroll">
       <ul class="bu-home-ticker-list" id="buHomeNewsTicker">
         <?php
-        $db->where('is_news', 1);
-        $home_news = $db->get('news_and_announcement');
+        $db->orderBy('news_date', 'desc');
+        $db->orderBy('id', 'desc');
+        $home_news = $db->get('news', 15);
         if(is_array($home_news) && count($home_news) > 0) {
           foreach($home_news as $hn) { ?>
             <li>
-              <a href="<?php echo href("announcements.php","id=".$hn['id']."");?>">
+              <a href="<?php echo href("news.php","id=".$hn['id']."");?>">
                 <?php echo $hn['title']?>
               </a>
             </li>

@@ -768,6 +768,8 @@ input.selectric-input,
             $itemMonth = date('m', $timestamp);
         ?>
         <div class="bu-news-card bu-news-item" 
+             id="news-item-<?php echo $inews['id']; ?>"
+             data-id="<?php echo $inews['id']; ?>"
              data-title="<?php echo htmlspecialchars(strtolower($title)); ?>"
              data-year="<?php echo $itemYear; ?>"
              data-month="<?php echo $itemMonth; ?>"
@@ -1020,6 +1022,32 @@ function closeNewsModalOnOverlay(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeNewsModal();
+  }
+});
+
+// Auto scroll and open modal if news ?id=XX or /news/XX/ is in URL
+$(document).ready(function() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var newsId = urlParams.get('id');
+  if (!newsId) {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    var lastPart = parts[parts.length - 1];
+    if (lastPart && /^\d+$/.test(lastPart)) {
+      newsId = lastPart;
+    }
+  }
+  if (newsId) {
+    var targetCard = document.getElementById('news-item-' + newsId);
+    if (targetCard) {
+      setTimeout(function() {
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetCard.style.boxShadow = '0 0 0 3px #FFC107, 0 16px 36px rgba(10, 27, 84, 0.2)';
+        var zoomBtn = targetCard.querySelector('.bu-news-card-img-wrap');
+        if (zoomBtn) {
+          zoomBtn.click();
+        }
+      }, 400);
+    }
   }
 });
 </script>

@@ -1,5 +1,24 @@
 <?php
-// Bhabha University – Programs Offered Section (Uniform Cards with Blue Background on Hover & Blur Effect)
+// Bhabha University – Programs Offered Section (Dynamic from Database)
+global $db;
+$db->where('section_key', 'degree_programs');
+$deg_sec = $db->getOne('homepage_sections');
+
+if (!$deg_sec || $deg_sec['status'] != 1) {
+    return;
+}
+
+$deg_heading = !empty($deg_sec['heading']) ? $deg_sec['heading'] : '85+ programs across<br>every degree level.';
+$deg_extra = !empty($deg_sec['extra_data']) ? json_decode($deg_sec['extra_data'], true) : [];
+$all_programs = $deg_extra['programs'] ?? [];
+
+$tab_categories = [
+    'undergraduate' => 'UNDERGRADUATE',
+    'postgraduate'  => 'POSTGRADUATE',
+    'diploma'       => 'DIPLOMA',
+    'doctoral'      => 'DOCTORAL',
+    'certificate'   => 'CERTIFICATE'
+];
 ?>
 <section class="bu-deg-programs-section">
   <div class="bu-deg-container">
@@ -7,514 +26,59 @@
     <!-- Top Header -->
     <div class="bu-deg-header">
       <div class="bu-deg-header-left">
-        <h2 class="bu-deg-heading">85+ programs across<br>every degree level.</h2>
+        <h2 class="bu-deg-heading"><?php echo $deg_heading; ?></h2>
       </div>
       
       <!-- Interactive Degree Tabs -->
       <div class="bu-deg-tabs-wrapper">
-        <button class="bu-deg-tab active" data-tab="undergraduate">UNDERGRADUATE</button>
-        <button class="bu-deg-tab" data-tab="postgraduate">POSTGRADUATE</button>
-        <button class="bu-deg-tab" data-tab="diploma">DIPLOMA</button>
-        <button class="bu-deg-tab" data-tab="doctoral">DOCTORAL</button>
-        <button class="bu-deg-tab" data-tab="certificate">CERTIFICATE</button>
+        <?php 
+        $t_idx = 0;
+        foreach ($tab_categories as $tab_key => $tab_label): 
+          $t_idx++;
+        ?>
+          <button class="bu-deg-tab <?php echo ($t_idx === 1) ? 'active' : ''; ?>" data-tab="<?php echo $tab_key; ?>"><?php echo $tab_label; ?></button>
+        <?php endforeach; ?>
       </div>
     </div>
 
     <!-- Interactive Grids -->
     <div class="bu-deg-grids-container">
       
-      <!-- ============ 1. UNDERGRADUATE GRID ============ -->
-      <div class="bu-deg-grid active" id="undergraduate">
-        
-        <!-- Card 1: B.Tech CSE -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">B.Tech CSE</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>4 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 PCM 60%</strong></div>
-          </div>
+      <?php 
+      $g_idx = 0;
+      foreach ($tab_categories as $tab_key => $tab_label): 
+        $g_idx++;
+        // Filter programs for this tab
+        $tab_items = array_filter($all_programs, function($p) use ($tab_key) {
+            return isset($p['level']) && strtolower(trim($p['level'])) === strtolower($tab_key);
+        });
+      ?>
+        <!-- ============ <?php echo strtoupper($tab_key); ?> GRID ============ -->
+        <div class="bu-deg-grid <?php echo ($g_idx === 1) ? 'active' : ''; ?>" id="<?php echo $tab_key; ?>">
+          <?php if (!empty($tab_items)): ?>
+            <?php foreach ($tab_items as $item): ?>
+              <div class="bu-deg-card">
+                <div class="bu-deg-card-top">
+                  <span class="bu-deg-card-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    </svg>
+                  </span>
+                  <span class="bu-deg-card-tag"><?php echo htmlspecialchars($item['tag'] ?? 'FEATURED'); ?></span>
+                </div>
+                <h3 class="bu-deg-card-title"><?php echo htmlspecialchars($item['title'] ?? ''); ?></h3>
+                <div class="bu-deg-card-details">
+                  <div class="bu-detail-row"><span>Duration</span><strong><?php echo htmlspecialchars($item['duration'] ?? ''); ?></strong></div>
+                  <div class="bu-detail-row"><span>Eligibility</span><strong><?php echo htmlspecialchars($item['eligibility'] ?? ''); ?></strong></div>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <p class="text-muted" style="grid-column: 1 / -1; padding: 20px 0;">Programs will be updated shortly.</p>
+          <?php endif; ?>
         </div>
-
-        <!-- Card 2: B.Pharm -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">B.Pharm</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>4 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 PCB/PCM</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 3: BDS (Dental Surgery) -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">BDS (Dental)</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>5 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>NEET-UG / 10+2 PCB</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 4: BCA -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">BCA</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>3 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 Any Stream</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 5: BA LLB -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">BA LLB</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>5 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 50%</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 6: BBA -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">BBA</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>3 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 50%</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 7: B.Sc Nursing -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">B.Sc Nursing</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>4 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 PCB</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 8: B.Com (Hons) -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">B.Com (Hons)</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>3 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 Commerce/Any</strong></div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ============ 2. POSTGRADUATE GRID ============ -->
-      <div class="bu-deg-grid" id="postgraduate">
-        
-        <!-- Card 1: MBA -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">MBA</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>Graduation 50%</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 2: M.Tech CSE -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">M.Tech CSE</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>B.Tech/B.E. CSE</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 3: MCA -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">MCA</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>BCA / Graduation</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 4: M.Pharm -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">M.Pharm</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>B.Pharm 55%</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 5: M.Sc Biotech -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">M.Sc Biotech</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>B.Sc 50%</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 6: LL.M -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">LL.M</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>1 yr</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>LL.B 50%</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 7: M.Sc Nursing -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">M.Sc Nursing</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>B.Sc Nursing</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 8: M.Com -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">M.Com</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>B.Com 50%</strong></div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ============ 3. DIPLOMA GRID ============ -->
-      <div class="bu-deg-grid" id="diploma">
-        
-        <!-- Card 1: Diploma Engineering -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">Diploma Engineering</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>3 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10th Pass</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 2: D.Pharm -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">D.Pharm</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 PCB/PCM</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 3: DMLT -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">DMLT</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>2 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 Science</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 4: Diploma Hotel Mgmt -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">Diploma Hotel Mgmt</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>1 yr</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10th/12th Pass</strong></div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ============ 4. DOCTORAL GRID ============ -->
-      <div class="bu-deg-grid" id="doctoral">
-        
-        <!-- Card 1: Ph.D Engineering -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">Ph.D Engineering</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>3-5 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>M.Tech / equiv.</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 2: Ph.D Pharmacy -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">Ph.D Pharmacy</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>3-5 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>M.Pharm Pass</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 3: Ph.D Management -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">Ph.D Management</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>3-5 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>MBA / Master</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 4: Ph.D Science -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">Ph.D Science</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>3-5 yrs</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>M.Sc 55%</strong></div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ============ 5. CERTIFICATE GRID ============ -->
-      <div class="bu-deg-grid" id="certificate">
-        
-        <!-- Card 1: Digital Marketing -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">Digital Marketing</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>6 months</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 Pass</strong></div>
-          </div>
-        </div>
-
-        <!-- Card 2: Cyber Security -->
-        <div class="bu-deg-card">
-          <div class="bu-deg-card-top">
-            <span class="bu-deg-card-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </span>
-            <span class="bu-deg-card-tag">FEATURED</span>
-          </div>
-          <h3 class="bu-deg-card-title">Cyber Security</h3>
-          <div class="bu-deg-card-details">
-            <div class="bu-detail-row"><span>Duration</span><strong>6 months</strong></div>
-            <div class="bu-detail-row"><span>Eligibility</span><strong>10+2 / IT</strong></div>
-          </div>
-        </div>
-
-      </div>
+      <?php endforeach; ?>
 
     </div>
 

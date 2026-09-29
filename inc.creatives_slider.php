@@ -1,55 +1,25 @@
 <?php
-// Bhabha University – Hall of Fame & Placement Highlights Redesigned Slider Section
-$creative_images = [
-  [
-    'src'      => URL_ROOT . 'upload/media/highest-package-60lpa.png',
-    'title'    => 'Mr. Anurag Kumar - ₹60.0 LPA at CPP',
-    'alt'      => 'Mr. Anurag Kumar Highest Package 60 LPA Bhabha University',
-    'category' => 'Highest Placement (₹60 LPA)'
-  ],
-  [
-    'src'      => URL_ROOT . 'upload/media/alumni_harikesh_singh_ies_rank68.jpg',
-    'title'    => 'Harikesh Singh - AIR Rank 68 in UPSC IES 2025',
-    'alt'      => 'Harikesh Singh AIR Rank 68 UPSC IES Bhabha University',
-    'category' => 'UPSC IES Selection'
-  ],
-  [
-    'src'      => URL_ROOT . 'upload/media/alumni_shubham_srivastava_nhsrcl.jpg',
-    'title'    => 'Shubham Kumar Srivastava - ₹12.0 LPA at NHSRCL',
-    'alt'      => 'Shubham Kumar Srivastava NHSRCL 12 LPA Bhabha University',
-    'category' => 'PSU Placement (₹12 LPA)'
-  ],
-  [
-    'src'      => URL_ROOT . 'upload/media/alumni_rakesh_roy_dhariwal.jpg',
-    'title'    => 'Mr. Rakesh Kumar Roy - ₹7.44 LPA at Dhariwal Buildtech',
-    'alt'      => 'Mr. Rakesh Kumar Roy Dhariwal Buildtech Bhabha University',
-    'category' => 'Corporate Placement'
-  ],
-  [
-    'src'      => URL_ROOT . 'upload/media/alumni_anshuman_singh_ies.jpg',
-    'title'    => 'Anshuman Singh - Indian Engineering Services (UPSC IES)',
-    'alt'      => 'Anshuman Singh Selected in UPSC IES Bhabha University',
-    'category' => 'UPSC IES Selection'
-  ],
-  [
-    'src'      => URL_ROOT . 'upload/media/alumni_kamlesh_kumar_ies.jpg',
-    'title'    => 'Kamlesh Kumar - Indian Engineering Services (UPSC IES)',
-    'alt'      => 'Kamlesh Kumar Selected in UPSC IES Bhabha University',
-    'category' => 'UPSC IES Selection'
-  ],
-  [
-    'src'      => URL_ROOT . 'upload/media/alumni_nidhi_shukla_dte.jpg',
-    'title'    => 'Nidhi Shukla - Selected in DTE / PSU Placement',
-    'alt'      => 'Nidhi Shukla DTE PSU Placement Bhabha University',
-    'category' => 'Govt / PSU Placement'
-  ],
-  [
-    'src'      => URL_ROOT . 'upload/media/alumni_vikash_chandra_iit_kanpur.jpg',
-    'title'    => 'Vikash Chandra - M.Tech Selection at IIT Kanpur',
-    'alt'      => 'Vikash Chandra IIT Kanpur Selection Bhabha University',
-    'category' => 'Higher Studies (IIT)'
-  ]
-];
+// Bhabha University – Hall of Fame & Placement Highlights Redesigned Slider Section (Dynamic from Database)
+global $db;
+$db->where('section_key', 'hall_of_fame');
+$fame_sec = $db->getOne('homepage_sections');
+
+if (!$fame_sec || $fame_sec['status'] != 1) {
+    return;
+}
+
+$fame_badge = !empty($fame_sec['title']) ? $fame_sec['title'] : 'HALL OF FAME & HIGHLIGHTS';
+$fame_title = !empty($fame_sec['heading']) ? $fame_sec['heading'] : 'Spotlight on <em>Excellence &amp; Achievements</em>';
+$fame_subtitle = !empty($fame_sec['subheading']) ? $fame_sec['subheading'] : 'Celebrating milestone placements, competitive exam rank holders, and prestigious recruitment selections at Bhabha University.';
+
+$fame_extra = !empty($fame_sec['extra_data']) ? json_decode($fame_sec['extra_data'], true) : [];
+$creative_images = $fame_extra['posters'] ?? [];
+
+function bu_resolve_fame_img($img) {
+    if (empty($img)) return URL_ROOT . 'upload/media/highest-package-60lpa.png';
+    if (strpos($img, 'http://') === 0 || strpos($img, 'https://') === 0) return $img;
+    return URL_ROOT . ltrim($img, '/');
+}
 ?>
 
 <!-- ===== HALL OF FAME & HIGHLIGHTS REDESIGNED SECTION ===== -->
@@ -59,9 +29,9 @@ $creative_images = [
     <!-- Section Header with Title & Navigation Controls -->
     <div class="bu-fame-header">
       <div class="bu-fame-header-left">
-        <span class="bu-fame-badge"><i class="fa fa-trophy"></i> HALL OF FAME &amp; HIGHLIGHTS</span>
-        <h2 class="bu-fame-title">Spotlight on <em>Excellence &amp; Achievements</em></h2>
-        <p class="bu-fame-subtitle">Celebrating milestone placements, competitive exam rank holders, and prestigious recruitment selections at Bhabha University.</p>
+        <span class="bu-fame-badge"><i class="fa fa-trophy"></i> <?php echo htmlspecialchars($fame_badge); ?></span>
+        <h2 class="bu-fame-title"><?php echo $fame_title; ?></h2>
+        <p class="bu-fame-subtitle"><?php echo htmlspecialchars($fame_subtitle); ?></p>
       </div>
       
       <!-- Top Action Arrow Buttons -->
@@ -89,18 +59,23 @@ $creative_images = [
       <!-- Carousel Viewport & Flexible Track -->
       <div class="bu-fame-viewport">
         <div class="bu-fame-track" id="buFameTrack">
-          <?php foreach ($creative_images as $idx => $cimg): ?>
+          <?php foreach ($creative_images as $idx => $cimg): 
+            $img_src = bu_resolve_fame_img($cimg['src'] ?? '');
+            $item_title = $cimg['title'] ?? '';
+            $item_alt = !empty($cimg['alt']) ? $cimg['alt'] : $item_title;
+            $item_cat = !empty($cimg['category']) ? $cimg['category'] : 'Placement Milestone';
+          ?>
           <div class="bu-fame-slide" data-slide-index="<?php echo $idx; ?>">
-            <div class="bu-fame-card" onclick="openFameLightbox('<?php echo $cimg['src']; ?>', '<?php echo htmlspecialchars(addslashes($cimg['title'])); ?>')">
+            <div class="bu-fame-card" onclick="openFameLightbox('<?php echo $img_src; ?>', '<?php echo htmlspecialchars(addslashes($item_title)); ?>')">
               
               <!-- Category Pill Badge -->
               <span class="bu-fame-card-badge">
-                <i class="fa fa-star"></i> <?php echo htmlspecialchars($cimg['category']); ?>
+                <i class="fa fa-star"></i> <?php echo htmlspecialchars($item_cat); ?>
               </span>
 
               <!-- Poster Image Container -->
               <div class="bu-fame-poster-holder">
-                <img src="<?php echo $cimg['src']; ?>" alt="<?php echo htmlspecialchars($cimg['alt']); ?>" class="bu-fame-poster-img" loading="lazy" decoding="async">
+                <img src="<?php echo $img_src; ?>" alt="<?php echo htmlspecialchars($item_alt); ?>" class="bu-fame-poster-img" loading="lazy" decoding="async">
                 
                 <!-- Hover Overlay with Zoom Icon -->
                 <div class="bu-fame-card-overlay">
@@ -112,7 +87,7 @@ $creative_images = [
 
               <!-- Bottom Title Caption -->
               <div class="bu-fame-card-footer">
-                <h4 class="bu-fame-card-title"><?php echo htmlspecialchars($cimg['title']); ?></h4>
+                <h4 class="bu-fame-card-title"><?php echo htmlspecialchars($item_title); ?></h4>
               </div>
 
             </div>
@@ -821,11 +796,7 @@ document.addEventListener('keydown', function(e) {
   text-shadow: 0 2px 8px rgba(0,0,0,0.6) !important;
 }
 
-/* ========================================================
-   RESPONSIVE BREAKPOINTS FOR ALL DEVICES
-   ======================================================== */
-
-/* Small Desktop & Large Tablets (3 Cards) */
+/* Responsive */
 @media (max-width: 1179px) and (min-width: 900px) {
   .bu-fame-slide {
     flex: 0 0 33.333% !important;
@@ -834,7 +805,6 @@ document.addEventListener('keydown', function(e) {
   }
 }
 
-/* Medium Tablets & iPads (2 Cards) */
 @media (max-width: 899px) and (min-width: 580px) {
   .bu-fame-slide {
     flex: 0 0 50% !important;
@@ -855,7 +825,6 @@ document.addEventListener('keydown', function(e) {
   }
 }
 
-/* Mobile Devices & Phones (1 Large Full Card per view) */
 @media (max-width: 579px) {
   .bu-fame-section {
     padding: 45px 0 55px 0 !important;
@@ -887,7 +856,6 @@ document.addEventListener('keydown', function(e) {
     height: 40px !important;
   }
   
-  /* 1 Full-Width Card on Mobile */
   .bu-fame-slide {
     flex: 0 0 100% !important;
     max-width: 100% !important;

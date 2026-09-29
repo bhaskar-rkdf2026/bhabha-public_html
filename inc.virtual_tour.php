@@ -14,6 +14,10 @@ $vt_heading = !empty($vt_sec['heading']) ? $vt_sec['heading'] : 'Virtual Tour of
 $vt_desc = !empty($vt_sec['subheading']) ? $vt_sec['subheading'] : 'Experience our breathtaking 32-acre green campus from the sky. Explore world-class academic blocks, research labs, sports arenas, and vibrant student life — all from right here.';
 
 $vt_extra = !empty($vt_sec['extra_data']) ? json_decode($vt_sec['extra_data'], true) : [];
+$vt_poster = !empty($vt_extra['poster']) ? (strpos($vt_extra['poster'], 'http') === 0 ? $vt_extra['poster'] : URL_ROOT . ltrim($vt_extra['poster'], '/')) : URL_ROOT . 'new-media/image/campus-aerial.png';
+$vt_badge1 = !empty($vt_extra['badge1']) ? $vt_extra['badge1'] : 'Live Campus Video';
+$vt_badge2 = !empty($vt_extra['badge2']) ? $vt_extra['badge2'] : 'Bhopal, MP';
+
 $vt_tabs = !empty($vt_extra['video_tabs']) ? $vt_extra['video_tabs'] : [
     ['label' => 'Aerial Drone', 'icon' => 'fa fa-plane', 'video_url' => 'upload/video/bhabha_video.mp4'],
     ['label' => 'Campus Tour Video', 'icon' => 'fa fa-film', 'video_url' => 'new-media/image/hero/bhabha_2.mp4'],
@@ -32,7 +36,8 @@ if (strpos($vt_cta_url, 'http') !== 0 && strpos($vt_cta_url, '/') !== 0 && strpo
     $vt_cta_url = URL_ROOT . $vt_cta_url;
 }
 
-$main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], 'http') === 0 ? $vt_sec['media_url'] : URL_ROOT . ltrim($vt_sec['media_url'], '/')) : URL_ROOT . 'upload/video/bhabha_video.mp4';
+$first_tab_video = !empty($vt_tabs[0]['video_url']) ? $vt_tabs[0]['video_url'] : 'upload/video/bhabha_video.mp4';
+$main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], 'http') === 0 ? $vt_sec['media_url'] : URL_ROOT . ltrim($vt_sec['media_url'], '/')) : (strpos($first_tab_video, 'http') === 0 ? $first_tab_video : URL_ROOT . ltrim($first_tab_video, '/'));
 ?>
 
 <style>
@@ -350,15 +355,15 @@ $main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], '
         <!-- Floating Badges -->
         <div class="bu-hvt-player-overlay">
           <span class="bu-hvt-badge">
-            <i class="fa fa-video-camera"></i> Live Campus Video
+            <i class="fa fa-video-camera"></i> <?php echo htmlspecialchars($vt_badge1); ?>
           </span>
           <span class="bu-hvt-badge">
-            <i class="fa fa-map-marker"></i> Bhopal, MP
+            <i class="fa fa-map-marker"></i> <?php echo htmlspecialchars($vt_badge2); ?>
           </span>
         </div>
 
         <video id="buHvtVideo" class="bu-hvt-video" loop muted playsinline preload="none"
-               poster="<?php echo URL_ROOT;?>new-media/image/campus-aerial.png">
+               poster="<?php echo $vt_poster;?>">
           <source id="buHvtSource" src="<?php echo $main_video_url; ?>" type="video/mp4">
           Your browser does not support HTML5 video.
         </video>

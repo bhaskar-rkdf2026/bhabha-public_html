@@ -16,6 +16,7 @@ $hero_video = !empty($hero_sec['media_url']) ? (strpos($hero_sec['media_url'], '
 
 $hero_extra = !empty($hero_sec['extra_data']) ? json_decode($hero_sec['extra_data'], true) : [];
 $hero_poster = !empty($hero_extra['poster']) ? (strpos($hero_extra['poster'], 'http') === 0 ? $hero_extra['poster'] : URL_ROOT . ltrim($hero_extra['poster'], '/')) : URL_ROOT . "new-media/image/campus-aerial.png";
+$hero_video_2 = !empty($hero_extra['video_2']) ? (strpos($hero_extra['video_2'], 'http') === 0 ? $hero_extra['video_2'] : URL_ROOT . ltrim($hero_extra['video_2'], '/')) : URL_ROOT . "new-media/image/hero/bhabha_1.mp4";
 $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
     ['number' => '8500', 'suffix' => '+', 'commas' => true, 'label' => 'STUDENTS'],
     ['number' => '750', 'suffix' => '+', 'commas' => false, 'label' => 'FACULTY'],
@@ -33,7 +34,9 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
   <!-- Background Video (Infinite Autoplay Loop with Deferred Fast Preloading) -->
   <video class="bu-hero-video" id="buHeroVideo" autoplay loop muted playsinline preload="metadata" poster="<?php echo $hero_poster;?>">
     <source src="<?php echo $hero_video;?>" type="video/mp4">
-    <source src="<?php echo URL_ROOT;?>new-media/image/hero/bhabha_1.mp4" type="video/mp4">
+    <?php if(!empty($hero_video_2)): ?>
+      <source src="<?php echo $hero_video_2;?>" type="video/mp4">
+    <?php endif; ?>
     Your browser does not support the video tag.
   </video>
 

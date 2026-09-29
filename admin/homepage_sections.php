@@ -16,6 +16,16 @@ if (!empty($_SESSION['error'])) {
     unset($_SESSION['error']);
 }
 
+// Helper to resolve media URL for admin previews
+function bu_admin_media_url($path) {
+    if (empty($path)) return '';
+    $path = trim($path);
+    if (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0 || strpos($path, '//') === 0) {
+        return $path;
+    }
+    return '../' . ltrim($path, '/');
+}
+
 // Quick status toggle via GET
 if ($action == "toggle_status" && isset($_GET['id'])) {
     $id = intval($_GET['id']);
@@ -30,6 +40,26 @@ if ($action == "toggle_status" && isset($_GET['id'])) {
     redirect(PAGE);
 }
 
+// Helper for file upload
+function bu_handle_upload($fileArray, $targetDir = '../upload/media/') {
+    if (!isset($fileArray['name']) || empty($fileArray['name'])) {
+        return null;
+    }
+    if (!is_dir($targetDir)) {
+        @mkdir($targetDir, 0777, true);
+    }
+    $origName = basename($fileArray['name']);
+    $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+    $allowed = ['mp4', 'webm', 'ogg', 'jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf'];
+    if (in_array($ext, $allowed)) {
+        $newFile = md5(microtime() . $origName) . '.' . $ext;
+        if (move_uploaded_file($fileArray['tmp_name'], $targetDir . $newFile)) {
+            return ltrim(str_replace('../', '', $targetDir), '/') . $newFile;
+        }
+    }
+    return null;
+}
+
 // Handle Edit Submission
 if (isset($_POST['submit'])) {
     $subAction = $_POST['action'] ?? ($_GET['action'] ?? '');
@@ -41,27 +71,17 @@ if (isset($_POST['submit'])) {
         
         $mediaUrl = trim($_POST['media_url'] ?? '');
         
-        // Handle file upload if provided
+        // Single file upload for main media if provided
         if (isset($_FILES['media_file']) && !empty($_FILES['media_file']['name'])) {
-            $uploadDir = '../upload/media/';
-            if (!is_dir($uploadDir)) {
-                @mkdir($uploadDir, 0777, true);
-            }
-            $origName = basename($_FILES['media_file']['name']);
-            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
-            $allowedExts = ['mp4', 'webm', 'ogg', 'jpg', 'jpeg', 'png', 'gif', 'webp'];
-            if (in_array($ext, $allowedExts)) {
-                $newFile = md5(microtime() . $origName) . '.' . $ext;
-                if (move_uploaded_file($_FILES['media_file']['tmp_name'], $uploadDir . $newFile)) {
-                    $mediaUrl = 'upload/media/' . $newFile;
-                }
-            } else {
-                $stat['error'] = 'Invalid file format. Allowed: MP4, WEBM, JPG, PNG, GIF, WEBP';
+            $up = bu_handle_upload($_FILES['media_file'], '../upload/media/');
+            if ($up) {
+                $mediaUrl = $up;
             }
         }
         
-        // Section-specific extra_data assembly from simple fields
         $extraArray = [];
+        
+        // 1. HERO VIDEO
         if ($secKey == 'hero_video') {
             $stats = [];
             if (isset($_POST['hero_stat_num']) && is_array($_POST['hero_stat_num'])) {
@@ -73,16 +93,30 @@ if (isset($_POST['submit'])) {
                             'number' => $numTrim,
                             'suffix' => trim($_POST['hero_stat_suffix'][$k] ?? ''),
                             'commas' => ($rawDigits >= 1000),
-                            'label'  => trim($_POST['hero_stat_lbl'][$k] ?? '')
+                            'label'  => trim($_POST['hero_stat_lbl'][$k] ?? ''),
+                            'url'    => trim($_POST['hero_stat_url'][$k] ?? '')
                         ];
                     }
                 }
             }
+            $poster = trim($_POST['hero_poster'] ?? 'new-media/image/campus-aerial.png');
+            if (isset($_FILES['hero_poster_file']) && !empty($_FILES['hero_poster_file']['name'])) {
+                $upPoster = bu_handle_upload($_FILES['hero_poster_file'], '../upload/media/');
+                if ($upPoster) $poster = $upPoster;
+            }
+            $video2 = trim($_POST['hero_video_2'] ?? 'new-media/image/hero/bhabha_1.mp4');
+            if (isset($_FILES['hero_video2_file']) && !empty($_FILES['hero_video2_file']['name'])) {
+                $upVid2 = bu_handle_upload($_FILES['hero_video2_file'], '../upload/media/');
+                if ($upVid2) $video2 = $upVid2;
+            }
             $extraArray = [
-                'poster' => trim($_POST['hero_poster'] ?? 'new-media/image/campus-aerial.png'),
-                'stats'  => $stats
+                'poster'  => $poster,
+                'video_2' => $video2,
+                'stats'   => $stats
             ];
-        } elseif ($secKey == 'chancellor_welcome') {
+        } 
+        // 2. CHANCELLOR
+        elseif ($secKey == 'chancellor_welcome') {
             $recogs = [];
             if (isset($_POST['recog_title']) && is_array($_POST['recog_title'])) {
                 foreach ($_POST['recog_title'] as $k => $rtitle) {
@@ -96,7 +130,9 @@ if (isset($_POST['submit'])) {
                 }
             }
             $extraArray = ['recognitions' => $recogs];
-        } elseif ($secKey == 'why_bhabha') {
+        } 
+        // 3. WHY BHABHA (6+ Feature Points)
+        elseif ($secKey == 'why_bhabha') {
             $feats = [];
             if (isset($_POST['why_title']) && is_array($_POST['why_title'])) {
                 foreach ($_POST['why_title'] as $k => $wtitle) {
@@ -116,40 +152,83 @@ if (isset($_POST['submit'])) {
                 }
             }
             $extraArray = ['features' => $feats];
-        } elseif ($secKey == 'virtual_tour') {
-            $tabs = [];
+        } 
+        // 4. VIRTUAL TOUR
+        elseif ($secKey == 'virtual_tour') {
+            // Video Tabs
+            $vTabs = [];
             if (isset($_POST['vt_tab_label']) && is_array($_POST['vt_tab_label'])) {
                 foreach ($_POST['vt_tab_label'] as $k => $tlabel) {
                     $tlabelTrim = trim($tlabel);
                     if (!empty($tlabelTrim)) {
-                        $tabs[] = [
+                        $rawTabIcon = trim($_POST['vt_tab_icon'][$k] ?? 'fa fa-video-camera');
+                        if (!empty($rawTabIcon) && strpos($rawTabIcon, 'fa ') !== 0 && strpos($rawTabIcon, 'fas ') !== 0 && strpos($rawTabIcon, 'far ') !== 0 && strpos($rawTabIcon, 'fab ') !== 0) {
+                            $rawTabIcon = 'fa ' . (strpos($rawTabIcon, 'fa-') === 0 ? $rawTabIcon : 'fa-' . $rawTabIcon);
+                        }
+                        $tVid = trim($_POST['vt_tab_video'][$k] ?? '');
+                        if (isset($_FILES['vt_tab_file']['name'][$k]) && !empty($_FILES['vt_tab_file']['name'][$k])) {
+                            $uploadDir = '../upload/video/';
+                            if (!is_dir($uploadDir)) @mkdir($uploadDir, 0777, true);
+                            $origName = basename($_FILES['vt_tab_file']['name'][$k]);
+                            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+                            $allowed = ['mp4', 'webm', 'ogg'];
+                            if (in_array($ext, $allowed)) {
+                                $newF = md5(microtime() . $origName) . '.' . $ext;
+                                if (move_uploaded_file($_FILES['vt_tab_file']['tmp_name'][$k], $uploadDir . $newF)) {
+                                    $tVid = 'upload/video/' . $newF;
+                                }
+                            }
+                        }
+                        $vTabs[] = [
                             'label'     => $tlabelTrim,
-                            'icon'      => trim($_POST['vt_tab_icon'][$k] ?? 'fa fa-video-camera'),
-                            'video_url' => trim($_POST['vt_tab_url'][$k] ?? '')
+                            'icon'      => $rawTabIcon,
+                            'video_url' => $tVid
                         ];
                     }
                 }
             }
+
+            // Info Cards
             $cards = [];
             if (isset($_POST['vt_card_title']) && is_array($_POST['vt_card_title'])) {
                 foreach ($_POST['vt_card_title'] as $k => $ctitle) {
                     $ctitleTrim = trim($ctitle);
                     if (!empty($ctitleTrim)) {
+                        $rawCardIcon = trim($_POST['vt_card_icon'][$k] ?? 'fa fa-check');
+                        if (!empty($rawCardIcon) && strpos($rawCardIcon, 'fa ') !== 0 && strpos($rawCardIcon, 'fas ') !== 0 && strpos($rawCardIcon, 'far ') !== 0 && strpos($rawCardIcon, 'fab ') !== 0) {
+                            $rawCardIcon = 'fa ' . (strpos($rawCardIcon, 'fa-') === 0 ? $rawCardIcon : 'fa-' . $rawCardIcon);
+                        }
                         $cards[] = [
-                            'icon'  => trim($_POST['vt_card_icon'][$k] ?? 'fa fa-check'),
+                            'icon'  => $rawCardIcon,
                             'title' => $ctitleTrim,
                             'desc'  => trim($_POST['vt_card_desc'][$k] ?? '')
                         ];
                     }
                 }
             }
+
+            $vtPoster = trim($_POST['vt_poster'] ?? 'new-media/image/campus-aerial.png');
+            if (isset($_FILES['vt_poster_file']) && !empty($_FILES['vt_poster_file']['name'])) {
+                $upVt = bu_handle_upload($_FILES['vt_poster_file'], '../upload/media/');
+                if ($upVt) $vtPoster = $upVt;
+            }
+
+            if (!empty($vTabs[0]['video_url'])) {
+                $mediaUrl = $vTabs[0]['video_url'];
+            }
+
             $extraArray = [
-                'video_tabs' => $tabs,
+                'poster'     => $vtPoster,
+                'badge1'     => trim($_POST['vt_badge1'] ?? 'Live Campus Video'),
+                'badge2'     => trim($_POST['vt_badge2'] ?? 'Bhopal, MP'),
+                'video_tabs' => $vTabs,
                 'info_cards' => $cards,
                 'cta_text'   => trim($_POST['vt_cta_text'] ?? 'Explore Full Virtual Tour'),
                 'cta_url'    => trim($_POST['vt_cta_url'] ?? 'about.php#virtualTour')
             ];
-        } elseif ($secKey == 'research_innovation') {
+        } 
+        // 5. RESEARCH INNOVATION
+        elseif ($secKey == 'research_innovation') {
             $metrics = [];
             if (isset($_POST['res_target']) && is_array($_POST['res_target'])) {
                 foreach ($_POST['res_target'] as $k => $rtarg) {
@@ -175,7 +254,9 @@ if (isset($_POST['submit'])) {
                 'button_text'    => trim($_POST['res_btn_text'] ?? 'EXPLORE RESEARCH →'),
                 'button_url'     => trim($_POST['res_btn_url'] ?? 'research.php')
             ];
-        } elseif ($secKey == 'global_network') {
+        } 
+        // 6. GLOBAL NETWORK
+        elseif ($secKey == 'global_network') {
             $tagsRaw = trim($_POST['glob_tags'] ?? '');
             $tags = array_filter(array_map('trim', explode(',', $tagsRaw)));
             $extraArray = [
@@ -190,7 +271,9 @@ if (isset($_POST['submit'])) {
                 'yt_channel_url' => trim($_POST['yt_channel_url'] ?? ''),
                 'yt_channel_btn' => trim($_POST['yt_channel_btn'] ?? '')
             ];
-        } elseif ($secKey == 'insta_reels') {
+        } 
+        // 7. INSTA REELS
+        elseif ($secKey == 'insta_reels') {
             $reels = [];
             if (isset($_POST['reel_url']) && is_array($_POST['reel_url'])) {
                 foreach ($_POST['reel_url'] as $k => $rurl) {
@@ -214,6 +297,192 @@ if (isset($_POST['submit'])) {
                 'reels'              => $reels,
                 'footer_button_text' => trim($_POST['reels_btn_text'] ?? 'View Instagram Page →'),
                 'footer_button_url'  => trim($_POST['reels_btn_url'] ?? 'https://www.instagram.com/bhabhauniversitybhopal/')
+            ];
+        } 
+        // 8. DEGREE PROGRAMS
+        elseif ($secKey == 'degree_programs') {
+            $progs = [];
+            if (isset($_POST['deg_title']) && is_array($_POST['deg_title'])) {
+                foreach ($_POST['deg_title'] as $k => $dtitle) {
+                    $dtitleTrim = trim($dtitle);
+                    if (!empty($dtitleTrim)) {
+                        $progs[] = [
+                            'level'       => trim($_POST['deg_level'][$k] ?? 'undergraduate'),
+                            'title'       => $dtitleTrim,
+                            'tag'         => trim($_POST['deg_tag'][$k] ?? 'FEATURED'),
+                            'duration'    => trim($_POST['deg_duration'][$k] ?? ''),
+                            'eligibility' => trim($_POST['deg_eligibility'][$k] ?? '')
+                        ];
+                    }
+                }
+            }
+            $extraArray = ['programs' => $progs];
+        } 
+        // 9. INFRASTRUCTURE GRID
+        elseif ($secKey == 'infrastructure_grid') {
+            $facs = [];
+            if (isset($_POST['fac_title']) && is_array($_POST['fac_title'])) {
+                foreach ($_POST['fac_title'] as $k => $ftitle) {
+                    $ftitleTrim = trim($ftitle);
+                    if (!empty($ftitleTrim)) {
+                        $fKey = trim($_POST['fac_key'][$k] ?? '');
+                        if (empty($fKey)) {
+                            $fKey = preg_replace('/[^a-z0-9]+/', '-', strtolower($ftitleTrim));
+                        }
+                        $fImg = trim($_POST['fac_image'][$k] ?? '');
+                        if (isset($_FILES['fac_file']['name'][$k]) && !empty($_FILES['fac_file']['name'][$k])) {
+                            $uploadDir = '../upload/infrastructure/';
+                            if (!is_dir($uploadDir)) @mkdir($uploadDir, 0777, true);
+                            $origName = basename($_FILES['fac_file']['name'][$k]);
+                            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+                            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+                            if (in_array($ext, $allowed)) {
+                                $newF = md5(microtime() . $origName) . '.' . $ext;
+                                if (move_uploaded_file($_FILES['fac_file']['tmp_name'][$k], $uploadDir . $newF)) {
+                                    $fImg = 'upload/infrastructure/' . $newF;
+                                }
+                            }
+                        }
+                        $facs[$fKey] = [
+                            'title' => $ftitleTrim,
+                            'badge' => trim($_POST['fac_badge'][$k] ?? 'Campus Facility'),
+                            'desc'  => trim($_POST['fac_desc'][$k] ?? ''),
+                            'image' => $fImg,
+                            'link'  => trim($_POST['fac_link'][$k] ?? 'infrastructure.php')
+                        ];
+                    }
+                }
+            }
+            $extraArray = ['facilities' => $facs];
+        } 
+        // 10. CAMPUS LIFE
+        elseif ($secKey == 'campus_life') {
+            $cards = [];
+            if (isset($_POST['cl_title']) && is_array($_POST['cl_title'])) {
+                foreach ($_POST['cl_title'] as $k => $clTitle) {
+                    $clTitleTrim = trim($clTitle);
+                    if (!empty($clTitleTrim)) {
+                        $cImg = trim($_POST['cl_image'][$k] ?? '');
+                        if (isset($_FILES['cl_file']['name'][$k]) && !empty($_FILES['cl_file']['name'][$k])) {
+                            $uploadDir = '../upload/media/';
+                            if (!is_dir($uploadDir)) @mkdir($uploadDir, 0777, true);
+                            $origName = basename($_FILES['cl_file']['name'][$k]);
+                            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+                            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+                            if (in_array($ext, $allowed)) {
+                                $newF = md5(microtime() . $origName) . '.' . $ext;
+                                if (move_uploaded_file($_FILES['cl_file']['tmp_name'][$k], $uploadDir . $newF)) {
+                                    $cImg = 'upload/media/' . $newF;
+                                }
+                            }
+                        }
+                        $cards[] = [
+                            'title' => $clTitleTrim,
+                            'badge' => trim($_POST['cl_badge'][$k] ?? ''),
+                            'icon'  => trim($_POST['cl_icon'][$k] ?? 'fa fa-star'),
+                            'desc'  => trim($_POST['cl_desc'][$k] ?? ''),
+                            'image' => $cImg,
+                            'link'  => trim($_POST['cl_link'][$k] ?? 'infrastructure.php')
+                        ];
+                    }
+                }
+            }
+            $extraArray = ['cards' => $cards];
+        } 
+        // 11. HALL OF FAME
+        elseif ($secKey == 'hall_of_fame') {
+            $posters = [];
+            if (isset($_POST['fame_title']) && is_array($_POST['fame_title'])) {
+                foreach ($_POST['fame_title'] as $k => $fTitle) {
+                    $fTitleTrim = trim($fTitle);
+                    if (!empty($fTitleTrim)) {
+                        $pImg = trim($_POST['fame_src'][$k] ?? '');
+                        if (isset($_FILES['fame_file']['name'][$k]) && !empty($_FILES['fame_file']['name'][$k])) {
+                            $uploadDir = '../upload/media/';
+                            if (!is_dir($uploadDir)) @mkdir($uploadDir, 0777, true);
+                            $origName = basename($_FILES['fame_file']['name'][$k]);
+                            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+                            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+                            if (in_array($ext, $allowed)) {
+                                $newF = md5(microtime() . $origName) . '.' . $ext;
+                                if (move_uploaded_file($_FILES['fame_file']['tmp_name'][$k], $uploadDir . $newF)) {
+                                    $pImg = 'upload/media/' . $newF;
+                                }
+                            }
+                        }
+                        $posters[] = [
+                            'title'    => $fTitleTrim,
+                            'category' => trim($_POST['fame_cat'][$k] ?? 'Placement Milestone'),
+                            'alt'      => trim($_POST['fame_alt'][$k] ?? $fTitleTrim),
+                            'src'      => $pImg
+                        ];
+                    }
+                }
+            }
+            $extraArray = ['posters' => $posters];
+        } 
+        // 12. ACCREDITATIONS
+        elseif ($secKey == 'accreditations') {
+            $items = [];
+            if (isset($_POST['acc_name']) && is_array($_POST['acc_name'])) {
+                foreach ($_POST['acc_name'] as $k => $aName) {
+                    $aNameTrim = trim($aName);
+                    if (!empty($aNameTrim)) {
+                        $aImg = trim($_POST['acc_img'][$k] ?? '');
+                        if (isset($_FILES['acc_file']['name'][$k]) && !empty($_FILES['acc_file']['name'][$k])) {
+                            $uploadDir = '../upload/media/';
+                            if (!is_dir($uploadDir)) @mkdir($uploadDir, 0777, true);
+                            $origName = basename($_FILES['acc_file']['name'][$k]);
+                            $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+                            $allowed = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+                            if (in_array($ext, $allowed)) {
+                                $newF = md5(microtime() . $origName) . '.' . $ext;
+                                if (move_uploaded_file($_FILES['acc_file']['tmp_name'][$k], $uploadDir . $newF)) {
+                                    $aImg = 'upload/media/' . $newF;
+                                }
+                            }
+                        }
+                        $items[] = [
+                            'name' => $aNameTrim,
+                            'desc' => trim($_POST['acc_desc'][$k] ?? 'Approved'),
+                            'alt'  => trim($_POST['acc_alt'][$k] ?? $aNameTrim),
+                            'img'  => $aImg,
+                            'link' => trim($_POST['acc_link'][$k] ?? 'approvals.php')
+                        ];
+                    }
+                }
+            }
+            $extraArray = ['items' => $items];
+        } 
+        // 13. CTA JOURNEY
+        elseif ($secKey == 'cta_journey') {
+            $extraArray = [
+                'btn1_text'  => trim($_POST['cta_btn1_text'] ?? 'APPLY NOW'),
+                'btn1_url'   => trim($_POST['cta_btn1_url'] ?? 'enquiry.php'),
+                'btn2_text'  => trim($_POST['cta_btn2_text'] ?? 'DOWNLOAD PROSPECTUS'),
+                'btn2_url'   => trim($_POST['cta_btn2_url'] ?? ''),
+                'btn3_text'  => trim($_POST['cta_btn3_text'] ?? 'SCHEDULE CALL'),
+                'btn3_phone' => trim($_POST['cta_btn3_phone'] ?? '07554246498')
+            ];
+        } 
+        // 14. ACHIEVEMENTS & NEWS TICKER
+        elseif ($secKey == 'achievements_ticker') {
+            $source = trim($_POST['ticker_source'] ?? 'news');
+            $items = [];
+            if (isset($_POST['ach_item_title']) && is_array($_POST['ach_item_title'])) {
+                foreach ($_POST['ach_item_title'] as $k => $aTitle) {
+                    $aTitleTrim = trim($aTitle);
+                    if (!empty($aTitleTrim)) {
+                        $items[] = [
+                            'title' => $aTitleTrim,
+                            'url'   => trim($_POST['ach_item_url'][$k] ?? '')
+                        ];
+                    }
+                }
+            }
+            $extraArray = [
+                'source' => $source,
+                'items'  => $items
             ];
         }
         
@@ -314,6 +583,51 @@ if (isset($_POST['submit'])) {
     padding: 14px;
     margin-bottom: 15px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    position: relative;
+}
+.btn-delete-row {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 2px 8px;
+    font-size: 11px;
+}
+.bu-live-thumb-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+}
+.bu-live-thumb-img {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #94a3b8;
+    background: #fff;
+}
+.bu-live-video-preview {
+    max-width: 100%;
+    max-height: 180px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background: #000;
+    margin-top: 6px;
+}
+.bu-icon-badge-preview {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #0A1B54;
+    color: #FFC107;
+    border-radius: 4px;
+    font-size: 16px;
 }
 </style>
 </head>
@@ -403,59 +717,169 @@ if (isset($_POST['submit'])) {
                     <label>Chancellor Message (Full Content)</label>
                     <textarea name="content" class="form-control ckeditor" rows="5"><?php echo $aryData['content']; ?></textarea>
                   </div>
-                  <?php endif; ?>
                   
-                  <!-- Media / Video URL -->
-                  <?php if (in_array($aryData['section_key'], ['hero_video', 'chancellor_welcome', 'virtual_tour'])): ?>
-                  <div class="row">
-                    <div class="form-group col-md-8">
-                      <label>Media / Video URL</label>
-                      <input type="text" name="media_url" class="form-control" value="<?php echo htmlspecialchars($aryData['media_url']); ?>" />
-                      <small class="help-tip">Relative path (e.g. <code>new-media/image/hero/bhabha_2.mp4</code>) or full external link</small>
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label>Or Upload New Video / Image</label>
-                      <input type="file" name="media_file" class="form-control-file" />
-                      <small class="help-tip">Uploads directly to <code>upload/media/</code></small>
+                  <!-- Recognitions tags for Chancellor -->
+                  <?php $recogs = !empty($extra['recognitions']) ? $extra['recognitions'] : []; ?>
+                  <div class="simple-card-group">
+                    <div class="simple-card-title"><i class="fa fa-shield text-success"></i> Chancellor Recognition Badges (3 Items)</div>
+                    <div class="row">
+                      <?php for ($i = 0; $i < 3; $i++): 
+                        $rc = $recogs[$i] ?? ['title' => '', 'label' => ''];
+                      ?>
+                      <div class="col-md-4 mb-2">
+                        <div class="simple-item-box">
+                          <label class="text-primary font-weight-bold">Badge #<?php echo $i + 1; ?></label>
+                          <div class="form-group mb-1">
+                            <small class="text-muted">Title (e.g. UGC / AICTE)</small>
+                            <input type="text" name="recog_title[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($rc['title']); ?>">
+                          </div>
+                          <div class="form-group mb-0">
+                            <small class="text-muted">Status (e.g. RECOGNISED / APPROVED)</small>
+                            <input type="text" name="recog_label[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($rc['label']); ?>">
+                          </div>
+                        </div>
+                      </div>
+                      <?php endfor; ?>
                     </div>
                   </div>
                   <?php endif; ?>
                   
+                  <!-- Main Media / Video URL & Live Preview for Chancellor -->
+                  <?php if (in_array($aryData['section_key'], ['chancellor_welcome'])): ?>
+                  <div class="simple-card-group">
+                    <div class="simple-card-title"><i class="fa fa-video-camera text-primary"></i> Video / Media File &amp; Live Preview</div>
+                    <div class="row">
+                      <div class="col-md-7 form-group">
+                        <label>Media / Video URL</label>
+                        <input type="text" name="media_url" class="form-control" value="<?php echo htmlspecialchars($aryData['media_url']); ?>" />
+                        <small class="help-tip">Relative path (e.g. <code>upload/video/bhabha_video.mp4</code>) or full external link</small>
+                      </div>
+                      <div class="col-md-5 form-group">
+                        <label>Or Upload New Video / Image</label>
+                        <input type="file" name="media_file" class="form-control-file" />
+                        <small class="help-tip">Uploads directly to <code>upload/media/</code></small>
+                      </div>
+                    </div>
+                    <?php if (!empty($aryData['media_url'])): 
+                      $mResolved = bu_admin_media_url($aryData['media_url']);
+                      $isVid = preg_match('/\.(mp4|webm|ogg)$/i', $aryData['media_url']);
+                    ?>
+                    <div class="mt-2">
+                      <small class="font-weight-bold text-muted d-block">Current Media Preview:</small>
+                      <?php if ($isVid): ?>
+                        <video src="<?php echo $mResolved; ?>" controls class="bu-live-video-preview"></video>
+                      <?php else: ?>
+                        <div class="bu-live-thumb-wrap">
+                          <img src="<?php echo $mResolved; ?>" alt="Media" class="bu-live-thumb-img">
+                          <div>
+                            <span class="font-weight-bold d-block"><?php echo basename($aryData['media_url']); ?></span>
+                            <a href="<?php echo $mResolved; ?>" target="_blank" class="small text-primary"><i class="fa fa-external-link"></i> Open Full View</a>
+                          </div>
+                        </div>
+                      <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
+                  </div>
+                  <?php endif; ?>
+                  
                   <!-- ============================================== -->
-                  <!-- SECTION-SPECIFIC SIMPLE FIELDS (NO RAW JSON)   -->
+                  <!-- SECTION-SPECIFIC SIMPLE FIELDS                 -->
                   <!-- ============================================== -->
                   
                   <!-- 1. HERO VIDEO & STATS BAR FIELDS -->
                   <?php if ($aryData['section_key'] == 'hero_video'): 
                     $stats = !empty($extra['stats']) ? $extra['stats'] : [];
+                    $heroPoster = $extra['poster'] ?? 'new-media/image/campus-aerial.png';
+                    $heroVid2 = $extra['video_2'] ?? 'new-media/image/hero/bhabha_1.mp4';
                   ?>
                   <div class="simple-card-group">
                     <div class="simple-card-title">
-                      <i class="fa fa-bar-chart"></i> Hero Stats Bar Counters (8 Items)
+                      <i class="fa fa-video-camera text-primary"></i> Hero Background Videos &amp; Poster Image (Live Previews)
                     </div>
-                    <div class="form-group">
-                      <label>Video Poster Image URL</label>
-                      <input type="text" name="hero_poster" class="form-control" value="<?php echo htmlspecialchars($extra['poster'] ?? 'new-media/image/campus-aerial.png'); ?>" />
-                      <small class="help-tip">Image displayed while background video is loading</small>
+                    
+                    <!-- Video 1 -->
+                    <div class="simple-item-box mb-3">
+                      <label class="text-primary font-weight-bold"><i class="fa fa-film"></i> Primary Hero Video (Background Loop)</label>
+                      <div class="row">
+                        <div class="col-md-7 form-group mb-1">
+                          <small class="text-muted">Video 1 URL / Relative Path</small>
+                          <input type="text" name="media_url" class="form-control form-control-sm" value="<?php echo htmlspecialchars($aryData['media_url']); ?>" placeholder="new-media/image/hero/bhabha_2.mp4">
+                        </div>
+                        <div class="col-md-5 form-group mb-1">
+                          <small class="text-muted">Or Upload Video 1 (.mp4)</small>
+                          <input type="file" name="media_file" class="form-control-file">
+                        </div>
+                      </div>
+                      <?php if (!empty($aryData['media_url'])): ?>
+                        <video src="<?php echo bu_admin_media_url($aryData['media_url']); ?>" controls class="bu-live-video-preview" style="max-height:140px;"></video>
+                      <?php endif; ?>
+                    </div>
+
+                    <!-- Video 2 -->
+                    <div class="simple-item-box mb-3">
+                      <label class="text-primary font-weight-bold"><i class="fa fa-film"></i> Secondary / Fallback Hero Video</label>
+                      <div class="row">
+                        <div class="col-md-7 form-group mb-1">
+                          <small class="text-muted">Video 2 URL / Path</small>
+                          <input type="text" name="hero_video_2" class="form-control form-control-sm" value="<?php echo htmlspecialchars($heroVid2); ?>" placeholder="new-media/image/hero/bhabha_1.mp4">
+                        </div>
+                        <div class="col-md-5 form-group mb-1">
+                          <small class="text-muted">Or Upload Video 2 (.mp4)</small>
+                          <input type="file" name="hero_video2_file" class="form-control-file">
+                        </div>
+                      </div>
+                      <?php if (!empty($heroVid2)): ?>
+                        <video src="<?php echo bu_admin_media_url($heroVid2); ?>" controls class="bu-live-video-preview" style="max-height:140px;"></video>
+                      <?php endif; ?>
+                    </div>
+
+                    <!-- Poster Image -->
+                    <div class="simple-item-box">
+                      <label class="text-primary font-weight-bold"><i class="fa fa-picture-o"></i> Hero Video Poster Image (Before Video Loads)</label>
+                      <div class="row">
+                        <div class="col-md-7 form-group mb-1">
+                          <small class="text-muted">Poster Image URL / Path</small>
+                          <input type="text" name="hero_poster" class="form-control form-control-sm" value="<?php echo htmlspecialchars($heroPoster); ?>">
+                        </div>
+                        <div class="col-md-5 form-group mb-1">
+                          <small class="text-muted">Or Upload Poster (.jpg, .png)</small>
+                          <input type="file" name="hero_poster_file" class="form-control-file">
+                        </div>
+                      </div>
+                      <?php if (!empty($heroPoster)): ?>
+                        <div class="bu-live-thumb-wrap mt-1">
+                          <img src="<?php echo bu_admin_media_url($heroPoster); ?>" alt="Poster" class="bu-live-thumb-img">
+                          <span class="small font-weight-bold text-muted"><?php echo basename($heroPoster); ?></span>
+                        </div>
+                      <?php endif; ?>
+                    </div>
+
+                    <!-- Hero Stats -->
+                    <div class="simple-card-title mt-4">
+                      <i class="fa fa-bar-chart text-success"></i> Hero Stats Bar Counters (8 Items)
                     </div>
                     <div class="row">
                       <?php for ($i = 0; $i < 8; $i++): 
-                        $st = $stats[$i] ?? ['number' => '', 'suffix' => '', 'label' => ''];
+                        $st = $stats[$i] ?? ['number' => '', 'suffix' => '', 'label' => '', 'url' => ''];
                       ?>
                       <div class="col-md-3 col-sm-6 mb-3">
                         <div class="simple-item-box">
                           <label class="text-primary font-weight-bold">Stat #<?php echo $i + 1; ?></label>
                           <div class="form-group mb-1">
                             <small class="text-muted">Target Number</small>
-                            <input type="text" name="hero_stat_num[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($st['number']); ?>" placeholder="e.g. 15000">
+                            <input type="text" name="hero_stat_num[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($st['number']); ?>" placeholder="e.g. 15000">
                           </div>
                           <div class="form-group mb-1">
-                            <small class="text-muted">Suffix (Optional)</small>
-                            <input type="text" name="hero_stat_suffix[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($st['suffix']); ?>" placeholder="e.g. + or k+">
+                            <small class="text-muted">Suffix (e.g. + or % or ac)</small>
+                            <input type="text" name="hero_stat_suffix[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($st['suffix']); ?>" placeholder="e.g. +">
+                          </div>
+                          <div class="form-group mb-1">
+                            <small class="text-muted">Label Text</small>
+                            <input type="text" name="hero_stat_lbl[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($st['label']); ?>" placeholder="e.g. STUDENTS ENROLLED">
                           </div>
                           <div class="form-group mb-0">
-                            <small class="text-muted">Label</small>
-                            <input type="text" name="hero_stat_lbl[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($st['label']); ?>" placeholder="e.g. STUDENTS">
+                            <small class="text-muted">Target Link (Optional)</small>
+                            <input type="text" name="hero_stat_url[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($st['url'] ?? ''); ?>" placeholder="online-admission.php">
                           </div>
                         </div>
                       </div>
@@ -464,43 +888,9 @@ if (isset($_POST['submit'])) {
                   </div>
                   <?php endif; ?>
 
-                  <!-- 2. CHANCELLOR WELCOME RECOGNITIONS -->
-                  <?php if ($aryData['section_key'] == 'chancellor_welcome'): 
-                    $recogs = !empty($extra['recognitions']) ? $extra['recognitions'] : [
-                        ['title' => 'UGC', 'label' => 'RECOGNISED'],
-                        ['title' => 'MPPURC', 'label' => 'APPROVED'],
-                        ['title' => 'AICTE', 'label' => 'APPROVED']
-                    ];
-                  ?>
-                  <div class="simple-card-group">
-                    <div class="simple-card-title">
-                      <i class="fa fa-certificate"></i> Key Recognitions &amp; Accreditations (3 Badges)
-                    </div>
-                    <div class="row">
-                      <?php for ($i = 0; $i < 3; $i++): 
-                        $rc = $recogs[$i] ?? ['title' => '', 'label' => ''];
-                      ?>
-                      <div class="col-md-4 mb-3">
-                        <div class="simple-item-box">
-                          <label class="text-primary font-weight-bold">Recognition Badge #<?php echo $i + 1; ?></label>
-                          <div class="form-group mb-2">
-                            <small class="text-muted">Main Badge (e.g. UGC, MPPURC, AICTE)</small>
-                            <input type="text" name="recog_title[]" class="form-control" value="<?php echo htmlspecialchars($rc['title']); ?>">
-                          </div>
-                          <div class="form-group mb-0">
-                            <small class="text-muted">Subtitle / Status (e.g. RECOGNISED, APPROVED)</small>
-                            <input type="text" name="recog_label[]" class="form-control" value="<?php echo htmlspecialchars($rc['label']); ?>">
-                          </div>
-                        </div>
-                      </div>
-                      <?php endfor; ?>
-                    </div>
-                  </div>
-                  <?php endif; ?>
-
-                  <!-- 3. WHY BHABHA UNIVERSITY (6 FEATURES) -->
+                  <!-- 2. WHY BHABHA (6+ FEATURE POINTS) -->
                   <?php if ($aryData['section_key'] == 'why_bhabha'): 
-                    $defaultFeats = [
+                    $feats = !empty($extra['features']) ? $extra['features'] : [
                         ['icon' => 'fa fa-certificate', 'title' => 'UGC Recognised', 'desc' => 'UGC recognised under Section 2(f) with approvals from AICTE, PCI, BCI, DCI, NCTE.', 'url' => 'approvals.php'],
                         ['icon' => 'fa fa-flask', 'title' => 'Research Excellence', 'desc' => '120+ research labs, 250+ patents and 2,500+ publications.', 'url' => 'research.php'],
                         ['icon' => 'fa fa-globe', 'title' => 'Global Collaborations', 'desc' => 'MoUs with 60+ international universities across 4 continents.', 'url' => 'page.php?id=9'],
@@ -508,157 +898,230 @@ if (isset($_POST['submit'])) {
                         ['icon' => 'fa fa-building-o', 'title' => 'Smart Campus', 'desc' => '32-acre wifi-enabled green campus with smart classrooms.', 'url' => 'infrastructure.php'],
                         ['icon' => 'fa fa-rocket', 'title' => 'Innovation Ecosystem', 'desc' => 'Incubation centre, student startups and industry mentoring.', 'url' => 'research.php#incubation-edc']
                     ];
-                    $features = !empty($extra['features']) ? $extra['features'] : $defaultFeats;
                   ?>
                   <div class="simple-card-group">
-                    <div class="simple-card-title">
-                      <i class="fa fa-th-large"></i> Why Bhabha Key Features (6 Items)
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <div class="simple-card-title mb-0">
+                        <i class="fa fa-graduation-cap text-primary"></i> Why Bhabha Key Feature Cards (Points &amp; Badges)
+                      </div>
+                      <button type="button" class="btn btn-sm btn-success" onclick="addWhyBhabhaRow()"><i class="fa fa-plus"></i> Add New Point</button>
                     </div>
-                    <div class="row">
-                      <?php for ($i = 0; $i < 6; $i++): 
-                        $f = $features[$i] ?? ($defaultFeats[$i] ?? ['icon' => 'fa fa-certificate', 'title' => '', 'desc' => '', 'url' => '']);
+                    <div id="whyBhabhaRowsContainer" class="row">
+                      <?php foreach ($feats as $k => $f): 
+                        $fIcon = !empty($f['icon']) ? $f['icon'] : 'fa fa-star';
                       ?>
-                      <div class="col-md-4 mb-3">
-                        <div class="simple-item-box h-100">
-                          <label class="text-primary font-weight-bold">Feature #<?php echo $i + 1; ?></label>
-                          <div class="form-group mb-2">
-                            <small class="text-muted">Feature Title</small>
-                            <input type="text" name="why_title[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['title'] ?? ''); ?>" placeholder="Title">
+                      <div class="col-md-6 mb-3 why-feat-item">
+                        <div class="simple-item-box">
+                          <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.why-feat-item').remove();">&times; Remove</button>
+                          <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="bu-icon-badge-preview mr-2"><i class="<?php echo htmlspecialchars($fIcon); ?>"></i></span>
+                            <label class="text-primary font-weight-bold mb-0">Feature Point #<?php echo $k + 1; ?></label>
                           </div>
-                          <div class="form-group mb-2">
-                            <small class="text-muted">FontAwesome Icon Class</small>
-                            <input type="text" name="why_icon[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['icon'] ?? ''); ?>" placeholder="fa fa-certificate">
+                          
+                          <div class="row">
+                            <div class="col-md-8 form-group mb-1">
+                              <small class="text-muted">Point Title</small>
+                              <input type="text" name="why_title[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($f['title'] ?? ''); ?>" placeholder="e.g. UGC Recognised">
+                            </div>
+                            <div class="col-md-4 form-group mb-1">
+                              <small class="text-muted">FontAwesome Icon</small>
+                              <input type="text" name="why_icon[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($fIcon); ?>" placeholder="fa fa-certificate">
+                            </div>
                           </div>
-                          <div class="form-group mb-2">
-                            <small class="text-muted">Redirect URL / Link</small>
-                            <input type="text" name="why_url[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['url'] ?? ''); ?>" placeholder="e.g. research.php or approvals.php">
+                          
+                          <div class="form-group mb-1">
+                            <small class="text-muted">Description Text</small>
+                            <textarea name="why_desc[]" class="form-control form-control-sm" rows="2" placeholder="Point description..."><?php echo htmlspecialchars($f['desc'] ?? ''); ?></textarea>
                           </div>
+                          
                           <div class="form-group mb-0">
-                            <small class="text-muted">Description</small>
-                            <textarea name="why_desc[]" class="form-control form-control-sm" rows="2" placeholder="Description"><?php echo htmlspecialchars($f['desc'] ?? ''); ?></textarea>
+                            <small class="text-muted">Explore Details Link / URL</small>
+                            <input type="text" name="why_url[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['url'] ?? ''); ?>" placeholder="approvals.php">
                           </div>
                         </div>
                       </div>
-                      <?php endfor; ?>
+                      <?php endforeach; ?>
                     </div>
                   </div>
                   <?php endif; ?>
 
-                  <!-- 4. VIRTUAL TOUR SHOWCASE -->
+                  <!-- 3. VIRTUAL TOUR 360 -->
                   <?php if ($aryData['section_key'] == 'virtual_tour'): 
-                    $vtabs = !empty($extra['video_tabs']) ? $extra['video_tabs'] : [];
-                    $cards = !empty($extra['info_cards']) ? $extra['info_cards'] : [];
+                    $vtPoster = $extra['poster'] ?? 'new-media/image/campus-aerial.png';
+                    $vtTabs = !empty($extra['video_tabs']) ? $extra['video_tabs'] : [
+                        ['label' => 'Aerial Drone', 'icon' => 'fa fa-plane', 'video_url' => 'upload/video/bhabha_video.mp4'],
+                        ['label' => 'Campus Tour Video', 'icon' => 'fa fa-film', 'video_url' => 'new-media/image/hero/bhabha_2.mp4'],
+                        ['label' => 'Academic & Labs', 'icon' => 'fa fa-flask', 'video_url' => 'new-media/image/hero/academic-lab.mp4'],
+                        ['label' => 'Student Life', 'icon' => 'fa fa-graduation-cap', 'video_url' => 'new-media/image/hero/bhabha_4.mp4']
+                    ];
+                    $vtCards = !empty($extra['info_cards']) ? $extra['info_cards'] : ($extra['cards'] ?? [
+                        ['icon' => 'fa fa-tree', 'title' => '32-Acre Green Campus', 'desc' => 'Eco-friendly lush green campus with solar energy, botanical gardens, and spacious plazas.'],
+                        ['icon' => 'fa fa-university', 'title' => '25 Schools & Institutes', 'desc' => 'Engineering, Medical, Dental, Pharmacy, Law, Agriculture & Management blocks.'],
+                        ['icon' => 'fa fa-flask', 'title' => '120+ Modern Labs', 'desc' => 'Hi-tech practical skill labs, research wings, and state-of-art computing centers.'],
+                        ['icon' => 'fa fa-hospital-o', 'title' => '500-Bed Hospital', 'desc' => 'Full-fledged multi-speciality teaching hospital & clinical training facility.']
+                    ]);
                   ?>
                   <div class="simple-card-group">
-                    <div class="simple-card-title">
-                      <i class="fa fa-video-camera"></i> Virtual Tour Video Tabs (4 Video Buttons)
+                    <div class="simple-card-title"><i class="fa fa-street-view text-primary"></i> Virtual Tour Video Poster &amp; Floating Badges</div>
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label>Video Poster Image URL</label>
+                        <input type="text" name="vt_poster" class="form-control form-control-sm" value="<?php echo htmlspecialchars($vtPoster); ?>">
+                        <?php if (!empty($vtPoster)): ?>
+                          <div class="bu-live-thumb-wrap mt-1">
+                            <img src="<?php echo bu_admin_media_url($vtPoster); ?>" alt="Poster" class="bu-live-thumb-img">
+                            <span class="small font-weight-bold text-muted"><?php echo basename($vtPoster); ?></span>
+                          </div>
+                        <?php endif; ?>
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>Or Upload New Poster</label>
+                        <input type="file" name="vt_poster_file" class="form-control-file">
+                      </div>
                     </div>
                     <div class="row">
-                      <?php for ($i = 0; $i < 4; $i++): 
-                        $vt = $vtabs[$i] ?? ['label' => '', 'icon' => 'fa fa-video-camera', 'video_url' => ''];
+                      <div class="col-md-6 form-group">
+                        <label>Badge 1 Text (Overlay Left)</label>
+                        <input type="text" name="vt_badge1" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['badge1'] ?? 'Live Campus Video'); ?>">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>Badge 2 Text (Overlay Right)</label>
+                        <input type="text" name="vt_badge2" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['badge2'] ?? 'Bhopal, MP'); ?>">
+                      </div>
+                    </div>
+                    
+                    <!-- 4 Interactive Video Tabs -->
+                    <div class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
+                      <div class="simple-card-title mb-0 border-0 p-0">
+                        <i class="fa fa-film text-danger"></i> Interactive Video Tabs (<?php echo count($vtTabs); ?> Tabs)
+                      </div>
+                      <button type="button" class="btn btn-sm btn-success" onclick="addVirtualTourTab()"><i class="fa fa-plus"></i> Add Video Tab</button>
+                    </div>
+                    <div id="vtTabsRowsContainer" class="row">
+                      <?php foreach ($vtTabs as $k => $vtTab): 
+                        $tIcon = !empty($vtTab['icon']) ? $vtTab['icon'] : 'fa fa-video-camera';
+                        $tVid = !empty($vtTab['video_url']) ? $vtTab['video_url'] : '';
                       ?>
-                      <div class="col-md-6 mb-3">
-                        <div class="simple-item-box">
-                          <label class="text-primary font-weight-bold">Video Tab #<?php echo $i + 1; ?></label>
+                      <div class="col-md-6 mb-3 vt-tab-item">
+                        <div class="simple-item-box" style="border-color:#4e73df;">
+                          <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.vt-tab-item').remove();">&times; Remove</button>
+                          <div class="d-flex align-items-center mb-2">
+                            <span class="bu-icon-badge-preview mr-2"><i class="<?php echo htmlspecialchars($tIcon); ?>"></i></span>
+                            <label class="text-primary font-weight-bold mb-0">Video Tab #<?php echo $k + 1; ?></label>
+                          </div>
+                          
                           <div class="row">
-                            <div class="col-7">
+                            <div class="col-md-7 form-group mb-1">
                               <small class="text-muted">Tab Label</small>
-                              <input type="text" name="vt_tab_label[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($vt['label']); ?>" placeholder="e.g. Aerial Drone">
+                              <input type="text" name="vt_tab_label[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($vtTab['label'] ?? ''); ?>" placeholder="e.g. Aerial Drone">
                             </div>
-                            <div class="col-5">
+                            <div class="col-md-5 form-group mb-1">
                               <small class="text-muted">Icon Class</small>
-                              <input type="text" name="vt_tab_icon[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($vt['icon']); ?>" placeholder="fa fa-plane">
-                            </div>
-                            <div class="col-12 mt-2">
-                              <small class="text-muted">Video MP4 URL or Path</small>
-                              <input type="text" name="vt_tab_url[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($vt['video_url']); ?>" placeholder="new-media/image/hero/bhabha_1.mp4">
+                              <input type="text" name="vt_tab_icon[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($tIcon); ?>" placeholder="fa fa-plane">
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      <?php endfor; ?>
-                    </div>
-
-                    <div class="simple-card-title mt-4">
-                      <i class="fa fa-info-circle"></i> Campus Highlights (4 Side Cards)
-                    </div>
-                    <div class="row">
-                      <?php for ($i = 0; $i < 4; $i++): 
-                        $c = $cards[$i] ?? ['title' => '', 'desc' => '', 'icon' => 'fa fa-check'];
-                      ?>
-                      <div class="col-md-6 mb-3">
-                        <div class="simple-item-box">
-                          <label class="text-primary font-weight-bold">Highlight Card #<?php echo $i + 1; ?></label>
+                          
                           <div class="row">
-                            <div class="col-8">
+                            <div class="col-md-7 form-group mb-1">
+                              <small class="text-muted">Video URL / Path</small>
+                              <input type="text" name="vt_tab_video[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($tVid); ?>" placeholder="upload/video/... or new-media/...">
+                            </div>
+                            <div class="col-md-5 form-group mb-1">
+                              <small class="text-muted">Or Upload Video (.mp4)</small>
+                              <input type="file" name="vt_tab_file[]" class="form-control-file">
+                            </div>
+                          </div>
+
+                          <?php if (!empty($tVid)): ?>
+                            <div class="mt-2">
+                              <small class="text-muted font-weight-bold d-block"><i class="fa fa-play-circle"></i> Live Video Preview:</small>
+                              <video src="<?php echo bu_admin_media_url($tVid); ?>" controls class="bu-live-video-preview" style="max-height:130px;"></video>
+                            </div>
+                          <?php endif; ?>
+                        </div>
+                      </div>
+                      <?php endforeach; ?>
+                    </div>
+
+                    <!-- 4 Side Feature Cards -->
+                    <div class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
+                      <div class="simple-card-title mb-0 border-0 p-0">
+                        <i class="fa fa-th-list text-info"></i> Side Feature Highlight Cards (<?php echo count($vtCards); ?> Cards)
+                      </div>
+                      <button type="button" class="btn btn-sm btn-success" onclick="addVirtualTourCard()"><i class="fa fa-plus"></i> Add Feature Card</button>
+                    </div>
+                    <div id="vtCardsRowsContainer" class="row">
+                      <?php foreach ($vtCards as $k => $vc): 
+                        $cIcon = !empty($vc['icon']) ? $vc['icon'] : 'fa fa-check';
+                      ?>
+                      <div class="col-md-6 mb-3 vt-card-item">
+                        <div class="simple-item-box" style="border-color:#36b9cc;">
+                          <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.vt-card-item').remove();">&times; Remove</button>
+                          <div class="d-flex align-items-center mb-2">
+                            <span class="bu-icon-badge-preview mr-2"><i class="<?php echo htmlspecialchars($cIcon); ?>"></i></span>
+                            <label class="text-info font-weight-bold mb-0">Feature Card #<?php echo $k + 1; ?></label>
+                          </div>
+                          
+                          <div class="row">
+                            <div class="col-md-8 form-group mb-1">
                               <small class="text-muted">Card Title</small>
-                              <input type="text" name="vt_card_title[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($c['title']); ?>" placeholder="e.g. 32-Acre Green Campus">
+                              <input type="text" name="vt_card_title[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($vc['title'] ?? ''); ?>" placeholder="e.g. 32-Acre Green Campus">
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4 form-group mb-1">
                               <small class="text-muted">Icon Class</small>
-                              <input type="text" name="vt_card_icon[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($c['icon']); ?>" placeholder="fa fa-tree">
+                              <input type="text" name="vt_card_icon[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($cIcon); ?>" placeholder="fa fa-tree">
                             </div>
-                            <div class="col-12 mt-2">
-                              <small class="text-muted">Short Description</small>
-                              <textarea name="vt_card_desc[]" class="form-control form-control-sm" rows="2"><?php echo htmlspecialchars($c['desc']); ?></textarea>
-                            </div>
+                          </div>
+                          
+                          <div class="form-group mb-0">
+                            <small class="text-muted">Short Description</small>
+                            <textarea name="vt_card_desc[]" class="form-control form-control-sm" rows="2" placeholder="Feature card description..."><?php echo htmlspecialchars($vc['desc'] ?? ''); ?></textarea>
                           </div>
                         </div>
                       </div>
-                      <?php endfor; ?>
+                      <?php endforeach; ?>
                     </div>
-
-                    <div class="simple-card-title mt-4">
-                      <i class="fa fa-external-link"></i> Virtual Tour CTA Button
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Button Text</label>
-                        <input type="text" name="vt_cta_text" class="form-control" value="<?php echo htmlspecialchars($extra['cta_text'] ?? 'Explore Full Virtual Tour'); ?>">
+                    
+                    <div class="row mt-3">
+                      <div class="col-md-6 form-group">
+                        <label>Explore Button Text</label>
+                        <input type="text" name="vt_cta_text" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['cta_text'] ?? 'Explore Full Virtual Tour'); ?>">
                       </div>
-                      <div class="col-md-6">
-                        <label>Button Link / URL</label>
-                        <input type="text" name="vt_cta_url" class="form-control" value="<?php echo htmlspecialchars($extra['cta_url'] ?? 'about.php#virtualTour'); ?>">
+                      <div class="col-md-6 form-group">
+                        <label>Explore Button Link</label>
+                        <input type="text" name="vt_cta_url" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['cta_url'] ?? 'about.php#virtualTour'); ?>">
                       </div>
                     </div>
                   </div>
                   <?php endif; ?>
 
-                  <!-- 5. RESEARCH & INNOVATION -->
+                  <!-- 4. RESEARCH & INNOVATION -->
                   <?php if ($aryData['section_key'] == 'research_innovation'): 
                     $metrics = !empty($extra['metrics']) ? $extra['metrics'] : [];
-                    $resImg = !empty($aryData['media_url']) ? (strpos($aryData['media_url'], 'http') === 0 ? $aryData['media_url'] : '../' . ltrim($aryData['media_url'], '/')) : '../new-media/image/research-students.png';
                   ?>
                   <div class="simple-card-group">
-                    <!-- Research Side Image Preview & Upload -->
-                    <div class="simple-card-title">
-                      <i class="fa fa-image"></i> Research Section Side Image
-                    </div>
-                    <div class="row align-items-center mb-3">
-                      <div class="col-md-3 text-center">
-                        <div style="background:#f1f5f9; padding:8px; border-radius:8px; border:1px solid #e2e8f0;">
-                          <img src="<?php echo $resImg; ?>" alt="Research Preview" style="max-width:100%; max-height:120px; border-radius:6px; object-fit:cover;" onerror="this.src='../images/fav-icon.png';">
-                          <div class="small text-muted mt-1 font-weight-bold">Current Image Preview</div>
-                        </div>
+                    <div class="simple-card-title"><i class="fa fa-flask text-primary"></i> Research Section Main Photo &amp; Live Preview</div>
+                    <div class="row">
+                      <div class="col-md-7 form-group">
+                        <label>Photo URL / Path</label>
+                        <input type="text" name="media_url" class="form-control" value="<?php echo htmlspecialchars($aryData['media_url']); ?>">
                       </div>
-                      <div class="col-md-9">
-                        <div class="form-group mb-2">
-                          <label>Image File Path / External URL</label>
-                          <input type="text" name="media_url" class="form-control" value="<?php echo htmlspecialchars($aryData['media_url']); ?>" placeholder="e.g. new-media/image/research-students.png">
-                          <small class="help-tip">Path to image file (e.g. <code>new-media/image/research-students.png</code>)</small>
-                        </div>
-                        <div class="form-group mb-0">
-                          <label>Or Upload New Image</label>
-                          <input type="file" name="media_file" class="form-control-file">
-                          <small class="help-tip">Allowed: JPG, PNG, WEBP. Uploads directly to <code>upload/media/</code></small>
-                        </div>
+                      <div class="col-md-5 form-group">
+                        <label>Or Upload New Photo</label>
+                        <input type="file" name="media_file" class="form-control-file">
                       </div>
                     </div>
+                    <?php if (!empty($aryData['media_url'])): ?>
+                      <div class="bu-live-thumb-wrap mb-3">
+                        <img src="<?php echo bu_admin_media_url($aryData['media_url']); ?>" alt="Research" class="bu-live-thumb-img" style="width:70px; height:70px;">
+                        <div>
+                          <span class="font-weight-bold d-block"><?php echo basename($aryData['media_url']); ?></span>
+                          <a href="<?php echo bu_admin_media_url($aryData['media_url']); ?>" target="_blank" class="small text-primary"><i class="fa fa-external-link"></i> Full View</a>
+                        </div>
+                      </div>
+                    <?php endif; ?>
 
-                    <!-- Research Metrics (4 Counters) -->
-                    <div class="simple-card-title mt-4">
-                      <i class="fa fa-line-chart"></i> Research Metrics (4 Counters)
-                    </div>
+                    <div class="simple-card-title mt-4"><i class="fa fa-line-chart text-success"></i> Research Metrics (4 Counters)</div>
                     <div class="row">
                       <?php for ($i = 0; $i < 4; $i++): 
                         $m = $metrics[$i] ?? ['target' => '', 'suffix' => '', 'prefix' => '', 'label' => ''];
@@ -669,7 +1132,7 @@ if (isset($_POST['submit'])) {
                           <label class="text-primary font-weight-bold">Metric #<?php echo $i + 1; ?></label>
                           <div class="form-group mb-1">
                             <small class="text-muted">Target Number</small>
-                            <input type="text" name="res_target[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($mVal); ?>" placeholder="e.g. 250">
+                            <input type="text" name="res_target[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($mVal); ?>" placeholder="e.g. 250">
                           </div>
                           <div class="form-group mb-1">
                             <small class="text-muted">Prefix (e.g. ₹)</small>
@@ -677,7 +1140,7 @@ if (isset($_POST['submit'])) {
                           </div>
                           <div class="form-group mb-1">
                             <small class="text-muted">Suffix (e.g. + or Cr)</small>
-                            <input type="text" name="res_suffix[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($m['suffix'] ?? ''); ?>" placeholder="e.g. + or Cr">
+                            <input type="text" name="res_suffix[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($m['suffix'] ?? ''); ?>" placeholder="e.g. +">
                           </div>
                           <div class="form-group mb-0">
                             <small class="text-muted">Metric Label</small>
@@ -688,144 +1151,82 @@ if (isset($_POST['submit'])) {
                       <?php endfor; ?>
                     </div>
 
-                    <!-- Highlight Grant Card -->
-                    <div class="simple-card-title mt-3">
-                      <i class="fa fa-bullhorn"></i> Featured Grant Highlight &amp; Explore Button
-                    </div>
+                    <div class="simple-card-title mt-3"><i class="fa fa-bullhorn text-warning"></i> Featured Grant Highlight &amp; Button</div>
                     <div class="row">
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label>Highlight Card Icon</label>
-                          <input type="text" name="res_highlight_icon" class="form-control" value="<?php echo htmlspecialchars($extra['highlight_icon'] ?? 'fa fa-flask'); ?>" placeholder="fa fa-flask">
-                          <small class="help-tip">FontAwesome icon class (e.g. <code>fa fa-flask</code>, <code>fa fa-trophy</code>)</small>
-                        </div>
+                      <div class="col-md-3 form-group">
+                        <label>Highlight Icon</label>
+                        <input type="text" name="res_highlight_icon" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['highlight_icon'] ?? 'fa fa-flask'); ?>">
                       </div>
-                      <div class="col-md-9">
-                        <div class="form-group">
-                          <label>Featured Grant Highlight Card Text</label>
-                          <input type="text" name="res_highlight" class="form-control" value="<?php echo htmlspecialchars($extra['highlight_text'] ?? 'Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.'); ?>" placeholder="e.g. Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.">
-                        </div>
+                      <div class="col-md-9 form-group">
+                        <label>Highlight Card Text</label>
+                        <input type="text" name="res_highlight" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['highlight_text'] ?? 'Featured: DST-funded sustainable energy research lab — ₹2.4 Cr grant.'); ?>">
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-6 form-group">
                         <label>Explore Button Text</label>
-                        <input type="text" name="res_btn_text" class="form-control" value="<?php echo htmlspecialchars($extra['button_text'] ?? 'EXPLORE RESEARCH →'); ?>">
+                        <input type="text" name="res_btn_text" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['button_text'] ?? 'EXPLORE RESEARCH →'); ?>">
                       </div>
-                      <div class="col-md-6">
-                        <label>Explore Button Link / URL</label>
-                        <input type="text" name="res_btn_url" class="form-control" value="<?php echo htmlspecialchars($extra['button_url'] ?? 'research.php'); ?>">
+                      <div class="col-md-6 form-group">
+                        <label>Explore Button Link</label>
+                        <input type="text" name="res_btn_url" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['button_url'] ?? 'research.php'); ?>">
                       </div>
                     </div>
                   </div>
                   <?php endif; ?>
 
-                  <!-- 6. GLOBAL NETWORK & YOUTUBE LIVE SECTION -->
+                  <!-- 5. GLOBAL NETWORK & YOUTUBE LIVE -->
                   <?php if ($aryData['section_key'] == 'global_network'): 
-                    $tagsList = !empty($extra['tags']) && is_array($extra['tags']) ? implode(', ', $extra['tags']) : 'University of Toronto, TU Munich, NUS Singapore, Monash, Curtin, UPenn, Sheffield, Kyoto University, ETH Zürich';
+                    $tagsList = !empty($extra['tags']) && is_array($extra['tags']) ? implode(', ', $extra['tags']) : 'Saudi Arabia (KSA), UAE, USA, UK, Germany, Canada, Singapore, Australia';
                     $ytIsLive = !empty($extra['yt_is_live']) ? 1 : 0;
                     $ytLiveUrl = $extra['yt_live_url'] ?? '';
                     $ytVideoUrl = $extra['yt_video_url'] ?? 'https://www.youtube.com/watch?v=zUsj1r_9wuM';
-                    $ytTitle = $extra['yt_title'] ?? 'Bhabha University Broadcast & Official Events';
-                    $ytDesc = $extra['yt_desc'] ?? 'Watch live broadcasts of convocation, expert guest lectures, campus fests & university events.';
-                    $ytChannelUrl = $extra['yt_channel_url'] ?? 'https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g';
-                    $ytChannelBtn = $extra['yt_channel_btn'] ?? 'Watch on YouTube →';
                   ?>
-                  
-                  <!-- Left Side Settings: International / Global Network -->
                   <div class="simple-card-group">
-                    <div class="simple-card-title">
-                      <i class="fa fa-globe text-primary"></i> Column 1: International Partner Universities &amp; Button
-                    </div>
+                    <div class="simple-card-title"><i class="fa fa-globe text-primary"></i> Partner Countries &amp; Universities Badges</div>
                     <div class="form-group">
-                      <label>Partner Universities (Comma Separated)</label>
-                      <textarea name="glob_tags" class="form-control" rows="3" placeholder="e.g. University of Toronto, TU Munich, NUS Singapore, Monash, Curtin, UPenn, Sheffield"><?php echo htmlspecialchars($tagsList); ?></textarea>
-                      <small class="help-tip">Type university names separated by commas. Each name will automatically become a sleek partner badge on the website.</small>
+                      <label>Partner Countries / Universities (Comma Separated)</label>
+                      <textarea name="glob_tags" class="form-control" rows="2"><?php echo htmlspecialchars($tagsList); ?></textarea>
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
-                        <label>Button Text</label>
-                        <input type="text" name="glob_btn_text" class="form-control" value="<?php echo htmlspecialchars($extra['button_text'] ?? 'APPLY NOW →'); ?>">
+                      <div class="col-md-6 form-group">
+                        <label>Apply Button Text</label>
+                        <input type="text" name="glob_btn_text" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['button_text'] ?? 'APPLY NOW →'); ?>">
                       </div>
-                      <div class="col-md-6">
-                        <label>Button Link / URL</label>
-                        <input type="text" name="glob_btn_url" class="form-control" value="<?php echo htmlspecialchars($extra['button_url'] ?? 'enquiry.php'); ?>">
+                      <div class="col-md-6 form-group">
+                        <label>Apply Button Link</label>
+                        <input type="text" name="glob_btn_url" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['button_url'] ?? 'enquiry.php'); ?>">
                       </div>
                     </div>
-                  </div>
 
-                  <!-- Right Side Settings: YouTube Live Telecast & Video -->
-                  <div class="simple-card-group" style="background:#fff7f7; border-color:#f5c6cb;">
-                    <div class="simple-card-title" style="color:#c82333; border-bottom-color:#f5c6cb;">
-                      <i class="fa fa-youtube-play text-danger"></i> Column 2: YouTube Live Telecast &amp; Video Broadcast
-                    </div>
-                    
-                    <!-- Live Stream Switch -->
-                    <div class="form-group bg-white p-3 border rounded mb-3" style="border-color:#f5c6cb !important;">
+                    <div class="simple-card-title mt-4 text-danger"><i class="fa fa-youtube-play"></i> YouTube Live Telecast / Featured Broadcast</div>
+                    <div class="form-group bg-white p-3 border rounded mb-3">
                       <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="ytLiveSwitch" name="yt_is_live" value="1" <?php echo ($ytIsLive == 1) ? 'checked' : ''; ?>>
                         <label class="custom-control-label font-weight-bold text-danger" for="ytLiveSwitch">
-                          <span class="badge badge-danger p-1 mr-1">🔴 LIVE</span> Enable YouTube Live Telecast Mode (Currently Streaming Live)
+                          <span class="badge badge-danger mr-1">🔴 LIVE</span> Enable YouTube Live Telecast Mode (Streaming Live Now)
                         </label>
                       </div>
-                      <small class="help-tip">Check this when a live event or telecast is running. The section will display the live telecast stream with a pulsing <strong>🔴 LIVE NOW</strong> indicator.</small>
                     </div>
-
                     <div class="row">
-                      <!-- Live Stream URL / ID -->
                       <div class="col-md-6 form-group">
-                        <label class="text-danger font-weight-bold"><i class="fa fa-video-camera"></i> YouTube Live Telecast URL / ID</label>
-                        <input type="text" name="yt_live_url" class="form-control" value="<?php echo htmlspecialchars($ytLiveUrl); ?>" placeholder="e.g. https://www.youtube.com/watch?v=... or https://www.youtube.com/live/...">
-                        <small class="help-tip">Live video link or ID (used when Live Mode is checked above).</small>
+                        <label class="text-danger font-weight-bold">Live Telecast Video URL / ID</label>
+                        <input type="text" name="yt_live_url" class="form-control form-control-sm" value="<?php echo htmlspecialchars($ytLiveUrl); ?>" placeholder="https://www.youtube.com/watch?v=...">
                       </div>
-
-                      <!-- Fallback / Featured Video URL / ID -->
                       <div class="col-md-6 form-group">
-                        <label class="font-weight-bold"><i class="fa fa-play-circle text-primary"></i> YouTube Regular / Featured Video URL (Fallback)</label>
-                        <input type="text" name="yt_video_url" class="form-control" value="<?php echo htmlspecialchars($ytVideoUrl); ?>" placeholder="e.g. https://www.youtube.com/watch?v=zUsj1r_9wuM">
-                        <small class="help-tip">Displayed when Live Telecast is OFF or as default university video.</small>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <!-- Video Card Title -->
-                      <div class="col-md-6 form-group">
-                        <label>Video Card Title</label>
-                        <input type="text" name="yt_title" class="form-control" value="<?php echo htmlspecialchars($ytTitle); ?>" placeholder="e.g. Bhabha University Broadcast &amp; Official Events">
-                      </div>
-
-                      <!-- Video Card Subtitle -->
-                      <div class="col-md-6 form-group">
-                        <label>Video Card Description</label>
-                        <input type="text" name="yt_desc" class="form-control" value="<?php echo htmlspecialchars($ytDesc); ?>" placeholder="e.g. Watch live broadcasts, convocation, campus fests &amp; expert talks.">
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <!-- YouTube Channel Link -->
-                      <div class="col-md-6 form-group">
-                        <label><i class="fa fa-youtube-play text-danger"></i> Official YouTube Channel URL</label>
-                        <input type="text" name="yt_channel_url" class="form-control" value="<?php echo htmlspecialchars($ytChannelUrl); ?>" placeholder="https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g">
-                        <small class="help-tip">Direct link to Bhabha University YouTube channel.</small>
-                      </div>
-
-                      <!-- YouTube Channel Button Text -->
-                      <div class="col-md-6 form-group">
-                        <label>Channel Button Text</label>
-                        <input type="text" name="yt_channel_btn" class="form-control" value="<?php echo htmlspecialchars($ytChannelBtn); ?>" placeholder="Watch on YouTube →">
+                        <label class="font-weight-bold">Regular / Featured Video URL</label>
+                        <input type="text" name="yt_video_url" class="form-control form-control-sm" value="<?php echo htmlspecialchars($ytVideoUrl); ?>" placeholder="https://www.youtube.com/watch?v=zUsj1r_9wuM">
                       </div>
                     </div>
                   </div>
                   <?php endif; ?>
 
-                  <!-- 7. CAMPUS INSTAGRAM REELS -->
+                  <!-- 6. CAMPUS INSTAGRAM REELS -->
                   <?php if ($aryData['section_key'] == 'insta_reels'): 
                     $reels = !empty($extra['reels']) ? $extra['reels'] : [];
                   ?>
                   <div class="simple-card-group">
-                    <div class="simple-card-title">
-                      <i class="fa fa-instagram"></i> Instagram Reel Cards (4 Reels)
-                    </div>
+                    <div class="simple-card-title"><i class="fa fa-instagram text-danger"></i> Campus Instagram Reels (4 Items)</div>
                     <div class="row">
                       <?php for ($i = 0; $i < 4; $i++): 
                         $r = $reels[$i] ?? ['title' => '', 'insta_url' => ''];
@@ -835,36 +1236,438 @@ if (isset($_POST['submit'])) {
                           <label class="text-primary font-weight-bold">Instagram Reel #<?php echo $i + 1; ?></label>
                           <div class="form-group mb-2">
                             <small class="text-muted">Reel Title / Activity Name</small>
-                            <input type="text" name="reel_title[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($r['title']); ?>" placeholder="Title">
+                            <input type="text" name="reel_title[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($r['title']); ?>" placeholder="Title">
                           </div>
                           <div class="form-group mb-0">
-                            <small class="text-muted">Instagram Reel URL or Post Link</small>
-                            <input type="text" name="reel_url[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($r['insta_url']); ?>" placeholder="e.g. https://www.instagram.com/reel/Dbr0ycHAi-x/">
-                            <small class="help-tip">Paste regular Instagram reel link; embed will be generated automatically.</small>
+                            <small class="text-muted">Instagram Reel URL</small>
+                            <input type="text" name="reel_url[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($r['insta_url']); ?>" placeholder="https://www.instagram.com/reel/...">
+                          </div>
+                          <?php if (!empty($r['insta_url'])): ?>
+                            <div class="mt-2">
+                              <a href="<?php echo htmlspecialchars($r['insta_url']); ?>" target="_blank" class="small text-danger"><i class="fa fa-instagram"></i> Test Reel Link</a>
+                            </div>
+                          <?php endif; ?>
+                        </div>
+                      </div>
+                      <?php endfor; ?>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-md-6 form-group">
+                        <label>Profile Button Text</label>
+                        <input type="text" name="reels_btn_text" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['footer_button_text'] ?? 'View Instagram Page →'); ?>">
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>Instagram Page Link</label>
+                        <input type="text" name="reels_btn_url" class="form-control form-control-sm" value="<?php echo htmlspecialchars($extra['footer_button_url'] ?? 'https://www.instagram.com/bhabhauniversitybhopal/'); ?>">
+                      </div>
+                    </div>
+                  </div>
+                  <?php endif; ?>
+
+                  <!-- 7. DEGREE PROGRAMS TABS & CARDS -->
+                  <?php if ($aryData['section_key'] == 'degree_programs'): 
+                    $programs = $extra['programs'] ?? [];
+                  ?>
+                  <div class="simple-card-group">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <div class="simple-card-title mb-0">
+                        <i class="fa fa-th-large text-primary"></i> Degree Programs Cards (85+ Programs Tab)
+                      </div>
+                      <button type="button" class="btn btn-sm btn-success" onclick="addDegreeProgramRow()"><i class="fa fa-plus"></i> Add New Program</button>
+                    </div>
+                    <div id="degProgramRowsContainer" class="row">
+                      <?php foreach ($programs as $k => $p): ?>
+                      <div class="col-md-4 col-sm-6 mb-3 deg-prog-item">
+                        <div class="simple-item-box">
+                          <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.deg-prog-item').remove();">&times; Remove</button>
+                          <label class="text-primary font-weight-bold">Program #<?php echo $k + 1; ?></label>
+                          <div class="form-group mb-1">
+                            <small class="text-muted">Tab Level</small>
+                            <select name="deg_level[]" class="form-control form-control-sm font-weight-bold">
+                              <option value="undergraduate" <?php echo (($p['level'] ?? '') === 'undergraduate') ? 'selected' : ''; ?>>Undergraduate</option>
+                              <option value="postgraduate" <?php echo (($p['level'] ?? '') === 'postgraduate') ? 'selected' : ''; ?>>Postgraduate</option>
+                              <option value="diploma" <?php echo (($p['level'] ?? '') === 'diploma') ? 'selected' : ''; ?>>Diploma</option>
+                              <option value="doctoral" <?php echo (($p['level'] ?? '') === 'doctoral') ? 'selected' : ''; ?>>Doctoral (Ph.D)</option>
+                              <option value="certificate" <?php echo (($p['level'] ?? '') === 'certificate') ? 'selected' : ''; ?>>Certificate</option>
+                            </select>
+                          </div>
+                          <div class="form-group mb-1">
+                            <small class="text-muted">Program Title</small>
+                            <input type="text" name="deg_title[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($p['title'] ?? ''); ?>" placeholder="e.g. B.Tech CSE">
+                          </div>
+                          <div class="row">
+                            <div class="col-6 form-group mb-1">
+                              <small class="text-muted">Tag Badge</small>
+                              <input type="text" name="deg_tag[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($p['tag'] ?? 'FEATURED'); ?>" placeholder="FEATURED">
+                            </div>
+                            <div class="col-6 form-group mb-1">
+                              <small class="text-muted">Duration</small>
+                              <input type="text" name="deg_duration[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($p['duration'] ?? ''); ?>" placeholder="e.g. 4 yrs">
+                            </div>
+                          </div>
+                          <div class="form-group mb-0">
+                            <small class="text-muted">Eligibility</small>
+                            <input type="text" name="deg_eligibility[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($p['eligibility'] ?? ''); ?>" placeholder="e.g. 10+2 PCM 60%">
+                          </div>
+                        </div>
+                      </div>
+                      <?php endforeach; ?>
+                    </div>
+                  </div>
+                  <?php endif; ?>
+
+                  <!-- 8. CAMPUS FACILITIES & INFRASTRUCTURE GRID -->
+                  <?php if ($aryData['section_key'] == 'infrastructure_grid'): 
+                    $facilities = $extra['facilities'] ?? [];
+                  ?>
+                  <div class="simple-card-group">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <div class="simple-card-title mb-0">
+                        <i class="fa fa-building text-primary"></i> Campus Facilities Cards &amp; Interactive Popups
+                      </div>
+                      <button type="button" class="btn btn-sm btn-success" onclick="addInfraFacilityRow()"><i class="fa fa-plus"></i> Add New Facility</button>
+                    </div>
+                    <div id="infraFacRowsContainer" class="row">
+                      <?php 
+                      $f_idx = 0;
+                      foreach ($facilities as $fKey => $f): 
+                        $f_idx++;
+                        $fImg = $f['image'] ?? '';
+                      ?>
+                      <div class="col-md-6 mb-3 infra-fac-item">
+                        <div class="simple-item-box">
+                          <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.infra-fac-item').remove();">&times; Remove</button>
+                          <label class="text-primary font-weight-bold">Facility #<?php echo $f_idx; ?>: <?php echo htmlspecialchars($f['title'] ?? ''); ?></label>
+                          <input type="hidden" name="fac_key[]" value="<?php echo htmlspecialchars($fKey); ?>">
+                          <div class="row">
+                            <div class="col-md-7 form-group mb-1">
+                              <small class="text-muted">Facility Title</small>
+                              <input type="text" name="fac_title[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($f['title'] ?? ''); ?>" placeholder="Title">
+                            </div>
+                            <div class="col-md-5 form-group mb-1">
+                              <small class="text-muted">Badge Category</small>
+                              <input type="text" name="fac_badge[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['badge'] ?? ''); ?>" placeholder="e.g. Digital Learning">
+                            </div>
+                          </div>
+                          <div class="form-group mb-1">
+                            <small class="text-muted">Description (Popup Details)</small>
+                            <textarea name="fac_desc[]" class="form-control form-control-sm" rows="2"><?php echo htmlspecialchars($f['desc'] ?? ''); ?></textarea>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-7 form-group mb-1">
+                              <small class="text-muted">Image Path</small>
+                              <input type="text" name="fac_image[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($fImg); ?>">
+                            </div>
+                            <div class="col-md-5 form-group mb-1">
+                              <small class="text-muted">Or Upload New Image</small>
+                              <input type="file" name="fac_file[]" class="form-control-file">
+                            </div>
+                          </div>
+                          <?php if (!empty($fImg)): ?>
+                            <div class="bu-live-thumb-wrap mb-2">
+                              <img src="<?php echo bu_admin_media_url($fImg); ?>" alt="Facility" class="bu-live-thumb-img">
+                              <span class="small font-weight-bold text-muted"><?php echo basename($fImg); ?></span>
+                            </div>
+                          <?php endif; ?>
+                          <div class="form-group mb-0">
+                            <small class="text-muted">Detailed Page Link</small>
+                            <input type="text" name="fac_link[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($f['link'] ?? 'infrastructure.php'); ?>">
+                          </div>
+                        </div>
+                      </div>
+                      <?php endforeach; ?>
+                    </div>
+                  </div>
+                  <?php endif; ?>
+
+                  <!-- 9. CAMPUS LIFE (4 HIGHLIGHT CARDS) -->
+                  <?php if ($aryData['section_key'] == 'campus_life'): 
+                    $cl_cards = $extra['cards'] ?? [];
+                  ?>
+                  <div class="simple-card-group">
+                    <div class="simple-card-title">
+                      <i class="fa fa-leaf text-success"></i> Campus Life &amp; Environment (4 Highlight Cards)
+                    </div>
+                    <div class="row">
+                      <?php for ($i = 0; $i < 4; $i++): 
+                        $c = $cl_cards[$i] ?? ['title' => '', 'badge' => '', 'icon' => 'fa fa-book', 'desc' => '', 'image' => '', 'link' => ''];
+                        $cImg = $c['image'] ?? '';
+                        $cIcon = !empty($c['icon']) ? $c['icon'] : 'fa fa-star';
+                      ?>
+                      <div class="col-md-6 mb-3">
+                        <div class="simple-item-box">
+                          <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="bu-icon-badge-preview mr-2"><i class="<?php echo htmlspecialchars($cIcon); ?>"></i></span>
+                            <label class="text-primary font-weight-bold mb-0">Highlight Card #<?php echo $i + 1; ?></label>
+                          </div>
+                          
+                          <div class="row">
+                            <div class="col-md-6 form-group mb-1">
+                              <small class="text-muted">Card Title</small>
+                              <input type="text" name="cl_title[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($c['title']); ?>" placeholder="Title">
+                            </div>
+                            <div class="col-md-3 form-group mb-1">
+                              <small class="text-muted">Badge</small>
+                              <input type="text" name="cl_badge[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($c['badge']); ?>" placeholder="Badge">
+                            </div>
+                            <div class="col-md-3 form-group mb-1">
+                              <small class="text-muted">Icon Class</small>
+                              <input type="text" name="cl_icon[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($cIcon); ?>" placeholder="fa fa-book">
+                            </div>
+                          </div>
+                          <div class="form-group mb-1">
+                            <small class="text-muted">Short Description</small>
+                            <input type="text" name="cl_desc[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($c['desc']); ?>" placeholder="Description">
+                          </div>
+                          <div class="row">
+                            <div class="col-md-7 form-group mb-1">
+                              <small class="text-muted">Image Path</small>
+                              <input type="text" name="cl_image[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($cImg); ?>">
+                            </div>
+                            <div class="col-md-5 form-group mb-1">
+                              <small class="text-muted">Or Upload Image</small>
+                              <input type="file" name="cl_file[]" class="form-control-file">
+                            </div>
+                          </div>
+                          <?php if (!empty($cImg)): ?>
+                            <div class="bu-live-thumb-wrap mb-2">
+                              <img src="<?php echo bu_admin_media_url($cImg); ?>" alt="Card" class="bu-live-thumb-img">
+                              <span class="small font-weight-bold text-muted"><?php echo basename($cImg); ?></span>
+                            </div>
+                          <?php endif; ?>
+                          <div class="form-group mb-0">
+                            <small class="text-muted">Link / URL</small>
+                            <input type="text" name="cl_link[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($c['link']); ?>" placeholder="infrastructure.php">
                           </div>
                         </div>
                       </div>
                       <?php endfor; ?>
                     </div>
+                  </div>
+                  <?php endif; ?>
 
-                    <div class="simple-card-title mt-3">
-                      <i class="fa fa-external-link"></i> Instagram Page Link &amp; Follow Button
+                  <!-- 10. HALL OF FAME & PLACEMENT HIGHLIGHTS SLIDER -->
+                  <?php if ($aryData['section_key'] == 'hall_of_fame'): 
+                    $posters = $extra['posters'] ?? [];
+                  ?>
+                  <div class="simple-card-group">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <div class="simple-card-title mb-0">
+                        <i class="fa fa-trophy text-warning"></i> Achiever Posters / Hall of Fame Slider Items
+                      </div>
+                      <button type="button" class="btn btn-sm btn-success" onclick="addFamePosterRow()"><i class="fa fa-plus"></i> Add New Poster</button>
+                    </div>
+                    <div id="famePostersContainer" class="row">
+                      <?php foreach ($posters as $k => $p): 
+                        $pImg = $p['src'] ?? '';
+                      ?>
+                      <div class="col-md-6 mb-3 fame-poster-item">
+                        <div class="simple-item-box">
+                          <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.fame-poster-item').remove();">&times; Remove</button>
+                          <label class="text-primary font-weight-bold">Poster #<?php echo $k + 1; ?>: <?php echo htmlspecialchars($p['title'] ?? ''); ?></label>
+                          <div class="row">
+                            <div class="col-md-7 form-group mb-1">
+                              <small class="text-muted">Achiever Name &amp; Package Title</small>
+                              <input type="text" name="fame_title[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($p['title'] ?? ''); ?>" placeholder="Mr. Anurag Kumar - ₹60.0 LPA">
+                            </div>
+                            <div class="col-md-5 form-group mb-1">
+                              <small class="text-muted">Category Pill Badge</small>
+                              <input type="text" name="fame_cat[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($p['category'] ?? ''); ?>" placeholder="Highest Placement (₹60 LPA)">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-7 form-group mb-1">
+                              <small class="text-muted">Poster Image Path</small>
+                              <input type="text" name="fame_src[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($pImg); ?>">
+                            </div>
+                            <div class="col-md-5 form-group mb-1">
+                              <small class="text-muted">Or Upload Poster</small>
+                              <input type="file" name="fame_file[]" class="form-control-file">
+                            </div>
+                          </div>
+                          <?php if (!empty($pImg)): ?>
+                            <div class="bu-live-thumb-wrap mb-2">
+                              <img src="<?php echo bu_admin_media_url($pImg); ?>" alt="Poster" class="bu-live-thumb-img" style="height:65px; width:65px;">
+                              <span class="small font-weight-bold text-muted"><?php echo basename($pImg); ?></span>
+                            </div>
+                          <?php endif; ?>
+                          <div class="form-group mb-0">
+                            <small class="text-muted">Image Alt Text (SEO)</small>
+                            <input type="text" name="fame_alt[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($p['alt'] ?? ''); ?>" placeholder="Alt text">
+                          </div>
+                        </div>
+                      </div>
+                      <?php endforeach; ?>
+                    </div>
+                  </div>
+                  <?php endif; ?>
+
+                  <!-- 11. STATUTORY APPROVALS & ACCREDITATIONS -->
+                  <?php if ($aryData['section_key'] == 'accreditations'): 
+                    $acc_items = $extra['items'] ?? [];
+                  ?>
+                  <div class="simple-card-group">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <div class="simple-card-title mb-0">
+                        <i class="fa fa-certificate text-primary"></i> Statutory Approvals &amp; Accreditations Logos
+                      </div>
+                      <button type="button" class="btn btn-sm btn-success" onclick="addAccreditationRow()"><i class="fa fa-plus"></i> Add New Approval</button>
+                    </div>
+                    <div id="accredRowsContainer" class="row">
+                      <?php foreach ($acc_items as $k => $item): 
+                        $aImg = $item['img'] ?? '';
+                      ?>
+                      <div class="col-md-4 col-sm-6 mb-3 accred-item">
+                        <div class="simple-item-box">
+                          <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.accred-item').remove();">&times; Remove</button>
+                          <label class="text-primary font-weight-bold">Council #<?php echo $k + 1; ?>: <?php echo htmlspecialchars($item['name'] ?? ''); ?></label>
+                          <div class="form-group mb-1">
+                            <small class="text-muted">Council Name (e.g. UGC, AICTE, PCI)</small>
+                            <input type="text" name="acc_name[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($item['name'] ?? ''); ?>" placeholder="UGC">
+                          </div>
+                          <div class="form-group mb-1">
+                            <small class="text-muted">Status / Recognition Text</small>
+                            <input type="text" name="acc_desc[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($item['desc'] ?? ''); ?>" placeholder="Section 2(f) / Approved">
+                          </div>
+                          <div class="row">
+                            <div class="col-md-7 form-group mb-1">
+                              <small class="text-muted">Logo Path</small>
+                              <input type="text" name="acc_img[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($aImg); ?>">
+                            </div>
+                            <div class="col-md-5 form-group mb-1">
+                              <small class="text-muted">Or Upload Logo</small>
+                              <input type="file" name="acc_file[]" class="form-control-file">
+                            </div>
+                          </div>
+                          <?php if (!empty($aImg)): ?>
+                            <div class="bu-live-thumb-wrap mb-2">
+                              <img src="<?php echo bu_admin_media_url($aImg); ?>" alt="Logo" class="bu-live-thumb-img" style="height:40px; width:50px; object-fit:contain;">
+                              <span class="small font-weight-bold text-muted"><?php echo basename($aImg); ?></span>
+                            </div>
+                          <?php endif; ?>
+                          <div class="form-group mb-0">
+                            <small class="text-muted">Link / Target Page</small>
+                            <input type="text" name="acc_link[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($item['link'] ?? 'approvals.php'); ?>" placeholder="approvals.php">
+                          </div>
+                        </div>
+                      </div>
+                      <?php endforeach; ?>
+                    </div>
+                  </div>
+                  <?php endif; ?>
+
+                  <!-- 12. JOURNEY STARTS NOW CTA BANNER -->
+                  <?php if ($aryData['section_key'] == 'cta_journey'): ?>
+                  <div class="simple-card-group" style="background: #fffdf5; border-color: #ffe8a1;">
+                    <div class="simple-card-title" style="color: #946c00; border-bottom-color: #ffe8a1;">
+                      <i class="fa fa-bullhorn text-warning"></i> Admissions CTA Banner &amp; Action Buttons
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
-                        <label>Follow Button Text</label>
-                        <input type="text" name="reels_btn_text" class="form-control" value="<?php echo htmlspecialchars($extra['footer_button_text'] ?? 'View Instagram Page →'); ?>">
+                      <div class="col-md-6 form-group">
+                        <label class="font-weight-bold">Button 1: Apply Online</label>
+                        <div class="input-group mb-2">
+                          <input type="text" name="cta_btn1_text" class="form-control" value="<?php echo htmlspecialchars($extra['btn1_text'] ?? 'APPLY NOW'); ?>" placeholder="Button Text">
+                          <input type="text" name="cta_btn1_url" class="form-control" value="<?php echo htmlspecialchars($extra['btn1_url'] ?? 'enquiry.php'); ?>" placeholder="URL / Link">
+                        </div>
                       </div>
-                      <div class="col-md-6">
-                        <label>Official Instagram Profile URL</label>
-                        <input type="text" name="reels_btn_url" class="form-control" value="<?php echo htmlspecialchars($extra['footer_button_url'] ?? 'https://www.instagram.com/bhabhauniversitybhopal/'); ?>">
+                      <div class="col-md-6 form-group">
+                        <label class="font-weight-bold">Button 2: Download Prospectus</label>
+                        <div class="input-group mb-2">
+                          <input type="text" name="cta_btn2_text" class="form-control" value="<?php echo htmlspecialchars($extra['btn2_text'] ?? 'DOWNLOAD PROSPECTUS'); ?>" placeholder="Button Text">
+                          <input type="text" name="cta_btn2_url" class="form-control" value="<?php echo htmlspecialchars($extra['btn2_url'] ?? ''); ?>" placeholder="PDF / Drive Link">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label class="font-weight-bold">Button 3: Schedule Call</label>
+                        <div class="input-group mb-2">
+                          <input type="text" name="cta_btn3_text" class="form-control" value="<?php echo htmlspecialchars($extra['btn3_text'] ?? 'SCHEDULE CALL'); ?>" placeholder="Button Text">
+                          <input type="text" name="cta_btn3_phone" class="form-control" value="<?php echo htmlspecialchars($extra['btn3_phone'] ?? '07554246498'); ?>" placeholder="Phone Number">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <?php endif; ?>
+
+                  <!-- 13. OUR ACHIEVEMENTS & NEWS TICKER -->
+                  <?php if ($aryData['section_key'] == 'achievements_ticker'): 
+                    $tSource = $extra['source'] ?? 'news';
+                    $ach_items = $extra['items'] ?? [];
+                    // Fetch current live news for preview from news table
+                    $db->orderBy('news_date', 'desc');
+                    $db->orderBy('id', 'desc');
+                    $liveNewsList = $db->get('news', 12);
+                  ?>
+                  <div class="simple-card-group">
+                    <div class="simple-card-title">
+                      <i class="fa fa-bullhorn text-warning"></i> Marquee Ticker Source &amp; Configuration
+                    </div>
+                    
+                    <div class="form-group bg-white p-3 border rounded mb-3">
+                      <label class="font-weight-bold text-primary mb-2">Ticker Data Source:</label>
+                      <div class="custom-control custom-radio mb-2">
+                        <input type="radio" id="srcNews" name="ticker_source" value="news" class="custom-control-input" <?php echo ($tSource === 'news') ? 'checked' : ''; ?> onchange="toggleTickerMode('news')">
+                        <label class="custom-control-label font-weight-bold" for="srcNews">
+                          <i class="fa fa-newspaper-o text-success mr-1"></i> Live News Coverage from Database (Direct Clickable links redirecting to <code>news.php</code>)
+                        </label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="srcCustom" name="ticker_source" value="custom" class="custom-control-input" <?php echo ($tSource === 'custom') ? 'checked' : ''; ?> onchange="toggleTickerMode('custom')">
+                        <label class="custom-control-label font-weight-bold" for="srcCustom">
+                          <i class="fa fa-pencil-square-o text-info mr-1"></i> Custom Ticker Headlines (Enter custom titles and optional target links)
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Live News Preview Box -->
+                    <div id="liveNewsPreviewBox" class="p-3 bg-light border rounded mb-3" style="<?php echo ($tSource === 'news') ? '' : 'display:none;'; ?>">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="font-weight-bold text-success"><i class="fa fa-check-circle"></i> Active News Coverage Articles in Ticker (<?php echo count($liveNewsList); ?> Items):</span>
+                        <a href="news.php" target="_blank" class="btn btn-xs btn-primary"><i class="fa fa-external-link"></i> Manage News Articles in Admin</a>
+                      </div>
+                      <ul class="mb-0 pl-3">
+                        <?php foreach ($liveNewsList as $ln): ?>
+                          <li class="small mb-1">
+                            <strong><?php echo htmlspecialchars($ln['title']); ?></strong>
+                            <span class="text-muted">&rarr; links to <code>news.php?id=<?php echo $ln['id']; ?></code> (<?php echo !empty($ln['news_date']) ? $ln['news_date'] : ''; ?>)</span>
+                          </li>
+                        <?php endforeach; ?>
+                      </ul>
+                    </div>
+
+                    <!-- Custom Items Container -->
+                    <div id="customTickerContainer" style="<?php echo ($tSource === 'custom') ? '' : 'display:none;'; ?>">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="font-weight-bold text-muted">Custom Ticker Items:</div>
+                        <button type="button" class="btn btn-sm btn-success" onclick="addAchievementRow()"><i class="fa fa-plus"></i> Add Ticker Item</button>
+                      </div>
+                      <div id="achItemsContainer">
+                        <?php foreach ($ach_items as $k => $achItem): 
+                          $aTitle = is_array($achItem) ? ($achItem['title'] ?? '') : $achItem;
+                          $aUrl = is_array($achItem) ? ($achItem['url'] ?? '') : '';
+                        ?>
+                        <div class="simple-item-box mb-2 ach-item-row" style="border-color:#ffc107;">
+                          <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.ach-item-row').remove();">&times; Remove</button>
+                          <div class="row">
+                            <div class="col-md-7 form-group mb-1">
+                              <small class="text-muted">Headline Title</small>
+                              <input type="text" name="ach_item_title[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($aTitle); ?>" placeholder="e.g. Admissions open 2026-27">
+                            </div>
+                            <div class="col-md-5 form-group mb-1">
+                              <small class="text-muted">Target Redirect URL (Optional)</small>
+                              <input type="text" name="ach_item_url[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($aUrl); ?>" placeholder="e.g. news.php or online-admission.php">
+                            </div>
+                          </div>
+                        </div>
+                        <?php endforeach; ?>
                       </div>
                     </div>
                   </div>
                   <?php endif; ?>
                   
                   <!-- Status Checkbox -->
-                  <div class="form-group">
+                  <div class="form-group mt-3">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" class="custom-control-input" id="statusCheck" name="status" value="1" <?php echo ($aryData['status'] == 1) ? 'checked' : ''; ?>>
                       <label class="custom-control-label" for="statusCheck"><strong>Section Active (Visible on Home Page)</strong></label>
@@ -891,7 +1694,7 @@ if (isset($_POST['submit'])) {
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <div>
                     <h4 class="mt-0 header-title"><i class="fa fa-list text-primary"></i> Homepage Sections List</h4>
-                    <p class="text-muted mb-0">Manage and update all major interactive and branding sections of the Bhabha University Home Page.</p>
+                    <p class="text-muted mb-0">Manage and update all major interactive, branding, and content sections of the Bhabha University Home Page.</p>
                   </div>
                 </div>
                 
@@ -901,7 +1704,7 @@ if (isset($_POST['submit'])) {
                   <table class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                       <tr>
-                        <th style="width:60px;">#</th>
+                        <th style="width:50px;">#</th>
                         <th>Section Name</th>
                         <th>Section Key</th>
                         <th>Heading / Title</th>
@@ -912,7 +1715,7 @@ if (isset($_POST['submit'])) {
                     </thead>
                     <tbody>
                       <?php
-                      $db->orderBy('sort_order', 'ASC');
+                      $db->orderBy('id', 'ASC');
                       $sections = $db->get(DBTAB);
                       if (is_array($sections) && count($sections) > 0) {
                           $i = 1;
@@ -925,13 +1728,20 @@ if (isset($_POST['submit'])) {
                                   $cleanHeading = substr($cleanHeading, 0, 57) . '...';
                               }
                               $secIcons = [
-                                  'hero_video' => 'fa fa-video-camera',
-                                  'chancellor_welcome' => 'fa fa-user-circle',
-                                  'why_bhabha' => 'fa fa-graduation-cap',
-                                  'virtual_tour' => 'fa fa-street-view',
-                                  'research_portal' => 'fa fa-flask',
-                                  'global_network' => 'fa fa-globe',
-                                  'insta_reels' => 'fa fa-instagram'
+                                  'hero_video'          => 'fa fa-video-camera',
+                                  'chancellor_welcome'  => 'fa fa-user-circle',
+                                  'why_bhabha'          => 'fa fa-graduation-cap',
+                                  'virtual_tour'        => 'fa fa-street-view',
+                                  'research_innovation' => 'fa fa-flask',
+                                  'global_network'      => 'fa fa-globe',
+                                  'insta_reels'         => 'fa fa-instagram',
+                                  'degree_programs'     => 'fa fa-th-large',
+                                  'infrastructure_grid' => 'fa fa-building',
+                                  'campus_life'         => 'fa fa-leaf',
+                                  'hall_of_fame'        => 'fa fa-trophy',
+                                  'accreditations'      => 'fa fa-certificate',
+                                  'cta_journey'         => 'fa fa-bullhorn',
+                                  'achievements_ticker' => 'fa fa-line-chart'
                               ];
                               $iconClass = $secIcons[$sec['section_key']] ?? 'fa fa-cube';
                       ?>
@@ -981,6 +1791,299 @@ if (isset($_POST['submit'])) {
     <?php include_once("inc.footer.php"); ?>
   </div>
 </div>
+
+<script>
+function addWhyBhabhaRow() {
+    const container = document.getElementById('whyBhabhaRowsContainer');
+    const div = document.createElement('div');
+    div.className = 'col-md-6 mb-3 why-feat-item';
+    div.innerHTML = `
+      <div class="simple-item-box" style="border-color:#28a745;">
+        <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.why-feat-item').remove();">&times; Remove</button>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="bu-icon-badge-preview mr-2"><i class="fa fa-certificate"></i></span>
+          <label class="text-success font-weight-bold mb-0">New Feature Point</label>
+        </div>
+        <div class="row">
+          <div class="col-md-8 form-group mb-1">
+            <small class="text-muted">Point Title</small>
+            <input type="text" name="why_title[]" class="form-control form-control-sm font-weight-bold" placeholder="e.g. Industry Collaborations">
+          </div>
+          <div class="col-md-4 form-group mb-1">
+            <small class="text-muted">FontAwesome Icon</small>
+            <input type="text" name="why_icon[]" class="form-control form-control-sm" value="fa fa-certificate" placeholder="fa fa-certificate">
+          </div>
+        </div>
+        <div class="form-group mb-1">
+          <small class="text-muted">Description Text</small>
+          <textarea name="why_desc[]" class="form-control form-control-sm" rows="2" placeholder="Point description..."></textarea>
+        </div>
+        <div class="form-group mb-0">
+          <small class="text-muted">Explore Details Link / URL</small>
+          <input type="text" name="why_url[]" class="form-control form-control-sm" value="about.php" placeholder="about.php">
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+}
+
+function addDegreeProgramRow() {
+    const container = document.getElementById('degProgramRowsContainer');
+    const div = document.createElement('div');
+    div.className = 'col-md-4 col-sm-6 mb-3 deg-prog-item';
+    div.innerHTML = `
+      <div class="simple-item-box" style="border-color:#28a745;">
+        <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.deg-prog-item').remove();">&times; Remove</button>
+        <label class="text-success font-weight-bold">New Program</label>
+        <div class="form-group mb-1">
+          <small class="text-muted">Tab Level</small>
+          <select name="deg_level[]" class="form-control form-control-sm font-weight-bold">
+            <option value="undergraduate">Undergraduate</option>
+            <option value="postgraduate">Postgraduate</option>
+            <option value="diploma">Diploma</option>
+            <option value="doctoral">Doctoral (Ph.D)</option>
+            <option value="certificate">Certificate</option>
+          </select>
+        </div>
+        <div class="form-group mb-1">
+          <small class="text-muted">Program Title</small>
+          <input type="text" name="deg_title[]" class="form-control form-control-sm font-weight-bold" placeholder="e.g. B.Tech AI & ML">
+        </div>
+        <div class="row">
+          <div class="col-6 form-group mb-1">
+            <small class="text-muted">Tag Badge</small>
+            <input type="text" name="deg_tag[]" class="form-control form-control-sm" value="FEATURED" placeholder="FEATURED">
+          </div>
+          <div class="col-6 form-group mb-1">
+            <small class="text-muted">Duration</small>
+            <input type="text" name="deg_duration[]" class="form-control form-control-sm" placeholder="e.g. 4 yrs">
+          </div>
+        </div>
+        <div class="form-group mb-0">
+          <small class="text-muted">Eligibility</small>
+          <input type="text" name="deg_eligibility[]" class="form-control form-control-sm" placeholder="e.g. 10+2 PCM">
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+}
+
+function addInfraFacilityRow() {
+    const container = document.getElementById('infraFacRowsContainer');
+    const div = document.createElement('div');
+    div.className = 'col-md-6 mb-3 infra-fac-item';
+    div.innerHTML = `
+      <div class="simple-item-box" style="border-color:#28a745;">
+        <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.infra-fac-item').remove();">&times; Remove</button>
+        <label class="text-success font-weight-bold">New Facility</label>
+        <input type="hidden" name="fac_key[]" value="">
+        <div class="row">
+          <div class="col-md-7 form-group mb-1">
+            <small class="text-muted">Facility Title</small>
+            <input type="text" name="fac_title[]" class="form-control form-control-sm font-weight-bold" placeholder="e.g. Robotics & AI Lab">
+          </div>
+          <div class="col-md-5 form-group mb-1">
+            <small class="text-muted">Badge Category</small>
+            <input type="text" name="fac_badge[]" class="form-control form-control-sm" placeholder="e.g. Innovation Hub">
+          </div>
+        </div>
+        <div class="form-group mb-1">
+          <small class="text-muted">Description (Popup Details)</small>
+          <textarea name="fac_desc[]" class="form-control form-control-sm" rows="2" placeholder="Facility description..."></textarea>
+        </div>
+        <div class="row">
+          <div class="col-md-7 form-group mb-1">
+            <small class="text-muted">Image URL / Path</small>
+            <input type="text" name="fac_image[]" class="form-control form-control-sm" placeholder="upload/infrastructure/...">
+          </div>
+          <div class="col-md-5 form-group mb-1">
+            <small class="text-muted">Or Upload Image</small>
+            <input type="file" name="fac_file[]" class="form-control-file">
+          </div>
+        </div>
+        <div class="form-group mb-0">
+          <small class="text-muted">Detailed Page Link</small>
+          <input type="text" name="fac_link[]" class="form-control form-control-sm" value="infrastructure.php" placeholder="infrastructure.php">
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+}
+
+function addFamePosterRow() {
+    const container = document.getElementById('famePostersContainer');
+    const div = document.createElement('div');
+    div.className = 'col-md-6 mb-3 fame-poster-item';
+    div.innerHTML = `
+      <div class="simple-item-box" style="border-color:#28a745;">
+        <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.fame-poster-item').remove();">&times; Remove</button>
+        <label class="text-success font-weight-bold">New Achiever Poster</label>
+        <div class="row">
+          <div class="col-md-7 form-group mb-1">
+            <small class="text-muted">Achiever Name &amp; Package Title</small>
+            <input type="text" name="fame_title[]" class="form-control form-control-sm font-weight-bold" placeholder="Mr. John Doe - ₹25 LPA at Amazon">
+          </div>
+          <div class="col-md-5 form-group mb-1">
+            <small class="text-muted">Category Pill Badge</small>
+            <input type="text" name="fame_cat[]" class="form-control form-control-sm" placeholder="MNC Placement (₹25 LPA)">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-7 form-group mb-1">
+            <small class="text-muted">Poster Image Path</small>
+            <input type="text" name="fame_src[]" class="form-control form-control-sm" placeholder="upload/media/...">
+          </div>
+          <div class="col-md-5 form-group mb-1">
+            <small class="text-muted">Or Upload Poster</small>
+            <input type="file" name="fame_file[]" class="form-control-file">
+          </div>
+        </div>
+        <div class="form-group mb-0">
+          <small class="text-muted">Image Alt Text (SEO)</small>
+          <input type="text" name="fame_alt[]" class="form-control form-control-sm" placeholder="Achiever placement poster">
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+}
+
+function addAccreditationRow() {
+    const container = document.getElementById('accredRowsContainer');
+    const div = document.createElement('div');
+    div.className = 'col-md-4 col-sm-6 mb-3 accred-item';
+    div.innerHTML = `
+      <div class="simple-item-box" style="border-color:#28a745;">
+        <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.accred-item').remove();">&times; Remove</button>
+        <label class="text-success font-weight-bold">New Council</label>
+        <div class="form-group mb-1">
+          <small class="text-muted">Council Name</small>
+          <input type="text" name="acc_name[]" class="form-control form-control-sm font-weight-bold" placeholder="e.g. NBA / NAAC">
+        </div>
+        <div class="form-group mb-1">
+          <small class="text-muted">Status / Recognition Text</small>
+          <input type="text" name="acc_desc[]" class="form-control form-control-sm" value="Approved" placeholder="Approved / Accredited">
+        </div>
+        <div class="row">
+          <div class="col-md-7 form-group mb-1">
+            <small class="text-muted">Logo Path</small>
+            <input type="text" name="acc_img[]" class="form-control form-control-sm" placeholder="images/... or upload/media/...">
+          </div>
+          <div class="col-md-5 form-group mb-1">
+            <small class="text-muted">Or Upload Logo</small>
+            <input type="file" name="acc_file[]" class="form-control-file">
+          </div>
+        </div>
+        <div class="form-group mb-0">
+          <small class="text-muted">Link / Target Page</small>
+          <input type="text" name="acc_link[]" class="form-control form-control-sm" value="approvals.php" placeholder="approvals.php">
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+}
+
+function toggleTickerMode(mode) {
+    const liveBox = document.getElementById('liveNewsPreviewBox');
+    const customBox = document.getElementById('customTickerContainer');
+    if (mode === 'news') {
+        if (liveBox) liveBox.style.display = 'block';
+        if (customBox) customBox.style.display = 'none';
+    } else {
+        if (liveBox) liveBox.style.display = 'none';
+        if (customBox) customBox.style.display = 'block';
+    }
+}
+
+function addAchievementRow() {
+    const container = document.getElementById('achItemsContainer');
+    const count = container.querySelectorAll('.ach-item-row').length + 1;
+    const div = document.createElement('div');
+    div.className = 'simple-item-box mb-2 ach-item-row';
+    div.style.borderColor = '#ffc107';
+    div.innerHTML = `
+      <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.ach-item-row').remove();">&times; Remove</button>
+      <div class="row">
+        <div class="col-md-7 form-group mb-1">
+          <small class="text-muted">Headline Title #${count}</small>
+          <input type="text" name="ach_item_title[]" class="form-control form-control-sm font-weight-bold" placeholder="e.g. Entrance Examination Results Announced">
+        </div>
+        <div class="col-md-5 form-group mb-1">
+          <small class="text-muted">Target Redirect URL</small>
+          <input type="text" name="ach_item_url[]" class="form-control form-control-sm" placeholder="e.g. news.php or result.php">
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+}
+
+function addVirtualTourTab() {
+    const container = document.getElementById('vtTabsRowsContainer');
+    const count = container.querySelectorAll('.vt-tab-item').length + 1;
+    const div = document.createElement('div');
+    div.className = 'col-md-6 mb-3 vt-tab-item';
+    div.innerHTML = `
+      <div class="simple-item-box" style="border-color:#4e73df;">
+        <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.vt-tab-item').remove();">&times; Remove</button>
+        <div class="d-flex align-items-center mb-2">
+          <span class="bu-icon-badge-preview mr-2"><i class="fa fa-film"></i></span>
+          <label class="text-primary font-weight-bold mb-0">Video Tab #${count}</label>
+        </div>
+        <div class="row">
+          <div class="col-md-7 form-group mb-1">
+            <small class="text-muted">Tab Label</small>
+            <input type="text" name="vt_tab_label[]" class="form-control form-control-sm font-weight-bold" placeholder="e.g. Research Labs View">
+          </div>
+          <div class="col-md-5 form-group mb-1">
+            <small class="text-muted">Icon Class</small>
+            <input type="text" name="vt_tab_icon[]" class="form-control form-control-sm" value="fa fa-film" placeholder="fa fa-film">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-7 form-group mb-1">
+            <small class="text-muted">Video URL / Path</small>
+            <input type="text" name="vt_tab_video[]" class="form-control form-control-sm" placeholder="upload/video/... or new-media/...">
+          </div>
+          <div class="col-md-5 form-group mb-1">
+            <small class="text-muted">Or Upload Video (.mp4)</small>
+            <input type="file" name="vt_tab_file[]" class="form-control-file">
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+}
+
+function addVirtualTourCard() {
+    const container = document.getElementById('vtCardsRowsContainer');
+    const count = container.querySelectorAll('.vt-card-item').length + 1;
+    const div = document.createElement('div');
+    div.className = 'col-md-6 mb-3 vt-card-item';
+    div.innerHTML = `
+      <div class="simple-item-box" style="border-color:#36b9cc;">
+        <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.vt-card-item').remove();">&times; Remove</button>
+        <div class="d-flex align-items-center mb-2">
+          <span class="bu-icon-badge-preview mr-2"><i class="fa fa-check"></i></span>
+          <label class="text-info font-weight-bold mb-0">Feature Card #${count}</label>
+        </div>
+        <div class="row">
+          <div class="col-md-8 form-group mb-1">
+            <small class="text-muted">Card Title</small>
+            <input type="text" name="vt_card_title[]" class="form-control form-control-sm font-weight-bold" placeholder="e.g. Advanced Sports Complex">
+          </div>
+          <div class="col-md-4 form-group mb-1">
+            <small class="text-muted">Icon Class</small>
+            <input type="text" name="vt_card_icon[]" class="form-control form-control-sm" value="fa fa-check" placeholder="fa fa-check">
+          </div>
+        </div>
+        <div class="form-group mb-0">
+          <small class="text-muted">Short Description</small>
+          <textarea name="vt_card_desc[]" class="form-control form-control-sm" rows="2" placeholder="Feature card description..."></textarea>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+}
+</script>
 
 <?php include_once("inc.footer.js.php"); ?>
 </body>
