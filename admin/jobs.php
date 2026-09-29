@@ -397,13 +397,30 @@ $totalJobs = $db->getValue(DBTAB, 'count(*)');
                   <input type="file" name="icon" class="form-control-file p-2 border rounded bg-light" accept=".pdf,.jpg,.jpeg,.png,.gif,.doc,.docx">
                   <small class="text-muted d-block mt-1">Accepted formats: PDF, JPG, PNG, DOCX (Max: 10MB)</small>
 
-                  <?php if (!empty($editData['image'])): ?>
-                    <div class="mt-2 p-2 bg-light rounded border d-inline-flex align-items-center" style="gap:8px;">
-                      <i class="mdi mdi-file-check text-success font-18"></i>
-                      <span class="font-12 font-weight-bold">Current Attachment:</span>
-                      <a href="<?php echo URL_UPLOAD; ?>jobs/<?php echo $editData['image']; ?>" target="_blank" class="bu-doc-badge font-12">
-                        <i class="mdi mdi-eye"></i> View <?php echo htmlspecialchars($editData['image']); ?>
+                  <?php if (!empty($editData['image'])): 
+                    $isPdf = (strtolower(pathinfo($editData['image'], PATHINFO_EXTENSION)) === 'pdf');
+                  ?>
+                    <div style="margin-top: 10px; padding: 12px 16px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; display: inline-flex; align-items: center; gap: 14px; max-width: 100%;">
+                      <a href="<?php echo URL_ROOT;?>upload/jobs/<?php echo $editData['image'];?>" target="_blank" title="Click to view file">
+                        <?php if ($isPdf): ?>
+                          <div style="width: 70px; height: 70px; background: #FEE2E2; color: #DC2626; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 28px; border: 1px solid #FECACA;">
+                            <i class="mdi mdi-file-pdf"></i>
+                          </div>
+                        <?php else: ?>
+                          <img src="<?php echo URL_ROOT;?>upload/jobs/<?php echo $editData['image'];?>" alt="Current Advertisement" style="height: 75px; max-width: 140px; object-fit: cover; border-radius: 6px; border: 1px solid #CBD5E1; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                        <?php endif; ?>
                       </a>
+                      <div>
+                        <div style="font-size: 13px; font-weight: 700; color: #0A1B54; margin-bottom: 3px;">
+                          <i class="mdi <?php echo $isPdf ? 'mdi-file-pdf text-danger' : 'mdi-file-image text-primary'; ?>"></i> Current Uploaded <?php echo $isPdf ? 'PDF Document' : 'Image'; ?>
+                        </div>
+                        <div style="font-size: 12px; color: #64748B; word-break: break-all;">
+                          <code><?php echo htmlspecialchars($editData['image']); ?></code>
+                        </div>
+                        <div style="font-size: 11.5px; color: #059669; margin-top: 4px;">
+                          <i class="mdi mdi-check-circle"></i> Leave empty to keep existing notification attachment.
+                        </div>
+                      </div>
                     </div>
                   <?php endif; ?>
                 </div>

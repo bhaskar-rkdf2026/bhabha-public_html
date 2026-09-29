@@ -31,18 +31,25 @@
         </ul>
       </div>
 
-      <!-- Column 2: Quick Links 2 -->
+      <!-- Column 2: Quick Links 2 / Portals -->
       <div class="bu-footer-col">
         <h4 class="bu-footer-heading">IMPORTANT LINKS</h4>
         <ul class="bu-footer-links">
+          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-angle-right"></i> Student ERP Login</a></li>
+          <li><a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank"><i class="fa fa-angle-right"></i> Faculty Portal Login</a></li>
+          <li><a href="https://bhabha.accsofterp.com/OAP/AdminLogin.aspx" target="_blank"><i class="fa fa-angle-right"></i> OAP Admin Login</a></li>
+          <li><a href="https://webmail.bhabhauniversity.edu.in/" target="_blank"><i class="fa fa-angle-right"></i> Official Web Mail</a></li>
+          <li><a href="<?php echo href('page.php','id=25'); ?>"><i class="fa fa-angle-right"></i> NAD (DigiLocker)</a></li>
+          <li><a href="<?php echo href('enquiry.php'); ?>"><i class="fa fa-angle-right"></i> Admission Enquiry</a></li>
+          <li><a href="<?php echo href('news.php'); ?>"><i class="fa fa-angle-right"></i> Latest News Updates</a></li>
           <li><a href="https://voters.eci.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> Voter Portal</a></li>
           <li><a href="https://scholarshipportal.mp.nic.in/Index.aspx" target="_blank"><i class="fa fa-angle-right"></i> MP Scholarship Portal 2.0</a></li>
           <li><a href="https://scholarships.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> National Scholarship Portal</a></li>
           <li><a href="https://drive.google.com/file/d/1jhIfUzZbjtOWSCnYu77C0MM5C8U5vumt/view" target="_blank"><i class="fa fa-angle-right"></i> Prospectus 2024-25</a></li>
           <li><a href="<?php echo href("faculties.php"); ?>"><i class="fa fa-angle-right"></i> Staff Details</a></li>
-          <li><a href="<?php echo href("auditreport.php"); ?>"><i class="fa fa-angle-right"></i> Income Expenditure Details</a></li>
+          <li><a href="<?php echo href("auditreport.php"); ?>"><i class="fa fa-angle-right"></i> Income Expenditure / Audit</a></li>
           <li><a href="http://www.mppurc.mp.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> MPPURC</a></li>
-          <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> NATIONAL RAGGING PREVENTION PROGRAMME</a></li>
+          <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> Ragging Prevention</a></li>
         </ul>
       </div>
 

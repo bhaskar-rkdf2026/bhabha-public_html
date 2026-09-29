@@ -209,8 +209,36 @@ if(is_array($branch) && count($branch)>0)
                     <input type="text" name="heading" class="form-control"  value="<?php if($action=="edit"){echo $aryData['heading'];}else{echo $_POST['heading'];}?>"/>
                   </div>
                   <div class="form-group col-xs-12">
-                    <label>Upload Syllabus</label>
-                    <input type="file" name="icon"/>
+                    <label>Upload Syllabus Document (PDF / Image)</label>
+                    <div style="margin-bottom:8px;">
+                      <input type="file" name="icon" class="form-control-file" accept=".pdf,image/*" />
+                    </div>
+                    <?php if($action=="edit" && !empty($aryData['image'])): 
+                      $isPdf = (strtolower(pathinfo($aryData['image'], PATHINFO_EXTENSION)) === 'pdf');
+                    ?>
+                      <div style="margin-top: 10px; padding: 12px 16px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; display: inline-flex; align-items: center; gap: 14px; max-width: 100%;">
+                        <a href="<?php echo URL_ROOT;?>upload/syllabus/<?php echo $aryData['image'];?>" target="_blank" title="Click to view file">
+                          <?php if ($isPdf): ?>
+                            <div style="width: 70px; height: 70px; background: #FEE2E2; color: #DC2626; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 28px; border: 1px solid #FECACA;">
+                              <i class="fa fa-file-pdf-o"></i>
+                            </div>
+                          <?php else: ?>
+                            <img src="<?php echo URL_ROOT;?>upload/syllabus/<?php echo $aryData['image'];?>" alt="Current Syllabus" style="height: 75px; max-width: 140px; object-fit: cover; border-radius: 6px; border: 1px solid #CBD5E1; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                          <?php endif; ?>
+                        </a>
+                        <div>
+                          <div style="font-size: 13px; font-weight: 700; color: #0A1B54; margin-bottom: 3px;">
+                            <i class="fa <?php echo $isPdf ? 'fa-file-pdf-o text-danger' : 'fa-book text-primary'; ?>"></i> Current Uploaded <?php echo $isPdf ? 'PDF Syllabus' : 'Image'; ?>
+                          </div>
+                          <div style="font-size: 12px; color: #64748B; word-break: break-all;">
+                            <code><?php echo htmlspecialchars($aryData['image']); ?></code>
+                          </div>
+                          <div style="font-size: 11.5px; color: #059669; margin-top: 4px;">
+                            <i class="fa fa-check-circle"></i> Leave empty to keep existing syllabus file.
+                          </div>
+                        </div>
+                      </div>
+                    <?php endif; ?>
                   </div>
                   <input type="submit" value="<?php echo ucfirst($action);?> Data" name="submit" class="btn btn-default"/>
                   <input value="Back" class="btn btn-warning waves-effect waves-light" 

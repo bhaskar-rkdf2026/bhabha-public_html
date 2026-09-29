@@ -147,9 +147,29 @@ if($action=="delete")
                   </div>
                   
                   <div class="form-group col-xs-12">
-                    <label>Photo </label>
-                    <input type="file" name="icon"/>
+                    <label>Award / Achievement Photo</label>
+                    <div style="margin-bottom:8px;">
+                      <input type="file" name="icon" class="form-control-file" accept="image/*" />
                     </div>
+                    <?php if($action=="edit" && !empty($aryData['image'])): ?>
+                      <div style="margin-top: 10px; padding: 12px 16px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; display: inline-flex; align-items: center; gap: 14px; max-width: 100%;">
+                        <a href="<?php echo URL_ROOT;?>upload/awards/<?php echo $aryData['image'];?>" target="_blank" title="Click to view full image">
+                          <img src="<?php echo URL_ROOT;?>upload/awards/<?php echo $aryData['image'];?>" alt="Current Award Photo" style="height: 85px; max-width: 150px; object-fit: cover; border-radius: 6px; border: 1px solid #CBD5E1; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                        </a>
+                        <div>
+                          <div style="font-size: 13px; font-weight: 700; color: #0A1B54; margin-bottom: 3px;">
+                            <i class="fa fa-trophy text-warning"></i> Current Uploaded Photo
+                          </div>
+                          <div style="font-size: 12px; color: #64748B; word-break: break-all;">
+                            <code><?php echo htmlspecialchars($aryData['image']); ?></code>
+                          </div>
+                          <div style="font-size: 11.5px; color: #059669; margin-top: 4px;">
+                            <i class="fa fa-check-circle"></i> Leave empty to keep existing award image.
+                          </div>
+                        </div>
+                      </div>
+                    <?php endif; ?>
+                  </div>
                   <input type="submit" value="<?php echo ucfirst($action);?> Data" name="submit" class="btn btn-default"/> <input value="Back" class="btn btn-warning waves-effect waves-light" 
                   name="Back" type="button" onclick="window.location='javascript:history.go(-1)'" />
                 </form>

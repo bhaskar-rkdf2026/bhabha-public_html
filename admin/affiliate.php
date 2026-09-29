@@ -154,9 +154,29 @@ if($action=="delete")
                   
                   
                   <div class="form-group col-xs-12">
-                    <label>Recruiter Logo</label>
-                    <input type="file" name="icon"/>
-                    180*180 </div>
+                    <label>Affiliate / Partner Logo (Recommended 180x180 px)</label>
+                    <div style="margin-bottom:8px;">
+                      <input type="file" name="icon" class="form-control-file" accept="image/*" />
+                    </div>
+                    <?php if($action=="edit" && !empty($aryData['image'])): ?>
+                      <div style="margin-top: 10px; padding: 12px 16px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; display: inline-flex; align-items: center; gap: 14px; max-width: 100%;">
+                        <a href="<?php echo URL_ROOT;?>upload/affiliate/<?php echo $aryData['image'];?>" target="_blank" title="Click to view logo">
+                          <img src="<?php echo URL_ROOT;?>upload/affiliate/<?php echo $aryData['image'];?>" alt="Current Logo" style="height: 70px; max-width: 120px; object-fit: contain; padding: 4px; background:#fff; border-radius: 6px; border: 1px solid #CBD5E1; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                        </a>
+                        <div>
+                          <div style="font-size: 13px; font-weight: 700; color: #0A1B54; margin-bottom: 3px;">
+                            <i class="fa fa-handshake-o text-primary"></i> Current Uploaded Logo
+                          </div>
+                          <div style="font-size: 12px; color: #64748B; word-break: break-all;">
+                            <code><?php echo htmlspecialchars($aryData['image']); ?></code>
+                          </div>
+                          <div style="font-size: 11.5px; color: #059669; margin-top: 4px;">
+                            <i class="fa fa-check-circle"></i> Leave empty to keep existing logo.
+                          </div>
+                        </div>
+                      </div>
+                    <?php endif; ?>
+                  </div>
                   <input type="submit" value="<?php echo ucfirst($action);?> Data" name="submit" class="btn btn-default"/> <input value="Back" class="btn btn-warning waves-effect waves-light" 
                   name="Back" type="button" onclick="window.location='javascript:history.go(-1)'" />
                 </form>

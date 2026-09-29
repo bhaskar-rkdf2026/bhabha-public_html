@@ -1,5 +1,7 @@
 <?php 
 include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('admission-process') : null;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

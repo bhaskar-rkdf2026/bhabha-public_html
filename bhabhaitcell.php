@@ -1,4 +1,7 @@
-<?php include('config.php'); ?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('bhabhaitcell') : null;
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

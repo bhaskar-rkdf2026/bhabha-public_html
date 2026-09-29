@@ -1,11 +1,14 @@
-<?php include('config.php');?>
+<?php 
+include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('highlights') : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>University Highlights - Bhabha University Bhopal Madhya Pradesh</title>
+<title><?php echo portalVal($portalPage, 'page_title', 'University Highlights - Bhabha University Bhopal Madhya Pradesh'); ?></title>
 <meta name="description" content="Explore key institutional highlights, achievements, and features of Bhabha University Bhopal.">
 <?php include('inc.meta.php');?>
 </head>
@@ -17,9 +20,9 @@
   <!--HEADER END-->
 
   <?php
-  $page_title    = 'University <em>Highlights</em>';
-  $page_subtitle = 'Distinctive institutional milestones, key features, and infrastructure highlights of Bhabha University.';
-  $page_icon     = 'fa-star';
+  $page_title    = portalVal($portalPage, 'heading', 'University <em>Highlights</em>');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'Distinctive institutional milestones, key features, and infrastructure highlights of Bhabha University.');
+  $page_icon     = (!empty($portalPage['data']['page_icon'])) ? $portalPage['data']['page_icon'] : 'fa-star';
   $breadcrumbs   = [
     ['label' => 'Home',  'url' => URL_ROOT],
     ['label' => 'About', 'url' => href('about.php')],
@@ -33,10 +36,13 @@
 
     <main class="bu-inner-content">
       <div class="bu-content-card">
-        <span class="bu-content-label">At a Glance</span>
-        <h2 class="bu-content-h2">Key Institutional <em>Highlights</em></h2>
+        <span class="bu-content-label"><?php echo portalVal($portalPage, 'badge', 'At a Glance'); ?></span>
+        <h2 class="bu-content-h2"><?php echo portalVal($portalPage, 'heading', 'Key Institutional <em>Highlights</em>'); ?></h2>
         <div class="bu-content-divider"></div>
         <div class="bu-content-body">
+          <?php if (!empty($portalPage['data']['body'])): ?>
+            <?php echo $portalPage['data']['body']; ?>
+          <?php else: ?>
           <div class="row">
             <div class="col-md-6 mb-3">
               <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:18px;">
@@ -63,6 +69,7 @@
               </div>
             </div>
           </div>
+          <?php endif; ?>
         </div>
       </div>
     </main>
