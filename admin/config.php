@@ -61,12 +61,21 @@ try {
 if (!function_exists('bu_modsec_decode')) {
     function bu_modsec_decode($item) {
         if (is_array($item)) {
-            return array_map('bu_modsec_decode', $item);
+            $res = [];
+            foreach ($item as $k => $v) {
+                $res[$k] = bu_modsec_decode($v);
+            }
+            return $res;
         }
-        if (is_string($item) && strpos($item, 'B64:') === 0) {
-            $decoded = base64_decode(substr($item, 4));
-            if ($decoded !== false) {
-                return $decoded;
+        if (is_string($item)) {
+            while (strpos($item, 'B64:') === 0) {
+                $raw = substr($item, 4);
+                $decoded = base64_decode($raw, true);
+                if ($decoded !== false) {
+                    $item = $decoded;
+                } else {
+                    break;
+                }
             }
         }
         return $item;

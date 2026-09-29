@@ -271,6 +271,9 @@ if ($action == "delete") {
             if ($action == "edit") {
                 $db->where('id', intval($_REQUEST['id']));
                 $aryData = $db->getOne(DBTAB);
+                if (is_array($aryData) && function_exists('bu_modsec_decode')) {
+                    $aryData = bu_modsec_decode($aryData);
+                }
             }
             
             // Parse existing JSON blocks
@@ -289,7 +292,7 @@ if ($action == "delete") {
 
                 <div><?php echo msg($stat);?></div>
 
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="" method="post" enctype="multipart/form-data" novalidate>
                   
                   <!-- Section-wise Navigation Tabs -->
                   <ul class="nav nav-tabs bu-admin-tabs mb-4" id="deptTab" role="tablist">

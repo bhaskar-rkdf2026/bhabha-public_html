@@ -5,10 +5,12 @@
 <script src="<?php echo URL_JS;?>jquery.slimscroll.js"></script>
 <script src="<?php echo URL_JS;?>waves.min.js"></script>
 <script src="<?php echo URL_PLUG;?>jquery-sparkline/jquery.sparkline.min.js"></script>
+<?php if (basename($_SERVER['PHP_SELF']) == 'dashboard.php'): ?>
 <!--Morris Chart-->
 <script src="<?php echo URL_PLUG;?>morris/morris.min.js"></script>
 <script src="<?php echo URL_PLUG;?>raphael/raphael-min.js"></script>
 <script src="assets/pages/dashboard.js"></script>
+<?php endif; ?>
 <!-- App js -->
 <script src="<?php echo URL_JS;?>app.js"></script>
 

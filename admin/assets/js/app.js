@@ -31,7 +31,7 @@
                         var html = inst.getData();
                         var encoded = buSafeB64Encode(html);
                         inst.setData(encoded);
-                        var targetEl = form.querySelector('[name="' + name + '"]') || document.getElementById(name);
+                        var targetEl = form.querySelector('textarea[name="' + name + '"], #' + name);
                         if (targetEl) {
                             targetEl.value = encoded;
                         }
@@ -40,17 +40,22 @@
             }
         }
 
-        // 2. Encode all textareas and inputs
+        // 2. Encode all textareas and text/hidden inputs (NEVER touch select or buttons/files)
         var elements = form.elements;
         if (elements) {
             for (var i = 0; i < elements.length; i++) {
                 var el = elements[i];
+                var tag = (el.tagName || '').toLowerCase();
                 var type = (el.type || 'text').toLowerCase();
-                if (type !== 'file' && type !== 'submit' && type !== 'button' && type !== 'checkbox' && type !== 'radio' && type !== 'password') {
-                    var val = el.value;
-                    if (val && typeof val === 'string' && val.indexOf('B64:') !== 0) {
-                        el.value = buSafeB64Encode(val);
-                    }
+                
+                // Skip selects, files, buttons, radios, checkboxes
+                if (tag === 'select' || type === 'file' || type === 'submit' || type === 'button' || type === 'checkbox' || type === 'radio' || type === 'password') {
+                    continue;
+                }
+                
+                var val = el.value;
+                if (val && typeof val === 'string' && val.indexOf('B64:') !== 0) {
+                    el.value = buSafeB64Encode(val);
                 }
             }
         }

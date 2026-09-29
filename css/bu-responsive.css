@@ -150,11 +150,25 @@ table {
   }
 
   .bu-btn-top-gold {
-    font-size: 9.5px !important;
+    background: #FFC107 !important;
+    color: #040F4A !important;
+    font-size: 8.5px !important;
     font-weight: 800 !important;
-    padding: 3px 9px !important;
+    padding: 2px 7px !important;
     border-radius: 3px !important;
     white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.2px !important;
+    line-height: 1.2 !important;
+    box-shadow: 0 1px 4px rgba(255, 193, 7, 0.4) !important;
+    border: 1px solid #FFC107 !important;
+  }
+
+  .bu-btn-top-gold i {
+    font-size: 8px !important;
+    margin-right: 3px !important;
   }
 
   .bu-header-wrapper {

@@ -25,6 +25,7 @@
                 <!-- Column 1: Logins & Portals -->
                 <div class="bu-info-col">
                   <div class="bu-info-head"><i class="fa fa-graduation-cap"></i> Student &amp; Staff Logins</div>
+                  <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" style="color: #FFC107 !important; font-weight: 700;"><i class="fa fa-file-text-o text-warning"></i> Resultsoft Portal</a>
                   <a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-user-graduate text-warning"></i> Student ERP Login</a>
                   <a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank"><i class="fa fa-chalkboard-teacher text-info"></i> Faculty Portal Login</a>
                   <a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-id-card text-success"></i> ERP System Login</a>
@@ -58,6 +59,7 @@
           <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><span class="bu-blink" style="color:#FFC107 !important; font-weight:800;">ERP Login</span></a></li>
 
           <!-- 3-8: Desktop Only (Cleanly hidden on mobile to avoid any cutoff) -->
+          <li class="bu-hide-mobile"><a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" style="color:#FFC107 !important; font-weight:700;">Resultsoft</a></li>
           <li class="bu-hide-mobile"><a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank">Faculty Portal</a></li>
           <li class="bu-hide-mobile"><a href="<?php echo href('enquiry.php'); ?>" style="color:#38BDF8 !important; font-weight:700;">Admission Enquiry</a></li>
           <li class="bu-hide-mobile"><a href="<?php echo href('grievance.php'); ?>">Grievance</a></li>
@@ -77,6 +79,9 @@
             <i class="fa fa-phone"></i> +91 755 4936800
           </a>
         <?php endif; ?>
+        <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-top-gold">
+          <i class="fa fa-paper-plane mr-1"></i> Apply Now
+        </a>
       </div>
     </div>
   </div>
@@ -171,18 +176,19 @@
                 </ul>
               </div>
 
-              <!-- Column 2: Examinations -->
-              <div class="bu-acad-col">
-                <div class="bu-acad-col-heading"><i class="fa fa-pencil-square-o"></i> Examinations</div>
-                <ul>
-                  <li><a href="<?php echo href("page.php","id=16");?>">Online Examination Process</a></li>
-                  <li><a href="<?php echo href("examination.php")?>">Examination Notices</a></li>
-                  <li><a href="<?php echo href("time-table.php")?>">Exam Time Table</a></li>
-                  <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Examination Results</a></li>
-                  <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Login</a></li>
-                  <li><a href="<?php echo href('BUQuestionPapers_demo.php'); ?>">Previous Question Papers</a></li>
-                </ul>
-              </div>
+                <!-- Column 2: Examinations -->
+                <div class="bu-acad-col">
+                  <div class="bu-acad-col-heading"><i class="fa fa-pencil-square-o"></i> Examinations</div>
+                  <ul>
+                    <li><a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" style="color: #FFC107 !important; font-weight:700;"><i class="fa fa-external-link text-warning mr-1"></i> Resultsoft Portal</a></li>
+                    <li><a href="<?php echo href("page.php","id=16");?>">Online Examination Process</a></li>
+                    <li><a href="<?php echo href("examination.php")?>">Examination Notices</a></li>
+                    <li><a href="<?php echo href("time-table.php")?>">Exam Time Table</a></li>
+                    <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Examination Results</a></li>
+                    <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Student Login</a></li>
+                    <li><a href="<?php echo href('BUQuestionPapers_demo.php'); ?>">Previous Question Papers</a></li>
+                  </ul>
+                </div>
 
             </div>
           </li>

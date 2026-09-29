@@ -35,6 +35,7 @@
       <div class="bu-footer-col">
         <h4 class="bu-footer-heading">IMPORTANT LINKS</h4>
         <ul class="bu-footer-links">
+          <li><a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" style="color: #FFC107 !important; font-weight:700;"><i class="fa fa-angle-right"></i> Resultsoft Portal</a></li>
           <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-angle-right"></i> Student ERP Login</a></li>
           <li><a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank"><i class="fa fa-angle-right"></i> Faculty Portal Login</a></li>
           <li><a href="https://bhabha.accsofterp.com/OAP/AdminLogin.aspx" target="_blank"><i class="fa fa-angle-right"></i> OAP Admin Login</a></li>

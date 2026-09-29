@@ -125,7 +125,7 @@ if (isset($_POST['submit'])) {
 
     // 5. Build Master Data Array
     $data = [
-        "department"              => intval($_POST['department'] ?? 0),
+        "department"              => (!empty($_POST['department']) ? intval($_POST['department']) : (!empty($aryData['department']) ? intval($aryData['department']) : 0)),
         "institute_name"          => trim($_POST['institute_name'] ?? ''),
         "subtitle"                => trim($_POST['subtitle'] ?? ''),
         "icon"                    => trim($_POST['icon'] ?? 'fa-university'),
@@ -290,6 +290,9 @@ if ($action == "delete") {
             if ($action == "edit") {
                 $db->where('id', intval($_REQUEST['id']));
                 $aryData = $db->getOne(DBTAB);
+                if (is_array($aryData) && function_exists('bu_modsec_decode')) {
+                    $aryData = bu_modsec_decode($aryData);
+                }
             }
             
             // Parse existing JSON blocks
@@ -309,7 +312,7 @@ if ($action == "delete") {
 
                 <div><?php echo msg($stat);?></div>
 
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="" method="post" enctype="multipart/form-data" novalidate>
                   
                   <!-- Section-wise Navigation Tabs -->
                   <ul class="nav nav-tabs bu-admin-tabs mb-4" id="instTab" role="tablist">
@@ -354,8 +357,9 @@ if ($action == "delete") {
                             <?php
                             $departments = $db->get('department');
                             if (is_array($departments)) {
+                                $currDept = strval($aryData['department'] ?? $_POST['department'] ?? '');
                                 foreach ($departments as $dept) {
-                                    $selected = (($aryData['department'] ?? $_POST['department'] ?? '') == $dept['id']) ? 'selected="selected"' : '';
+                                    $selected = ($currDept !== '' && $currDept === strval($dept['id'])) ? 'selected="selected"' : '';
                                     echo "<option value=\"{$dept['id']}\" {$selected}>" . htmlspecialchars($dept['title']) . "</option>";
                                 }
                             }
@@ -450,7 +454,7 @@ if ($action == "delete") {
                             $pImg = (strpos($aryData['principal_image'], 'http') === 0 ? $aryData['principal_image'] : URL_ROOT . $aryData['principal_image']);
                           ?>
                             <div class="mt-2">
-                              <img src="<?php echo $pImg;?>" style="max-height: 80px; border-radius: 6px; border: 1px solid #ccc;">
+                              <img src="<?php echo $pImg;?>" onerror="this.parentElement.style.display='none';" style="max-height: 80px; border-radius: 6px; border: 1px solid #ccc;">
                             </div>
                           <?php endif; ?>
                         </div>
@@ -944,12 +948,14 @@ $(document).ready(function() {
         if (elements) {
             for (var i = 0; i < elements.length; i++) {
                 var el = elements[i];
+                var tag = (el.tagName || '').toLowerCase();
                 var type = (el.type || 'text').toLowerCase();
-                if (type !== 'file' && type !== 'submit' && type !== 'button' && type !== 'checkbox' && type !== 'radio' && type !== 'password') {
-                    var val = el.value;
-                    if (val && typeof val === 'string' && val.indexOf('B64:') !== 0) {
-                        el.value = safeB64Encode(val);
-                    }
+                if (tag === 'select' || type === 'file' || type === 'submit' || type === 'button' || type === 'checkbox' || type === 'radio' || type === 'password') {
+                    continue;
+                }
+                var val = el.value;
+                if (val && typeof val === 'string' && val.indexOf('B64:') !== 0) {
+                    el.value = safeB64Encode(val);
                 }
             }
         }
