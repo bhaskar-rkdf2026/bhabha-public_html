@@ -2300,7 +2300,7 @@ section.bu-section-block {
   $page_icon     = $dept_icon_class;
   $breadcrumbs   = [
     ['label' => 'Home',    'url' => URL_ROOT],
-    ['label' => 'Schools & Faculties', 'url' => href('faculties.php')],
+    ['label' => 'Institutes & Faculties', 'url' => href('faculties.php')],
     ['label' => $aryData['title'], 'url' => '#'],
   ];
   include('inc.page-banner.php');

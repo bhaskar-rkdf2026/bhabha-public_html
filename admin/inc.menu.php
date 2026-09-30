@@ -69,10 +69,10 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
         ?>
         <li class="<?php echo $isSchoolsActive; ?>">
           <a href="javascript:void(0);" class="waves-effect has-arrow <?php echo $isSchoolsActive; ?>">
-            <i class="mdi mdi-school"></i> <span>Schools & Institutes</span>
+            <i class="mdi mdi-school"></i> <span>Institutes</span>
           </a>
           <ul class="submenu">
-            <li><a href="section_hub.php?section=schools" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Schools Hub</a></li>
+            <li><a href="section_hub.php?section=schools" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Institutes Hub</a></li>
             <li><a href="institute.php"><i class="mdi mdi-circle-outline"></i> Faculties & Institutes</a></li>
             <li><a href="department.php"><i class="mdi mdi-circle-outline"></i> Departments</a></li>
             <li><a href="sub_department.php"><i class="mdi mdi-circle-outline"></i> Sub Departments</a></li>

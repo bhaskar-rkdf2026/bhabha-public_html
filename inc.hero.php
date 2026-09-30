@@ -21,7 +21,7 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
     ['number' => '8500', 'suffix' => '+', 'commas' => true, 'label' => 'STUDENTS'],
     ['number' => '750', 'suffix' => '+', 'commas' => false, 'label' => 'FACULTY'],
     ['number' => '85', 'suffix' => '+', 'commas' => false, 'label' => 'PROGRAMS'],
-    ['number' => '25', 'suffix' => '', 'commas' => false, 'label' => 'SCHOOLS'],
+    ['number' => '25', 'suffix' => '', 'commas' => false, 'label' => 'INSTITUTES'],
     ['number' => '300', 'suffix' => '+', 'commas' => false, 'label' => 'RECRUITERS'],
     ['number' => '20000', 'suffix' => '+', 'commas' => true, 'label' => 'ALUMNI'],
     ['number' => '2500', 'suffix' => '+', 'commas' => true, 'label' => 'PUBLICATIONS'],

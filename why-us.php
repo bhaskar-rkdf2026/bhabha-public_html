@@ -72,7 +72,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('why-us') : null;
             ['icon'=>'fa-certificate','title'=>'UGC Recognised','desc'=>'UGC recognised under Section 2(f) with AICTE, PCI, BCI, DCI, and NCTE statutory approvals — ensuring the credibility and value of every degree awarded.'],
             ['icon'=>'fa-flask','title'=>'Research Excellence','desc'=>'120+ research labs, 250+ patents and 2,500+ publications make Bhabha a hub for academic and applied research.'],
             ['icon'=>'fa-globe','title'=>'Global Collaborations','desc'=>'MoUs with 60+ international universities across 4 continents for student exchanges, joint research, and faculty development.'],
-            ['icon'=>'fa-mortar-board','title'=>'Outstanding Placements','desc'=>'98% placement rate with 300+ recruiters visiting campus. Highest package of ₹60 LPA across all schools.'],
+            ['icon'=>'fa-mortar-board','title'=>'Outstanding Placements','desc'=>'98% placement rate with 300+ recruiters visiting campus. Highest package of ₹60 LPA across all institutes.'],
             ['icon'=>'fa-building','title'=>'Smart Campus','desc'=>'32-acre Wi-Fi-enabled green campus with smart classrooms, air-conditioned labs, hostels and sports infrastructure.'],
             ['icon'=>'fa-rocket','title'=>'Innovation Ecosystem','desc'=>'Active incubation centre, student startup support, hackathons and industry mentoring programmes.'],
             ['icon'=>'fa-users','title'=>'Expert Faculty','desc'=>'750+ highly qualified faculty members from premier institutions with rich industry and research experience.'],

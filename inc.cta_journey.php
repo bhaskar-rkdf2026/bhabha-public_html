@@ -10,7 +10,7 @@ if (!$cta_sec || $cta_sec['status'] != 1) {
 
 $cta_label = !empty($cta_sec['title']) ? $cta_sec['title'] : 'ADMISSIONS OPEN · 2026-27';
 $cta_heading = !empty($cta_sec['heading']) ? $cta_sec['heading'] : 'Your journey starts now.';
-$cta_sub = !empty($cta_sec['subheading']) ? $cta_sec['subheading'] : 'Applications open across all 25 schools and institutes. Speak to an advisor, download the prospectus, or apply online in minutes.';
+$cta_sub = !empty($cta_sec['subheading']) ? $cta_sec['subheading'] : 'Applications open across all 25 institutes. Speak to an advisor, download the prospectus, or apply online in minutes.';
 
 $cta_extra = !empty($cta_sec['extra_data']) ? json_decode($cta_sec['extra_data'], true) : [];
 

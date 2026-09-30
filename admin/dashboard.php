@@ -439,7 +439,7 @@ try {
                 </span>
                 <div class="d-flex flex-wrap gap-1">
                   <a href="section_hub.php?section=about" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-bank text-primary"></i> About (9)</a>
-                  <a href="section_hub.php?section=schools" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-school text-info"></i> Schools (5)</a>
+                  <a href="section_hub.php?section=schools" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-school text-info"></i> Institutes (5)</a>
                   <a href="section_hub.php?section=academics" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-book-open-page-variant text-success"></i> Academics (7)</a>
                   <a href="section_hub.php?section=admissions" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-account-plus text-warning"></i> Admissions (8)</a>
                   <a href="section_hub.php?section=research" class="btn btn-sm btn-light font-weight-bold" style="font-size:12px; border:1px solid #E2E8F0;"><i class="mdi mdi-flask text-danger"></i> Research (9)</a>

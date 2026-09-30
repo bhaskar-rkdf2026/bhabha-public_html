@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Institutes & Schools - Bhabha University Bhopal</title>
-<meta name="description" content="Discover multidisciplinary institutes and schools at Bhabha University Bhopal — Engineering, Pharmacy, Dental, Nursing, Management, Law, Agriculture, Science, and Education.">
+<title>Institutes - Bhabha University Bhopal</title>
+<meta name="description" content="Discover multidisciplinary institutes at Bhabha University Bhopal — Engineering, Pharmacy, Dental, Nursing, Management, Law, Agriculture, Science, and Education.">
 <?php include('inc.meta.php');?>
 <style>
 .bu-full-width-container {
@@ -106,12 +106,12 @@
   <!-- HEADER END -->
 
   <?php
-  $page_title    = 'Schools & <em>Institutes</em>';
-  $page_subtitle = 'Explore our multidisciplinary schools offering undergraduate, postgraduate, and doctoral degree programmes.';
+  $page_title    = 'Our <em>Institutes</em>';
+  $page_subtitle = 'Explore our multidisciplinary institutes offering undergraduate, postgraduate, and doctoral degree programmes.';
   $page_icon     = 'fa-graduation-cap';
   $breadcrumbs   = [
     ['label' => 'Home',    'url' => URL_ROOT],
-    ['label' => 'Schools & Institutes', 'url' => '#'],
+    ['label' => 'Institutes', 'url' => '#'],
   ];
   include('inc.page-banner.php');
   ?>
@@ -120,7 +120,7 @@
     <main>
       <div class="bu-content-card">
         <span class="bu-content-label">Academic Divisions</span>
-        <h2 class="bu-content-h2">All Schools &amp; <em>Institutes</em></h2>
+        <h2 class="bu-content-h2">All <em>Institutes</em></h2>
         <div class="bu-content-divider"></div>
         
         <div class="bu-fac-list-grid">
@@ -136,7 +136,7 @@
             </div>
             <h4><?php echo $idepartment['title'];?></h4>
             <p>Providing industry-aligned education, experiential learning, and modern research infrastructure.</p>
-            <span class="bu-fac-btn">Explore School <i class="fa fa-arrow-right"></i></span>
+            <span class="bu-fac-btn">Explore Institute <i class="fa fa-arrow-right"></i></span>
           </a>
           <?php 
             }

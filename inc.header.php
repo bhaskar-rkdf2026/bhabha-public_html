@@ -144,7 +144,7 @@
 
           <!-- Schools / Institutes Dynamic Dropdown -->
           <li class="bu-nav-item">
-            <a href="<?php echo href("institutes.php")?>" class="bu-nav-link">Schools <i class="fa fa-angle-down"></i></a>
+            <a href="<?php echo href("institutes.php")?>" class="bu-nav-link">Institutes <i class="fa fa-angle-down"></i></a>
             <ul class="bu-dropdown bu-dropdown-2col">
               <?php
               $institutes = $db->get('department');

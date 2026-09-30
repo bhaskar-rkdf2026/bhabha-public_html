@@ -112,7 +112,7 @@
 
       <div class="bu-content-card">
         <span class="bu-content-label">Academic Programs</span>
-        <h2 class="bu-content-h2">Select School to View <em>Courses &amp; Eligibility</em></h2>
+        <h2 class="bu-content-h2">Select Institute to View <em>Courses &amp; Eligibility</em></h2>
         <div class="bu-content-divider"></div>
 
         <div class="bu-course-grid">

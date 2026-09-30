@@ -247,7 +247,7 @@ select.bu-form-control:focus {
               <select name="course" id="course" class="bu-form-control" required>
                 <option value="">-- Select Course --</option>
                 <?php
-                $courses = $db->get('course');
+                $courses = $db->orderBy('course', 'ASC')->get('course');
                 if(is_array($courses) && count($courses) > 0) {
                   foreach($courses as $icourse) {
                     $selected = (isset($_POST['course']) && $_POST['course'] == $icourse['id']) ? 'selected="selected"' : '';
@@ -266,6 +266,7 @@ select.bu-form-control:focus {
                 if(isset($_POST['course']) && !empty($_POST['course'])) {
                   $db->where('course', $_POST['course']);
                   $db->where('status', 1);
+                  $db->orderBy('branch', 'ASC');
                   $branches = $db->get('branch');
                   if(is_array($branches) && count($branches) > 0) {
                     foreach($branches as $ibranch) {

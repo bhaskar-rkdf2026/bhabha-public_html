@@ -8,7 +8,7 @@
     <div class="bu-programmes-header">
       <span class="bu-programmes-label">ACADEMIC DEPARTMENTS</span>
       <h2 class="bu-programmes-heading">Programmes We Offer</h2>
-      <p class="bu-programmes-sub">Discover our diverse schools and colleges offering industry-aligned undergraduate, postgraduate, and doctoral degrees.</p>
+      <p class="bu-programmes-sub">Discover our diverse institutes and colleges offering industry-aligned undergraduate, postgraduate, and doctoral degrees.</p>
     </div>
 
     <!-- Programmes Cards Grid -->
@@ -31,7 +31,7 @@
         </div>
         <div class="bu-card-content">
           <h3 class="bu-card-title"><?php echo htmlspecialchars($idepartment['title']); ?></h3>
-          <span class="bu-card-link">Explore School <i class="fa fa-chevron-right"></i></span>
+          <span class="bu-card-link">Explore Institute <i class="fa fa-chevron-right"></i></span>
         </div>
       </a>
       <?php 

@@ -5,6 +5,7 @@ echo '<option value="">-- Select Branch --</option>';
 if (!empty($course)) {
     $db->where('course', $course);
     $db->where('status', 1);
+    $db->orderBy('branch', 'ASC');
     $branch = $db->get('branch');
     if (is_array($branch) && count($branch) > 0) {
         foreach ($branch as $ibranch) {

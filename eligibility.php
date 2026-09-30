@@ -131,7 +131,7 @@ $department = $db->getOne('department');
   $breadcrumbs   = [
     ['label' => 'Home',       'url' => URL_ROOT],
     ['label' => 'Courses & Intake', 'url' => href("course.php")],
-    ['label' => isset($department['title']) ? $department['title'] : 'School', 'url' => isset($department['id']) ? href("program.php", "id=".$department['id']) : '#'],
+    ['label' => isset($department['title']) ? $department['title'] : 'Institute', 'url' => isset($department['id']) ? href("program.php", "id=".$department['id']) : '#'],
     ['label' => $aryData['course'], 'url' => '#'],
   ];
   include('inc.page-banner.php');

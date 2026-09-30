@@ -117,13 +117,13 @@ $sections = [
         ]
     ],
     'schools' => [
-        'title' => 'Schools & Institutes',
+        'title' => 'Institutes',
         'icon'  => 'mdi mdi-school',
         'desc'  => 'Manage 16 Faculties/Institutes, Academic Departments, Sub-Departments, Courses and Branches.',
         'pages' => [
             [
-                'title'       => 'Faculties & Institutes (16 Schools)',
-                'nav_path'    => 'Frontend Nav > Schools > All Institutes',
+                'title'       => 'Faculties & Institutes',
+                'nav_path'    => 'Frontend Nav > Institutes > All Institutes',
                 'live_url'    => URL_ROOT . 'institutes.php',
                 'edit_url'    => 'institute.php',
                 'add_url'     => 'institute.php?action=add',
@@ -134,7 +134,7 @@ $sections = [
             ],
             [
                 'title'       => 'Academic Departments',
-                'nav_path'    => 'Frontend Nav > Schools > Department View',
+                'nav_path'    => 'Frontend Nav > Institutes > Department View',
                 'live_url'    => URL_ROOT . 'department.php',
                 'edit_url'    => 'department.php',
                 'add_url'     => 'department.php?action=add',
@@ -145,7 +145,7 @@ $sections = [
             ],
             [
                 'title'       => 'Sub Departments & Units',
-                'nav_path'    => 'Frontend Nav > Schools > Sub-Departments',
+                'nav_path'    => 'Frontend Nav > Institutes > Sub-Departments',
                 'live_url'    => URL_ROOT . 'institutes.php',
                 'edit_url'    => 'sub_department.php',
                 'add_url'     => 'sub_department.php?action=add',
@@ -768,7 +768,7 @@ if ($activeSection === 'all' || !isset($sections[$activeSection])) {
               <span><?php echo ($activeSection === 'all' || !isset($sections[$activeSection])) ? 'All Website Sections & Pages Directory' : $sections[$activeSection]['title']; ?></span>
             </div>
             <p class="bu-hub-subtitle">
-              <?php echo ($activeSection === 'all' || !isset($sections[$activeSection])) ? 'Ab aapko koi bhi page dhundne ki zaroorat nahi hai. Frontend Navigation tabs (About, Schools, Academics, Admissions, Research, Placements, News) ke according categorized hain.' : $sections[$activeSection]['desc']; ?>
+              <?php echo ($activeSection === 'all' || !isset($sections[$activeSection])) ? 'Ab aapko koi bhi page dhundne ki zaroorat nahi hai. Frontend Navigation tabs (About, Institutes, Academics, Admissions, Research, Placements, News) ke according categorized hain.' : $sections[$activeSection]['desc']; ?>
             </p>
           </div>
 

@@ -1527,7 +1527,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <div class="bu-vt-info-card">
             <div class="bu-vt-icon-box"><i class="fa fa-university"></i></div>
             <div class="bu-vt-card-content">
-              <h4>25 Schools &amp; Institutes</h4>
+              <h4>25 Institutes</h4>
               <p>Engineering, Medical, Dental, Pharmacy, Law, Agriculture &amp; Management blocks.</p>
             </div>
           </div>

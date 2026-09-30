@@ -39,7 +39,7 @@ if(!$aryData) {
   $page_icon     = 'fa-folder-open';
   $breadcrumbs   = [
     ['label' => 'Home',    'url' => URL_ROOT],
-    ['label' => 'Schools', 'url' => href('faculties.php')],
+    ['label' => 'Institutes', 'url' => href('institutes.php')],
     ['label' => $aryData['title'], 'url' => '#'],
   ];
   include('inc.page-banner.php');

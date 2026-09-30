@@ -956,7 +956,7 @@ if (isset($_POST['submit'])) {
                     ];
                     $vtCards = !empty($extra['info_cards']) ? $extra['info_cards'] : ($extra['cards'] ?? [
                         ['icon' => 'fa fa-tree', 'title' => '32-Acre Green Campus', 'desc' => 'Eco-friendly lush green campus with solar energy, botanical gardens, and spacious plazas.'],
-                        ['icon' => 'fa fa-university', 'title' => '25 Schools & Institutes', 'desc' => 'Engineering, Medical, Dental, Pharmacy, Law, Agriculture & Management blocks.'],
+                        ['icon' => 'fa fa-university', 'title' => '25 Institutes', 'desc' => 'Engineering, Medical, Dental, Pharmacy, Law, Agriculture & Management blocks.'],
                         ['icon' => 'fa fa-flask', 'title' => '120+ Modern Labs', 'desc' => 'Hi-tech practical skill labs, research wings, and state-of-art computing centers.'],
                         ['icon' => 'fa fa-hospital-o', 'title' => '500-Bed Hospital', 'desc' => 'Full-fledged multi-speciality teaching hospital & clinical training facility.']
                     ]);

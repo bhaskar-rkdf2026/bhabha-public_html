@@ -7,19 +7,19 @@
     <!-- Header Block -->
     <div class="bu-faculties-header">
       <div class="bu-header-left">
-        <span class="bu-faculties-label">SCHOOLS &amp; FACULTIES</span>
+        <span class="bu-faculties-label">INSTITUTES &amp; FACULTIES</span>
         <h2 class="bu-faculties-heading">
-          25 schools &amp; institutes. One <em>global</em><br>university.
+          25 institutes. One <em>global</em><br>university.
         </h2>
       </div>
       
       <div class="bu-header-right">
-        <a href="<?php echo href("institutes.php"); ?>" class="bu-view-all">VIEW ALL SCHOOLS &nbsp;→</a>
+        <a href="<?php echo href("institutes.php"); ?>" class="bu-view-all">VIEW ALL INSTITUTES &nbsp;→</a>
         <div class="bu-faculty-slider-ctrls" id="buFacSliderCtrls">
-          <button type="button" class="bu-fnav-btn" id="buFacPrevBtn" aria-label="Previous School">
+          <button type="button" class="bu-fnav-btn" id="buFacPrevBtn" aria-label="Previous Institute">
             <i class="fa fa-chevron-left"></i>
           </button>
-          <button type="button" class="bu-fnav-btn" id="buFacNextBtn" aria-label="Next School">
+          <button type="button" class="bu-fnav-btn" id="buFacNextBtn" aria-label="Next Institute">
             <i class="fa fa-chevron-right"></i>
           </button>
         </div>
@@ -160,7 +160,7 @@
       <?php 
         }
       } else {
-        echo '<p>No schools found.</p>';
+        echo '<p>No institutes found.</p>';
       }
       ?>
     </div>
