@@ -38,7 +38,7 @@
                 <!-- Column 2: University Links & Compliance -->
                 <div class="bu-info-col">
                   <div class="bu-info-head"><i class="fa fa-university"></i> Quick University Services</div>
-                  <a href="<?php echo href('auditreport.php'); ?>"><i class="fa fa-file-pdf-o text-danger"></i> Mandatory Public Disclosure</a>
+                  <a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i> Mandatory Public Disclosure</a>
                   <a href="<?php echo href('nirf.php'); ?>"><i class="fa fa-trophy text-warning"></i> NIRF Rankings &amp; Data</a>
                   <a href="<?php echo href('iqac.php'); ?>"><i class="fa fa-check-square-o text-success"></i> IQAC Quality Assurance</a>
                   <a href="<?php echo href('grievance.php'); ?>"><i class="fa fa-balance-scale text-primary"></i> Grievance Redressal Cell</a>
@@ -53,17 +53,14 @@
             </div>
           </li>
 
-          <!-- Main Visible Strip Links -->
-          <!-- 1 & 2: Visible everywhere (Mobile & Desktop) -->
-          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-user mr-1 text-warning"></i> Student Portal</a></li>
-          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><span class="bu-blink" style="color:#FFC107 !important; font-weight:800;">ERP Login</span></a></li>
+          <!-- 1. Combined Students / ERP Login -->
+          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-user mr-1 text-warning"></i> <span style="color:#FFC107 !important; font-weight:800;">Students / ERP Login</span></a></li>
 
-          <!-- 3-8: Desktop Only (Cleanly hidden on mobile to avoid any cutoff) -->
+          <!-- 2-7: Desktop Only Links -->
           <li class="bu-hide-mobile"><a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" style="color:#FFC107 !important; font-weight:700;">Resultsoft</a></li>
           <li class="bu-hide-mobile"><a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank">Faculty Portal</a></li>
-          <li class="bu-hide-mobile"><a href="<?php echo href('enquiry.php'); ?>" style="color:#38BDF8 !important; font-weight:700;">Admission Enquiry</a></li>
           <li class="bu-hide-mobile"><a href="<?php echo href('grievance.php'); ?>">Grievance</a></li>
-          <li class="bu-hide-mobile"><a href="<?php echo href('auditreport.php'); ?>">Public Disclosure</a></li>
+          <li class="bu-hide-mobile"><a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank">Public Disclosure</a></li>
           <li class="bu-hide-mobile"><a href="<?php echo href('nirf.php'); ?>">NIRF</a></li>
           <li class="bu-hide-mobile"><a href="<?php echo href('notice.php'); ?>">Notices</a></li>
         </ul>
@@ -135,6 +132,7 @@
               <li><a href="<?php echo href("advisory.php")?>">Cells & Committees</a></li>
               <li><a href="<?php echo href('iqac.php'); ?>">IQAC (Internal Quality Assurance)</a></li>
               <li><a href="<?php echo href("approvals.php")?>">Approvals & Recognitions</a></li>
+              <li><a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank">Mandatory Public Disclosure</a></li>
               <li><a href="<?php echo URL_UPLOAD; ?>media/ffe90b0c7e9e55b00b1207aee3ce3971.pdf" target="_blank">Sponsoring Detail</a></li>
               <li><a href="<?php echo href('auditreport.php'); ?>">Finance Officer &gt; Audit Report</a></li>
               <li><a href="<?php echo URL_UPLOAD; ?>media/671d06f0fea73f07576a994c4343281c.pdf" target="_blank">Annual Report 2024</a></li>

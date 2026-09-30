@@ -59,8 +59,12 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('mandatory-disclo
                       </tr>
                     </thead>
                     <tbody>
-                      <?php if (!empty($portalPage['data']['docs']) && is_array($portalPage['data']['docs'])): ?>
-                        <?php foreach ($portalPage['data']['docs'] as $d): 
+                      <?php 
+                        $defaultDocs = [
+                          ['title' => 'Mandatory Public Disclosure — Bhabha University Bhopal', 'url' => URL_ROOT . 'upload/media/12dfaac45ab95d2c718f63563d7c5a28.pdf']
+                        ];
+                        $docsList = (!empty($portalPage['data']['docs']) && is_array($portalPage['data']['docs'])) ? $portalPage['data']['docs'] : $defaultDocs;
+                        foreach ($docsList as $d): 
                           $dUrl = strpos($d['url'], 'http') === 0 ? $d['url'] : URL_ROOT . ltrim($d['url'], '/');
                         ?>
                         <tr>
@@ -75,17 +79,12 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('mandatory-disclo
                             </a>
                           </td>
                           <td style="width:160px; text-align:center; vertical-align:middle;">
-                            <a href="<?php echo $dUrl;?>" target="_blank" download class="bu-table-dl">
+                            <a href="<?php echo $dUrl;?>" target="_blank" class="bu-table-dl">
                               <i class="fa fa-download"></i> Download
                             </a>
                           </td>
                         </tr>
                         <?php endforeach; ?>
-                      <?php else: ?>
-                        <tr>
-                          <td colspan="3" style="text-align:center; color:#64748B; padding:30px;">Regulatory disclosure records are being updated for the current academic session.</td>
-                        </tr>
-                      <?php endif; ?>
                     </tbody>
                   </table>
                 </div>

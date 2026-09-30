@@ -66,6 +66,11 @@ $active_page = $active_page ?? '';
         </a>
       </li>
       <li>
+        <a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank">
+          <i class="fa fa-file-pdf-o"></i> Mandatory Public Disclosure
+        </a>
+      </li>
+      <li>
         <a href="<?php echo URL_UPLOAD; ?>media/ffe90b0c7e9e55b00b1207aee3ce3971.pdf" target="_blank">
           <i class="fa fa-file-pdf-o"></i> Sponsoring Detail
         </a>

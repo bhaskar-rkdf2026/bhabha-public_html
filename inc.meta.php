@@ -150,9 +150,14 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 .bu-topbar-links li:last-child a { border-right: none !important; }
 .bu-topbar-links li a:hover { color: var(--bu-gold) !important; text-decoration: none !important; }
 
-/* Topbar Dropdown Styles */
+/* Topbar Dropdown Styles - Info Corner (Mobile & Tablet Only) */
 .bu-topbar-dropdown {
   position: relative !important;
+}
+@media (min-width: 992px) {
+  .bu-topbar-dropdown {
+    display: none !important;
+  }
 }
 .bu-topbar-drop-toggle {
   cursor: pointer !important;
