@@ -162,7 +162,7 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
 
         <!-- =================== 7. NEWS, MEDIA & EVENTS =================== -->
         <?php 
-          $newsPages = ['news.php', 'notice.php', 'announcements.php', 'events.php', 'media.php', 'gallery.php'];
+          $newsPages = ['news.php', 'notice.php', 'announcements.php', 'events.php', 'media.php', 'gallery.php', 'blogs.php'];
           $isNewsActive = isSubActive($newsPages, $currPage, 'news', $secParam);
         ?>
         <li class="<?php echo $isNewsActive; ?>">
@@ -171,6 +171,7 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
           </a>
           <ul class="submenu">
             <li><a href="section_hub.php?section=news" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ News & Media Hub</a></li>
+            <li><a href="blogs.php"><i class="mdi mdi-circle-outline"></i> Research & Tech Blogs</a></li>
             <li><a href="news.php"><i class="mdi mdi-circle-outline"></i> News Updates</a></li>
             <li><a href="notice.php"><i class="mdi mdi-circle-outline"></i> Official Notices</a></li>
             <li><a href="announcements.php"><i class="mdi mdi-circle-outline"></i> Ticker Announcements</a></li>

@@ -235,8 +235,7 @@ table {
   }
 
   .bu-header-actions {
-    margin-left: auto !important;
-    order: 98 !important;
+    display: none !important;
   }
 
   .bu-header-container {

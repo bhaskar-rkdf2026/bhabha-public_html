@@ -99,16 +99,19 @@
       </div>
 
       <div class="bu-topbar-right">
-        <!-- Phone Number -->
+        <!-- Phone Number (Desktop) -->
         <?php if(!empty($aryForm['phone_one'])): ?>
-          <a href="tel:<?php echo $aryForm['phone_one']; ?>" class="bu-topbar-phone">
+          <a href="tel:<?php echo $aryForm['phone_one']; ?>" class="bu-topbar-phone bu-hide-mobile">
             <i class="fa fa-phone"></i> <?php echo $aryForm['phone_one']; ?>
           </a>
         <?php else: ?>
-          <a href="tel:+917554936800" class="bu-topbar-phone">
+          <a href="tel:+917554936800" class="bu-topbar-phone bu-hide-mobile">
             <i class="fa fa-phone"></i> 0755-4246498
           </a>
         <?php endif; ?>
+
+        <!-- MOBILE ONLY: Small Top Apply Button -->
+        <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-top-gold bu-show-mobile-only"><i class="fa fa-graduation-cap"></i> <span class="bu-blink">Apply Now</span></a>
 
         <!-- DESKTOP: Beautiful Social Media Icons -->
         <div class="bu-topbar-socials bu-hide-mobile">
@@ -331,8 +334,8 @@
         </ul>
       </nav>
 
-      <!-- Action Buttons (Apply) -->
-      <div class="bu-header-actions">
+      <!-- Action Buttons (Apply - Desktop Only) -->
+      <div class="bu-header-actions bu-hide-mobile">
         <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-gold">Apply</a>
       </div>
 
