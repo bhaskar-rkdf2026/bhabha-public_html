@@ -22,6 +22,11 @@
     function processFormForModSec(form) {
         if (!form) return;
         
+        // If HTML5 form validation fails, abort immediately so we don't alter inputs in UI
+        if (form.checkValidity && !form.checkValidity()) {
+            return;
+        }
+
         // 1. Force update and encode all CKEditor instances
         if (typeof CKEDITOR !== 'undefined' && CKEDITOR.instances) {
             for (var name in CKEDITOR.instances) {
@@ -29,18 +34,23 @@
                     var inst = CKEDITOR.instances[name];
                     if (inst) {
                         var html = inst.getData();
-                        var encoded = buSafeB64Encode(html);
-                        inst.setData(encoded);
-                        var targetEl = form.querySelector('textarea[name="' + name + '"], #' + name);
-                        if (targetEl) {
-                            targetEl.value = encoded;
+                        if (html && html.indexOf('B64:') !== 0) {
+                            var encoded = buSafeB64Encode(html);
+                            inst.setData(encoded);
+                            var targetEl = form.querySelector('textarea[name="' + name + '"], #' + name);
+                            if (targetEl) {
+                                targetEl.value = encoded;
+                            }
                         }
                     }
                 } catch(e) {}
             }
         }
 
-        // 2. Encode all textareas and text/hidden inputs (NEVER touch select or buttons/files)
+        // 2. Encode only textareas and text/hidden inputs.
+        // NEVER encode dates, numbers, emails, passwords, files, selects, etc. (which causes browser rejection or validation error)
+        var disallowedTypes = ['date', 'datetime-local', 'time', 'month', 'week', 'number', 'range', 'color', 'email', 'url', 'tel', 'file', 'submit', 'button', 'reset', 'checkbox', 'radio', 'password', 'image', 'search'];
+        
         var elements = form.elements;
         if (elements) {
             for (var i = 0; i < elements.length; i++) {
@@ -48,27 +58,26 @@
                 var tag = (el.tagName || '').toLowerCase();
                 var type = (el.type || 'text').toLowerCase();
                 
-                // Skip selects, files, buttons, radios, checkboxes
-                if (tag === 'select' || type === 'file' || type === 'submit' || type === 'button' || type === 'checkbox' || type === 'radio' || type === 'password') {
+                if (tag === 'select' || disallowedTypes.indexOf(type) !== -1) {
                     continue;
                 }
                 
-                var val = el.value;
-                if (val && typeof val === 'string' && val.indexOf('B64:') !== 0) {
-                    el.value = buSafeB64Encode(val);
+                // Only encode textareas and text/hidden inputs
+                if (tag === 'textarea' || type === 'text' || type === 'hidden' || !el.type) {
+                    var val = el.value;
+                    if (val && typeof val === 'string' && val.indexOf('B64:') !== 0) {
+                        el.value = buSafeB64Encode(val);
+                    }
                 }
             }
         }
     }
 
-    // Intercept both Click on submit buttons and Submit event
-    $(document).on('click', 'input[type="submit"], button[type="submit"]', function() {
-        if (this.form) {
-            processFormForModSec(this.form);
+    // Intercept Form Submit ONLY (never click) so HTML5 validation passes smoothly first
+    $(document).on('submit', 'form', function(e) {
+        if (this.checkValidity && !this.checkValidity()) {
+            return;
         }
-    });
-
-    $(document).on('submit', 'form', function() {
         processFormForModSec(this);
     });
 })(window.jQuery);

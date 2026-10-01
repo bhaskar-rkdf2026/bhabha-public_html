@@ -61,7 +61,7 @@ table {
 }
 
 @media (max-width: 1280px) {
-  .bu-topbar-links li a {
+  .bu-topbar-links > li > a {
     padding: 0 6px !important;
     font-size: 10px !important;
   }
@@ -72,13 +72,31 @@ table {
 }
 
 @media (max-width: 1100px) {
-  .bu-topbar-links li a {
+  .bu-topbar-links > li > a {
     padding: 0 5px !important;
     font-size: 9.5px !important;
   }
 }
 
+@media (min-width: 992px) {
+  .bu-show-mobile-only,
+  .bu-topbar-links > li.bu-show-mobile-only,
+  li.bu-show-mobile-only {
+    display: none !important;
+  }
+}
+
 @media (max-width: 991px) {
+  .bu-show-mobile-only,
+  .bu-topbar-links > li.bu-show-mobile-only,
+  li.bu-show-mobile-only {
+    display: inline-flex !important;
+  }
+  .bu-hide-mobile,
+  .bu-topbar-links > li.bu-hide-mobile,
+  li.bu-hide-mobile {
+    display: none !important;
+  }
   .bu-topbar {
     display: block !important;
     background: #071338 !important;
@@ -117,13 +135,13 @@ table {
     padding: 0 !important;
   }
 
-  .bu-topbar-links li {
+  .bu-topbar-links > li {
     flex-shrink: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
   }
 
-  .bu-topbar-links li a {
+  .bu-topbar-links > li > a {
     font-size: 10px !important;
     font-weight: 600 !important;
     padding: 2px 7px !important;
@@ -134,7 +152,7 @@ table {
     white-space: nowrap !important;
   }
 
-  .bu-topbar-links li:last-child a {
+  .bu-topbar-links > li:last-child > a {
     border-right: none !important;
   }
 

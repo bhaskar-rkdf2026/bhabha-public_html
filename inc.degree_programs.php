@@ -12,6 +12,23 @@ $deg_heading = !empty($deg_sec['heading']) ? $deg_sec['heading'] : '85+ programs
 $deg_extra = !empty($deg_sec['extra_data']) ? json_decode($deg_sec['extra_data'], true) : [];
 $all_programs = $deg_extra['programs'] ?? [];
 
+$cert_count = count(array_filter($all_programs, function($p) {
+    return (!empty($p['levels']) && in_array('certificate', $p['levels'])) || ($p['level'] ?? '') === 'certificate';
+}));
+
+if ($cert_count === 0) {
+    $all_programs = array_merge($all_programs, [
+        ['title'=>'Hotel Management Diploma/Certificate', 'levels'=>['diploma','certificate'], 'level'=>'certificate', 'duration'=>'6 Mo / 1 yr', 'eligibility'=>'10+2 Any Stream', 'tag'=>'FEATURED'],
+        ['title'=>'Media certificate/diploma Courses', 'levels'=>['diploma','certificate'], 'level'=>'certificate', 'duration'=>'6 Mo / 1 yr', 'eligibility'=>'10+2 Any Stream', 'tag'=>'FEATURED'],
+        ['title'=>'Certificate in Digital Marketing & AI Tools', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'10+2 Any Stream', 'tag'=>'TRENDING'],
+        ['title'=>'Certificate in Cyber Security & Ethical Hacking', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'10+2 / IT Interest', 'tag'=>'FEATURED'],
+        ['title'=>'Certificate in Full Stack Web Development', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'10+2 / BCA / B.Tech', 'tag'=>'FEATURED'],
+        ['title'=>'Certificate in Data Science & Machine Learning', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'10+2 with Math / Grad', 'tag'=>'FEATURED'],
+        ['title'=>'Certificate in Dental Assistant & Oral Hygiene', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'10+2 PCB / Any', 'tag'=>'POPULAR'],
+        ['title'=>'Certificate in Hospital Administration', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'Graduation / 10+2', 'tag'=>'POPULAR'],
+    ]);
+}
+
 $tab_categories = [
     'undergraduate' => 'UNDERGRADUATE',
     'postgraduate'  => 'POSTGRADUATE',
@@ -50,6 +67,9 @@ $tab_categories = [
         $g_idx++;
         // Filter programs for this tab
         $tab_items = array_filter($all_programs, function($p) use ($tab_key) {
+            if (!empty($p['levels']) && is_array($p['levels'])) {
+                return in_array($tab_key, $p['levels']);
+            }
             return isset($p['level']) && strtolower(trim($p['level'])) === strtolower($tab_key);
         });
       ?>
@@ -80,6 +100,13 @@ $tab_categories = [
         </div>
       <?php endforeach; ?>
 
+    </div>
+
+    <!-- View All Programmes Link -->
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="<?php echo href('programmes.php'); ?>" class="bu-deg-view-all-btn">
+        Explore All 85+ Academic Programmes &nbsp;→
+      </a>
     </div>
 
   </div>
@@ -339,6 +366,30 @@ $tab_categories = [
   .bu-deg-card-title {
     font-size: 20px !important;
   }
+.bu-deg-view-all-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #0B2545 !important;
+  color: #FFC107 !important;
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  padding: 14px 34px !important;
+  border-radius: 50px !important;
+  border: 2px solid #0B2545 !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 8px 24px rgba(11, 37, 69, 0.2) !important;
+}
+.bu-deg-view-all-btn:hover {
+  background: #FFC107 !important;
+  border-color: #FFC107 !important;
+  color: #0B2545 !important;
+  text-decoration: none !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 30px rgba(255, 193, 7, 0.35) !important;
 }
 </style>
 

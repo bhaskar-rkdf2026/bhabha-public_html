@@ -660,82 +660,117 @@ select.bu-input {
 
         <div class="bu-alumni-stories-grid">
           <?php
-          $alumni_stories = [
-            [
-              'name'      => 'Mr. Anurag Kumar',
-              'degree'    => 'M.Tech (Thermal Science Engineering) — Batch 2025',
-              'badge'     => '₹60.0 LPA Package',
-              'highlight' => 'China Petroleum Pipeline Engineering Co. Ltd. (CPP)',
-              'role'      => 'Mechanical Engineer - Lead',
-              'desc'      => 'Secured an international milestone package of 60.0 LPA at China Petroleum Pipeline Engineering Co. Ltd., representing the cutting-edge engineering competence cultivated at Bhabha University.',
-              'image'     => 'upload/media/alumni_anurag_kumar_cpp_60lpa.jpg',
-            ],
-            [
-              'name'      => 'Harikesh Singh',
-              'degree'    => 'M.Tech – VLSI Design (Batch 2023–2025)',
-              'badge'     => 'AIR Rank 68 in IES 2025',
-              'highlight' => 'Indian Engineering Services (IES / ESE 2025)',
-              'role'      => 'UPSC Engineering Officer',
-              'desc'      => 'Secured an All India Rank 68 in the prestigious Indian Engineering Services 2025, demonstrating top-tier academic dedication, perseverance, and technical excellence.',
-              'image'     => 'upload/media/alumni_harikesh_singh_ies_rank68.jpg',
-            ],
-            [
-              'name'      => 'Mr. Kamlesh Kumar',
-              'degree'    => 'Engineering Alumnus — Bhabha University',
-              'badge'     => 'UPSC IES Officer',
-              'highlight' => 'Indian Engineering Services (IES / ESE)',
-              'role'      => 'UPSC Engineering Officer',
-              'desc'      => 'Cleared the prestigious Union Public Service Commission (UPSC) Indian Engineering Services examination and selected as an IES Officer in the Government of India.',
-              'image'     => 'upload/media/alumni_kamlesh_kumar_ies.jpg',
-            ],
-            [
-              'name'      => 'Mr. Anshuman Rajesh Singh',
-              'degree'    => 'Engineering Alumnus — Bhabha University',
-              'badge'     => 'UPSC IES 2023 Officer',
-              'highlight' => 'Indian Engineering Services (IES / ESE 2023)',
-              'role'      => 'UPSC Engineering Officer',
-              'desc'      => 'Successfully cracked the prestigious UPSC Indian Engineering Services (IES 2023) examination and appointed as an Engineering Officer in the Government of India.',
-              'image'     => 'upload/media/alumni_anshuman_singh_ies.jpg',
-            ],
-            [
-              'name'      => 'Ms. Nidhi Shukla',
-              'degree'    => 'Distinguished Alumna — Bhabha University',
-              'badge'     => 'Deputy Director, DTE MP',
-              'highlight' => 'Directorate of Technical Education (DTE), Govt. of M.P.',
-              'role'      => 'Deputy Director',
-              'desc'      => 'Selected through MPPSC and appointed as Deputy Director at Directorate of Technical Education (DTE), Government of Madhya Pradesh.',
-              'image'     => 'upload/media/alumni_nidhi_shukla_dte.jpg',
-            ],
-            [
-              'name'      => 'Shubham Kumar Srivastava',
-              'degree'    => 'M.Tech (Power Systems - Electrical)',
-              'badge'     => '₹12.0 LPA Package',
-              'highlight' => 'National High Speed Rail Corporation Ltd. (NHSRCL)',
-              'role'      => 'Junior Technical Manager (Electrical)',
-              'desc'      => 'Selected as Junior Technical Manager (Electrical) for India’s landmark High-Speed Bullet Train project at NHSRCL with an attractive 12 LPA package.',
-              'image'     => 'upload/media/alumni_shubham_srivastava_nhsrcl.jpg',
-            ],
-            [
-              'name'      => 'Vikash Chandra',
-              'degree'    => 'B.Pharm — Bhabha Pharmacy Research Institute (BPRI)',
-              'badge'     => 'IIT Kanpur Selection',
-              'highlight' => 'Indian Institute of Technology (IIT) Kanpur',
-              'role'      => 'M.Tech (Biomedical Engineering)',
-              'desc'      => 'Achieved direct selection at premier institution IIT Kanpur for postgraduate research and M.Tech in Biomedical Engineering after graduating from BPRI.',
-              'image'     => 'upload/media/alumni_vikash_chandra_iit_kanpur.jpg',
-            ],
-            [
-              'name'      => 'Mr. Rakesh Kumar Roy',
-              'degree'    => 'B.Tech – Civil Engineering (Batch 2025)',
-              'badge'     => '₹7.44 LPA Package',
-              'highlight' => 'Dhariwal Buildtech Limited (DBL)',
-              'role'      => 'Material Engineer',
-              'desc'      => 'Selected as Material Engineer at leading infrastructure conglomerate Dhariwal Buildtech Limited (DBL) with a commendable annual CTC of 7.44 LPA.',
-              'image'     => 'upload/media/alumni_rakesh_roy_dhariwal.jpg',
-            ],
-          ];
+          // Ensure table exists
+          try {
+              $db->rawQuery("CREATE TABLE IF NOT EXISTS `alumni_achievers` (
+                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `name` varchar(255) NOT NULL,
+                `degree` varchar(255) DEFAULT NULL,
+                `badge` varchar(255) DEFAULT NULL,
+                `highlight` varchar(255) DEFAULT NULL,
+                `role` varchar(255) DEFAULT NULL,
+                `description` text DEFAULT NULL,
+                `image` varchar(255) DEFAULT NULL,
+                `orders` int(11) DEFAULT 0,
+                `status` tinyint(1) DEFAULT 1,
+                `created_at` timestamp NULL DEFAULT current_timestamp(),
+                PRIMARY KEY (`id`)
+              ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+          } catch (\Throwable $e) {}
+
+          $db->where('status', 1);
+          $db->orderBy('orders', 'ASC');
+          $db->orderBy('id', 'ASC');
+          $alumni_stories = $db->get('alumni_achievers');
+
+          if (empty($alumni_stories)) {
+              $alumni_stories = [
+                [
+                  'name'        => 'Mr. Anurag Kumar',
+                  'degree'      => 'M.Tech (Thermal Science Engineering) — Batch 2025',
+                  'badge'       => '₹60.0 LPA Package',
+                  'highlight'   => 'China Petroleum Pipeline Engineering Co. Ltd. (CPP)',
+                  'role'        => 'Mechanical Engineer - Lead',
+                  'description' => 'Secured an international milestone package of 60.0 LPA at China Petroleum Pipeline Engineering Co. Ltd.',
+                  'image'       => 'media/alumni_anurag_kumar_cpp_60lpa.jpg',
+                ],
+                [
+                  'name'        => 'Harikesh Singh',
+                  'degree'      => 'M.Tech – VLSI Design (Batch 2023–2025)',
+                  'badge'       => 'AIR Rank 68 in IES 2025',
+                  'highlight'   => 'Indian Engineering Services (IES / ESE 2025)',
+                  'role'        => 'UPSC Engineering Officer',
+                  'description' => 'Secured an All India Rank 68 in the prestigious Indian Engineering Services 2025.',
+                  'image'       => 'media/alumni_harikesh_singh_ies_rank68.jpg',
+                ],
+                [
+                  'name'        => 'Mr. Kamlesh Kumar',
+                  'degree'      => 'Engineering Alumnus — Bhabha University',
+                  'badge'       => 'UPSC IES Officer',
+                  'highlight'   => 'Indian Engineering Services (IES / ESE)',
+                  'role'        => 'UPSC Engineering Officer',
+                  'description' => 'Cleared the prestigious UPSC Indian Engineering Services examination.',
+                  'image'       => 'media/alumni_kamlesh_kumar_ies.jpg',
+                ],
+                [
+                  'name'        => 'Mr. Anshuman Rajesh Singh',
+                  'degree'      => 'Engineering Alumnus — Bhabha University',
+                  'badge'       => 'UPSC IES 2023 Officer',
+                  'highlight'   => 'Indian Engineering Services (IES / ESE 2023)',
+                  'role'        => 'UPSC Engineering Officer',
+                  'description' => 'Successfully cracked the prestigious UPSC Indian Engineering Services (IES 2023) examination.',
+                  'image'       => 'media/alumni_anshuman_singh_ies.jpg',
+                ],
+                [
+                  'name'        => 'Ms. Nidhi Shukla',
+                  'degree'      => 'Distinguished Alumna — Bhabha University',
+                  'badge'       => 'Deputy Director, DTE MP',
+                  'highlight'   => 'Directorate of Technical Education (DTE), Govt. of M.P.',
+                  'role'        => 'Deputy Director',
+                  'description' => 'Selected through MPPSC and appointed as Deputy Director at Directorate of Technical Education (DTE).',
+                  'image'       => 'media/alumni_nidhi_shukla_dte.jpg',
+                ],
+                [
+                  'name'        => 'Shubham Kumar Srivastava',
+                  'degree'      => 'M.Tech (Power Systems - Electrical)',
+                  'badge'       => '₹12.0 LPA Package',
+                  'highlight'   => 'National High Speed Rail Corporation Ltd. (NHSRCL)',
+                  'role'        => 'Junior Technical Manager (Electrical)',
+                  'description' => 'Selected as Junior Technical Manager for India’s landmark High-Speed Bullet Train project.',
+                  'image'       => 'media/alumni_shubham_srivastava_nhsrcl.jpg',
+                ],
+                [
+                  'name'        => 'Vikash Chandra',
+                  'degree'      => 'B.Pharm — Bhabha Pharmacy Research Institute (BPRI)',
+                  'badge'       => 'IIT Kanpur Selection',
+                  'highlight'   => 'Indian Institute of Technology (IIT) Kanpur',
+                  'role'        => 'M.Tech (Biomedical Engineering)',
+                  'description' => 'Achieved direct selection at premier institution IIT Kanpur.',
+                  'image'       => 'media/alumni_vikash_chandra_iit_kanpur.jpg',
+                ],
+                [
+                  'name'        => 'Mr. Rakesh Kumar Roy',
+                  'degree'      => 'B.Tech – Civil Engineering (Batch 2025)',
+                  'badge'       => '₹7.44 LPA Package',
+                  'highlight'   => 'Dhariwal Buildtech Limited (DBL)',
+                  'role'        => 'Material Engineer',
+                  'description' => 'Selected as Material Engineer at Dhariwal Buildtech Limited (DBL).',
+                  'image'       => 'media/alumni_rakesh_roy_dhariwal.jpg',
+                ]
+              ];
+          }
+
           foreach($alumni_stories as $story):
-            $imgUrl = URL_ROOT . $story['image'];
+            $rawImg = $story['image'] ?? '';
+            if (empty($rawImg)) {
+                $imgUrl = URL_ROOT . 'upload/media/alumni_anurag_kumar_cpp_60lpa.jpg';
+            } elseif (strpos($rawImg, 'upload/') === 0 || strpos($rawImg, 'http') === 0) {
+                $imgUrl = (strpos($rawImg, 'http') === 0) ? $rawImg : URL_ROOT . $rawImg;
+            } elseif (strpos($rawImg, 'media/') === 0) {
+                $imgUrl = URL_ROOT . 'upload/' . $rawImg;
+            } else {
+                $imgUrl = URL_ROOT . 'upload/alumni/' . $rawImg;
+            }
           ?>
           <div class="bu-story-card" onclick="openAlumniPoster('<?php echo $imgUrl;?>', '<?php echo htmlspecialchars($story['name']);?>')">
             <div class="bu-story-img-box">
@@ -744,8 +779,8 @@ select.bu-input {
             </div>
             <div class="bu-story-body">
               <h3 class="bu-story-name"><?php echo htmlspecialchars($story['name']);?></h3>
-              <div class="bu-story-course"><?php echo htmlspecialchars($story['degree']);?></div>
-              <span class="bu-story-pkg-pill"><i class="fa fa-trophy"></i> <?php echo htmlspecialchars($story['badge']);?></span>
+              <div class="bu-story-course"><?php echo htmlspecialchars($story['degree'] ?? '');?></div>
+              <span class="bu-story-pkg-pill"><i class="fa fa-trophy"></i> <?php echo htmlspecialchars($story['badge'] ?? '');?></span>
             </div>
           </div>
           <?php endforeach; ?>

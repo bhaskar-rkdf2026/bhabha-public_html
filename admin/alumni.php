@@ -544,9 +544,14 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .
             <h4><i class="mdi mdi-school" style="color:var(--bu-gold);"></i> <?php echo TITLE; ?></h4>
             <p>Search, review, and manage verified alumni members and graduation profiles across university colleges.</p>
           </div>
-          <div class="bu-stat-badge">
-            <i class="mdi mdi-account-group" style="color:var(--bu-gold);font-size:16px;"></i>
-            Total Registrations: <strong><?php echo number_format($totalAlumni); ?></strong>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <div class="bu-stat-badge">
+              <i class="mdi mdi-account-group" style="color:var(--bu-gold);font-size:16px;"></i>
+              Total Registrations: <strong><?php echo number_format($totalAlumni); ?></strong>
+            </div>
+            <a href="alumni_achievers.php" class="btn btn-warning" style="font-weight:800; border-radius:30px; padding:7px 18px; display:inline-flex; align-items:center; gap:6px; color:#0A1B54; box-shadow:0 3px 10px rgba(255,193,7,0.3);">
+              <i class="fa fa-star"></i> Manage Star Achievers & Posters
+            </a>
           </div>
         </div>
 

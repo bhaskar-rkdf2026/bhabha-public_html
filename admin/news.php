@@ -20,7 +20,7 @@ if(isset($_SESSION['error']) && $_SESSION['error']!="")
 	unset($_SESSION['error']);
 }
 
-if(isset($_POST['submit']))
+if(isset($_POST['submit']) || (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['title']) || isset($_POST['news_date']))))
 {
 	if(!empty($_FILES['icon']['name']))
 	{

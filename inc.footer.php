@@ -77,7 +77,7 @@
         <ul class="bu-footer-links">
           <li><a href="<?php echo href("online-admission.php"); ?>"><i class="fa fa-angle-right"></i> Online Admission 2026-27</a></li>
           <li><a href="<?php echo href("admission-process.php"); ?>"><i class="fa fa-angle-right"></i> Admission Process</a></li>
-          <li><a href="<?php echo href("all-programs.php"); ?>"><i class="fa fa-angle-right"></i> Courses &amp; Programs</a></li>
+          <li><a href="<?php echo href("programmes.php"); ?>"><i class="fa fa-angle-right"></i> Academic Programmes</a></li>
           <li><a href="<?php echo href("fees.php"); ?>"><i class="fa fa-angle-right"></i> Fee Structure</a></li>
           <li><a href="<?php echo href("examination.php"); ?>"><i class="fa fa-angle-right"></i> Examination Cell</a></li>
           <li><a href="<?php echo href("time-table.php"); ?>"><i class="fa fa-angle-right"></i> Exam Time Table</a></li>

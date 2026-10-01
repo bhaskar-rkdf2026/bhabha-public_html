@@ -910,67 +910,7 @@ $(document).ready(function() {
         $('#instTab .nav-link[href="#tab-overview"]').addClass('active');
     }
 
-    // Helper for 100% reliable UTF-8 Base64 Encoding
-    function safeB64Encode(str) {
-        if (!str || typeof str !== 'string') return str;
-        try {
-            return 'B64:' + btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-                return String.fromCharCode(parseInt(p1, 16));
-            }));
-        } catch(e) {
-            try {
-                return 'B64:' + btoa(unescape(encodeURIComponent(str)));
-            } catch(e2) {
-                return str;
-            }
-        }
-    }
 
-    function processFormForModSec(form) {
-        if (!form) return;
-        if (typeof CKEDITOR !== 'undefined' && CKEDITOR.instances) {
-            for (var name in CKEDITOR.instances) {
-                try {
-                    var inst = CKEDITOR.instances[name];
-                    if (inst) {
-                        var html = inst.getData();
-                        var encoded = safeB64Encode(html);
-                        inst.setData(encoded);
-                        var targetEl = form.querySelector('[name="' + name + '"]') || document.getElementById(name);
-                        if (targetEl) {
-                            targetEl.value = encoded;
-                        }
-                    }
-                } catch(e) {}
-            }
-        }
-        var elements = form.elements;
-        if (elements) {
-            for (var i = 0; i < elements.length; i++) {
-                var el = elements[i];
-                var tag = (el.tagName || '').toLowerCase();
-                var type = (el.type || 'text').toLowerCase();
-                if (tag === 'select' || type === 'file' || type === 'submit' || type === 'button' || type === 'checkbox' || type === 'radio' || type === 'password') {
-                    continue;
-                }
-                var val = el.value;
-                if (val && typeof val === 'string' && val.indexOf('B64:') !== 0) {
-                    el.value = safeB64Encode(val);
-                }
-            }
-        }
-    }
-
-    // 3. Intercept submit click and form submit to bypass Mod_Security 406
-    $(document).on('click', 'input[type="submit"], button[type="submit"]', function() {
-        if (this.form) {
-            processFormForModSec(this.form);
-        }
-    });
-
-    $('form').on('submit', function() {
-        processFormForModSec(this);
-    });
 
     // 4. Add New Program Repeater
     $('#btnAddProgram').on('click', function() {

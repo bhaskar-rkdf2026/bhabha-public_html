@@ -144,7 +144,7 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
 
         <!-- =================== 6. PLACEMENTS & CAREERS =================== -->
         <?php 
-          $placePages = ['recruiters.php', 'testimonial.php', 'jobs.php'];
+          $placePages = ['recruiters.php', 'alumni_achievers.php', 'testimonial.php', 'jobs.php'];
           $isPlaceActive = isSubActive($placePages, $currPage, 'placements', $secParam);
         ?>
         <li class="<?php echo $isPlaceActive; ?>">
@@ -154,6 +154,7 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
           <ul class="submenu">
             <li><a href="section_hub.php?section=placements" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Placements Hub</a></li>
             <li><a href="recruiters.php"><i class="mdi mdi-circle-outline"></i> Placement Recruiters</a></li>
+            <li><a href="alumni_achievers.php"><i class="mdi mdi-circle-outline"></i> Star Alumni Achievers</a></li>
             <li><a href="testimonial.php"><i class="mdi mdi-circle-outline"></i> Student Testimonials</a></li>
             <li><a href="jobs.php"><i class="mdi mdi-circle-outline"></i> Career & Job Openings</a></li>
           </ul>

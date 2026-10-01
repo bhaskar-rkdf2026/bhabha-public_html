@@ -470,6 +470,17 @@ $sections = [
                 'desc'        => 'TCS, Infosys, Wipro, Cipla, Sun Pharma, L&T, HCL and top hiring partner logos.'
             ],
             [
+                'title'       => 'Star Alumni Achievers & Posters',
+                'nav_path'    => 'Frontend Nav > Placements / Alumni > Distinguished Alumni',
+                'live_url'    => URL_ROOT . 'alumni.php',
+                'edit_url'    => 'alumni_achievers.php',
+                'add_url'     => 'alumni_achievers.php?action=add',
+                'icon'        => 'mdi mdi-star-circle',
+                'badge'       => 'Dedicated Module',
+                'badge_cls'   => 'bu-badge-module',
+                'desc'        => '60 LPA milestone packages, UPSC IES officers, IIT selections, and star alumni posters.'
+            ],
+            [
                 'title'       => 'Student Placement Testimonials',
                 'nav_path'    => 'Frontend Nav > Placements / Home > Testimonials',
                 'live_url'    => URL_ROOT . 'placements.php',

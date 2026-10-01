@@ -8,13 +8,13 @@
       <div class="bu-topbar-left">
         <ul class="bu-topbar-links">
           
-          <!-- Info Corner Master Dropdown -->
-          <li class="bu-topbar-dropdown">
+          <!-- MOBILE ONLY: Info Corner Master Dropdown -->
+          <li class="bu-topbar-dropdown bu-show-mobile-only">
             <a href="javascript:void(0);" class="bu-topbar-drop-toggle bu-info-corner-badge">
               <i class="fa fa-th mr-1" style="color: #FFC107;"></i> Info Corner <i class="fa fa-angle-down ml-1"></i>
             </a>
             <div class="bu-topbar-drop-menu bu-info-corner-menu">
-              <!-- Mobile / Desktop Close Header -->
+              <!-- Mobile Close Header -->
               <div class="bu-info-menu-topbar">
                 <span class="bu-info-menu-title"><i class="fa fa-th text-warning mr-1"></i> Quick Portals &amp; Links</span>
                 <button type="button" class="bu-info-close-btn" id="buInfoCloseBtn" title="Close Panel">&times;</button>
@@ -53,32 +53,71 @@
             </div>
           </li>
 
-          <!-- 1. Combined Students / ERP Login -->
-          <li><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-user mr-1 text-warning"></i> <span style="color:#FFC107 !important; font-weight:800;">Students / ERP Login</span></a></li>
+          <!-- MOBILE ONLY: Students / ERP Login -->
+          <li class="bu-show-mobile-only"><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-user mr-1 text-warning"></i> <span style="color:#FFC107 !important; font-weight:800;">Students / ERP Login</span></a></li>
 
-          <!-- 2-7: Desktop Only Links -->
-          <li class="bu-hide-mobile"><a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" style="color:#FFC107 !important; font-weight:700;">Resultsoft</a></li>
-          <li class="bu-hide-mobile"><a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank">Faculty Portal</a></li>
-          <li class="bu-hide-mobile"><a href="<?php echo href('grievance.php'); ?>">Grievance</a></li>
-          <li class="bu-hide-mobile"><a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank">Public Disclosure</a></li>
+          <!-- ============================================================
+               DESKTOP TOP MENU ITEMS (As per user specifications)
+               ============================================================ -->
+          <!-- 1. ERP Login Dropdown (4 Menus: Student, Staff/Faculty, OAP, Resultsoft) -->
+          <li class="bu-erp-dropdown bu-hide-mobile">
+            <a href="javascript:void(0);" class="bu-erp-toggle-link">
+              <i class="fa fa-user-circle mr-1"></i> ERP Login <i class="fa fa-angle-down ml-1"></i>
+            </a>
+            <div class="bu-erp-menu">
+              <a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank"><i class="fa fa-graduation-cap"></i> Student Login</a>
+              <a href="https://bhabha.accsofterp.com/Accsoft/Login.aspx" target="_blank"><i class="fa fa-users"></i> Staff/Faculty Login</a>
+              <a href="https://bhabha.accsofterp.com/OAP/AdminLogin.aspx" target="_blank"><i class="fa fa-shield"></i> OAP Login</a>
+              <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank"><i class="fa fa-file-text-o"></i> Resultsoft Login</a>
+            </div>
+          </li>
+
+          <!-- 2. Alumni -->
+          <li class="bu-hide-mobile"><a href="<?php echo href('alumni.php'); ?>">Alumni</a></li>
+
+          <!-- 3. NIRF -->
           <li class="bu-hide-mobile"><a href="<?php echo href('nirf.php'); ?>">NIRF</a></li>
-          <li class="bu-hide-mobile"><a href="<?php echo href('notice.php'); ?>">Notices</a></li>
+
+          <!-- 4. NAD -->
+          <li class="bu-hide-mobile"><a href="<?php echo href('page.php','id=25'); ?>">NAD</a></li>
+
+          <!-- 5. IQAC -->
+          <li class="bu-hide-mobile"><a href="<?php echo href('iqac.php'); ?>">IQAC</a></li>
+
+          <!-- 6. Public Disclosure -->
+          <li class="bu-hide-mobile"><a href="<?php echo URL_UPLOAD; ?>media/12dfaac45ab95d2c718f63563d7c5a28.pdf" target="_blank">Public Disclosure</a></li>
+
+          <!-- 7. Verification -->
+          <li class="bu-hide-mobile"><a href="https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx" target="_blank">Verification</a></li>
+
+          <!-- 8. Webmail -->
+          <li class="bu-hide-mobile"><a href="https://webmail.bhabhauniversity.edu.in/" target="_blank">Webmail</a></li>
+
+          <!-- 9. Blog -->
+          <li class="bu-hide-mobile"><a href="<?php echo href('blogs.php'); ?>">Blog</a></li>
         </ul>
       </div>
 
       <div class="bu-topbar-right">
+        <!-- Phone Number -->
         <?php if(!empty($aryForm['phone_one'])): ?>
           <a href="tel:<?php echo $aryForm['phone_one']; ?>" class="bu-topbar-phone">
             <i class="fa fa-phone"></i> <?php echo $aryForm['phone_one']; ?>
           </a>
         <?php else: ?>
           <a href="tel:+917554936800" class="bu-topbar-phone">
-            <i class="fa fa-phone"></i> +91 755 4936800
+            <i class="fa fa-phone"></i> 0755-4246498
           </a>
         <?php endif; ?>
-        <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-top-gold">
-          <i class="fa fa-paper-plane mr-1"></i> Apply Now
-        </a>
+
+        <!-- DESKTOP: Beautiful Social Media Icons -->
+        <div class="bu-topbar-socials bu-hide-mobile">
+          <a href="https://www.facebook.com/BhabhaUniversityIndia/" target="_blank" class="bu-social-btn bu-fb" title="Facebook"><i class="fa fa-facebook"></i></a>
+          <a href="https://www.instagram.com/bhabhauniversitybhopal/" target="_blank" class="bu-social-btn bu-insta" title="Instagram"><i class="fa fa-instagram"></i></a>
+          <a href="https://twitter.com/bhabhaUniversty" target="_blank" class="bu-social-btn bu-tw" title="Twitter / X"><i class="fa fa-twitter"></i></a>
+          <a href="https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g" target="_blank" class="bu-social-btn bu-yt" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+          <a href="https://in.linkedin.com/company/bhabha-university" target="_blank" class="bu-social-btn bu-li" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -154,6 +193,18 @@
                 echo '<li><a href="'.href("institutes.php").'">All Institutes</a></li>';
               }
               ?>
+            </ul>
+          </li>
+
+          <!-- Academic Programmes Dropdown -->
+          <li class="bu-nav-item">
+            <a href="<?php echo href("programmes.php")?>" class="bu-nav-link">Programmes <i class="fa fa-angle-down"></i></a>
+            <ul class="bu-dropdown">
+              <li><a href="<?php echo href("programmes.php","type=undergraduate")?>"><i class="fa fa-graduation-cap text-warning mr-2"></i> Under Graduate programmes</a></li>
+              <li><a href="<?php echo href("programmes.php","type=postgraduate")?>"><i class="fa fa-book text-info mr-2"></i> Post Graduate programmes</a></li>
+              <li><a href="<?php echo href("programmes.php","type=doctoral")?>"><i class="fa fa-university text-danger mr-2"></i> Doctoral Programmes</a></li>
+              <li><a href="<?php echo href("programmes.php","type=diploma")?>"><i class="fa fa-certificate text-success mr-2"></i> Diploma Programmes</a></li>
+              <li><a href="<?php echo href("programmes.php","type=certificate")?>"><i class="fa fa-file-text-o text-warning mr-2"></i> Certificate Programmes</a></li>
             </ul>
           </li>
 
@@ -250,11 +301,11 @@
             </ul>
           </li>
 
-          <!-- Placements Dropdown -->
+          <!-- T&P Cell Dropdown -->
           <li class="bu-nav-item">
-            <a href="<?php echo href("placements.php");?>" class="bu-nav-link">Placements <i class="fa fa-angle-down"></i></a>
+            <a href="<?php echo href("placements.php");?>" class="bu-nav-link">T&amp;P Cell <i class="fa fa-angle-down"></i></a>
             <ul class="bu-dropdown">
-              <li><a href="<?php echo href("placements.php");?>">Training & Placement Cell</a></li>
+              <li><a href="<?php echo href("placements.php");?>">Training &amp; Placement Cell</a></li>
               <li><a href="<?php echo URL_UPLOAD; ?>media/9018b4daec2ac10a45dfd539260998f5.pdf" target="_blank">Recent Placement List</a></li>
               <li><a href="<?php echo URL_UPLOAD; ?>media/f27e76c6a5c21432282101555c225b35.jpg" target="_blank">Our Major Recruiters</a></li>
             </ul>
@@ -280,12 +331,9 @@
         </ul>
       </nav>
 
-      <!-- Action Buttons (Search & Apply) -->
+      <!-- Action Buttons (Apply) -->
       <div class="bu-header-actions">
-        <button class="bu-search-btn" id="buSearchOpen" title="Search website">
-          <i class="fa fa-search"></i>
-        </button>
-        <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-navy">Apply</a>
+        <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-gold">Apply</a>
       </div>
 
       <!-- Mobile Menu Toggle Button (extreme right corner) -->
@@ -395,8 +443,29 @@
       });
     }
 
-    /* ---- Topbar Mobile Dropdown Toggle ---- */
+    /* ---- Topbar Dropdown Toggles (Info Corner & ERP Login) ---- */
     document.addEventListener('click', function(e) {
+      // ERP Dropdown Click Toggle
+      var erpToggle = e.target.closest('.bu-erp-toggle-link');
+      if (erpToggle) {
+        e.preventDefault();
+        e.stopPropagation();
+        var erpParent = erpToggle.closest('.bu-erp-dropdown');
+        var isErpActive = erpParent.classList.contains('active');
+        document.querySelectorAll('.bu-erp-dropdown.active').forEach(function(d) {
+          d.classList.remove('active');
+        });
+        if (!isErpActive) {
+          erpParent.classList.add('active');
+        }
+        return;
+      } else if (!e.target.closest('.bu-erp-menu')) {
+        document.querySelectorAll('.bu-erp-dropdown.active').forEach(function(d) {
+          d.classList.remove('active');
+        });
+      }
+
+      // Info Corner Mobile Close Button
       var closeBtn = e.target.closest('#buInfoCloseBtn');
       if (closeBtn) {
         e.preventDefault();
@@ -406,6 +475,8 @@
         });
         return;
       }
+
+      // Info Corner Toggle
       var toggle = e.target.closest('.bu-topbar-drop-toggle');
       if (toggle) {
         e.preventDefault();
