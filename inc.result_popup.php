@@ -1,13 +1,25 @@
 <?php
 /**
  * inc.result_popup.php
- * Official Notification Modal Popup for Homepage
+ * Official Notification Modal Popup for Homepage (Dual-Section Feature)
+ * Left Section: Star Milestone / ISRO Selection Poster + Press Coverage CTA
+ * Right Section: Important University Notices, Declared Results & Circulars
  * Bhabha University Theme: Deep Navy (#0A1B54, #051235), Royal Gold (#FFC107, #D99B00)
  */
+
+global $db;
+$govindNews = null;
+if (isset($db) && is_object($db)) {
+    $govindNews = $db->where('image', '307a24b505ca5d4b45f4bef7b8d1bd75.jpg')->getOne('news');
+}
+if (!$govindNews && isset($db) && is_object($db)) {
+    $govindNews = $db->where('id', 203)->getOne('news');
+}
+$govindNewsUrl = $govindNews ? href('news.php', 'id=' . $govindNews['id']) : (defined('URL_ROOT') ? URL_ROOT . 'news/203/' : 'news.php?id=203');
 ?>
 <style>
 /* ================================================================
-   BHABHA UNIVERSITY — NOTIFICATION MODAL POPUP
+   BHABHA UNIVERSITY — NOTIFICATION MODAL POPUP (DUAL-SECTION)
    Theme: Deep Navy #0A1B54, Gold #FFC107, Clean White & Slate
    ================================================================ */
 .bu-res-popup-overlay {
@@ -19,10 +31,10 @@
   width: 100vw !important;
   height: 100vh !important;
   margin: 0 !important;
-  padding: 24px 20px !important;
-  background: rgba(5, 18, 53, 0.72) !important;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  padding: 24px 16px !important;
+  background: rgba(5, 18, 53, 0.78) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 99999999 !important;
   display: flex !important;
   align-items: center !important;
@@ -30,7 +42,7 @@
   box-sizing: border-box !important;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0.25s ease;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
 }
 .bu-res-popup-overlay.show {
   opacity: 1;
@@ -39,20 +51,155 @@
 
 .bu-res-popup-box {
   background: #ffffff;
-  border-radius: 14px;
-  max-width: 560px !important;
-  width: 92% !important;
+  border-radius: 18px;
+  max-width: 880px !important;
+  width: 95% !important;
   margin: auto !important;
-  box-shadow: 0 25px 60px -12px rgba(5, 18, 53, 0.55), 0 0 0 1px rgba(255, 193, 7, 0.35);
+  box-shadow: 0 25px 70px -10px rgba(5, 18, 53, 0.65), 0 0 0 1px rgba(255, 193, 7, 0.35);
   overflow: hidden;
   position: relative;
-  transform: scale(0.95);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: row;
+  transform: scale(0.94);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  max-height: 90vh;
 }
 .bu-res-popup-overlay.show .bu-res-popup-box {
   transform: scale(1);
+}
+
+/* ================================================================
+   LEFT SECTION: STAR ACHIEVER / ISRO POSTER & CTA
+   ================================================================ */
+.bu-res-popup-left {
+  flex: 0 0 350px;
+  max-width: 350px;
+  background: linear-gradient(180deg, #051235 0%, #0A1B54 60%, #07153D 100%);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  border-right: 2px solid rgba(255, 193, 7, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+.bu-res-popup-left::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: -40px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255, 193, 7, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.bu-achiever-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.4);
+  color: #FFC107;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+.bu-achiever-star {
+  font-size: 11px;
+  animation: buStarPulse 1.8s ease-in-out infinite;
+}
+@keyframes buStarPulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.25); opacity: 1; }
+}
+
+.bu-achiever-img-wrap {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #051235;
+  margin-bottom: 12px;
+  display: block;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.bu-achiever-img-wrap:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+}
+.bu-achiever-img {
+  width: 100%;
+  height: auto;
+  max-height: 310px;
+  object-fit: contain;
+  display: block;
+}
+
+.bu-achiever-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bu-achiever-caption {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+  margin: 0;
+}
+.bu-achiever-caption strong {
+  color: #FFC107;
+  font-weight: 700;
+}
+
+/* Call to Action Button */
+.bu-achiever-cta {
+  background: linear-gradient(135deg, #FFC107 0%, #FFB300 100%);
+  color: #0A1B54 !important;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: -0.1px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 14px rgba(255, 193, 7, 0.35);
+  transition: all 0.22s ease;
+}
+.bu-achiever-cta:hover {
+  background: linear-gradient(135deg, #FFD54F 0%, #FFC107 100%);
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 18px rgba(255, 193, 7, 0.5);
+  color: #051235 !important;
+}
+.bu-achiever-cta i.fa-arrow-right {
+  transition: transform 0.2s ease;
+}
+.bu-achiever-cta:hover i.fa-arrow-right {
+  transform: translateX(4px);
+}
+
+/* ================================================================
+   RIGHT SECTION: NOTICES & CIRCULARS LIST
+   ================================================================ */
+.bu-res-popup-right {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  min-width: 0;
 }
 
 /* 1. Header (University Navy + Gold Bottom Accent) */
@@ -88,7 +235,7 @@
   50% { transform: rotate(0); }
 }
 .bu-res-header-text h3 {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 800;
   margin: 0;
   color: #ffffff;
@@ -96,7 +243,7 @@
   letter-spacing: -0.2px;
 }
 .bu-res-header-text p {
-  font-size: 10.5px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.8);
   margin: 2px 0 0 0;
   line-height: 1.2;
@@ -128,11 +275,12 @@
 
 /* 2. Body */
 .bu-res-popup-body {
-  padding: 12px 14px;
-  max-height: 310px;
+  padding: 12px 16px;
+  max-height: 330px;
   overflow-y: auto;
   background: #ffffff;
   box-sizing: border-box;
+  flex: 1 1 auto;
 }
 
 /* Custom Sleek Scrollbar */
@@ -162,7 +310,7 @@
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
   border-radius: 8px;
-  padding: 9px 12px;
+  padding: 8px 12px;
   text-decoration: none !important;
   color: inherit !important;
   display: block;
@@ -227,7 +375,7 @@
 .bu-res-popup-footer {
   background: #ffffff;
   border-top: 1px solid #E5E7EB;
-  padding: 11px 18px;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -239,7 +387,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 11.5px;
+  font-size: 11px;
   color: #64748B;
   cursor: pointer;
   user-select: none;
@@ -263,9 +411,9 @@
   background: #ffffff;
   border: 1.5px solid #CBD5E1;
   color: #0A1B54 !important;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  padding: 7px 13px;
+  padding: 6px 12px;
   border-radius: 6px;
   text-decoration: none !important;
   display: inline-flex;
@@ -284,9 +432,9 @@
   background: #0A1B54;
   border: 1.5px solid #0A1B54;
   color: #ffffff !important;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  padding: 7px 16px;
+  padding: 6px 14px;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -300,115 +448,160 @@
   color: #0A1B54 !important;
 }
 
-@media (max-width: 575px) {
+/* ================================================================
+   RESPONSIVE LAYOUT (MOBILE & TABLET BREAKPOINTS)
+   ================================================================ */
+@media (max-width: 768px) {
   .bu-res-popup-overlay {
-    padding: 16px !important;
+    padding: 16px 12px !important;
   }
   .bu-res-popup-box {
-    max-width: 95% !important;
-    width: 95% !important;
+    flex-direction: column !important;
+    max-width: 96% !important;
+    width: 96% !important;
+    max-height: 88vh !important;
+    overflow-y: auto !important;
   }
-  .bu-res-popup-header {
-    padding: 11px 14px;
+  .bu-res-popup-left {
+    flex: none !important;
+    max-width: 100% !important;
+    border-right: none !important;
+    border-bottom: 3px solid #FFC107 !important;
+    padding: 14px !important;
+  }
+  .bu-achiever-img {
+    max-height: 220px !important;
+  }
+  .bu-res-popup-right {
+    flex: none !important;
   }
   .bu-res-popup-body {
-    padding: 12px 14px;
-    max-height: 310px;
+    max-height: 220px !important;
+    padding: 12px 14px !important;
   }
   .bu-res-popup-footer {
-    padding: 10px 14px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
+    padding: 10px 14px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
   }
   .bu-notif-footer-btns {
-    justify-content: space-between;
+    justify-content: space-between !important;
   }
   .bu-notif-btn-outline, .bu-notif-btn-close {
-    flex: 1;
-    justify-content: center;
+    flex: 1 !important;
+    justify-content: center !important;
   }
 }
 </style>
 
-<!-- MODAL POPUP COMPONENT (CENTERED SCREEN OVERLAY) -->
+<!-- DUAL-SECTION MODAL POPUP COMPONENT (CENTERED SCREEN OVERLAY) -->
 <div id="buResultModalOverlay" class="bu-res-popup-overlay" onclick="closeBuResultModal(event)">
-  <div class="bu-res-popup-box" style="max-width: 560px !important; width: 92% !important;" onclick="event.stopPropagation()">
+  <div class="bu-res-popup-box" onclick="event.stopPropagation()">
     
-    <!-- Header -->
-    <div class="bu-res-popup-header">
-      <div class="bu-res-header-left">
-        <div class="bu-res-header-bell">
-          <i class="fa fa-bell"></i>
+    <!-- LEFT SECTION: STAR ACHIEVER / ISRO POSTER & CTA -->
+    <div class="bu-res-popup-left">
+      <div>
+        <div class="bu-achiever-pill">
+          <span class="bu-achiever-star"><i class="fa fa-star"></i></span>
+          <span>STAR MILESTONE &bull; ISRO</span>
         </div>
-        <div class="bu-res-header-text">
-          <h3>Bhabha University &mdash; Important Notices &amp; Circulars</h3>
-          <p>Latest official notifications, declared examination results &amp; academic circulars</p>
-        </div>
+
+        <a href="<?php echo $govindNewsUrl; ?>" class="bu-achiever-img-wrap" title="Govind Singh Selected in ISRO - Read Press Coverage">
+          <img src="<?php echo URL_IMG; ?>govind-singh-isro.jpg" alt="Govind Singh Selected as Scientist/Engineer SC at ISRO - Bhabha University" class="bu-achiever-img">
+        </a>
       </div>
-      <button type="button" class="bu-res-popup-close" onclick="closeBuResultModal()" aria-label="Close">&times;</button>
-    </div>
 
-    <!-- Body: Notification Cards with Theme Colored Accents -->
-    <div class="bu-res-popup-body">
-      <div class="bu-notif-cards-list">
-        
-        <!-- 1. B.Pharm 4th Sem (Theme Navy Accent) -->
-        <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-navy">
-          <span class="bu-notif-tag">RESULT NOTIFICATION &bull; B.PHARM</span>
-          <p class="bu-notif-content">
-            <strong>🎓 B.Pharm &ndash; 4th Semester (Regular)</strong> &mdash; Examination results declared and published on the official portal.
-          </p>
+      <div class="bu-achiever-bottom">
+        <p class="bu-achiever-caption">
+          <strong>Govind Singh (M.Tech)</strong> selected as Scientist/Engineer 'SC' at URSC, ISRO Bengaluru.
+        </p>
+        <a href="<?php echo $govindNewsUrl; ?>" class="bu-achiever-cta">
+          <span><i class="fa fa-newspaper-o" style="margin-right:6px;"></i> Read Press Coverage</span>
+          <i class="fa fa-arrow-right"></i>
         </a>
-
-        <!-- 2. Diploma HMCT 1st Year (Theme Gold Accent) -->
-        <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-gold">
-          <span class="bu-notif-tag">RESULT NOTIFICATION &bull; DIPLOMA HMCT</span>
-          <p class="bu-notif-content">
-            <strong>🍴 Diploma HMCT &ndash; 1st Year (Regular)</strong> &mdash; 1st Year annual examination marksheet and result live.
-          </p>
-        </a>
-
-        <!-- 3. M.Pharm 2nd Sem (Royal Blue Accent) -->
-        <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-blue">
-          <span class="bu-notif-tag">RESULT NOTIFICATION &bull; M.PHARM</span>
-          <p class="bu-notif-content">
-            <strong>🔬 M.Pharm &ndash; 2nd Semester (Regular)</strong> &mdash; Post-graduate semester examination results available online.
-          </p>
-        </a>
-
-        <!-- 4. B.Sc. B.Ed 2nd Sem (Emerald Green Accent) -->
-        <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-green">
-          <span class="bu-notif-tag">RESULT NOTIFICATION &bull; B.SC. B.ED</span>
-          <p class="bu-notif-content">
-            <strong>📖 B.Sc. B.Ed &ndash; 2nd Semester (Regular)</strong> &mdash; 4-Year integrated programme results declared.
-          </p>
-        </a>
-
-        <!-- 5. B.Pharm 2nd Sem (Theme Navy Accent) -->
-        <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-navy">
-          <span class="bu-notif-tag">RESULT NOTIFICATION &bull; B.PHARM</span>
-          <p class="bu-notif-content">
-            <strong>🎓 B.Pharm &ndash; 2nd Semester (Regular)</strong> &mdash; 2nd Semester regular examination results declared.
-          </p>
-        </a>
-
       </div>
     </div>
 
-    <!-- Footer Bar -->
-    <div class="bu-res-popup-footer">
-      <label class="bu-notif-checkbox-label">
-        <input type="checkbox" id="buNotifDontShowToday"> Don't show again today
-      </label>
-      <div class="bu-notif-footer-btns">
-        <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-btn-outline">
-          View Result &nearr;
-        </a>
-        <button type="button" onclick="closeBuResultModal()" class="bu-notif-btn-close">
-          Got it, Close
-        </button>
+    <!-- RIGHT SECTION: IMPORTANT NOTICES, RESULTS & CIRCULARS -->
+    <div class="bu-res-popup-right">
+      
+      <!-- Header -->
+      <div class="bu-res-popup-header">
+        <div class="bu-res-header-left">
+          <div class="bu-res-header-bell">
+            <i class="fa fa-bell"></i>
+          </div>
+          <div class="bu-res-header-text">
+            <h3>Important Notices &amp; Results</h3>
+            <p>Official circulars &amp; declared semester examination marks</p>
+          </div>
+        </div>
+        <button type="button" class="bu-res-popup-close" onclick="closeBuResultModal()" aria-label="Close">&times;</button>
       </div>
+
+      <!-- Body: Notification Cards with Theme Colored Accents -->
+      <div class="bu-res-popup-body">
+        <div class="bu-notif-cards-list">
+          
+          <!-- 1. B.Pharm 4th Sem (Theme Navy Accent) -->
+          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-navy">
+            <span class="bu-notif-tag">RESULT NOTIFICATION &bull; B.PHARM</span>
+            <p class="bu-notif-content">
+              <strong>🎓 B.Pharm &ndash; 4th Semester (Regular)</strong> &mdash; Examination results declared and published on the official portal.
+            </p>
+          </a>
+
+          <!-- 2. Diploma HMCT 1st Year (Theme Gold Accent) -->
+          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-gold">
+            <span class="bu-notif-tag">RESULT NOTIFICATION &bull; DIPLOMA HMCT</span>
+            <p class="bu-notif-content">
+              <strong>🍴 Diploma HMCT &ndash; 1st Year (Regular)</strong> &mdash; 1st Year annual examination marksheet and result live.
+            </p>
+          </a>
+
+          <!-- 3. M.Pharm 2nd Sem (Royal Blue Accent) -->
+          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-blue">
+            <span class="bu-notif-tag">RESULT NOTIFICATION &bull; M.PHARM</span>
+            <p class="bu-notif-content">
+              <strong>🔬 M.Pharm &ndash; 2nd Semester (Regular)</strong> &mdash; Post-graduate semester examination results available online.
+            </p>
+          </a>
+
+          <!-- 4. B.Sc. B.Ed 2nd Sem (Emerald Green Accent) -->
+          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-green">
+            <span class="bu-notif-tag">RESULT NOTIFICATION &bull; B.SC. B.ED</span>
+            <p class="bu-notif-content">
+              <strong>📖 B.Sc. B.Ed &ndash; 2nd Semester (Regular)</strong> &mdash; 4-Year integrated programme results declared.
+            </p>
+          </a>
+
+          <!-- 5. B.Pharm 2nd Sem (Theme Navy Accent) -->
+          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-navy">
+            <span class="bu-notif-tag">RESULT NOTIFICATION &bull; B.PHARM</span>
+            <p class="bu-notif-content">
+              <strong>🎓 B.Pharm &ndash; 2nd Semester (Regular)</strong> &mdash; 2nd Semester regular examination results declared.
+            </p>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Footer Bar -->
+      <div class="bu-res-popup-footer">
+        <label class="bu-notif-checkbox-label">
+          <input type="checkbox" id="buNotifDontShowToday"> Don't show again today
+        </label>
+        <div class="bu-notif-footer-btns">
+          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-btn-outline">
+            View Result &nearr;
+          </a>
+          <button type="button" onclick="closeBuResultModal()" class="bu-notif-btn-close">
+            Got it, Close
+          </button>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -416,7 +609,7 @@
 
 <script>
 (function() {
-  var STORAGE_KEY = 'bu_result_popup_dismissed_date';
+  var STORAGE_KEY = 'bu_result_popup_dismissed_v2_date';
 
   function shouldShowPopup() {
     try {

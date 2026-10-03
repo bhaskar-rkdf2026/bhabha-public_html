@@ -578,6 +578,31 @@ input.selectric-input,
   background: #0f172a;
   min-height: 380px;
   max-height: calc(90vh - 120px);
+  position: relative;
+}
+
+.bu-modal-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #FFC107;
+  font-size: 32px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.bu-modal-loader span {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #CBD5E1;
+  letter-spacing: 0.3px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .bu-modal-img {
@@ -586,6 +611,8 @@ input.selectric-input,
   object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.22s ease-in-out;
 }
 
 .bu-modal-footer {
@@ -837,6 +864,10 @@ input.selectric-input,
       </button>
     </div>
     <div class="bu-modal-body">
+      <div class="bu-modal-loader" id="buModalLoader">
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <span>Loading Clipping...</span>
+      </div>
       <img src="" id="buModalImg" class="bu-modal-img" alt="News Image Clipping">
     </div>
     <div class="bu-modal-footer">
@@ -993,24 +1024,73 @@ function resetNewsFilters() {
   applyNewsSorting();
 }
 
+var currentModalRequestId = 0;
+
 function openNewsModal(imgUrl, titleText) {
   var modal = document.getElementById('buNewsModal');
   var imgEl = document.getElementById('buModalImg');
   var titleEl = document.getElementById('buModalTitle');
   var dlEl = document.getElementById('buModalDl');
+  var loaderEl = document.getElementById('buModalLoader');
   
-  imgEl.src = imgUrl;
+  // Set title and download link
   titleEl.textContent = titleText;
   dlEl.href = imgUrl;
   
+  // CRITICAL FIX: Immediately clear previous image and hide it
+  // This prevents the old news clipping from flashing for 1-2 seconds
+  imgEl.removeAttribute('src');
+  imgEl.style.opacity = '0';
+  if (loaderEl) {
+    loaderEl.style.display = 'flex';
+  }
+  
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+
+  // Incremental ID to prevent race conditions on fast switching
+  var requestId = ++currentModalRequestId;
+  
+  // Preload new image in memory before painting
+  var preloader = new Image();
+  preloader.onload = function() {
+    if (requestId === currentModalRequestId) {
+      imgEl.src = imgUrl;
+      imgEl.style.opacity = '1';
+      if (loaderEl) {
+        loaderEl.style.display = 'none';
+      }
+    }
+  };
+  preloader.onerror = function() {
+    if (requestId === currentModalRequestId) {
+      imgEl.src = '<?php echo URL_ROOT;?>extra-images/news1.jpg';
+      imgEl.style.opacity = '1';
+      if (loaderEl) {
+        loaderEl.style.display = 'none';
+      }
+    }
+  };
+  preloader.src = imgUrl;
 }
 
 function closeNewsModal() {
   var modal = document.getElementById('buNewsModal');
+  var imgEl = document.getElementById('buModalImg');
+  var loaderEl = document.getElementById('buModalLoader');
+  
+  // Cancel any pending background load
+  currentModalRequestId++;
+  
   modal.classList.remove('active');
   document.body.style.overflow = '';
+  
+  // Wipe out image source completely on close
+  imgEl.removeAttribute('src');
+  imgEl.style.opacity = '0';
+  if (loaderEl) {
+    loaderEl.style.display = 'flex';
+  }
 }
 
 function closeNewsModalOnOverlay(e) {

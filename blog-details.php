@@ -102,6 +102,56 @@ $catCounts = $db->rawQuery("SELECT category, category_name, COUNT(*) as total_co
 <meta name="twitter:image" content="<?php echo htmlspecialchars($imgSrc); ?>">
 <?php endif; ?>
 
+<!-- Structured Data (Schema.org JSON-LD for Article & FAQs) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": <?php echo json_encode($title); ?>,
+      "datePublished": "<?php echo date('Y-m-d', strtotime($article['publish_date'])); ?>",
+      "dateModified": "<?php echo date('Y-m-d', strtotime($article['updated_at'] ?? $article['publish_date'])); ?>",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": <?php echo json_encode($canonicalUrl); ?>
+      },
+      "author": {
+        "@type": "Person",
+        "name": <?php echo json_encode($authorName); ?>,
+        "jobTitle": <?php echo json_encode($authorRole); ?><?php if (strpos($authorName, 'Abhishek') !== false): ?>,
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Digital4Local",
+          "url": "https://digital4local.com/"
+        },
+        "sameAs": ["https://www.linkedin.com/in/abhishekraikwar-ai-expert/"]
+        <?php endif; ?>
+      },
+      "publisher": {
+        "@type": "CollegeOrUniversity",
+        "name": "Bhabha University",
+        "url": "https://www.bhabhauniversity.edu.in/"
+      }<?php if (!empty($imgSrc)): ?>,
+      "image": <?php echo json_encode($imgSrc); ?>
+      <?php endif; ?>
+    }<?php if ($slug === 'digital-marketing-careers-2026-27'): ?>,
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Is digital marketing a good career in 2026–27?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, for students who build practical skills. AI search has changed how businesses get found, and agencies need people who understand Google rankings, direct answers and AI citations together. Because these skills are new, freshers with a strong portfolio can compete with more experienced candidates."}},
+        {"@type": "Question", "name": "What is the difference between SEO, AEO and GEO?", "acceptedAnswer": {"@type": "Answer", "text": "SEO helps a website rank in Google's regular results. AEO structures content so search engines show it as a direct answer, such as a featured snippet. GEO helps a brand become a source that AI tools like ChatGPT and Google AI Overviews trust and cite in their answers."}},
+        {"@type": "Question", "name": "Can I get a digital marketing job without a marketing degree?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Agencies care more about proof of skill than the name of your degree. A portfolio with two or three documented projects, such as a local business audit or an AI visibility test, often matters more than marks. BBA, BCA, B.Com, BA and engineering students all work in the field."}},
+        {"@type": "Question", "name": "Which digital marketing skill is most in demand for freshers?", "acceptedAnswer": {"@type": "Answer", "text": "Search skills are among the most useful because every business needs to be found online. Understanding SEO and how AI tools choose sources gives freshers an edge. Clear writing and the ability to read analytics data come close behind, since they apply across every marketing role."}},
+        {"@type": "Question", "name": "How long does it take to become job-ready in digital marketing?", "acceptedAnswer": {"@type": "Answer", "text": "With about one hour a day, many students can become internship-ready in around 90 days. The first month covers foundations, the second builds two portfolio projects, and the third focuses on sharing work on LinkedIn and applying for internships."}},
+        {"@type": "Question", "name": "Are free digital marketing certifications enough to get hired?", "acceptedAnswer": {"@type": "Answer", "text": "Certificates alone rarely get you hired, but they show commitment. Free options from Google Skillshop, HubSpot Academy and Semrush Academy are widely recognised. Pair each certificate with a real project that shows you can apply what you learned."}}
+      ]
+    }
+    <?php endif; ?>
+  ]
+}
+</script>
+
 <?php include('inc.meta.php'); ?>
 
 <!-- Fonts -->
@@ -380,6 +430,41 @@ $catCounts = $db->rawQuery("SELECT category, category_name, COUNT(*) as total_co
 
 .bu-article-body p {
   margin-bottom: 22px;
+}
+
+/* Editorial Links - Visible, Distinct, Accessible */
+.bu-article-body a,
+.bu-article-body p a,
+.bu-article-body li a,
+.bu-article-body td a,
+.bu-article-body span a {
+  color: #1E6091 !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  text-decoration-color: rgba(30, 96, 145, 0.45) !important;
+  text-underline-offset: 3px !important;
+  transition: all 0.2s ease !important;
+  word-break: break-word !important;
+}
+
+.bu-article-body a strong,
+.bu-article-body p a strong,
+.bu-article-body li a strong,
+.bu-article-body td a strong {
+  color: #1E6091 !important;
+}
+
+.bu-article-body a:hover,
+.bu-article-body p a:hover,
+.bu-article-body li a:hover,
+.bu-article-body td a:hover,
+.bu-article-body a:hover strong,
+.bu-article-body p a:hover strong,
+.bu-article-body li a:hover strong {
+  color: var(--bu-navy) !important;
+  text-decoration-color: var(--bu-navy) !important;
+  background-color: rgba(255, 193, 7, 0.18) !important;
+  border-radius: 3px !important;
 }
 
 .bu-article-body h2 {
@@ -1091,7 +1176,11 @@ $catCounts = $db->rawQuery("SELECT category, category_name, COUNT(*) as total_co
           <div class="bu-author-bio-text">
             <h4><?php echo htmlspecialchars($authorName); ?></h4>
             <h6><?php echo htmlspecialchars($authorRole); ?></h6>
+            <?php if (strpos($authorName, 'Abhishek') !== false || strpos($authorRole, 'Digital4Local') !== false): ?>
+            <p>Abhishek Raikwar is the founder of <a href="https://digital4local.com/" target="_blank" rel="noopener">Digital4Local</a>, a local SEO, AEO and AI search agency based in Bhopal working with UK and Indian businesses. He has 5+ years of SEO experience and holds an MBA in Marketing and Business Analytics. Connect with him on <a href="https://www.linkedin.com/in/abhishekraikwar-ai-expert/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+            <?php else: ?>
             <p>Faculty researcher and contributing scholar at Bhabha University Bhopal. Actively engaged in curriculum modernization, peer-reviewed publications, and university-industry research translation across interdisciplinary domains.</p>
+            <?php endif; ?>
           </div>
         </div>
 
