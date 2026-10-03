@@ -470,6 +470,9 @@ src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
 
 
 
+<!-- RESULT NOTIFICATION POPUP -->
+<?php include('inc.result_popup.php'); ?>
+
 </body>
 </html>
 

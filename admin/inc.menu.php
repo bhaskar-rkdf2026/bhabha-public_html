@@ -222,6 +222,11 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
 
         <!-- =================== 10. SYSTEM & SEO SETTINGS =================== -->
         <li class="bu-menu-category"><span>System & Settings</span></li>
+        <li class="<?php echo ($currPage === 'header_settings.php') ? 'active' : ''; ?>">
+          <a href="header_settings.php" class="waves-effect <?php echo ($currPage === 'header_settings.php') ? 'active' : ''; ?>">
+            <i class="mdi mdi-page-layout-header" style="color: #FFC107 !important;"></i> <span>Header &amp; Navigation</span>
+          </a>
+        </li>
         <li class="<?php echo ($currPage === 'pages.php') ? 'active' : ''; ?>">
           <a href="pages.php" class="waves-effect <?php echo ($currPage === 'pages.php') ? 'active' : ''; ?>">
             <i class="mdi mdi-file-document"></i> <span>All Website Pages</span>

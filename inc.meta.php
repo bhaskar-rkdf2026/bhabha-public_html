@@ -141,22 +141,26 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   white-space: nowrap !important;
 }
 .bu-topbar-links > li > a {
-  color: rgba(255,255,255,0.92) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
   text-decoration: none !important;
   font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.4px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
   text-transform: uppercase !important;
-  padding: 4px 0 !important;
-  border-right: none !important;
+  padding: 3px 6px !important;
+  border-radius: 3px !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 4px !important;
   line-height: 1 !important;
   white-space: nowrap !important;
-  transition: color 0.2s !important;
+  transition: all 0.2s ease !important;
 }
-.bu-topbar-links > li > a:hover { color: var(--bu-gold) !important; text-decoration: none !important; }
+.bu-topbar-links > li > a:hover {
+  color: #FFC107 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  text-decoration: none !important;
+}
 
 /* ERP Dropdown Styles on Desktop */
 .bu-erp-dropdown {
@@ -165,13 +169,15 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   align-items: center !important;
   z-index: 999999 !important;
 }
+.bu-topbar-links > li > a.bu-erp-toggle-link,
+.bu-topbar-links > li.bu-erp-dropdown > a,
 .bu-erp-toggle-link,
 .bu-erp-drop-btn {
   color: #071338 !important;
   background: #FFC107 !important;
   font-weight: 800 !important;
   font-size: 11px !important;
-  letter-spacing: 0.4px !important;
+  letter-spacing: 0.5px !important;
   padding: 4px 10px !important;
   border: 1px solid #FFC107 !important;
   border-radius: 4px !important;
@@ -183,13 +189,17 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   text-transform: uppercase !important;
   transition: all 0.2s ease !important;
   line-height: 1 !important;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25) !important;
 }
+.bu-topbar-links > li > a.bu-erp-toggle-link *,
 .bu-erp-toggle-link i,
 .bu-erp-drop-btn i {
   color: #071338 !important;
-  font-size: 12px !important;
+  font-size: 11px !important;
 }
+.bu-topbar-links > li > a.bu-erp-toggle-link:hover,
+.bu-topbar-links > li.bu-erp-dropdown:hover > a,
+.bu-topbar-links > li.bu-erp-dropdown.active > a,
 .bu-erp-toggle-link:hover,
 .bu-erp-dropdown:hover .bu-erp-toggle-link,
 .bu-erp-dropdown.active .bu-erp-toggle-link {
@@ -277,6 +287,113 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   transform: none !important;
 }
 .bu-erp-menu a:hover i {
+  color: #071338 !important;
+  text-shadow: none !important;
+}
+
+/* ---- News & Media Topbar Dropdown ---- */
+.bu-topbar-news-drop {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  z-index: 999999 !important;
+}
+.bu-topbar-news-drop > a.bu-topbar-news-link {
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-decoration: none !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+  text-transform: uppercase !important;
+  padding: 3px 6px !important;
+  border-radius: 3px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+.bu-topbar-news-drop:hover > a.bu-topbar-news-link,
+.bu-topbar-news-drop.active > a.bu-topbar-news-link {
+  color: #FFC107 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  text-decoration: none !important;
+}
+.bu-topbar-news-menu {
+  display: none !important;
+  position: absolute !important;
+  top: 100% !important;
+  margin-top: 6px !important;
+  left: 0 !important;
+  min-width: 230px !important;
+  width: max-content !important;
+  background: #081642 !important;
+  border: 1.5px solid #FFC107 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85) !important;
+  padding: 7px !important;
+  z-index: 99999999 !important;
+  box-sizing: border-box !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+}
+.bu-topbar-news-menu::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -8px !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 8px !important;
+  background: transparent !important;
+}
+.bu-topbar-news-drop:hover > .bu-topbar-news-menu,
+.bu-topbar-news-drop.active > .bu-topbar-news-menu {
+  display: flex !important;
+}
+.bu-topbar-links .bu-topbar-news-menu a,
+.bu-topbar-news-drop .bu-topbar-news-menu a,
+.bu-topbar-news-menu a {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  min-width: 210px !important;
+  box-sizing: border-box !important;
+  padding: 9px 14px !important;
+  margin: 0 !important;
+  border-radius: 6px !important;
+  color: #FFFFFF !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  letter-spacing: 0.2px !important;
+  border-right: none !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.2s ease !important;
+  line-height: 1.2 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+.bu-topbar-news-menu a i {
+  font-size: 15px !important;
+  width: 24px !important;
+  text-align: center !important;
+  margin-right: 10px !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+}
+.bu-topbar-news-menu a:hover {
+  background: #FFC107 !important;
+  border-color: #FFC107 !important;
+  color: #071338 !important;
+  padding-left: 16px !important;
+  transform: none !important;
+}
+.bu-topbar-news-menu a:hover i {
   color: #071338 !important;
   text-shadow: none !important;
 }
@@ -600,7 +717,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   justify-content: space-between !important;
   max-width: 1380px !important;
   margin: 0 auto !important;
-  padding: 10px 24px !important;
+  padding: 10px 10px !important;
   gap: 10px !important;
   flex-wrap: nowrap !important;
   min-width: 0 !important;
@@ -1208,7 +1325,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 @media (max-width: 1050px) {
   .bu-nav-link { font-size: 10.5px !important; padding: 14px 4px !important; letter-spacing: 0.3px !important; }
   .bu-brand-title { font-size: 20px !important; }
-  .bu-header-container { gap: 6px !important; padding: 10px 14px !important; }
+  .bu-header-container { gap: 5px !important; padding: 10px 10px !important; }
 }
 /* ---- TABLET & MOBILE (max-width: 991px) ---- */
 @media (max-width: 991px) {
@@ -1292,7 +1409,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding: 10px 16px !important;
+    padding: 10px 10px !important;
   }
   .bu-header-actions {
     margin-left: auto !important;
@@ -1489,14 +1606,14 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   .bu-nav-item.open > .bu-nav-link i.fa-angle-down { transform: rotate(180deg) !important; color: #FFC107 !important; }
 
   /* Brand adjustments on tablet */
-  .bu-header-container { padding: 10px 14px !important; gap: 8px !important; }
+  .bu-header-container { padding: 10px 10px !important; gap: 8px !important; }
   .bu-btn-navy { padding: 8px 16px !important; font-size: 11.5px !important; }
 }
 
 /* ---- MOBILE (max-width: 575px) ---- */
 @media (max-width: 575px) {
   .bu-btn-navy { display: none !important; }
-  .bu-header-container { gap: 8px !important; padding: 8px 12px !important; }
+  .bu-header-container { gap: 8px !important; padding: 8px 10px !important; }
   .bu-ticker-label { padding: 0 12px !important; font-size: 9.5px !important; }
 }
 

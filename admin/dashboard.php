@@ -790,6 +790,18 @@ try {
           </div>
 
           <div class="col-md-3 col-sm-6 mb-3 d-flex align-items-stretch">
+            <a href="header_settings.php" class="hub-tile" style="border: 2px solid #FFC107;">
+              <div class="hub-icon" style="background:#FEF3C7; color:#B45309;">
+                <i class="mdi mdi-page-layout-header"></i>
+              </div>
+              <div class="hub-info">
+                <div class="hub-title" style="color: #0A1B54; font-weight:700;">Header &amp; Navigation ★</div>
+                <div class="hub-desc">Top utility bar, ERP logins, apply buttons &amp; nav tabs</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-3 col-sm-6 mb-3 d-flex align-items-stretch">
             <a href="recruiters.php" class="hub-tile">
               <div class="hub-icon" style="background:#FEF9C3; color:#CA8A04;">
                 <i class="fa fa-briefcase"></i>

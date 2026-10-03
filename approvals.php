@@ -44,6 +44,7 @@
             ['name'=>'NCTE', 'desc'=>'Approved'],
             ['name'=>'INC',  'desc'=>'Approved'],
             ['name'=>'MPNRC','desc'=>'Recognized'],
+            ['name'=>'NCH',  'desc'=>'Approved'],
           ];
           foreach($badges as $b): ?>
           <div style="background:rgba(255,193,7,0.1);border:1px solid rgba(255,193,7,0.25);border-radius:6px;padding:14px 18px;text-align:center;min-width:90px;">

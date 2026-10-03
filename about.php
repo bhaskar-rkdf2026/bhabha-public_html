@@ -1840,6 +1840,11 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
           <span class="bu-accred-badge-name">MPPURC</span>
           <span class="bu-accred-badge-desc">Approved</span>
         </div>
+        <div class="bu-accred-badge">
+          <img loading="lazy" src="<?php echo URL_IMG;?>nch_logo.png" alt="NCH" class="bu-accred-logo">
+          <span class="bu-accred-badge-name">NCH</span>
+          <span class="bu-accred-badge-desc">Approved</span>
+        </div>
       </div>
     </div>
   </section>

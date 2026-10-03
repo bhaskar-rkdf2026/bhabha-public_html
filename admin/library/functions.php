@@ -877,4 +877,114 @@ function portalVal($pageData, $field, $default = '') {
     }
     return $default;
 }
+
+/**
+ * Fetch dynamic header & topbar configuration
+ */
+function getHeaderConfig() {
+    global $db;
+
+    $default_top_quick_links = [
+        ['id' => 't1', 'label' => 'Alumni', 'url' => 'alumni.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 't2', 'label' => 'NIRF', 'url' => 'nirf.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 't3', 'label' => 'NAD', 'url' => 'page.php?id=25', 'target' => '_self', 'show' => '1'],
+        ['id' => 't4', 'label' => 'IQAC', 'url' => 'iqac.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 't5', 'label' => 'Public Disclosure', 'url' => (defined('URL_UPLOAD') ? URL_UPLOAD : '') . 'media/12dfaac45ab95d2c718f63563d7c5a28.pdf', 'target' => '_blank', 'show' => '1'],
+        ['id' => 't6', 'label' => 'Verification', 'url' => 'https://bhabha.accsofterp.com/AccSoft/EducationVerificationForm.aspx', 'target' => '_blank', 'show' => '1'],
+        ['id' => 't7', 'label' => 'Webmail', 'url' => 'https://webmail.bhabhauniversity.edu.in/', 'target' => '_blank', 'show' => '1'],
+        ['id' => 't8', 'label' => 'Blog', 'url' => 'blogs.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 't9', 'label' => 'News & Media', 'url' => 'news.php', 'target' => '_self', 'show' => '1'],
+    ];
+
+    $default_erp_links = [
+        ['id' => 'e1', 'label' => 'Student Login', 'url' => 'https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx', 'icon' => 'fa fa-graduation-cap', 'show' => '1'],
+        ['id' => 'e2', 'label' => 'Staff/Faculty Login', 'url' => 'https://bhabha.accsofterp.com/Accsoft/Login.aspx', 'icon' => 'fa fa-users', 'show' => '1'],
+        ['id' => 'e3', 'label' => 'OAP Login', 'url' => 'https://bhabha.accsofterp.com/OAP/AdminLogin.aspx', 'icon' => 'fa fa-shield', 'show' => '1'],
+        ['id' => 'e4', 'label' => 'Resultsoft Login', 'url' => 'https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx', 'icon' => 'fa fa-file-text-o', 'show' => '1'],
+    ];
+
+    $default_main_nav_items = [
+        ['id' => 'm1', 'type' => 'home', 'label' => 'Home', 'url' => 'index.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 'm2', 'type' => 'about', 'label' => 'About', 'url' => 'about.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 'm3', 'type' => 'institutes', 'label' => 'Institutes', 'url' => 'institutes.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 'm4', 'type' => 'programmes', 'label' => 'Programmes', 'url' => 'programmes.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 'm5', 'type' => 'academics', 'label' => 'Academics & Exams', 'url' => '#', 'target' => '_self', 'show' => '1'],
+        ['id' => 'm6', 'type' => 'research', 'label' => 'Research', 'url' => 'research.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 'm7', 'type' => 'admissions', 'label' => 'Admissions', 'url' => 'enquiry.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 'm_campus_life', 'type' => 'campus-life', 'label' => 'Campus Life', 'url' => 'campus-life.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 'm8', 'type' => 'placements', 'label' => 'T&P Cell', 'url' => 'placements.php', 'target' => '_self', 'show' => '1'],
+        ['id' => 'm10', 'type' => 'contact', 'label' => 'Contact', 'url' => 'contact.php', 'target' => '_self', 'show' => '1'],
+    ];
+
+    $default = [
+        'phone_one'          => '0755-4246498',
+        'phone_two'          => '+91 755 4936800',
+        'helpline_email'     => 'info@bhabhauniversity.edu.in',
+        'show_top_contacts'  => '1',
+
+        'show_erp_dropdown'  => '1',
+        'erp_links'          => $default_erp_links,
+        'top_quick_links'    => $default_top_quick_links,
+
+        'facebook_url'       => 'https://www.facebook.com/BhabhaUniversityIndia/',
+        'instagram_url'      => 'https://www.instagram.com/bhabhauniversitybhopal/',
+        'twitter_url'        => 'https://twitter.com/bhabhaUniversty',
+        'youtube_url'        => 'https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g',
+        'linkedin_url'       => 'https://in.linkedin.com/company/bhabha-university',
+        'whatsapp_num'       => '+917554936800',
+        'show_social_links'  => '1',
+
+        'apply_btn_text'     => 'Apply',
+        'apply_btn_url'      => 'enquiry.php',
+        'apply_btn_show'     => '1',
+        'apply_top_text'     => 'Apply Now',
+        'apply_top_url'      => 'enquiry.php',
+        'apply_top_blink'    => '1',
+
+        'brand_name_1'       => 'BHABHA',
+        'brand_name_2'       => 'UNIVERSITY',
+        'brand_logo'         => 'bhabha-university-logo-hd.png?v=20260926',
+
+        'main_nav_items'     => $default_main_nav_items,
+
+        // Legacy Fallbacks
+        'erp_student_url'    => 'https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx',
+        'erp_faculty_url'    => 'https://bhabha.accsofterp.com/Accsoft/Login.aspx',
+        'erp_oap_url'        => 'https://bhabha.accsofterp.com/OAP/AdminLogin.aspx',
+        'erp_resultsoft_url' => 'https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx',
+        'webmail_url'        => 'https://webmail.bhabhauniversity.edu.in/',
+        'alumni_url'         => 'alumni.php',
+        'nirf_url'           => 'nirf.php',
+        'nad_url'            => 'page.php?id=25',
+        'iqac_url'           => 'iqac.php',
+        'disclosure_url'     => (defined('URL_UPLOAD') ? URL_UPLOAD : '') . 'media/12dfaac45ab95d2c718f63563d7c5a28.pdf',
+        'verification_url'   => 'https://bhabha.accsofterp.com/AccSoft/EducationVerificationForm.aspx',
+        'blog_url'           => 'blogs.php',
+    ];
+
+    if (!isset($db) || !is_object($db)) return $default;
+
+    try {
+        $db->where('field', 'header_config_json');
+        $row = $db->getOne('settings');
+        if ($row && !empty($row['value'])) {
+            $saved = json_decode($row['value'], true);
+            if (is_array($saved)) {
+                $merged = array_merge($default, $saved);
+                if (empty($merged['main_nav_items']) || !is_array($merged['main_nav_items'])) {
+                    $merged['main_nav_items'] = $default_main_nav_items;
+                }
+                if (empty($merged['top_quick_links']) || !is_array($merged['top_quick_links'])) {
+                    $merged['top_quick_links'] = $default_top_quick_links;
+                }
+                if (empty($merged['erp_links']) || !is_array($merged['erp_links'])) {
+                    $merged['erp_links'] = $default_erp_links;
+                }
+                return $merged;
+            }
+        }
+    } catch (\Throwable $e) {}
+
+    return $default;
+}
 ?>

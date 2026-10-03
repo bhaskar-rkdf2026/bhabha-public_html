@@ -90,6 +90,11 @@ $active_page = $active_page ?? '';
           <i class="fa fa-file-text"></i> UGC Proforma
         </a>
       </li>
+      <li>
+        <a href="<?php echo href('gallery.php'); ?>" class="<?php echo ($active_page=='gallery') ? 'active' : ''; ?>">
+          <i class="fa fa-picture-o"></i> Photo Gallery
+        </a>
+      </li>
     </ul>
   </nav>
 </aside>

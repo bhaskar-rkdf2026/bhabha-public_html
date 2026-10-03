@@ -2477,6 +2477,7 @@ section.bu-section-block {
           </div>
 
           <div class="bu-resource-grid">
+            <?php if($is_engineering): ?>
             <a href="<?php echo href('BUQuestionPapers_engineering.php');?>" class="bu-resource-link">
               <div class="bu-resource-icon-wrap"><i class="fa fa-files-o"></i></div>
               <div class="bu-resource-content">
@@ -2485,6 +2486,7 @@ section.bu-section-block {
               </div>
               <i class="fa fa-chevron-right bu-resource-arrow"></i>
             </a>
+            <?php endif; ?>
 
             <a href="<?php echo href('syllabus.php');?>" class="bu-resource-link">
               <div class="bu-resource-icon-wrap"><i class="fa fa-book"></i></div>
@@ -2514,6 +2516,13 @@ section.bu-section-block {
             </a>
           </div>
         </section>
+
+        <?php 
+        // Specialized Homeopathic College Sections from updated WEBSITE MATTER-1.docx
+        if ($id == 16 || stripos($aryData['title'], 'homoeo') !== false || stripos($aryData['title'], 'homeo') !== false) {
+            include('inc.homeopathy_sections.php');
+        }
+        ?>
 
         <?php if(is_array($why_pillars) && count($why_pillars) > 0): ?>
         <!-- 5. Why Choose BHABHA? (Dynamic 3D Single-Card Showcase) -->

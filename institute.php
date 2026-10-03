@@ -1938,6 +1938,13 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
       </section>
       <?php endif; ?>
 
+      <?php 
+      // Specialized Homeopathic College Sections from updated WEBSITE MATTER-1.docx
+      if ($id == 30 || (!empty($aryData['institute_name']) && (stripos($aryData['institute_name'], 'homoeo') !== false || stripos($aryData['institute_name'], 'homeo') !== false))) {
+          include('inc.homeopathy_sections.php');
+      }
+      ?>
+
       <!-- C. CONSTITUENT DEPARTMENTS & WINGS -->
       <?php if((is_array($sub_department) && count($sub_department) > 0) || !empty($aryData['departments'])): ?>
       <section class="bu-section-block">
