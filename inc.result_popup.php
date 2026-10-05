@@ -8,14 +8,112 @@
  */
 
 global $db;
+
+// 1. Fetch Dynamic Popup Settings
+$popupSettings = [];
+if (isset($db) && is_object($db)) {
+    $db->where('page_key', 'home_result_popup');
+    $portalRow = $db->getOne('site_portal_pages');
+    if ($portalRow && !empty($portalRow['content_data'])) {
+        $popupSettings = json_decode($portalRow['content_data'], true) ?: [];
+    }
+}
+
+// Check if popup is disabled by admin
+if (isset($popupSettings['enabled']) && intval($popupSettings['enabled']) === 0) {
+    return; // Don't output popup if turned off
+}
+
+// Default fallback settings
+$defaultSettings = [
+    'enabled' => 1,
+    'header_title' => 'Important Notices & Results',
+    'header_subtitle' => 'Official circulars & declared semester examination marks',
+    'header_icon' => 'fa fa-bell',
+    'result_btn_text' => 'View Result ↗',
+    'result_btn_link' => 'https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx',
+    'close_btn_text' => 'Got it, Close',
+    'show_dont_show_today' => 1,
+    'left_achiever_enabled' => 1,
+    'achiever_pill' => 'STAR MILESTONE • ISRO',
+    'achiever_image' => 'govind-singh-isro.jpg',
+    'achiever_caption' => "<strong>Govind Singh (M.Tech)</strong> selected as Scientist/Engineer 'SC' at URSC, ISRO Bengaluru.",
+    'achiever_cta_text' => 'Read Press Coverage',
+    'achiever_cta_link' => 'news.php?id=203'
+];
+$pop = array_merge($defaultSettings, $popupSettings);
+
+// 2. Fetch dynamic notice cards from site_popup_notices
+$popupNotices = [];
+if (isset($db) && is_object($db)) {
+    try {
+        $db->where('status', 1);
+        $db->orderBy('sort_order', 'ASC');
+        $db->orderBy('id', 'DESC');
+        $popupNotices = $db->get('site_popup_notices');
+    } catch (\Exception $e) {}
+}
+
+// Fallback notices if none returned from DB
+if (empty($popupNotices)) {
+    $popupNotices = [
+        [
+            'tag' => 'RESULT NOTIFICATION • B.PHARM',
+            'title' => '🎓 B.Pharm – 4th Semester (Regular)',
+            'description' => 'Examination results declared and published on the official portal.',
+            'link' => $pop['result_btn_link'],
+            'color_class' => 'is-navy'
+        ],
+        [
+            'tag' => 'RESULT NOTIFICATION • DIPLOMA HMCT',
+            'title' => '🍽️ Diploma HMCT – 1st Year (Regular)',
+            'description' => '1st Year annual examination marksheet and result live.',
+            'link' => $pop['result_btn_link'],
+            'color_class' => 'is-gold'
+        ],
+        [
+            'tag' => 'RESULT NOTIFICATION • M.PHARM',
+            'title' => '🔬 M.Pharm – 2nd Semester (Regular)',
+            'description' => 'Post-graduate semester examination results available online.',
+            'link' => $pop['result_btn_link'],
+            'color_class' => 'is-blue'
+        ],
+        [
+            'tag' => 'RESULT NOTIFICATION • B.SC. B.ED',
+            'title' => '📖 B.Sc. B.Ed – 2nd Semester (Regular)',
+            'description' => '4-Year integrated programme results declared.',
+            'link' => $pop['result_btn_link'],
+            'color_class' => 'is-green'
+        ],
+        [
+            'tag' => 'RESULT NOTIFICATION • B.PHARM',
+            'title' => '🎓 B.Pharm – 2nd Semester (Regular)',
+            'description' => '2nd Semester regular examination results declared.',
+            'link' => $pop['result_btn_link'],
+            'color_class' => 'is-navy'
+        ]
+    ];
+}
+
+// 3. Achiever Section Assets
 $govindNews = null;
 if (isset($db) && is_object($db)) {
     $govindNews = $db->where('image', '307a24b505ca5d4b45f4bef7b8d1bd75.jpg')->getOne('news');
+    if (!$govindNews) {
+        $govindNews = $db->where('id', 203)->getOne('news');
+    }
 }
-if (!$govindNews && isset($db) && is_object($db)) {
-    $govindNews = $db->where('id', 203)->getOne('news');
+$defaultGovindUrl = $govindNews ? href('news.php', 'id=' . $govindNews['id']) : (defined('URL_ROOT') ? URL_ROOT . 'news/203/' : 'news.php?id=203');
+$achieverCtaUrl = !empty($pop['achiever_cta_link']) ? $pop['achiever_cta_link'] : $defaultGovindUrl;
+
+$achieverImgRaw = $pop['achiever_image'];
+if (strpos($achieverImgRaw, 'http://') === 0 || strpos($achieverImgRaw, 'https://') === 0 || strpos($achieverImgRaw, '//') === 0) {
+    $achieverImgUrl = $achieverImgRaw;
+} elseif (strpos($achieverImgRaw, 'upload/') === 0) {
+    $achieverImgUrl = (defined('URL_ROOT') ? URL_ROOT : '') . $achieverImgRaw;
+} else {
+    $achieverImgUrl = URL_IMG . $achieverImgRaw;
 }
-$govindNewsUrl = $govindNews ? href('news.php', 'id=' . $govindNews['id']) : (defined('URL_ROOT') ? URL_ROOT . 'news/203/' : 'news.php?id=203');
 ?>
 <style>
 /* ================================================================
@@ -499,29 +597,31 @@ $govindNewsUrl = $govindNews ? href('news.php', 'id=' . $govindNews['id']) : (de
 <div id="buResultModalOverlay" class="bu-res-popup-overlay" onclick="closeBuResultModal(event)">
   <div class="bu-res-popup-box" onclick="event.stopPropagation()">
     
+    <?php if (!empty($pop['left_achiever_enabled'])): ?>
     <!-- LEFT SECTION: STAR ACHIEVER / ISRO POSTER & CTA -->
     <div class="bu-res-popup-left">
       <div>
         <div class="bu-achiever-pill">
           <span class="bu-achiever-star"><i class="fa fa-star"></i></span>
-          <span>STAR MILESTONE &bull; ISRO</span>
+          <span><?php echo htmlspecialchars($pop['achiever_pill']); ?></span>
         </div>
 
-        <a href="<?php echo $govindNewsUrl; ?>" class="bu-achiever-img-wrap" title="Govind Singh Selected in ISRO - Read Press Coverage">
-          <img src="<?php echo URL_IMG; ?>govind-singh-isro.jpg" alt="Govind Singh Selected as Scientist/Engineer SC at ISRO - Bhabha University" class="bu-achiever-img">
+        <a href="<?php echo htmlspecialchars($achieverCtaUrl); ?>" class="bu-achiever-img-wrap" title="<?php echo htmlspecialchars(strip_tags($pop['achiever_caption'])); ?>">
+          <img src="<?php echo htmlspecialchars($achieverImgUrl); ?>" alt="Bhabha University Achiever" class="bu-achiever-img">
         </a>
       </div>
 
       <div class="bu-achiever-bottom">
         <p class="bu-achiever-caption">
-          <strong>Govind Singh (M.Tech)</strong> selected as Scientist/Engineer 'SC' at URSC, ISRO Bengaluru.
+          <?php echo $pop['achiever_caption']; ?>
         </p>
-        <a href="<?php echo $govindNewsUrl; ?>" class="bu-achiever-cta">
-          <span><i class="fa fa-newspaper-o" style="margin-right:6px;"></i> Read Press Coverage</span>
+        <a href="<?php echo htmlspecialchars($achieverCtaUrl); ?>" class="bu-achiever-cta">
+          <span><i class="fa fa-newspaper-o" style="margin-right:6px;"></i> <?php echo htmlspecialchars($pop['achiever_cta_text']); ?></span>
           <i class="fa fa-arrow-right"></i>
         </a>
       </div>
     </div>
+    <?php endif; ?>
 
     <!-- RIGHT SECTION: IMPORTANT NOTICES, RESULTS & CIRCULARS -->
     <div class="bu-res-popup-right">
@@ -530,11 +630,11 @@ $govindNewsUrl = $govindNews ? href('news.php', 'id=' . $govindNews['id']) : (de
       <div class="bu-res-popup-header">
         <div class="bu-res-header-left">
           <div class="bu-res-header-bell">
-            <i class="fa fa-bell"></i>
+            <i class="<?php echo htmlspecialchars($pop['header_icon'] ?? 'fa fa-bell'); ?>"></i>
           </div>
           <div class="bu-res-header-text">
-            <h3>Important Notices &amp; Results</h3>
-            <p>Official circulars &amp; declared semester examination marks</p>
+            <h3><?php echo htmlspecialchars($pop['header_title']); ?></h3>
+            <p><?php echo htmlspecialchars($pop['header_subtitle']); ?></p>
           </div>
         </div>
         <button type="button" class="bu-res-popup-close" onclick="closeBuResultModal()" aria-label="Close">&times;</button>
@@ -543,61 +643,35 @@ $govindNewsUrl = $govindNews ? href('news.php', 'id=' . $govindNews['id']) : (de
       <!-- Body: Notification Cards with Theme Colored Accents -->
       <div class="bu-res-popup-body">
         <div class="bu-notif-cards-list">
-          
-          <!-- 1. B.Pharm 4th Sem (Theme Navy Accent) -->
-          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-navy">
-            <span class="bu-notif-tag">RESULT NOTIFICATION &bull; B.PHARM</span>
+          <?php foreach ($popupNotices as $card): 
+            $cardLink = !empty($card['link']) ? $card['link'] : $pop['result_btn_link'];
+            $colorCls = !empty($card['color_class']) ? $card['color_class'] : 'is-navy';
+          ?>
+          <a href="<?php echo htmlspecialchars($cardLink); ?>" target="_blank" class="bu-notif-card <?php echo htmlspecialchars($colorCls); ?>">
+            <span class="bu-notif-tag"><?php echo htmlspecialchars($card['tag']); ?></span>
             <p class="bu-notif-content">
-              <strong>🎓 B.Pharm &ndash; 4th Semester (Regular)</strong> &mdash; Examination results declared and published on the official portal.
+              <strong><?php echo htmlspecialchars($card['title']); ?></strong><?php if (!empty($card['description'])): ?> &mdash; <?php echo htmlspecialchars($card['description']); ?><?php endif; ?>
             </p>
           </a>
-
-          <!-- 2. Diploma HMCT 1st Year (Theme Gold Accent) -->
-          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-gold">
-            <span class="bu-notif-tag">RESULT NOTIFICATION &bull; DIPLOMA HMCT</span>
-            <p class="bu-notif-content">
-              <strong>🍴 Diploma HMCT &ndash; 1st Year (Regular)</strong> &mdash; 1st Year annual examination marksheet and result live.
-            </p>
-          </a>
-
-          <!-- 3. M.Pharm 2nd Sem (Royal Blue Accent) -->
-          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-blue">
-            <span class="bu-notif-tag">RESULT NOTIFICATION &bull; M.PHARM</span>
-            <p class="bu-notif-content">
-              <strong>🔬 M.Pharm &ndash; 2nd Semester (Regular)</strong> &mdash; Post-graduate semester examination results available online.
-            </p>
-          </a>
-
-          <!-- 4. B.Sc. B.Ed 2nd Sem (Emerald Green Accent) -->
-          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-green">
-            <span class="bu-notif-tag">RESULT NOTIFICATION &bull; B.SC. B.ED</span>
-            <p class="bu-notif-content">
-              <strong>📖 B.Sc. B.Ed &ndash; 2nd Semester (Regular)</strong> &mdash; 4-Year integrated programme results declared.
-            </p>
-          </a>
-
-          <!-- 5. B.Pharm 2nd Sem (Theme Navy Accent) -->
-          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-card is-navy">
-            <span class="bu-notif-tag">RESULT NOTIFICATION &bull; B.PHARM</span>
-            <p class="bu-notif-content">
-              <strong>🎓 B.Pharm &ndash; 2nd Semester (Regular)</strong> &mdash; 2nd Semester regular examination results declared.
-            </p>
-          </a>
-
+          <?php endforeach; ?>
         </div>
       </div>
 
       <!-- Footer Bar -->
       <div class="bu-res-popup-footer">
+        <?php if (!empty($pop['show_dont_show_today'])): ?>
         <label class="bu-notif-checkbox-label">
           <input type="checkbox" id="buNotifDontShowToday"> Don't show again today
         </label>
+        <?php else: ?>
+        <div></div>
+        <?php endif; ?>
         <div class="bu-notif-footer-btns">
-          <a href="https://bhabha.accsofterp.com/Resultsoft_BU/Login.aspx" target="_blank" class="bu-notif-btn-outline">
-            View Result &nearr;
+          <a href="<?php echo htmlspecialchars($pop['result_btn_link']); ?>" target="_blank" class="bu-notif-btn-outline">
+            <?php echo htmlspecialchars($pop['result_btn_text']); ?>
           </a>
           <button type="button" onclick="closeBuResultModal()" class="bu-notif-btn-close">
-            Got it, Close
+            <?php echo htmlspecialchars($pop['close_btn_text']); ?>
           </button>
         </div>
       </div>

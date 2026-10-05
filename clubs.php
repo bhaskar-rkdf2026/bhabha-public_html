@@ -1,6 +1,7 @@
 <?php 
 include('config.php');
 $portalPage = function_exists('getPortalPage') ? getPortalPage('clubs') : null;
+$cbData = !empty($portalPage['data']) ? $portalPage['data'] : [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,8 +10,8 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('clubs') : null;
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo portalVal($portalPage, 'page_title', 'University Clubs & Societies - Bhabha University Bhopal'); ?></title>
-<meta name="description" content="Explore vibrant Student & University Clubs at Bhabha University Bhopal — Abhivyakti Club, Unload Pittara, Staff Club, Environment Club, Legal Aid Clinic, Khelo Bhabha, Nav Grah Vatika, EDC & AD-MAD Club. Learn beyond classrooms, lead with purpose, and create impact.">
-<meta name="keywords" content="Bhabha University clubs, student societies Bhopal, Abhivyakti cultural club, Unload Pittara mental wellness, Khelo Bhabha sports, Environment club 1101 trees, Legal aid clinic, Nav Grah Vatika, EDC incubation, AD MAD club">
+<meta name="description" content="<?php echo htmlspecialchars($cbData['meta_description'] ?? 'Explore vibrant Student & University Clubs at Bhabha University Bhopal — Abhivyakti Club, Unload Pittara, Staff Club, Environment Club, Legal Aid Clinic, Khelo Bhabha, Nav Grah Vatika, EDC & AD-MAD Club. Learn beyond classrooms, lead with purpose, and create impact.'); ?>">
+<meta name="keywords" content="<?php echo htmlspecialchars($cbData['meta_keywords'] ?? 'Bhabha University clubs, student societies Bhopal, Abhivyakti cultural club, Unload Pittara mental wellness, Khelo Bhabha sports, Environment club 1101 trees, Legal aid clinic, Nav Grah Vatika, EDC incubation, AD MAD club'); ?>">
 <?php include('inc.meta.php');?>
 
 <style>
@@ -722,608 +723,174 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('clubs') : null;
     <main class="bu-inner-content">
 
       <!-- SECTION 1: EXECUTIVE OVERVIEW BANNER CARD -->
+      <?php
+      $introBadge = !empty($cbData['badge']) ? $cbData['badge'] : 'Co-Curricular Excellence &amp; Student Life';
+      $introHeading = portalVal($portalPage, 'heading', 'University <em>Clubs &amp; Societies</em>');
+      $introP = !empty($cbData['intro_p']) ? $cbData['intro_p'] : 'At Bhabha University, Bhopal, learning goes beyond classrooms. It is about discovering passions, nurturing talents, building character and preparing future-ready professionals! At Bhabha University, clubs are not merely extracurricular activities; they are platforms that inspire aspirations, cultivate leadership, foster well-being and shape socially responsible citizens ready to lead the future.';
+      $mottoLabel = !empty($cbData['motto_label']) ? $cbData['motto_label'] : 'OUR MOTTO';
+      $mottoItems = !empty($cbData['motto']) ? $cbData['motto'] : [
+        ['icon' => 'fa-book', 'title' => 'Learn Beyond Classrooms'],
+        ['icon' => 'fa-bullseye', 'title' => 'Lead with Purpose'],
+        ['icon' => 'fa-heart', 'title' => 'Grow with Values'],
+        ['icon' => 'fa-rocket', 'title' => 'Create Impact']
+      ];
+      $metrics = !empty($cbData['metrics']) ? $cbData['metrics'] : [
+        ['icon' => 'fa-cubes', 'num' => '9+ Specialized', 'label' => 'Clubs &amp; Cells'],
+        ['icon' => 'fa-paint-brush', 'num' => '35+ Activities', 'label' => 'Cultural &amp; Creative'],
+        ['icon' => 'fa-smile-o', 'num' => '1,700+ Scholars', 'label' => 'Mentored for Wellness'],
+        ['icon' => 'fa-tree', 'num' => '1,101 Trees', 'label' => 'Green Mission 2026'],
+        ['icon' => 'fa-gavel', 'num' => '18+ Years', 'label' => 'Free Legal Aid Service']
+      ];
+      ?>
       <div class="bu-lead-intro-card">
         <div class="bu-lead-header-row">
           <div class="bu-lead-title-box">
-            <span class="bu-lead-badge"><i class="fa fa-cubes"></i> Co-Curricular Excellence &amp; Student Life</span>
-            <h2>University <em>Clubs &amp; Societies</em></h2>
+            <span class="bu-lead-badge"><i class="fa fa-cubes"></i> <?php echo htmlspecialchars($introBadge); ?></span>
+            <h2><?php echo $introHeading; ?></h2>
           </div>
         </div>
         
         <p class="bu-lead-intro-p">
-          At Bhabha University, Bhopal, learning goes beyond classrooms. It is about discovering passions, nurturing talents, 
-          building character and preparing future-ready professionals! At Bhabha University, clubs are not merely extracurricular 
-          activities; they are platforms that inspire aspirations, cultivate leadership, foster well-being and shape socially 
-          responsible citizens ready to lead the future.
+          <?php echo htmlspecialchars($introP); ?>
         </p>
 
         <!-- 4-Pillar University Motto Box -->
         <div class="bu-motto-strip">
-          <div class="bu-motto-label"><i class="fa fa-compass"></i> OUR MOTTO</div>
+          <div class="bu-motto-label"><i class="fa fa-compass"></i> <?php echo htmlspecialchars($mottoLabel); ?></div>
           <div class="bu-motto-grid">
+            <?php foreach ($mottoItems as $mt): ?>
             <div class="bu-motto-item">
-              <div class="bu-motto-icon"><i class="fa fa-book"></i></div>
-              <span>Learn Beyond Classrooms</span>
+              <div class="bu-motto-icon"><i class="fa <?php echo htmlspecialchars($mt['icon'] ?? 'fa-check'); ?>"></i></div>
+              <span><?php echo htmlspecialchars($mt['title'] ?? ''); ?></span>
             </div>
-            <div class="bu-motto-item">
-              <div class="bu-motto-icon"><i class="fa fa-bullseye"></i></div>
-              <span>Lead with Purpose</span>
-            </div>
-            <div class="bu-motto-item">
-              <div class="bu-motto-icon"><i class="fa fa-heart"></i></div>
-              <span>Grow with Values</span>
-            </div>
-            <div class="bu-motto-item">
-              <div class="bu-motto-icon"><i class="fa fa-rocket"></i></div>
-              <span>Create Impact</span>
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
 
         <!-- Institutional Metrics -->
         <div class="bu-lead-metrics-row">
+          <?php foreach ($metrics as $met): ?>
           <div class="bu-lead-metric-item">
-            <div class="bu-lead-metric-icon"><i class="fa fa-cubes"></i></div>
+            <div class="bu-lead-metric-icon"><i class="fa <?php echo htmlspecialchars($met['icon'] ?? 'fa-star'); ?>"></i></div>
             <div class="bu-lead-metric-info">
-              <strong>9+ Specialized</strong>
-              <span>Clubs &amp; Cells</span>
+              <strong><?php echo htmlspecialchars($met['num'] ?? ''); ?></strong>
+              <span><?php echo htmlspecialchars($met['label'] ?? ''); ?></span>
             </div>
           </div>
-          <div class="bu-lead-metric-item">
-            <div class="bu-lead-metric-icon"><i class="fa fa-paint-brush"></i></div>
-            <div class="bu-lead-metric-info">
-              <strong>35+ Activities</strong>
-              <span>Cultural &amp; Creative</span>
-            </div>
-          </div>
-          <div class="bu-lead-metric-item">
-            <div class="bu-lead-metric-icon"><i class="fa fa-smile-o"></i></div>
-            <div class="bu-lead-metric-info">
-              <strong>1,700+ Scholars</strong>
-              <span>Mentored for Wellness</span>
-            </div>
-          </div>
-          <div class="bu-lead-metric-item">
-            <div class="bu-lead-metric-icon"><i class="fa fa-tree"></i></div>
-            <div class="bu-lead-metric-info">
-              <strong>1,101 Trees</strong>
-              <span>Green Mission 2026</span>
-            </div>
-          </div>
-          <div class="bu-lead-metric-item">
-            <div class="bu-lead-metric-icon"><i class="fa fa-gavel"></i></div>
-            <div class="bu-lead-metric-info">
-              <strong>18+ Years</strong>
-              <span>Free Legal Aid Service</span>
-            </div>
-          </div>
+          <?php endforeach; ?>
         </div>
       </div>
 
       <!-- SECTION 2: UNIVERSITY CLUBS DIRECTORY (SPOTLIGHT CARDS) -->
+      <?php
+      $secLabel = !empty($cbData['sec_label']) ? $cbData['sec_label'] : 'Active Student Societies';
+      $secHeading = !empty($cbData['sec_heading']) ? $cbData['sec_heading'] : 'Our Flagship Clubs &amp; Specialized Cells';
+      $clubsList = !empty($cbData['clubs']) ? $cbData['clubs'] : [];
+      ?>
       <div class="bu-lead-sec-heading">
-        <span class="bu-sec-label">Active Student Societies</span>
-        <h3>Our Flagship Clubs &amp; Specialized Cells</h3>
+        <span class="bu-sec-label"><?php echo htmlspecialchars($secLabel); ?></span>
+        <h3><?php echo htmlspecialchars($secHeading); ?></h3>
         <div class="bu-lead-sec-divider"></div>
       </div>
 
-      <!-- CLUB 1: ABHIVYAKTI CLUB -->
-      <div class="bu-chancellor-spotlight" id="abhivyakti">
+      <?php foreach ($clubsList as $club): 
+        $clubAnchor = htmlspecialchars($club['id'] ?? '');
+        $clubName = htmlspecialchars($club['name'] ?? '');
+        $clubDesig = htmlspecialchars($club['desig'] ?? '');
+        $deskLabel = htmlspecialchars($club['desk_label'] ?? '');
+        $deskIcon = htmlspecialchars($club['desk_icon'] ?? 'fa-ticket');
+        $pillText = htmlspecialchars($club['pill_text'] ?? '');
+        $pillIcon = htmlspecialchars($club['pill_icon'] ?? 'fa-star');
+        $visualBg = htmlspecialchars($club['visual_bg'] ?? 'linear-gradient(145deg, #040F4A 0%, #061D7C 60%, #0D2CB5 100%)');
+        $visualIcon = htmlspecialchars($club['visual_icon'] ?? 'fa-users');
+        $visualCat = htmlspecialchars($club['visual_cat'] ?? '');
+        $visualName = htmlspecialchars($club['visual_name'] ?? $club['name'] ?? '');
+        $visualTag = htmlspecialchars($club['visual_tag'] ?? '');
+        $quoteText = htmlspecialchars($club['quote'] ?? '');
+        $chips = !empty($club['chips']) && is_array($club['chips']) ? $club['chips'] : [];
+      ?>
+      <div class="bu-chancellor-spotlight" id="<?php echo $clubAnchor; ?>">
         <div class="bu-chancellor-grid">
           
           <!-- Left Visual Frame -->
           <div class="bu-chancellor-left-col">
             <div class="bu-chancellor-portrait-wrap">
-              <div class="bu-club-visual-box">
-                <div class="bu-club-icon-circle"><i class="fa fa-paint-brush"></i></div>
-                <span class="bu-club-visual-cat">Cultural &amp; Arts</span>
-                <h4 class="bu-club-visual-name">Abhivyakti</h4>
-                <span class="bu-club-visual-tag">35+ Annual Activities</span>
+              <div class="bu-club-visual-box" style="background: <?php echo $visualBg; ?>;">
+                <div class="bu-club-icon-circle"><i class="fa <?php echo $visualIcon; ?>"></i></div>
+                <?php if (!empty($visualCat)): ?><span class="bu-club-visual-cat"><?php echo $visualCat; ?></span><?php endif; ?>
+                <h4 class="bu-club-visual-name"><?php echo $visualName; ?></h4>
+                <?php if (!empty($visualTag)): ?><span class="bu-club-visual-tag"><?php echo $visualTag; ?></span><?php endif; ?>
               </div>
             </div>
+            <?php if (!empty($pillText)): ?>
             <div class="bu-chancellor-oxford-pill">
-              <i class="fa fa-star"></i> Personality &amp; Cultural Platform
+              <i class="fa <?php echo $pillIcon; ?>"></i> <?php echo $pillText; ?>
             </div>
+            <?php endif; ?>
           </div>
 
           <!-- Right Content Column -->
           <div class="bu-chancellor-right-col">
-            <span class="bu-chancellor-desk-label"><i class="fa fa-ticket"></i> Cultural &amp; Creative Platform</span>
-            <h3>Abhivyakti Club</h3>
-            <span class="bu-chancellor-desig-sub">Personality Development, Communication, Creativity &amp; Life-Career Readiness</span>
+            <?php if (!empty($deskLabel)): ?>
+            <span class="bu-chancellor-desk-label"><i class="fa <?php echo $deskIcon; ?>"></i> <?php echo $deskLabel; ?></span>
+            <?php endif; ?>
+            <h3><?php echo $clubName; ?></h3>
+            <?php if (!empty($clubDesig)): ?>
+            <span class="bu-chancellor-desig-sub"><?php echo $clubDesig; ?></span>
+            <?php endif; ?>
 
+            <?php if (!empty($quoteText)): ?>
             <div class="bu-chancellor-quote-box">
               <p>
                 <i class="fa fa-quote-left"></i> 
-                “Empowering students to express, excel and evolve through nearly 35 cultural, creative and skill-oriented activities.”
+                “<?php echo $quoteText; ?>”
               </p>
             </div>
+            <?php endif; ?>
 
             <div class="bu-chancellor-body-text">
-              <p>
-                With nearly 35 cultural, creative and skill-oriented activities, <strong>Abhivyakti Club</strong> serves as a dynamic 
-                platform for personality development, leadership, communication, creativity and life-career readiness, empowering 
-                students to express, excel and evolve.
-              </p>
-              <p>
-                From theatrical productions and musical performances to public speaking debates and art exhibitions, the club provides an 
-                inclusive stage for every scholar to explore their latent artistic abilities while cultivating decisive stage presence and self-confidence.
-              </p>
+              <?php if (!empty($club['body_p1'])): ?>
+                <p><?php echo $club['body_p1']; ?></p>
+              <?php endif; ?>
+              <?php if (!empty($club['body_p2'])): ?>
+                <p><?php echo $club['body_p2']; ?></p>
+              <?php endif; ?>
             </div>
 
+            <?php if (!empty($chips)): ?>
             <div class="bu-chancellor-chips-row">
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> 35+ Annual Cultural Activities</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Personality Grooming &amp; Soft Skills</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Public Speaking &amp; Debate Mastery</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Creative Arts &amp; Theatrical Productions</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Inter-University Mega Festivals</span>
+              <?php foreach ($chips as $chip): ?>
+                <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> <?php echo htmlspecialchars($chip); ?></span>
+              <?php endforeach; ?>
             </div>
+            <?php endif; ?>
           </div>
 
         </div>
       </div>
-
-      <!-- CLUB 2: UNLOAD PITTARA -->
-      <div class="bu-chancellor-spotlight" id="unload-pittara">
-        <div class="bu-chancellor-grid">
-          
-          <!-- Left Visual Frame -->
-          <div class="bu-chancellor-left-col">
-            <div class="bu-chancellor-portrait-wrap">
-              <div class="bu-club-visual-box" style="background: linear-gradient(145deg, #064E3B 0%, #047857 60%, #059669 100%);">
-                <div class="bu-club-icon-circle" style="color:#10B981; border-color:#10B981; background:rgba(16,185,129,0.2);"><i class="fa fa-heartbeat"></i></div>
-                <span class="bu-club-visual-cat" style="color:#6EE7B7;">Mental Well-Being</span>
-                <h4 class="bu-club-visual-name">Unload Pittara</h4>
-                <span class="bu-club-visual-tag" style="background:rgba(255,255,255,0.2); border-color:#ffffff; color:#ffffff;">1,700+ Mentored</span>
-              </div>
-            </div>
-            <div class="bu-chancellor-oxford-pill">
-              <i class="fa fa-star"></i> MP Police Community Collaboration
-            </div>
-          </div>
-
-          <!-- Right Content Column -->
-          <div class="bu-chancellor-right-col">
-            <span class="bu-chancellor-desk-label"><i class="fa fa-heart"></i> Psychological Wellness &amp; Emotional Support</span>
-            <h3>Unload Pittara — Mental Well-Being Club</h3>
-            <span class="bu-chancellor-desig-sub">Emotional Well-Being, Stress Management &amp; Psychological Resilience</span>
-
-            <div class="bu-chancellor-quote-box">
-              <p>
-                <i class="fa fa-quote-left"></i> 
-                “Because every voice deserves to be heard — providing a safe and supportive space for self-expression, mental wellness, and care.”
-              </p>
-            </div>
-
-            <div class="bu-chancellor-body-text">
-              <p>
-                Because every voice deserves to be heard, <strong>Unload Pittara Club</strong> provides a safe and supportive space for 
-                emotional well-being, self-expression, stress management and psychological resilience, fostering a culture of care and belonging.
-              </p>
-              <p>
-                Having mentored more than <strong>1,700 students</strong> through seminars and workshops on happy living, the club has 
-                emerged as a significant initiative for promoting emotional wellness. It has also actively collaborated with <strong>MP Police 
-                under Community Policing initiatives</strong>, extending support to underprivileged children during moments of distress and vulnerability.
-              </p>
-            </div>
-
-            <div class="bu-chancellor-chips-row">
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> 1,700+ Students Mentored</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> MP Police Community Policing Linkage</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Happy Living Seminars &amp; Workshops</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Underprivileged Child Support Initiatives</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Peer Counselling &amp; Safe Listening Circles</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- CLUB 3: STAFF CLUB -->
-      <div class="bu-chancellor-spotlight" id="staff-club">
-        <div class="bu-chancellor-grid">
-          
-          <!-- Left Visual Frame -->
-          <div class="bu-chancellor-left-col">
-            <div class="bu-chancellor-portrait-wrap">
-              <div class="bu-club-visual-box" style="background: linear-gradient(145deg, #1E1B4B 0%, #312E81 60%, #4338CA 100%);">
-                <div class="bu-club-icon-circle"><i class="fa fa-users"></i></div>
-                <span class="bu-club-visual-cat">Faculty Synergy</span>
-                <h4 class="bu-club-visual-name">Staff Club</h4>
-                <span class="bu-club-visual-tag">Inclusive Culture</span>
-              </div>
-            </div>
-            <div class="bu-chancellor-oxford-pill">
-              <i class="fa fa-star"></i> Educator Well-Being &amp; Family Care
-            </div>
-          </div>
-
-          <!-- Right Content Column -->
-          <div class="bu-chancellor-right-col">
-            <span class="bu-chancellor-desk-label"><i class="fa fa-handshake-o"></i> Institutional Culture &amp; Faculty Synergy</span>
-            <h3>Staff Club</h3>
-            <span class="bu-chancellor-desig-sub">Professional Engagement, Collaboration, Educator Well-Being &amp; Community Care</span>
-
-            <div class="bu-chancellor-quote-box">
-              <p>
-                <i class="fa fa-quote-left"></i> 
-                “Recognizing that empowered educators inspire empowered learners — promoting collaboration and a positive institutional culture.”
-              </p>
-            </div>
-
-            <div class="bu-chancellor-body-text">
-              <p>
-                Recognizing that empowered educators inspire empowered learners, the <strong>Staff Club</strong> promotes professional engagement, 
-                well-being, collaboration and a positive institutional culture across the University.
-              </p>
-              <p>
-                The club regularly organizes different workshops, fun engagement activities and provides <strong>free career counselling support 
-                for the children of staff members</strong>, fostering a caring, egalitarian, and inclusive university community.
-              </p>
-            </div>
-
-            <div class="bu-chancellor-chips-row">
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Professional Collaboration Workshops</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Free Career Counselling for Staff Children</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Educator Wellness &amp; Engagement Activities</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Inclusive University Culture</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Annual Staff Family Reconnect Meets</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- CLUB 4: ENVIRONMENT CLUB -->
-      <div class="bu-chancellor-spotlight" id="environment-club">
-        <div class="bu-chancellor-grid">
-          
-          <!-- Left Visual Frame -->
-          <div class="bu-chancellor-left-col">
-            <div class="bu-chancellor-portrait-wrap">
-              <div class="bu-club-visual-box" style="background: linear-gradient(145deg, #14532D 0%, #15803D 60%, #16A34A 100%);">
-                <div class="bu-club-icon-circle" style="color:#86EFAC; border-color:#86EFAC; background:rgba(134,239,172,0.2);"><i class="fa fa-tree"></i></div>
-                <span class="bu-club-visual-cat" style="color:#BBF7D0;">Green Campus Mission</span>
-                <h4 class="bu-club-visual-name">Environment Club</h4>
-                <span class="bu-club-visual-tag" style="background:#FEF08A; color:#854D0E; border-color:#FEF08A;">1,101 Trees Target</span>
-              </div>
-            </div>
-            <div class="bu-chancellor-oxford-pill">
-              <i class="fa fa-star"></i> Mission 1,101 Trees (World Env Day – 15 Aug 2026)
-            </div>
-          </div>
-
-          <!-- Right Content Column -->
-          <div class="bu-chancellor-right-col">
-            <span class="bu-chancellor-desk-label"><i class="fa fa-leaf"></i> Sustainability &amp; Planetary Stewardship</span>
-            <h3>Environment Club</h3>
-            <span class="bu-chancellor-desig-sub">Eco-Conscious Practices, Conservation Campaigns &amp; Carbon Neutrality</span>
-
-            <div class="bu-chancellor-quote-box">
-              <p>
-                <i class="fa fa-quote-left"></i> 
-                “At Bhabha University, sustainability is a way of life — nurturing environmentally responsible citizens for a greener tomorrow.”
-              </p>
-            </div>
-
-            <div class="bu-chancellor-body-text">
-              <p>
-                At Bhabha University, sustainability is a way of life. Through awareness campaigns, conservation initiatives and 
-                eco-conscious practices, the <strong>Environment Club</strong> nurtures environmentally responsible citizens.
-              </p>
-              <p>
-                As a major Green Initiative &amp; Commitment, the University has undertaken a mission to plant <strong>1,101 trees 
-                between 5th June (World Environment Day) and 15th August 2026</strong>, further enriching our already lush green 32-acre 
-                campus and reinforcing our vision for a greener and more sustainable future.
-              </p>
-            </div>
-
-            <div class="bu-chancellor-chips-row">
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Mission 1,101 Trees Plantation Drive</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> 5th June to 15th August 2026 Commitment</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Eco-Conscious Campus Lifestyle</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Water Conservation &amp; Solar Audits</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Zero-Plastic Awareness Drives</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- CLUB 5: LEGAL AID CLINIC -->
-      <div class="bu-chancellor-spotlight" id="legal-aid">
-        <div class="bu-chancellor-grid">
-          
-          <!-- Left Visual Frame -->
-          <div class="bu-chancellor-left-col">
-            <div class="bu-chancellor-portrait-wrap">
-              <div class="bu-club-visual-box" style="background: linear-gradient(145deg, #451A03 0%, #78350F 60%, #92400E 100%);">
-                <div class="bu-club-icon-circle"><i class="fa fa-gavel"></i></div>
-                <span class="bu-club-visual-cat">Social Justice</span>
-                <h4 class="bu-club-visual-name">Legal Aid Clinic</h4>
-                <span class="bu-club-visual-tag">18+ Years Service</span>
-              </div>
-            </div>
-            <div class="bu-chancellor-oxford-pill">
-              <i class="fa fa-star"></i> Hundreds of Free Consultations &amp; Support
-            </div>
-          </div>
-
-          <!-- Right Content Column -->
-          <div class="bu-chancellor-right-col">
-            <span class="bu-chancellor-desk-label"><i class="fa fa-balance-scale"></i> Access to Justice &amp; Constitutional Literacy</span>
-            <h3>Legal Aid Clinic</h3>
-            <span class="bu-chancellor-desig-sub">Free Legal Consultation, Legal Awareness &amp; Community Social Justice</span>
-
-            <div class="bu-chancellor-quote-box">
-              <p>
-                <i class="fa fa-quote-left"></i> 
-                “Committed to the ideals of justice and social responsibility — empowering individuals through knowledge and free access to justice.”
-              </p>
-            </div>
-
-            <div class="bu-chancellor-body-text">
-              <p>
-                Committed to the ideals of justice and social responsibility, the <strong>Legal Aid Clinic</strong> provides free legal 
-                consultation, legal awareness and community support, empowering individuals through knowledge and access to justice.
-              </p>
-              <p>
-                Over the last <strong>18 years</strong>, the clinic has facilitated hundreds of free legal consultations and guidance sessions, 
-                reflecting Bhabha University's enduring commitment towards Social Justice and Community Service. Law students gain invaluable 
-                pro-bono clinical apprenticeship under the guidance of seasoned advocates and legal scholars.
-              </p>
-            </div>
-
-            <div class="bu-chancellor-chips-row">
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> 18+ Years of Enduring Pro-Bono Service</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Hundreds of Free Legal Consultations</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Community Legal Literacy Camps</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Rights Awareness for Underprivileged</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Clinical Student Advocate Training</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- CLUB 6: KHELO BHABHA -->
-      <div class="bu-chancellor-spotlight" id="khelo-bhabha">
-        <div class="bu-chancellor-grid">
-          
-          <!-- Left Visual Frame -->
-          <div class="bu-chancellor-left-col">
-            <div class="bu-chancellor-portrait-wrap">
-              <div class="bu-club-visual-box" style="background: linear-gradient(145deg, #7C2D12 0%, #C2410C 60%, #EA580C 100%);">
-                <div class="bu-club-icon-circle"><i class="fa fa-trophy"></i></div>
-                <span class="bu-club-visual-cat">Sports &amp; Athletics</span>
-                <h4 class="bu-club-visual-name">Khelo Bhabha</h4>
-                <span class="bu-club-visual-tag">Fit Campus Initiative</span>
-              </div>
-            </div>
-            <div class="bu-chancellor-oxford-pill">
-              <i class="fa fa-star"></i> Fitness, Teamwork &amp; Sportsmanship
-            </div>
-          </div>
-
-          <!-- Right Content Column -->
-          <div class="bu-chancellor-right-col">
-            <span class="bu-chancellor-desk-label"><i class="fa fa-soccer-ball-o"></i> Athletic Excellence &amp; Physical Fitness</span>
-            <h3>Khelo Bhabha — Sports Club</h3>
-            <span class="bu-chancellor-desig-sub">Fitness, Discipline, Teamwork, Inter-University Championships &amp; Sportsmanship</span>
-
-            <div class="bu-chancellor-quote-box">
-              <p>
-                <i class="fa fa-quote-left"></i> 
-                “Celebrating the spirit of fitness, discipline, teamwork and sportsmanship — pursuing athletic excellence both on and off the field.”
-              </p>
-            </div>
-
-            <div class="bu-chancellor-body-text">
-              <p>
-                <strong>Khelo Bhabha</strong> celebrates the spirit of fitness, discipline, teamwork and sportsmanship, encouraging students 
-                to pursue excellence both on and off the field.
-              </p>
-              <p>
-                Equipped with extensive outdoor sports grounds and indoor sports complexes, the club organizes annual university leagues, 
-                inter-departmental tournaments in cricket, football, basketball, and volleyball, while nurturing top athletic talent for state 
-                and national collegiate championships.
-              </p>
-            </div>
-
-            <div class="bu-chancellor-chips-row">
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Annual Inter-Departmental Sports Meet</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Cricket, Football &amp; Volleyball Leagues</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> State &amp; National Championship Representation</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Indoor Gymnasium &amp; Badminton Courts</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Mindful Fitness &amp; Yoga Camps</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- CLUB 7: NAV GRAH VATIKA -->
-      <div class="bu-chancellor-spotlight" id="nav-grah-vatika">
-        <div class="bu-chancellor-grid">
-          
-          <!-- Left Visual Frame -->
-          <div class="bu-chancellor-left-col">
-            <div class="bu-chancellor-portrait-wrap">
-              <div class="bu-club-visual-box" style="background: linear-gradient(145deg, #1E3A8A 0%, #1E40AF 60%, #0369A1 100%);">
-                <div class="bu-club-icon-circle"><i class="fa fa-globe"></i></div>
-                <span class="bu-club-visual-cat">Ecological Heritage</span>
-                <h4 class="bu-club-visual-name">Nav Grah Vatika</h4>
-                <span class="bu-club-visual-tag">9 Sacred Celestial Trees</span>
-              </div>
-            </div>
-            <div class="bu-chancellor-oxford-pill">
-              <i class="fa fa-star"></i> Nakshatra Shastra &amp; Ecological Heritage
-            </div>
-          </div>
-
-          <!-- Right Content Column -->
-          <div class="bu-chancellor-right-col">
-            <span class="bu-chancellor-desk-label"><i class="fa fa-sun-o"></i> Ancient Wisdom &amp; Botanical Biodiversity</span>
-            <h3>Nav Grah Vatika</h3>
-            <span class="bu-chancellor-desig-sub">Nakshatra Shastra, Sacred Celestial Flora, Indigenous Species &amp; Cosmic Ecology</span>
-
-            <div class="bu-chancellor-quote-box">
-              <p>
-                <i class="fa fa-quote-left"></i> 
-                “Harmonizing India's ancient ecological wisdom and Nakshatra Shastra with indigenous biodiversity conservation and cosmic consciousness.”
-              </p>
-            </div>
-
-            <div class="bu-chancellor-body-text">
-              <p>
-                Inspired by India's ancient wisdom and the science of <strong>Nakshatra Shastra</strong>, <strong>Nav Grah Vatika</strong> is a unique 
-                initiative of Bhabha University, Bhopal.
-              </p>
-              <p>
-                Designed around the traditional association of sacred trees with the nine celestial bodies, it stands as a tribute to our 
-                ecological heritage, promoting the restoration of indigenous tree species, biodiversity conservation and harmony between 
-                nature, culture and cosmic consciousness.
-              </p>
-            </div>
-
-            <div class="bu-chancellor-chips-row">
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> 9 Celestial Sacred Trees Garden</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Nakshatra Shastra Botanical Association</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Indigenous Tree Species Restoration</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Herbal &amp; Medicinal Plant Conservation</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Mindful Nature Harmony &amp; Research</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- CLUB 8: ENTREPRENEURSHIP DEVELOPMENT CELL -->
-      <div class="bu-chancellor-spotlight" id="edc-cell">
-        <div class="bu-chancellor-grid">
-          
-          <!-- Left Visual Frame -->
-          <div class="bu-chancellor-left-col">
-            <div class="bu-chancellor-portrait-wrap">
-              <div class="bu-club-visual-box" style="background: linear-gradient(145deg, #701A75 0%, #86198F 60%, #A21CAF 100%);">
-                <div class="bu-club-icon-circle"><i class="fa fa-lightbulb-o"></i></div>
-                <span class="bu-club-visual-cat">Startup &amp; Enterprise</span>
-                <h4 class="bu-club-visual-name">EDC Cell</h4>
-                <span class="bu-club-visual-tag">Cottage Industry MSME</span>
-              </div>
-            </div>
-            <div class="bu-chancellor-oxford-pill">
-              <i class="fa fa-star"></i> Mentored Thousands in Practical Industry Skills
-            </div>
-          </div>
-
-          <!-- Right Content Column -->
-          <div class="bu-chancellor-right-col">
-            <span class="bu-chancellor-desk-label"><i class="fa fa-rocket"></i> Innovation, Incubation &amp; Self-Reliance</span>
-            <h3>Entrepreneurship Development Cell (EDC)</h3>
-            <span class="bu-chancellor-desig-sub">Startup Mentorship, Cottage Industries Incubation, Product Development &amp; Enterprise</span>
-
-            <div class="bu-chancellor-quote-box">
-              <p>
-                <i class="fa fa-quote-left"></i> 
-                “Cultivating innovation, leadership and enterprise by encouraging students to transform ideas into viable ventures.”
-              </p>
-            </div>
-
-            <div class="bu-chancellor-body-text">
-              <p>
-                The <strong>Entrepreneurship Development Cell</strong> cultivates innovation, leadership and enterprise by encouraging 
-                students to transform ideas into impactful ventures through mentorship, industry interaction and entrepreneurial exposure.
-              </p>
-              <p>
-                Over the years, the Cell has mentored <strong>thousands of aspiring entrepreneurs</strong> in developing practical skills 
-                for establishing cottage industries, including the production of <strong>soaps, detergents, skin creams, nail paint removers, 
-                phenyl and other sustainable livelihood products</strong>, fostering self-reliance and entrepreneurial thinking.
-              </p>
-            </div>
-
-            <div class="bu-chancellor-chips-row">
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Cottage Industry Practical Skill Incubation</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Production of Soaps, Detergents &amp; Creams</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Mentored Thousands of Young Entrepreneurs</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Sustainable Livelihood MSME Training</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Angel Investor &amp; Industry Exposure</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- CLUB 9: AD-MAD CLUB -->
-      <div class="bu-chancellor-spotlight" id="ad-mad">
-        <div class="bu-chancellor-grid">
-          
-          <!-- Left Visual Frame -->
-          <div class="bu-chancellor-left-col">
-            <div class="bu-chancellor-portrait-wrap">
-              <div class="bu-club-visual-box" style="background: linear-gradient(145deg, #0F172A 0%, #1E293B 60%, #334155 100%);">
-                <div class="bu-club-icon-circle"><i class="fa fa-bullhorn"></i></div>
-                <span class="bu-club-visual-cat">Branding &amp; Media</span>
-                <h4 class="bu-club-visual-name">AD-MAD Club</h4>
-                <span class="bu-club-visual-tag">Strategic Persuasion</span>
-              </div>
-            </div>
-            <div class="bu-chancellor-oxford-pill">
-              <i class="fa fa-star"></i> Persuasion, Branding &amp; Media Strategy
-            </div>
-          </div>
-
-          <!-- Right Content Column -->
-          <div class="bu-chancellor-right-col">
-            <span class="bu-chancellor-desk-label"><i class="fa fa-video-camera"></i> Branding, Advertising &amp; Strategic Marketing</span>
-            <h3>AD-MAD Club</h3>
-            <span class="bu-chancellor-desig-sub">Creative Communications, Commercial Jingles, Campaign Pitching &amp; Brand Strategy</span>
-
-            <div class="bu-chancellor-quote-box">
-              <p>
-                <i class="fa fa-quote-left"></i> 
-                “A creative hub for aspiring communicators and marketers, nurturing the art of persuasion, branding, advertising and strategic media.”
-              </p>
-            </div>
-
-            <div class="bu-chancellor-body-text">
-              <p>
-                The <strong>AD-MAD Club</strong> is a creative hub for aspiring communicators and marketers, nurturing the art of persuasion, 
-                branding, advertising and strategic marketing, preparing students for the ever-evolving world of business and media.
-              </p>
-              <p>
-                Through high-energy ad-making hackathons, jingle composition competitions, viral marketing case studies, and corporate pitch 
-                simulations, members learn how to craft compelling messages that captivate global audiences.
-              </p>
-            </div>
-
-            <div class="bu-chancellor-chips-row">
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Live Ad-Film &amp; Jingle Competitions</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Brand Strategy &amp; Positioning Labs</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Corporate Pitch Simulation &amp; Storytelling</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Digital Marketing &amp; Viral Campaigns</span>
-              <span class="bu-focus-chip"><i class="fa fa-check-circle"></i> Radio &amp; Broadcast Media Collaborations</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
+      <?php endforeach; ?>
 
       <!-- SECTION 3: MEMBERSHIP & ENGAGEMENT CTA STRIP -->
+      <?php
+      $cbCta = $cbData['cta'] ?? [];
+      $cbCtaHeading = $cbCta['heading'] ?? 'Join a University Club &amp; Lead with Purpose!';
+      $cbCtaDesc = $cbCta['desc'] ?? 'Discover your passion, collaborate with passionate peers, organize flagship events, and build lifelong leadership skills. Open to all registered undergraduate, postgraduate, and diploma students.';
+      $cbBtn1Text = $cbCta['btn1_text'] ?? 'Join a Club Today';
+      $cbBtn1Url = !empty($cbCta['btn1_url']) ? href($cbCta['btn1_url']) : href('enquiry.php');
+      $cbBtn2Text = $cbCta['btn2_text'] ?? 'Contact Club Coordinators';
+      $cbBtn2Url = !empty($cbCta['btn2_url']) ? href($cbCta['btn2_url']) : href('contact.php');
+      ?>
       <div class="bu-join-club-strip">
         <div class="bu-join-club-info">
-          <h4>Join a University Club &amp; Lead with Purpose!</h4>
-          <p>
-            Discover your passion, collaborate with passionate peers, organize flagship events, and build lifelong leadership skills.
-            Open to all registered undergraduate, postgraduate, and diploma students.
-          </p>
+          <h4><?php echo htmlspecialchars($cbCtaHeading); ?></h4>
+          <p><?php echo htmlspecialchars($cbCtaDesc); ?></p>
         </div>
         <div class="bu-join-club-actions">
-          <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-gold">
-            <i class="fa fa-user-plus"></i> Join a Club Today
+          <a href="<?php echo $cbBtn1Url; ?>" class="bu-btn-gold">
+            <i class="fa fa-user-plus"></i> <?php echo htmlspecialchars($cbBtn1Text); ?>
           </a>
-          <a href="<?php echo href('contact.php'); ?>" class="bu-btn-outline-white">
-            <i class="fa fa-envelope"></i> Contact Club Coordinators
+          <a href="<?php echo $cbBtn2Url; ?>" class="bu-btn-outline-white">
+            <i class="fa fa-envelope"></i> <?php echo htmlspecialchars($cbBtn2Text); ?>
           </a>
         </div>
       </div>

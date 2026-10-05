@@ -38,6 +38,11 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
             <i class="mdi mdi-home"></i> <span>Home Sections</span>
           </a>
         </li>
+        <li class="<?php echo ($currPage === 'popup_notices.php') ? 'active' : ''; ?>">
+          <a href="popup_notices.php" class="waves-effect <?php echo ($currPage === 'popup_notices.php') ? 'active' : ''; ?>" style="color: #FFC107 !important; font-weight: 600;">
+            <i class="mdi mdi-bell-ring-outline" style="color: #FFC107 !important;"></i> <span>Popup & Results</span>
+          </a>
+        </li>
 
         <!-- =================== 1. ABOUT UNIVERSITY =================== -->
         <li class="bu-menu-category"><span>Frontend Sections</span></li>
@@ -162,7 +167,7 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
 
         <!-- =================== 7. NEWS, MEDIA & EVENTS =================== -->
         <?php 
-          $newsPages = ['news.php', 'notice.php', 'announcements.php', 'events.php', 'media.php', 'gallery.php', 'blogs.php'];
+          $newsPages = ['news.php', 'notice.php', 'announcements.php', 'popup_notices.php', 'events.php', 'media.php', 'gallery.php', 'blogs.php'];
           $isNewsActive = isSubActive($newsPages, $currPage, 'news', $secParam);
         ?>
         <li class="<?php echo $isNewsActive; ?>">
@@ -171,6 +176,7 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
           </a>
           <ul class="submenu">
             <li><a href="section_hub.php?section=news" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ News & Media Hub</a></li>
+            <li><a href="popup_notices.php" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-bell-ring-outline"></i> ★ Popup & Results</a></li>
             <li><a href="blogs.php"><i class="mdi mdi-circle-outline"></i> Research & Tech Blogs</a></li>
             <li><a href="news.php"><i class="mdi mdi-circle-outline"></i> News Updates</a></li>
             <li><a href="notice.php"><i class="mdi mdi-circle-outline"></i> Official Notices</a></li>
@@ -178,6 +184,21 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
             <li><a href="events.php"><i class="mdi mdi-circle-outline"></i> Events & Fests</a></li>
             <li><a href="media.php"><i class="mdi mdi-circle-outline"></i> Media Coverage</a></li>
             <li><a href="gallery.php"><i class="mdi mdi-circle-outline"></i> Photo Gallery</a></li>
+          </ul>
+        </li>
+
+        <!-- =================== CAMPUS LIFE =================== -->
+        <?php 
+          $campusLifePages = ['campus_life.php'];
+          $isCampusLifeActive = isSubActive($campusLifePages, $currPage, 'campus_life', $secParam);
+        ?>
+        <li class="<?php echo $isCampusLifeActive; ?>">
+          <a href="javascript:void(0);" class="waves-effect has-arrow <?php echo $isCampusLifeActive; ?>">
+            <i class="mdi mdi-compass-outline"></i> <span>Campus Life</span>
+          </a>
+          <ul class="submenu">
+            <li><a href="campus_life.php?page=overview" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-compass"></i> Campus Life Overview</a></li>
+            <li><a href="campus_life.php?page=clubs"><i class="mdi mdi-account-group"></i> Clubs &amp; Societies</a></li>
           </ul>
         </li>
 

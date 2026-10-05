@@ -510,6 +510,17 @@ $sections = [
         'desc'  => 'Manage Daily News Updates, Official Notices, Scroll Announcements, Events and Photo Galleries.',
         'pages' => [
             [
+                'title'       => 'Popup & Declared Results',
+                'nav_path'    => 'Homepage Modal Popup > Important Notices & Results',
+                'live_url'    => URL_ROOT . 'index.php',
+                'edit_url'    => 'popup_notices.php',
+                'add_url'     => 'popup_notices.php?action=add',
+                'icon'        => 'mdi mdi-bell-ring-outline',
+                'badge'       => 'Dedicated Module',
+                'badge_cls'   => 'bu-badge-media',
+                'desc'        => 'Homepage result & notice popup modal, declared semester marks, ERP student login link and achiever poster.'
+            ],
+            [
                 'title'       => 'News Updates (Date-wise)',
                 'nav_path'    => 'Frontend Nav > News & Media > Latest News & Events',
                 'live_url'    => URL_ROOT . 'news.php',
@@ -574,6 +585,33 @@ $sections = [
                 'badge'       => 'Dedicated Module',
                 'badge_cls'   => 'bu-badge-media',
                 'desc'        => 'Convocation ceremony photos, campus life albums, laboratory photos and seminar galleries.'
+            ]
+        ]
+    ],
+    'campus_life' => [
+        'title' => 'Campus Life & Student Societies',
+        'icon'  => 'mdi mdi-compass-outline',
+        'desc'  => 'Manage Campus Life Overview, Cultural Events, Sports Championships, World-Class Infrastructure and Student Clubs.',
+        'pages' => [
+            [
+                'title'       => 'Campus Life Overview & Showcases',
+                'nav_path'    => 'Frontend Nav > Campus Life > Overview',
+                'live_url'    => URL_ROOT . 'campus-life.php',
+                'edit_url'    => 'campus_life.php?page=overview',
+                'icon'        => 'mdi mdi-compass',
+                'badge'       => 'Dedicated Module',
+                'badge_cls'   => 'bu-badge-module',
+                'desc'        => 'Quick stats bar, annual cultural fest, freshers carnival, cricket ground, gym suite, hostels & infrastructure.'
+            ],
+            [
+                'title'       => 'Student Clubs & Societies',
+                'nav_path'    => 'Frontend Nav > Campus Life > Clubs & Societies',
+                'live_url'    => URL_ROOT . 'clubs.php',
+                'edit_url'    => 'campus_life.php?page=clubs',
+                'icon'        => 'mdi mdi-account-group',
+                'badge'       => 'Dedicated Module',
+                'badge_cls'   => 'bu-badge-module',
+                'desc'        => 'Abhivyakti cultural club, Unload Pittara mental wellness, Khelo Bhabha, Nav Grah Vatika, Staff Club, EDC & AD-MAD.'
             ]
         ]
     ],

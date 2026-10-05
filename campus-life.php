@@ -1,5 +1,19 @@
 <?php
 include('config.php');
+$portalPage = function_exists('getPortalPage') ? getPortalPage('campus-life') : null;
+$clData = !empty($portalPage['data']) ? $portalPage['data'] : [];
+
+if (!function_exists('bu_cl_img_url')) {
+    function bu_cl_img_url($img) {
+        if (empty($img)) return URL_ROOT . 'extra-images/col-3-thum5.jpg';
+        if (strpos($img, 'http://') === 0 || strpos($img, 'https://') === 0) return $img;
+        $clean = ltrim($img, '/\\');
+        if (strpos($clean, 'upload/') === 0) {
+            return URL_ROOT . $clean;
+        }
+        return URL_UPLOAD . $clean;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,9 +21,9 @@ include('config.php');
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Campus Life - Student Events, Sports & World-Class Infrastructure | Bhabha University Bhopal</title>
-<meta name="description" content="Experience life at Bhabha University Bhopal — vibrant cultural fests, sports championships, student clubs, 32-acre green campus, modern hostels, and state-of-the-art infrastructure.">
-<meta name="keywords" content="Bhabha University campus life, student life Bhopal, cultural fest Tarang, sports meet, university hostels, campus infrastructure, university clubs, student events">
+<title><?php echo portalVal($portalPage, 'page_title', 'Campus Life - Student Events, Sports & World-Class Infrastructure | Bhabha University Bhopal'); ?></title>
+<meta name="description" content="<?php echo htmlspecialchars($clData['meta_description'] ?? 'Experience life at Bhabha University Bhopal — vibrant cultural fests, sports championships, student clubs, 32-acre green campus, modern hostels, and state-of-the-art infrastructure.'); ?>">
+<meta name="keywords" content="<?php echo htmlspecialchars($clData['meta_keywords'] ?? 'Bhabha University campus life, student life Bhopal, cultural fest Tarang, sports meet, university hostels, campus infrastructure, university clubs, student events'); ?>">
 <?php include('inc.meta.php'); ?>
 
 <style>
@@ -611,9 +625,9 @@ include('config.php');
 
   <!-- INNER BANNER -->
   <?php
-  $page_title    = 'Vibrant <em>Campus Life</em>';
-  $page_subtitle = 'Experience 32 acres of academic innovation, active student clubs, grand cultural fests, sports excellence, and world-class living facilities.';
-  $page_icon     = 'fa-compass';
+  $page_title    = portalVal($portalPage, 'heading', 'Vibrant <em>Campus Life</em>');
+  $page_subtitle = portalVal($portalPage, 'subheading', 'Experience 32 acres of academic innovation, active student clubs, grand cultural fests, sports excellence, and world-class living facilities.');
+  $page_icon     = !empty($clData['page_icon']) ? $clData['page_icon'] : 'fa-compass';
   $breadcrumbs   = [
     ['label' => 'Home', 'url' => URL_ROOT],
     ['label' => 'Campus Life', 'url' => '#'],
@@ -625,32 +639,23 @@ include('config.php');
     <main>
       
       <!-- 1. Quick Stats Banner -->
+      <?php
+      $stats = !empty($clData['stats']) ? $clData['stats'] : [
+        ['icon' => 'fa-tree', 'class' => 'is-green', 'number' => '32', 'symbol' => '+', 'label' => 'Lush Green Acres'],
+        ['icon' => 'fa-calendar-check-o', 'class' => 'is-amber', 'number' => '50', 'symbol' => '+', 'label' => 'Annual Events &amp; Fests'],
+        ['icon' => 'fa-users', 'class' => 'is-blue', 'number' => '8', 'symbol' => '+', 'label' => 'Student Clubs &amp; Cells'],
+        ['icon' => 'fa-flask', 'class' => 'is-indigo', 'number' => '120', 'symbol' => '+', 'label' => 'Hi-Tech Labs &amp; Studios'],
+        ['icon' => 'fa-sun-o', 'class' => 'is-gold', 'number' => '100', 'symbol' => '%', 'label' => 'Solar-Powered Campus']
+      ];
+      ?>
       <div class="bu-cl-stats-bar">
+        <?php foreach ($stats as $st): ?>
         <div class="bu-cl-stat-item">
-          <div class="bu-cl-stat-icon is-green"><i class="fa fa-tree"></i></div>
-          <div class="bu-cl-stat-number">32<span class="bu-cl-stat-symbol">+</span></div>
-          <div class="bu-cl-stat-label">Lush Green Acres</div>
+          <div class="bu-cl-stat-icon <?php echo htmlspecialchars($st['class'] ?? 'is-blue'); ?>"><i class="fa <?php echo htmlspecialchars($st['icon'] ?? 'fa-star'); ?>"></i></div>
+          <div class="bu-cl-stat-number"><?php echo htmlspecialchars($st['number'] ?? '0'); ?><span class="bu-cl-stat-symbol"><?php echo htmlspecialchars($st['symbol'] ?? '+'); ?></span></div>
+          <div class="bu-cl-stat-label"><?php echo htmlspecialchars($st['label'] ?? ''); ?></div>
         </div>
-        <div class="bu-cl-stat-item">
-          <div class="bu-cl-stat-icon is-amber"><i class="fa fa-calendar-check-o"></i></div>
-          <div class="bu-cl-stat-number">50<span class="bu-cl-stat-symbol">+</span></div>
-          <div class="bu-cl-stat-label">Annual Events &amp; Fests</div>
-        </div>
-        <div class="bu-cl-stat-item">
-          <div class="bu-cl-stat-icon is-blue"><i class="fa fa-users"></i></div>
-          <div class="bu-cl-stat-number">8<span class="bu-cl-stat-symbol">+</span></div>
-          <div class="bu-cl-stat-label">Student Clubs &amp; Cells</div>
-        </div>
-        <div class="bu-cl-stat-item">
-          <div class="bu-cl-stat-icon is-indigo"><i class="fa fa-flask"></i></div>
-          <div class="bu-cl-stat-number">120<span class="bu-cl-stat-symbol">+</span></div>
-          <div class="bu-cl-stat-label">Hi-Tech Labs &amp; Studios</div>
-        </div>
-        <div class="bu-cl-stat-item">
-          <div class="bu-cl-stat-icon is-gold"><i class="fa fa-sun-o"></i></div>
-          <div class="bu-cl-stat-number">100<span class="bu-cl-stat-symbol">%</span></div>
-          <div class="bu-cl-stat-label">Solar-Powered Campus</div>
-        </div>
+        <?php endforeach; ?>
       </div>
 
       <!-- 2. Section Jump Filters -->
@@ -662,253 +667,112 @@ include('config.php');
       </div>
 
       <!-- 3. SECTION: CULTURAL EVENTS & STUDENT LIFE -->
+      <?php
+      $evSec = $clData['events_sec'] ?? [];
+      $evBadge = $evSec['badge'] ?? 'Student Celebrations';
+      $evBadgeIcon = $evSec['badge_icon'] ?? 'fa-calendar-o';
+      $evTitle = $evSec['title'] ?? 'Events, Fests &amp; <em>Youth Energy</em>';
+      $evDesc = $evSec['desc'] ?? 'At Bhabha University, learning extends far beyond lecture halls. From grand stage performances and tech hackathons to culinary carnivals and social service camps, campus life is alive with creativity, friendship, and leadership.';
+      $evItems = !empty($evSec['items']) ? $evSec['items'] : [];
+      ?>
       <section id="events" style="scroll-margin-top: 100px;">
         <div class="bu-cl-sec-header">
-          <span class="bu-cl-badge"><i class="fa fa-calendar-o"></i> Student Celebrations</span>
-          <h2 class="bu-cl-title">Events, Fests &amp; <em>Youth Energy</em></h2>
-          <p class="bu-cl-desc">At Bhabha University, learning extends far beyond lecture halls. From grand stage performances and tech hackathons to culinary carnivals and social service camps, campus life is alive with creativity, friendship, and leadership.</p>
+          <span class="bu-cl-badge"><i class="fa <?php echo htmlspecialchars($evBadgeIcon); ?>"></i> <?php echo htmlspecialchars($evBadge); ?></span>
+          <h2 class="bu-cl-title"><?php echo $evTitle; ?></h2>
+          <p class="bu-cl-desc"><?php echo htmlspecialchars($evDesc); ?></p>
         </div>
 
         <div class="bu-cl-grid">
-          
-          <!-- Event 1: Cultural Fest Tarang -->
+          <?php foreach ($evItems as $ev): 
+            $evImgUrl = bu_cl_img_url($ev['image'] ?? '');
+            $evTitleText = htmlspecialchars($ev['title'] ?? '');
+            $evModalTitle = addslashes(htmlspecialchars($ev['modal_title'] ?? $ev['title'] ?? ''));
+            $evModalDesc = addslashes(htmlspecialchars($ev['modal_desc'] ?? $ev['text'] ?? ''));
+            $evTags = !empty($ev['tags']) && is_array($ev['tags']) ? $ev['tags'] : [];
+          ?>
           <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/f81d40b399d52222915976848a04afa8.jpg', 'Annual Cultural Fest — Tarang', 'Vibrant stage performances, classical and contemporary dance competitions, rock band shows, and theatrical showcases on our open-air university stage.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/f81d40b399d52222915976848a04afa8.jpg" alt="Annual Cultural Fest" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-music"></i> Cultural Fest</span>
+            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo htmlspecialchars($evImgUrl); ?>', '<?php echo $evModalTitle; ?>', '<?php echo $evModalDesc; ?>')">
+              <img src="<?php echo htmlspecialchars($evImgUrl); ?>" alt="<?php echo $evTitleText; ?>" class="bu-cl-card-img" loading="lazy">
+              <?php if (!empty($ev['pill_text'])): ?>
+                <span class="bu-cl-card-pill"><i class="fa <?php echo htmlspecialchars($ev['pill_icon'] ?? 'fa-music'); ?>"></i> <?php echo htmlspecialchars($ev['pill_text']); ?></span>
+              <?php endif; ?>
               <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
             </div>
             <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Annual Youth Cultural Fest — "Tarang"</h3>
-              <p class="bu-cl-card-text">A multi-day extravaganza where students across all institutes unite to celebrate music, drama, fashion shows, and performing arts on grand auditorium and open-air stages.</p>
+              <h3 class="bu-cl-card-title"><?php echo $evTitleText; ?></h3>
+              <p class="bu-cl-card-text"><?php echo htmlspecialchars($ev['text'] ?? ''); ?></p>
+              <?php if (!empty($evTags)): ?>
               <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Music &amp; Dance</span>
-                <span class="bu-cl-tag">Theater</span>
-                <span class="bu-cl-tag">Celebrity Evenings</span>
+                <?php foreach ($evTags as $tag): ?>
+                  <span class="bu-cl-tag"><?php echo htmlspecialchars($tag); ?></span>
+                <?php endforeach; ?>
               </div>
+              <?php endif; ?>
             </div>
           </article>
-
-          <!-- Event 2: Welcome Freshers -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/3f8bfe94415a00337c91ccefe3f6ae22.jpg', 'Welcome Freshers Carnival', 'Welcoming incoming batches with talent rounds, creative games, peer mentorship, and dynamic student connections.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/3f8bfe94415a00337c91ccefe3f6ae22.jpg" alt="Welcome Freshers" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-handshake-o"></i> Induction</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Freshers' Welcome Carnival &amp; Talent Hunt</h3>
-              <p class="bu-cl-card-text">Every new academic journey begins with warmth, mentorship, and celebration. Incoming students showcase their unique talents, build lasting friendships, and integrate smoothly into university life.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Talent Rounds</span>
-                <span class="bu-cl-tag">Peer Bonding</span>
-                <span class="bu-cl-tag">Mentorship</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Event 3: Orientation Program -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/9107c678caa82c85e369f38c8c6cbe16.jpg', 'University Orientation & Convocation Assembly', 'Academic induction, leadership keynote addresses, and inspiring career orientations inside the Central Auditorium.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/9107c678caa82c85e369f38c8c6cbe16.jpg" alt="Orientation Program" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-graduation-cap"></i> Academic Induction</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Orientation Program &amp; Leadership Conclaves</h3>
-              <p class="bu-cl-card-text">Held inside the air-conditioned Central Auditorium, orientation sessions bridge the gap between school and professional university studies, featuring industry leaders and distinguished alumni.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Academic Vision</span>
-                <span class="bu-cl-tag">Career Guidance</span>
-                <span class="bu-cl-tag">Industry Talks</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Event 4: Food Festival -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/c3a81fc4f56922a13272a69d03f0081b.jpg', 'Annual Hospitality Food Festival', 'Live culinary stalls, multi-cuisine cooking demonstrations, and student entrepreneurship food counters organized by Hotel Management students.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/c3a81fc4f56922a13272a69d03f0081b.jpg" alt="Food Festival" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-cutlery"></i> Culinary Arts</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Annual Hospitality &amp; Culinary Carnival</h3>
-              <p class="bu-cl-card-text">Organized by our School of Hotel Management &amp; Catering Technology, students conceptualize themed pop-up cafes, live pastry kitchens, and food tasting counters across open lawns.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Hotel Mgmt</span>
-                <span class="bu-cl-tag">Live Kitchens</span>
-                <span class="bu-cl-tag">Student Enterprise</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Event 5: Engineer's Day Innovation -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/00ddc9caf03d120b67ca736c80de9658.jpg', 'Engineer\'s Day Tech Expo', 'Students presenting working robotics, IoT smart farming prototypes, renewable solar models, and software creations.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/00ddc9caf03d120b67ca736c80de9658.jpg" alt="Engineer's Day Tech Expo" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-cogs"></i> Tech Innovation</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Engineer's Day &amp; National Science Fair</h3>
-              <p class="bu-cl-card-text">An intellectual showcase of robotics, automated hardware models, renewable energy devices, and medical software applications built independently by student engineering squads.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Robotics</span>
-                <span class="bu-cl-tag">AI &amp; IoT</span>
-                <span class="bu-cl-tag">Model Demonstrations</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Event 6: Mechanical Engineering Car Project -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/5b8e9565e03c670d630c62ada74bfa25.jpg', 'Formula Student & Go-Kart Racing Project', 'Complete fabrication, chassis welding, engine tuning and track testing of electric and combustion race vehicles by student engineers.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/5b8e9565e03c670d630c62ada74bfa25.jpg" alt="Go-Kart Project" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-car"></i> Automotive Lab</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Formula Student &amp; Automotive Vehicle Project</h3>
-              <p class="bu-cl-card-text">Mechanical and electrical engineering students design and build competitive race karts, exploring electric powertrain integration, suspension ergonomics, and on-track endurance trials.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Motorsport</span>
-                <span class="bu-cl-tag">Hands-on R&amp;D</span>
-                <span class="bu-cl-tag">Chassis Fabrication</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Event 7: NCC & Leadership -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/efce40fadd861f6910b310d1e1a81826.jpg', 'NCC Unit Drill & National Youth Leadership', 'Disciplined parade training, obstacle courses, national camps, and character building under the University NCC Army Wing.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/efce40fadd861f6910b310d1e1a81826.jpg" alt="NCC Cadets" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-shield"></i> NCC Wing</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">NCC Cadets &amp; Youth Leadership Training</h3>
-              <p class="bu-cl-card-text">Building patriotism, discipline, and physical fitness, our active NCC wing participates in Republic Day parades, adventure camps, firing ranges, and national integration expeditions.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Army Wing</span>
-                <span class="bu-cl-tag">Discipline</span>
-                <span class="bu-cl-tag">Parade Training</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Event 8: Blood Donation Camp -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/0f625636125ac766ccba02c59bc086f5.jpg', 'NSS Mega Blood Donation & Healthcare Camp', 'Over 300+ units of blood collected in university campus camps in collaboration with Red Cross and government civil hospitals.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/0f625636125ac766ccba02c59bc086f5.jpg" alt="Blood Donation Camp" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-heartbeat"></i> Social Service</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Blood Donation &amp; Community Outreach Camps</h3>
-              <p class="bu-cl-card-text">Instilling social consciousness, student volunteers regularly organize voluntary blood donation camps, free dental checkups, rural literacy campaigns, and eco-plantation drives across Bhopal.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Community Aid</span>
-                <span class="bu-cl-tag">Red Cross</span>
-                <span class="bu-cl-tag">NSS Volunteers</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Event 9: Industrial Visits -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/7784e47dc525c0cfb55a3854d0ab3010.jpg', 'Industrial Field Exposure Visits', 'Student cohorts touring major pharmaceutical manufacturing plants, automated factories, and technical production facilities.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/7784e47dc525c0cfb55a3854d0ab3010.jpg" alt="Industrial Visit" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-industry"></i> Industry Connect</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Corporate Industrial &amp; Field Study Tours</h3>
-              <p class="bu-cl-card-text">Real-world corporate exposure through regular industrial tours to BHEL, pharmaceutical manufacturing plants, IT software hubs, and civil engineering infrastructure projects.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Plant Tours</span>
-                <span class="bu-cl-tag">Corporate Interaction</span>
-                <span class="bu-cl-tag">Experiential Learning</span>
-              </div>
-            </div>
-          </article>
-
+          <?php endforeach; ?>
         </div>
       </section>
 
       <!-- 4. SECTION: SPORTS & FITNESS -->
+      <?php
+      $spSec = $clData['sports_sec'] ?? [];
+      $spBadge = $spSec['badge'] ?? 'Athletics &amp; Wellness';
+      $spBadgeIcon = $spSec['badge_icon'] ?? 'fa-trophy';
+      $spTitle = $spSec['title'] ?? 'Sports Grounds, Tournaments &amp; <em>Fitness Suite</em>';
+      $spDesc = $spSec['desc'] ?? 'Physical well-being and competitive spirit are vital pillars at Bhabha University. With tournament-standard cricket grounds, volleyball arenas, gymnasium suites, and indoor recreation, sports enthusiasts flourish every single day.';
+      $spItems = !empty($spSec['items']) ? $spSec['items'] : [];
+      ?>
       <section id="sports" style="scroll-margin-top: 100px;">
         <div class="bu-cl-sec-header">
-          <span class="bu-cl-badge"><i class="fa fa-trophy"></i> Athletics &amp; Wellness</span>
-          <h2 class="bu-cl-title">Sports Grounds, Tournaments &amp; <em>Fitness Suite</em></h2>
-          <p class="bu-cl-desc">Physical well-being and competitive spirit are vital pillars at Bhabha University. With tournament-standard cricket grounds, volleyball arenas, gymnasium suites, and indoor recreation, sports enthusiasts flourish every single day.</p>
+          <span class="bu-cl-badge"><i class="fa <?php echo htmlspecialchars($spBadgeIcon); ?>"></i> <?php echo htmlspecialchars($spBadge); ?></span>
+          <h2 class="bu-cl-title"><?php echo $spTitle; ?></h2>
+          <p class="bu-cl-desc"><?php echo htmlspecialchars($spDesc); ?></p>
         </div>
 
         <div class="bu-cl-grid">
-          
-          <!-- Cricket & Tournaments -->
+          <?php foreach ($spItems as $sp): 
+            $spImgUrl = bu_cl_img_url($sp['image'] ?? '');
+            $spTitleText = htmlspecialchars($sp['title'] ?? '');
+            $spModalTitle = addslashes(htmlspecialchars($sp['modal_title'] ?? $sp['title'] ?? ''));
+            $spModalDesc = addslashes(htmlspecialchars($sp['modal_desc'] ?? $sp['text'] ?? ''));
+            $spTags = !empty($sp['tags']) && is_array($sp['tags']) ? $sp['tags'] : [];
+          ?>
           <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/cd3e8ce169d796421247b396bb3bfecb.jpg', 'Cricket Championship & Tournament Matches', 'Full-sized lush green cricket stadium hosting inter-departmental championships and university state-level leagues.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/cd3e8ce169d796421247b396bb3bfecb.jpg" alt="Cricket Match" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-trophy"></i> Cricket Ground</span>
+            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo htmlspecialchars($spImgUrl); ?>', '<?php echo $spModalTitle; ?>', '<?php echo $spModalDesc; ?>')">
+              <img src="<?php echo htmlspecialchars($spImgUrl); ?>" alt="<?php echo $spTitleText; ?>" class="bu-cl-card-img" loading="lazy">
+              <?php if (!empty($sp['pill_text'])): ?>
+                <span class="bu-cl-card-pill"><i class="fa <?php echo htmlspecialchars($sp['pill_icon'] ?? 'fa-trophy'); ?>"></i> <?php echo htmlspecialchars($sp['pill_text']); ?></span>
+              <?php endif; ?>
               <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
             </div>
             <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Cricket Stadium &amp; Annual Premier League</h3>
-              <p class="bu-cl-card-text">Our expansive cricket ground features turf pitches, boundary fencing, and spectator pavilions. The annual Bhabha Champions Trophy brings thrilling matches, live commentary, and student team spirit.</p>
+              <h3 class="bu-cl-card-title"><?php echo $spTitleText; ?></h3>
+              <p class="bu-cl-card-text"><?php echo htmlspecialchars($sp['text'] ?? ''); ?></p>
+              <?php if (!empty($spTags)): ?>
               <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Inter-College League</span>
-                <span class="bu-cl-tag">Turf Wickets</span>
-                <span class="bu-cl-tag">Day Tournaments</span>
+                <?php foreach ($spTags as $tag): ?>
+                  <span class="bu-cl-tag"><?php echo htmlspecialchars($tag); ?></span>
+                <?php endforeach; ?>
               </div>
+              <?php endif; ?>
             </div>
           </article>
-
-          <!-- Gymnasium & Fitness Suite -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>infrastructure/08ba91f6cd604afe6629e3c47afc8dfa.jpg', 'Modern Campus Gymnasium Suite', 'Professional fitness equipment, strength training stations, treadmills, free weights, and fitness trainers for students and staff.')">
-              <img src="<?php echo URL_UPLOAD; ?>infrastructure/08ba91f6cd604afe6629e3c47afc8dfa.jpg" alt="University Gym" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-heartbeat"></i> Gymnasium</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Fully Equipped Gymnasium &amp; Strength Suite</h3>
-              <p class="bu-cl-card-text">Designed to keep our campus community fit and active, the air-conditioned gymnasium offers cardio machines, multi-station weight rigs, dumbbells, and guidance from qualified physical education mentors.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Strength Training</span>
-                <span class="bu-cl-tag">Cardio Suite</span>
-                <span class="bu-cl-tag">Personal Trainers</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- International Women's Day & Sports Achievements -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>gallery/large/94b8b12372e5b74acca5e7ff2d2412c3.jpg', 'Sports Honors & Student Award Felicitations', 'Recognizing university athletes, inter-varsity medalists, and champions during annual award galas.')">
-              <img src="<?php echo URL_UPLOAD; ?>gallery/large/94b8b12372e5b74acca5e7ff2d2412c3.jpg" alt="Sports Awards" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-star"></i> Athlete Honors</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Sports Honors, Medals &amp; Annual Awards</h3>
-              <p class="bu-cl-card-text">Every athletic achievement is celebrated. State, national, and university-level tournament winners receive trophies, medals, sports scholarships, and university certificates of excellence.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Medal Winners</span>
-                <span class="bu-cl-tag">Sports Quota</span>
-                <span class="bu-cl-tag">University Colors</span>
-              </div>
-            </div>
-          </article>
-
+          <?php endforeach; ?>
         </div>
       </section>
 
       <!-- 5. SECTION: CLUBS & SOCIETIES SPOTLIGHT -->
+      <?php
+      $clSecBox = $clData['clubs_sec'] ?? [];
+      $clBoxTitle = $clSecBox['title'] ?? 'Student Clubs &amp; Creative Societies';
+      $clBoxDesc = $clSecBox['desc'] ?? 'Clubs at Bhabha University empower students to lead initiatives, explore diverse hobbies, nurture mental wellness, and create social impact alongside their degree.';
+      ?>
       <section id="clubs" style="scroll-margin-top: 100px;">
         <div class="bu-cl-spotlight-box">
           <div class="bu-cl-spotlight-header">
-            <h3>Student Clubs &amp; Creative Societies</h3>
-            <p>Clubs at Bhabha University empower students to lead initiatives, explore diverse hobbies, nurture mental wellness, and create social impact alongside their degree.</p>
+            <h3><?php echo htmlspecialchars($clBoxTitle); ?></h3>
+            <p><?php echo htmlspecialchars($clBoxDesc); ?></p>
           </div>
 
           <div class="bu-cl-clubs-grid">
@@ -994,187 +858,70 @@ include('config.php');
       </section>
 
       <!-- 6. SECTION: CAMPUS INFRASTRUCTURE -->
+      <?php
+      $inSec = $clData['infra_sec'] ?? [];
+      $inBadge = $inSec['badge'] ?? '32-Acre Campus';
+      $inBadgeIcon = $inSec['badge_icon'] ?? 'fa-building-o';
+      $inTitle = $inSec['title'] ?? 'World-Class <em>Campus Infrastructure</em>';
+      $inDesc = $inSec['desc'] ?? 'Every corner of Bhabha University is built with purpose. Explore our air-conditioned convention auditoriums, high-tech simulation laboratories, lush eco-gardens, on-campus hostels, and community radio broadcasting studios.';
+      $inItems = !empty($inSec['items']) ? $inSec['items'] : [];
+      ?>
       <section id="facilities" style="scroll-margin-top: 100px;">
         <div class="bu-cl-sec-header">
-          <span class="bu-cl-badge"><i class="fa fa-building-o"></i> 32-Acre Campus</span>
-          <h2 class="bu-cl-title">World-Class <em>Campus Infrastructure</em></h2>
-          <p class="bu-cl-desc">Every corner of Bhabha University is built with purpose. Explore our air-conditioned convention auditoriums, high-tech simulation laboratories, lush eco-gardens, on-campus hostels, and community radio broadcasting studios.</p>
+          <span class="bu-cl-badge"><i class="fa <?php echo htmlspecialchars($inBadgeIcon); ?>"></i> <?php echo htmlspecialchars($inBadge); ?></span>
+          <h2 class="bu-cl-title"><?php echo $inTitle; ?></h2>
+          <p class="bu-cl-desc"><?php echo htmlspecialchars($inDesc); ?></p>
         </div>
 
         <div class="bu-cl-grid">
-          
-          <!-- Infra 1: Auditorium -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>infrastructure/2aa0d1727f2df6a9ddfa7bb009eb7873.jpg', 'Central Auditorium & Conference Facility', 'Air-conditioned 600+ capacity auditorium with high-definition projection, acoustic sound engineering, and stage lighting for convocations, summits and national conferences.')">
-              <img src="<?php echo URL_UPLOAD; ?>infrastructure/2aa0d1727f2df6a9ddfa7bb009eb7873.jpg" alt="Auditorium" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-microphone"></i> Auditorium</span>
+          <?php foreach ($inItems as $in): 
+            $inImgUrl = bu_cl_img_url($in['image'] ?? '');
+            $inTitleText = htmlspecialchars($in['title'] ?? '');
+            $inModalTitle = addslashes(htmlspecialchars($in['modal_title'] ?? $in['title'] ?? ''));
+            $inModalDesc = addslashes(htmlspecialchars($in['modal_desc'] ?? $in['text'] ?? ''));
+            $inTags = !empty($in['tags']) && is_array($in['tags']) ? $in['tags'] : [];
+            $anchorAttr = !empty($in['anchor_id']) ? ' id="' . htmlspecialchars($in['anchor_id']) . '"' : '';
+          ?>
+          <article class="bu-cl-card"<?php echo $anchorAttr; ?>>
+            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo htmlspecialchars($inImgUrl); ?>', '<?php echo $inModalTitle; ?>', '<?php echo $inModalDesc; ?>')">
+              <img src="<?php echo htmlspecialchars($inImgUrl); ?>" alt="<?php echo $inTitleText; ?>" class="bu-cl-card-img" loading="lazy">
+              <?php if (!empty($in['pill_text'])): ?>
+                <span class="bu-cl-card-pill"><i class="fa <?php echo htmlspecialchars($in['pill_icon'] ?? 'fa-building-o'); ?>"></i> <?php echo htmlspecialchars($in['pill_text']); ?></span>
+              <?php endif; ?>
               <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
             </div>
             <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Central Auditorium &amp; Convention Hall</h3>
-              <p class="bu-cl-card-text">Equipped with 600+ plush seats, advanced digital surround sound, theatrical stage spotlights, and HD presentation systems for university convocations, national symposia, and cultural galas.</p>
+              <h3 class="bu-cl-card-title"><?php echo $inTitleText; ?></h3>
+              <p class="bu-cl-card-text"><?php echo htmlspecialchars($in['text'] ?? ''); ?></p>
+              <?php if (!empty($inTags)): ?>
               <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">600+ Seats</span>
-                <span class="bu-cl-tag">Acoustic Audio</span>
-                <span class="bu-cl-tag">Central A/C</span>
+                <?php foreach ($inTags as $tag): ?>
+                  <span class="bu-cl-tag"><?php echo htmlspecialchars($tag); ?></span>
+                <?php endforeach; ?>
               </div>
+              <?php endif; ?>
             </div>
           </article>
-
-          <!-- Infra 2: Smart Classrooms -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>infrastructure/83e285d874ee031ad471ea4df94a1945.jpg', 'Smart Digital Classrooms', 'Digital smart boards, lecture recording systems, audio-visual enhancements and ergonomic seating across every academic department.')">
-              <img src="<?php echo URL_UPLOAD; ?>infrastructure/83e285d874ee031ad471ea4df94a1945.jpg" alt="Smart Classrooms" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-desktop"></i> Smart Class</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Interactive Smart Digital Lecture Theaters</h3>
-              <p class="bu-cl-card-text">Step-tiered lecture theaters equipped with multimedia ceiling projectors, interactive whiteboards, high-fidelity microphones, and comfortable seating to facilitate active pedagogical discussions.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Digital Projectors</span>
-                <span class="bu-cl-tag">Tiered Theaters</span>
-                <span class="bu-cl-tag">Wi-Fi Enabled</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Infra 3: Central Library -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>infrastructure/acacb02dda9b764fac164d4397a2accd.jpg', 'Central Library & Knowledge Hub', 'Over 75,000+ text volumes, international research journals, DELNET e-resources, and silent study chambers.')">
-              <img src="<?php echo URL_UPLOAD; ?>infrastructure/acacb02dda9b764fac164d4397a2accd.jpg" alt="Central Library" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-book"></i> Central Library</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Central Library &amp; E-Resource Center</h3>
-              <p class="bu-cl-card-text">Spanning multiple wings, our automated library provides thousands of academic volumes, reference encyclopedias, national journals, research databases (IEEE, DELNET, Springer), and quiet research cabins.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">75,000+ Books</span>
-                <span class="bu-cl-tag">Digital Journals</span>
-                <span class="bu-cl-tag">Reading Halls</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Infra 4: Computer Labs -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>infrastructure/b6123df20111594aa04d8b15dd6ce2af.jpg', 'Central Computer Center & AI Labs', 'Networked high-performance workstations, licensed simulation software, high-speed optical fiber connectivity, and dedicated coding terminals.')">
-              <img src="<?php echo URL_UPLOAD; ?>infrastructure/b6123df20111594aa04d8b15dd6ce2af.jpg" alt="Computer Labs" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-laptop"></i> IT Infrastructure</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Central Computer Center &amp; AI Cloud Lab</h3>
-              <p class="bu-cl-card-text">Equipped with hundreds of latest-generation computer nodes, gigabit internet, CAD/CAM design tools, programming compilers, and AI machine-learning development suites for student coders.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Gigabit LAN</span>
-                <span class="bu-cl-tag">Python &amp; Java Labs</span>
-                <span class="bu-cl-tag">Cloud Software</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Infra 5: Hostels -->
-          <article class="bu-cl-card" id="hostels">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>infrastructure/f26b29937f258d4966b0be4de6bea02d.jpg', 'On-Campus Student Hostels', 'Separate residential halls for boys and girls with 24x7 security guards, CCTV surveillance, Wi-Fi connectivity, RO drinking water, and indoor recreational rooms.')">
-              <img src="<?php echo URL_UPLOAD; ?>infrastructure/f26b29937f258d4966b0be4de6bea02d.jpg" alt="Hostels" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-home"></i> Student Hostels</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Boys &amp; Girls Hostels — Home Away from Home</h3>
-              <p class="bu-cl-card-text">Safe and comfortable on-campus living with furnished rooms, round-the-clock security, continuous power backup, resident faculty wardens, common rooms with televisions, and laundry facilities.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Separate Hostels</span>
-                <span class="bu-cl-tag">24/7 Gated Security</span>
-                <span class="bu-cl-tag">RO Water</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Infra 6: Cafeteria -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>infrastructure/3864d09b8c0761c29ab3d67b49585238.jpg', 'Multi-Cuisine Campus Cafeteria', 'Spacious and hygienic food court serving hot nutritious meals, snacks, coffee, and beverages throughout the day.')">
-              <img src="<?php echo URL_UPLOAD; ?>infrastructure/3864d09b8c0761c29ab3d67b49585238.jpg" alt="Cafeteria" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-coffee"></i> Cafeteria</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Hygienic Multi-Cuisine Food Court &amp; Canteen</h3>
-              <p class="bu-cl-card-text">The lively social hub of the campus where students unwind between lectures. Serving vegetarian, nutritious home-style meals, breakfast, fresh juices, and evening refreshments under strict quality standards.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Hygienic Kitchen</span>
-                <span class="bu-cl-tag">Budget-Friendly</span>
-                <span class="bu-cl-tag">Social Hub</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Infra 7: Community Radio -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>infrastructure/9d2419cc88e43953ae02ef09e8d0bd2c.jpg', 'Radio Popcorn 90.8 FM Community Station', 'Madhya Pradesh\'s premier university community radio station where journalism and mass media students script, voice, and broadcast shows daily.')">
-              <img src="<?php echo URL_UPLOAD; ?>infrastructure/9d2419cc88e43953ae02ef09e8d0bd2c.jpg" alt="Radio Popcorn 90.8 FM" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-bullhorn"></i> Radio Popcorn 90.8</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Popcorn 90.8 FM — Campus Community Radio</h3>
-              <p class="bu-cl-card-text">The university houses an authorized community FM radio channel. Students gain practical broadcast experience as Radio Jockeys, sound engineers, voice-over artists, and news correspondents.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">Live FM Station</span>
-                <span class="bu-cl-tag">RJ Opportunities</span>
-                <span class="bu-cl-tag">Audio Studio</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Infra 8: Solar Power Plant -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>infrastructure/ed3185628b9828212309305234c8a863.jpg', 'University Solar Power Plant', 'Extensive rooftop and ground solar arrays generating clean renewable electricity, making Bhabha University a green eco-campus.')">
-              <img src="<?php echo URL_UPLOAD; ?>infrastructure/ed3185628b9828212309305234c8a863.jpg" alt="Solar Power Plant" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-sun-o"></i> Green Energy</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Clean Solar Power Plant &amp; Green Campus</h3>
-              <p class="bu-cl-card-text">Pioneering sustainable education in Central India, our on-campus solar infrastructure generates hundreds of kilowatts of clean green power, reducing carbon footprint while acting as a live research site.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">100% Sustainable</span>
-                <span class="bu-cl-tag">Clean Energy</span>
-                <span class="bu-cl-tag">Live Solar R&amp;D</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Infra 9: University Buses -->
-          <article class="bu-cl-card">
-            <div class="bu-cl-card-img-wrap" onclick="openClModal('<?php echo URL_UPLOAD; ?>infrastructure/1861bfeabedd25b52f2192d45a03c7f7.jpg', 'University Transport Fleet', 'Dedicated fleet of modern university buses traversing safe routes across all corners of Bhopal, Mandideep, and nearby regions.')">
-              <img src="<?php echo URL_UPLOAD; ?>infrastructure/1861bfeabedd25b52f2192d45a03c7f7.jpg" alt="Transport Fleet" class="bu-cl-card-img" loading="lazy">
-              <span class="bu-cl-card-pill"><i class="fa fa-bus"></i> Transport</span>
-              <span class="bu-cl-zoom-btn"><i class="fa fa-search-plus"></i></span>
-            </div>
-            <div class="bu-cl-card-body">
-              <h3 class="bu-cl-card-title">Dedicated City-Wide Transport Bus Network</h3>
-              <p class="bu-cl-card-text">Ensuring reliable and secure commutes for day scholars, a dedicated fleet of university buses operates along dozens of scheduled routes spanning Bhopal city, Bairagarh, Kolar, MP Nagar, and suburbs.</p>
-              <div class="bu-cl-card-tags">
-                <span class="bu-cl-tag">City-Wide Routes</span>
-                <span class="bu-cl-tag">Safe Commute</span>
-                <span class="bu-cl-tag">GPS Fleet</span>
-              </div>
-            </div>
-          </article>
-
+          <?php endforeach; ?>
         </div>
       </section>
 
       <!-- 7. Call To Action -->
+      <?php
+      $cta = $clData['cta'] ?? [];
+      $ctaHeading = $cta['heading'] ?? 'Ready to Experience Bhabha Campus Life?';
+      $ctaDesc = $cta['desc'] ?? 'Step inside our 32-acre thriving campus. Connect with counselors, take a guided tour of our laboratories and hostels, or begin your admission process today.';
+      $ctaBtn1Text = $cta['btn1_text'] ?? 'Apply For Admission 2026-27';
+      $ctaBtn1Url = !empty($cta['btn1_url']) ? href($cta['btn1_url']) : href('enquiry.php');
+      $ctaBtn2Text = $cta['btn2_text'] ?? 'Virtual Campus Tour';
+      $ctaBtn2Url = !empty($cta['btn2_url']) ? href($cta['btn2_url']) : href('virtual.php');
+      ?>
       <div class="bu-cl-cta">
-        <h3>Ready to Experience Bhabha Campus Life?</h3>
-        <p>Step inside our 32-acre thriving campus. Connect with counselors, take a guided tour of our laboratories and hostels, or begin your admission process today.</p>
+        <h3><?php echo htmlspecialchars($ctaHeading); ?></h3>
+        <p><?php echo htmlspecialchars($ctaDesc); ?></p>
         <div class="bu-cl-cta-btns">
-          <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-primary">Apply For Admission 2026-27 <i class="fa fa-arrow-right"></i></a>
-          <a href="<?php echo href('virtual.php'); ?>" class="bu-btn-secondary"><i class="fa fa-globe"></i> Virtual Campus Tour</a>
+          <a href="<?php echo $ctaBtn1Url; ?>" class="bu-btn-primary"><?php echo htmlspecialchars($ctaBtn1Text); ?> <i class="fa fa-arrow-right"></i></a>
+          <a href="<?php echo $ctaBtn2Url; ?>" class="bu-btn-secondary"><i class="fa fa-globe"></i> <?php echo htmlspecialchars($ctaBtn2Text); ?></a>
         </div>
       </div>
 
