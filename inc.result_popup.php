@@ -95,6 +95,18 @@ if (empty($popupNotices)) {
     ];
 }
 
+if (!function_exists('bu_pop_resolve_url')) {
+    function bu_pop_resolve_url($url) {
+        if (empty($url)) return '#';
+        $url = trim($url);
+        if (strpos($url, 'http://') === 0 || strpos($url, 'https://') === 0 || strpos($url, '//') === 0 || strpos($url, '#') === 0 || strpos($url, 'javascript:') === 0 || strpos($url, 'mailto:') === 0 || strpos($url, 'tel:') === 0) {
+            return $url;
+        }
+        $root = defined('URL_ROOT') ? URL_ROOT : '/';
+        return rtrim($root, '/') . '/' . ltrim($url, '/');
+    }
+}
+
 // 3. Achiever Section Assets
 $govindNews = null;
 if (isset($db) && is_object($db)) {
@@ -103,8 +115,10 @@ if (isset($db) && is_object($db)) {
         $govindNews = $db->where('id', 203)->getOne('news');
     }
 }
-$defaultGovindUrl = $govindNews ? href('news.php', 'id=' . $govindNews['id']) : (defined('URL_ROOT') ? URL_ROOT . 'news/203/' : 'news.php?id=203');
-$achieverCtaUrl = !empty($pop['achiever_cta_link']) ? $pop['achiever_cta_link'] : $defaultGovindUrl;
+$govindId = ($govindNews && !empty($govindNews['id'])) ? $govindNews['id'] : 203;
+$defaultGovindUrl = defined('URL_ROOT') ? URL_ROOT . 'news.php?id=' . $govindId : 'news.php?id=' . $govindId;
+$rawCtaLink = !empty($pop['achiever_cta_link']) ? $pop['achiever_cta_link'] : $defaultGovindUrl;
+$achieverCtaUrl = bu_pop_resolve_url($rawCtaLink);
 
 $achieverImgRaw = $pop['achiever_image'];
 if (strpos($achieverImgRaw, 'http://') === 0 || strpos($achieverImgRaw, 'https://') === 0 || strpos($achieverImgRaw, '//') === 0) {
@@ -114,6 +128,7 @@ if (strpos($achieverImgRaw, 'http://') === 0 || strpos($achieverImgRaw, 'https:/
 } else {
     $achieverImgUrl = URL_IMG . $achieverImgRaw;
 }
+$mainResultLink = bu_pop_resolve_url(!empty($pop['result_btn_link']) ? $pop['result_btn_link'] : 'https://bhabha.accsofterp.com/Accsoft/StudentLogin.aspx');
 ?>
 <style>
 /* ================================================================
@@ -667,7 +682,7 @@ if (strpos($achieverImgRaw, 'http://') === 0 || strpos($achieverImgRaw, 'https:/
         <div></div>
         <?php endif; ?>
         <div class="bu-notif-footer-btns">
-          <a href="<?php echo htmlspecialchars($pop['result_btn_link']); ?>" target="_blank" class="bu-notif-btn-outline">
+          <a href="<?php echo htmlspecialchars($mainResultLink); ?>" target="_blank" class="bu-notif-btn-outline">
             <?php echo htmlspecialchars($pop['result_btn_text']); ?>
           </a>
           <button type="button" onclick="closeBuResultModal()" class="bu-notif-btn-close">

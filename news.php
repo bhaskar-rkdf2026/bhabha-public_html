@@ -1,4 +1,27 @@
-<?php include('config.php'); ?>
+<?php 
+include('config.php'); 
+
+// Self-healing database check for `news_date` column in `news` table (fail-safe for live server)
+$hasNewsDate = false;
+if (isset($db) && is_object($db)) {
+    try {
+        $cols = $db->rawQuery("SHOW COLUMNS FROM `news` LIKE 'news_date'");
+        if (!empty($cols)) {
+            $hasNewsDate = true;
+        } else {
+            // Attempt auto-migration on live server
+            @$db->rawQuery("ALTER TABLE `news` ADD COLUMN `news_date` DATE NULL DEFAULT NULL AFTER `title`");
+            $checkColsAgain = $db->rawQuery("SHOW COLUMNS FROM `news` LIKE 'news_date'");
+            $hasNewsDate = !empty($checkColsAgain);
+            if ($hasNewsDate && file_exists(__DIR__ . '/migrate_news_date.php')) {
+                @include_once(__DIR__ . '/migrate_news_date.php');
+            }
+        }
+    } catch (\Throwable $e) {
+        $hasNewsDate = false;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -680,11 +703,20 @@ input.selectric-input,
   ?>
 
   <?php
-  // Fetch dynamic available years with counts
-  $yearsData = $db->rawQuery("SELECT YEAR(news_date) as yr, COUNT(*) as cnt FROM `news` WHERE news_date IS NOT NULL AND news_date != '0000-00-00' GROUP BY YEAR(news_date) ORDER BY yr DESC");
+  // Fetch dynamic available years with counts (fail-safe for live server)
+  $yearsData = [];
   $totalNewsCount = 0;
-  foreach ($yearsData as $yd) {
-      $totalNewsCount += (int)$yd['cnt'];
+  if ($hasNewsDate && isset($db) && is_object($db)) {
+      try {
+          $yearsData = $db->rawQuery("SELECT YEAR(news_date) as yr, COUNT(*) as cnt FROM `news` WHERE news_date IS NOT NULL AND news_date != '0000-00-00' GROUP BY YEAR(news_date) ORDER BY yr DESC");
+          if (is_array($yearsData)) {
+              foreach ($yearsData as $yd) {
+                  $totalNewsCount += (int)$yd['cnt'];
+              }
+          }
+      } catch (\Throwable $e) {
+          $yearsData = [];
+      }
   }
   ?>
 
@@ -778,9 +810,43 @@ input.selectric-input,
       <!-- Main News Grid -->
       <div class="bu-news-grid" id="buNewsGrid">
         <?php
-        $db->orderBy("news_date", "desc");
-        $db->orderBy("id", "desc");
-        $news = $db->get('news');
+        $news = [];
+        if (isset($db) && is_object($db)) {
+            try {
+                if ($hasNewsDate) {
+                    $db->orderBy("news_date", "desc");
+                }
+                $db->orderBy("id", "desc");
+                $news = $db->get('news');
+            } catch (\Throwable $e) {
+                try {
+                    $news = $db->rawQuery("SELECT * FROM `news` ORDER BY id DESC");
+                } catch (\Throwable $e2) {
+                    $news = [];
+                }
+            }
+        }
+        if ($totalNewsCount === 0 && !empty($news)) {
+            $totalNewsCount = count($news);
+        }
+
+        // If yearsData was empty (due to missing column), derive years dynamically from titles
+        if (empty($yearsData) && !empty($news)) {
+            $yearCounts = [];
+            foreach ($news as $item) {
+                $t = $item['title'] ?? '';
+                if (preg_match('/20\d{2}/', $t, $ym)) {
+                    $yr = $ym[0];
+                } else {
+                    $yr = '2026';
+                }
+                $yearCounts[$yr] = ($yearCounts[$yr] ?? 0) + 1;
+            }
+            krsort($yearCounts);
+            foreach ($yearCounts as $yr => $cnt) {
+                $yearsData[] = ['yr' => $yr, 'cnt' => $cnt];
+            }
+        }
         
         if (is_array($news) && count($news) > 0):
           foreach ($news as $inews):
@@ -788,8 +854,18 @@ input.selectric-input,
             $thumbUrl = !empty($inews['image']) ? URL_UPLOAD . 'news/thumb/' . $inews['image'] : $imgUrl;
             $title = !empty($inews['title']) ? htmlspecialchars($inews['title']) : 'Bhabha University News Update';
             
-            $rawDate = !empty($inews['news_date']) ? $inews['news_date'] : '2026-01-01';
-            $timestamp = strtotime($rawDate);
+            $rawDate = '';
+            if (!empty($inews['news_date']) && $inews['news_date'] !== '0000-00-00') {
+                $rawDate = $inews['news_date'];
+            } else {
+                // Try parsing from title
+                if (preg_match('/(\d{1,2})[-\/](\d{1,2})[-\/](20\d{2})/', $title, $m)) {
+                    $rawDate = "{$m[3]}-" . str_pad($m[2], 2, '0', STR_PAD_LEFT) . "-" . str_pad($m[1], 2, '0', STR_PAD_LEFT);
+                } else {
+                    $rawDate = '2026-01-01';
+                }
+            }
+            $timestamp = strtotime($rawDate) ?: time();
             $formattedDate = date('d M Y', $timestamp);
             $itemYear = date('Y', $timestamp);
             $itemMonth = date('m', $timestamp);
