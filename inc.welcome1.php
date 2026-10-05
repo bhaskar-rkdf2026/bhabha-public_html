@@ -61,12 +61,13 @@ if(is_array($events ) && count($events )>0)
         <!-- INTERO DES END--> 
         
         <!-- INTERO DES START-->
+        <a href="<?php echo href("radio.php");?>">
         <div class="kf_intro_des">
           <div class="kf_intro_des_caption"> <span><i class="icon-earth132"></i></span>
-            <h6>Campus Radio</h6>
+            <h6>Radio Popcorn 90.4 FM</h6>
           </div>
-          <figure> <img src="<?php echo URL_IMG?>/radio.jpg" alt=""/> </figure>
-        </div>
+          <figure> <img src="<?php echo URL_IMG?>/radio.jpg" alt="Radio Popcorn 90.4 FM"/> </figure>
+        </div></a>
       </div>
     </div>
   </div>

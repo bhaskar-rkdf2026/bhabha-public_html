@@ -683,14 +683,14 @@ $sections = [
                 'desc'        => 'On-campus clean energy solar installation, capacity, environmental impact and green campus initiative.'
             ],
             [
-                'title'       => 'Campus Radio (Bhabha Vani)',
-                'nav_path'    => 'Frontend > Campus Radio',
-                'live_url'    => URL_ROOT . 'page.php?id=23',
+                'title'       => 'Radio Popcorn 90.4 FM',
+                'nav_path'    => 'Frontend > Radio Popcorn 90.4 FM',
+                'live_url'    => URL_ROOT . 'radio.php',
                 'edit_url'    => 'pages.php?action=edit&id=23',
                 'icon'        => 'mdi mdi-radio-tower',
                 'badge'       => 'Page #23',
                 'badge_cls'   => 'bu-badge-page',
-                'desc'        => 'Community radio station frequency, live broadcast schedule, educational programs and student RJ team.'
+                'desc'        => 'Community radio station frequency 90.4 FM, live broadcast schedule, educational programs and student media.'
             ]
         ]
     ],

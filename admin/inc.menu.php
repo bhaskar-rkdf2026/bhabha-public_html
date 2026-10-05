@@ -217,7 +217,7 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
             <li><a href="student_publications.php"><i class="mdi mdi-circle-outline"></i> Student Publications</a></li>
             <li><a href="pages.php?action=edit&id=25"><i class="mdi mdi-circle-outline"></i> NAD Depository</a></li>
             <li><a href="pages.php?action=edit&id=22"><i class="mdi mdi-circle-outline"></i> Solar Plant & Green</a></li>
-            <li><a href="pages.php?action=edit&id=23"><i class="mdi mdi-circle-outline"></i> Campus Radio</a></li>
+            <li><a href="pages.php?action=edit&id=23"><i class="mdi mdi-circle-outline"></i> Radio Popcorn 90.4 FM</a></li>
           </ul>
         </li>
 

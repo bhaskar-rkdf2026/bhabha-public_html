@@ -8,7 +8,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('radio') : null;
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Campus Radio - Bhabha University Bhopal Madhya Pradesh</title>
+    <title>Radio Popcorn 90.4 FM - Bhabha University Bhopal Madhya Pradesh</title>
     <!-- Bootstrap core CSS -->
     <?php include('inc.meta.php');?>
     </head>
@@ -21,13 +21,13 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('radio') : null;
       <?php include('inc.header.php');?>
       <!--HEADER END-->
       <?php
-      $page_title    = 'Campus <em>Radio</em>';
+      $page_title    = 'Radio Popcorn <em>90.4 FM</em>';
       $page_subtitle = 'Radio Popcorn 90.4 FM - Voice of the Community';
       $page_icon     = 'fa-microphone';
       $breadcrumbs   = [
         ['label' => 'Home', 'url' => URL_ROOT],
         ['label' => 'About Us', 'url' => href('about.php')],
-        ['label' => 'Campus Radio', 'url' => '#']
+        ['label' => 'Radio Popcorn 90.4 FM', 'url' => '#']
       ];
       include('inc.page-banner.php');
       ?>
@@ -48,7 +48,7 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('radio') : null;
               <div style="background:linear-gradient(135deg, #0A1B54, #061D7C); color:#fff; border-radius:10px; padding:20px 24px; margin-bottom:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
                 <div>
                   <div style="color:#FFC107; font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">First Campus Radio in MP</div>
-                  <div style="font-size:22px; font-weight:800; font-family:'Playfair Display',serif;">Radio Popcorn 90.4 MHz</div>
+                  <div style="font-size:22px; font-weight:800; font-family:'Playfair Display',serif;">Radio Popcorn 90.4 FM</div>
                   <div style="font-size:13px; opacity:0.85; margin-top:4px;">Launched On 14th February 2008 &bull; Broadcasts 10 Hours Daily</div>
                 </div>
                 <div>

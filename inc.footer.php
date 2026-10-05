@@ -85,7 +85,7 @@
           <li><a href="<?php echo href("scholarship.php"); ?>"><i class="fa fa-angle-right"></i> Scholarships &amp; Aid</a></li>
           <li><a href="<?php echo href("placements.php"); ?>"><i class="fa fa-angle-right"></i> Training &amp; Placements</a></li>
           <li><a href="<?php echo href("infrastructure.php"); ?>"><i class="fa fa-angle-right"></i> Campus Facilities</a></li>
-          <li><a href="<?php echo href("radio.php"); ?>"><i class="fa fa-angle-right"></i> Radio Bhabha 90.4 FM</a></li>
+          <li><a href="<?php echo href("radio.php"); ?>"><i class="fa fa-angle-right"></i> Radio Popcorn 90.4 FM</a></li>
           <li><a href="<?php echo href("solar.php"); ?>"><i class="fa fa-angle-right"></i> Solar &amp; Green Energy</a></li>
           <li><a href="<?php echo href("announcements.php"); ?>"><i class="fa fa-angle-right"></i> Latest Announcements</a></li>
           <li><a href="<?php echo href("notice.php"); ?>"><i class="fa fa-angle-right"></i> Circulars &amp; Notices</a></li>

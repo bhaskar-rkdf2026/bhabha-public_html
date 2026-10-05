@@ -1644,10 +1644,10 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('about') : null;
         </div>
         <div class="bu-campus-card">
           <div class="bu-campus-img-wrap">
-            <img loading="lazy" src="<?php echo URL_ROOT;?>images/radio.jpg" alt="Radio Bhabha FM Studio" class="bu-campus-img">
+            <img loading="lazy" src="<?php echo URL_ROOT;?>images/radio.jpg" alt="Radio Popcorn 90.4 FM Studio" class="bu-campus-img">
           </div>
           <div class="bu-campus-info">
-            <h4>Radio Bhabha 90.4 FM</h4>
+            <h4>Radio Popcorn 90.4 FM</h4>
             <p>Community radio station broadcasting student media projects</p>
           </div>
         </div>
