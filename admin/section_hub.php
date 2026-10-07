@@ -122,6 +122,17 @@ $sections = [
         'desc'  => 'Manage 16 Faculties/Institutes, Academic Departments, Sub-Departments, Courses and Branches.',
         'pages' => [
             [
+                'title'       => 'Program Categories (Degree Levels)',
+                'nav_path'    => 'Frontend Nav > Programmes (UG, PG, Integrated, etc.)',
+                'live_url'    => URL_ROOT . 'programmes.php',
+                'edit_url'    => 'program.php',
+                'add_url'     => 'program.php?action=add',
+                'icon'        => 'mdi mdi-layers',
+                'badge'       => 'Dedicated Module',
+                'badge_cls'   => 'bu-badge-module',
+                'desc'        => 'Manage degree levels & categories: Under Graduate, Post Graduate, Integrated Programmes, Doctoral, Diploma, Certificate.'
+            ],
+            [
                 'title'       => 'Faculties & Institutes',
                 'nav_path'    => 'Frontend Nav > Institutes > All Institutes',
                 'live_url'    => URL_ROOT . 'institutes.php',

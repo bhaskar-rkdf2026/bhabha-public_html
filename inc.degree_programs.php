@@ -29,9 +29,21 @@ if ($cert_count === 0) {
     ]);
 }
 
+$integ_count = count(array_filter($all_programs, function($p) {
+    return (!empty($p['levels']) && in_array('integrated', $p['levels'])) || ($p['level'] ?? '') === 'integrated';
+}));
+
+if ($integ_count === 0) {
+    $all_programs = array_merge([
+        ['id'=>55, 'title'=>'B.Sc. B.Ed.', 'levels'=>['integrated'], 'level'=>'integrated', 'duration'=>'4 Years', 'eligibility'=>'10+2 Science 50%', 'tag'=>'NEW'],
+        ['title'=>'BA B.Ed.', 'levels'=>['integrated'], 'level'=>'integrated', 'duration'=>'4 Years', 'eligibility'=>'10+2 Any Stream 50%', 'tag'=>'POPULAR'],
+    ], $all_programs);
+}
+
 $tab_categories = [
     'undergraduate' => 'UNDERGRADUATE',
     'postgraduate'  => 'POSTGRADUATE',
+    'integrated'    => 'INTEGRATED',
     'diploma'       => 'DIPLOMA',
     'doctoral'      => 'DOCTORAL',
     'certificate'   => 'CERTIFICATE'
@@ -76,8 +88,10 @@ $tab_categories = [
         <!-- ============ <?php echo strtoupper($tab_key); ?> GRID ============ -->
         <div class="bu-deg-grid <?php echo ($g_idx === 1) ? 'active' : ''; ?>" id="<?php echo $tab_key; ?>">
           <?php if (!empty($tab_items)): ?>
-            <?php foreach ($tab_items as $item): ?>
-              <div class="bu-deg-card">
+            <?php foreach ($tab_items as $item): 
+              $tab_item_url = !empty($item['id']) ? href('eligibility.php', 'id=' . $item['id']) : href('programmes.php', 'type=' . $tab_key);
+            ?>
+              <div class="bu-deg-card" onclick="window.location.href='<?php echo $tab_item_url; ?>';" style="cursor:pointer;" title="Click to view details">
                 <div class="bu-deg-card-top">
                   <span class="bu-deg-card-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -87,7 +101,11 @@ $tab_categories = [
                   </span>
                   <span class="bu-deg-card-tag"><?php echo htmlspecialchars($item['tag'] ?? 'FEATURED'); ?></span>
                 </div>
-                <h3 class="bu-deg-card-title"><?php echo htmlspecialchars($item['title'] ?? ''); ?></h3>
+                <h3 class="bu-deg-card-title">
+                  <a href="<?php echo $tab_item_url; ?>" style="color:inherit;text-decoration:none;">
+                    <?php echo htmlspecialchars($item['title'] ?? ''); ?>
+                  </a>
+                </h3>
                 <div class="bu-deg-card-details">
                   <div class="bu-detail-row"><span>Duration</span><strong><?php echo htmlspecialchars($item['duration'] ?? ''); ?></strong></div>
                   <div class="bu-detail-row"><span>Eligibility</span><strong><?php echo htmlspecialchars($item['eligibility'] ?? ''); ?></strong></div>
@@ -274,6 +292,10 @@ $tab_categories = [
   color: #0B2545 !important;
   font-weight: 700 !important;
   text-align: right !important;
+  max-width: 65% !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
   transition: color 0.35s ease !important;
 }
 

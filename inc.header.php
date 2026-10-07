@@ -249,11 +249,91 @@ $hc = getHeaderConfig();
                 <li class="bu-nav-item">
                   <a href="<?php echo href("programmes.php")?>" class="bu-nav-link"><?php echo htmlspecialchars($i_label); ?> <i class="fa fa-angle-down"></i></a>
                   <ul class="bu-dropdown">
-                    <li><a href="<?php echo href("programmes.php","type=undergraduate")?>"><i class="fa fa-graduation-cap text-warning mr-2"></i> Under Graduate programmes</a></li>
-                    <li><a href="<?php echo href("programmes.php","type=postgraduate")?>"><i class="fa fa-book text-info mr-2"></i> Post Graduate programmes</a></li>
-                    <li><a href="<?php echo href("programmes.php","type=doctoral")?>"><i class="fa fa-university text-danger mr-2"></i> Doctoral Programmes</a></li>
-                    <li><a href="<?php echo href("programmes.php","type=diploma")?>"><i class="fa fa-certificate text-success mr-2"></i> Diploma Programmes</a></li>
-                    <li><a href="<?php echo href("programmes.php","type=certificate")?>"><i class="fa fa-file-text-o text-warning mr-2"></i> Certificate Programmes</a></li>
+                    <?php
+                    $hdr_progs = [];
+                    if (isset($db) && is_object($db)) {
+                        try {
+                            $hdr_progs = $db->rawQuery("SELECT * FROM program ORDER BY id ASC");
+                        } catch (\Throwable $e) {}
+                    }
+                    if (!empty($hdr_progs)) {
+                        // Sort by sort_order if present, otherwise by id
+                        usort($hdr_progs, function($a, $b) {
+                            $sa = isset($a['sort_order']) ? (int)$a['sort_order'] : (int)$a['id'];
+                            $sb = isset($b['sort_order']) ? (int)$b['sort_order'] : (int)$b['id'];
+                            return $sa <=> $sb;
+                        });
+                        // Filter out inactive if status column exists
+                        $hdr_progs = array_filter($hdr_progs, function($hp) {
+                            return !isset($hp['status']) || (int)$hp['status'] === 1;
+                        });
+
+                        // Ensure Integrated Programmes is always included
+                        $has_integrated = false;
+                        foreach ($hdr_progs as $hp) {
+                            if (stripos($hp['program'] ?? '', 'integ') !== false || ($hp['slug'] ?? '') === 'integrated') {
+                                $has_integrated = true;
+                                break;
+                            }
+                        }
+                        if (!$has_integrated) {
+                            $hdr_progs[] = [
+                                'id'         => 6,
+                                'program'    => 'Integrated Programmes',
+                                'slug'       => 'integrated',
+                                'icon'       => 'fa-cubes',
+                                'sort_order' => 6,
+                                'status'     => 1
+                            ];
+                        }
+
+                        $icon_color_map = [
+                            'undergraduate' => 'text-warning',
+                            'postgraduate'  => 'text-info',
+                            'doctoral'      => 'text-danger',
+                            'diploma'       => 'text-success',
+                            'certificate'   => 'text-warning',
+                            'integrated'    => 'text-primary'
+                        ];
+                        foreach ($hdr_progs as $hp) {
+                            $hp_name = trim($hp['program']);
+                            $hp_slug = !empty($hp['slug']) ? $hp['slug'] : '';
+                            if (empty($hp_slug)) {
+                                if (stripos($hp_name, 'integ') !== false) $hp_slug = 'integrated';
+                                elseif (stripos($hp_name, 'post') !== false || stripos($hp_name, 'pg') !== false) $hp_slug = 'postgraduate';
+                                elseif (stripos($hp_name, 'phd') !== false || stripos($hp_name, 'doc') !== false) $hp_slug = 'doctoral';
+                                elseif (stripos($hp_name, 'dip') !== false) $hp_slug = 'diploma';
+                                elseif (stripos($hp_name, 'cert') !== false) $hp_slug = 'certificate';
+                                elseif (stripos($hp_name, 'grad') !== false || stripos($hp_name, 'ug') !== false) $hp_slug = 'undergraduate';
+                                else $hp_slug = strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '-', $hp_name), '-'));
+                            }
+                            $hp_icon = !empty($hp['icon']) ? $hp['icon'] : ($hp_slug === 'integrated' ? 'fa-cubes' : 'fa-graduation-cap');
+                            $hp_color = $icon_color_map[$hp_slug] ?? 'text-primary';
+                            if (stripos($hp_name, 'programme') === false && stripos($hp_name, 'program') === false) {
+                                $hp_display = $hp_name . ' programmes';
+                            } else {
+                                $hp_display = $hp_name;
+                            }
+                            if (!empty($hp['custom_url'])) {
+                                $target_url = (strpos($hp['custom_url'], 'http') === 0) ? $hp['custom_url'] : href($hp['custom_url']);
+                            } else {
+                                $target_url = href("programmes.php", "type=" . urlencode($hp_slug));
+                            }
+                            ?>
+                            <li><a href="<?php echo $target_url; ?>"><i class="fa <?php echo $hp_icon . ' ' . $hp_color; ?> mr-2"></i> <?php echo htmlspecialchars($hp_display); ?></a></li>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <li><a href="<?php echo href("programmes.php","type=undergraduate")?>"><i class="fa fa-graduation-cap text-warning mr-2"></i> Under Graduate programmes</a></li>
+                        <li><a href="<?php echo href("programmes.php","type=postgraduate")?>"><i class="fa fa-book text-info mr-2"></i> Post Graduate programmes</a></li>
+                        <li><a href="<?php echo href("programmes.php","type=doctoral")?>"><i class="fa fa-university text-danger mr-2"></i> Doctoral Programmes</a></li>
+                        <li><a href="<?php echo href("programmes.php","type=integrated")?>"><i class="fa fa-cubes text-primary mr-2"></i> Integrated Programmes</a></li>
+                        <li><a href="<?php echo href("programmes.php","type=diploma")?>"><i class="fa fa-certificate text-success mr-2"></i> Diploma Programmes</a></li>
+                        <li><a href="<?php echo href("programmes.php","type=certificate")?>"><i class="fa fa-file-text-o text-warning mr-2"></i> Certificate Programmes</a></li>
+                        <?php
+                    }
+                    ?>
                   </ul>
                 </li>
 

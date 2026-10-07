@@ -1,13 +1,100 @@
 <?php 
 include('config.php'); 
 
+// Fetch dynamic program categories from database table `program`
+global $db;
+$db_categories = [];
+if (isset($db) && is_object($db)) {
+    try {
+        $db_cats = $db->rawQuery("SELECT * FROM program ORDER BY id ASC");
+        if (!empty($db_cats)) {
+            // Sort by sort_order if column exists
+            usort($db_cats, function($a, $b) {
+                $sa = isset($a['sort_order']) ? (int)$a['sort_order'] : (int)$a['id'];
+                $sb = isset($b['sort_order']) ? (int)$b['sort_order'] : (int)$b['id'];
+                return $sa <=> $sb;
+            });
+            $icon_defaults = [
+                'undergraduate' => 'fa-graduation-cap',
+                'postgraduate'  => 'fa-book',
+                'doctoral'      => 'fa-university',
+                'diploma'       => 'fa-certificate',
+                'certificate'   => 'fa-file-text-o',
+                'integrated'    => 'fa-cubes'
+            ];
+            foreach ($db_cats as $dc) {
+                if (isset($dc['status']) && (int)$dc['status'] === 0) continue;
+                $c_name = trim($dc['program']);
+                $c_slug = !empty($dc['slug']) ? $dc['slug'] : '';
+                if (empty($c_slug)) {
+                    if (stripos($c_name, 'integ') !== false) $c_slug = 'integrated';
+                    elseif (stripos($c_name, 'post') !== false || stripos($c_name, 'pg') !== false) $c_slug = 'postgraduate';
+                    elseif (stripos($c_name, 'phd') !== false || stripos($c_name, 'doc') !== false) $c_slug = 'doctoral';
+                    elseif (stripos($c_name, 'dip') !== false) $c_slug = 'diploma';
+                    elseif (stripos($c_name, 'cert') !== false) $c_slug = 'certificate';
+                    elseif (stripos($c_name, 'grad') !== false || stripos($c_name, 'ug') !== false) $c_slug = 'undergraduate';
+                    else $c_slug = strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '-', $c_name), '-'));
+                }
+                $c_icon = !empty($dc['icon']) ? $dc['icon'] : ($icon_defaults[$c_slug] ?? 'fa-graduation-cap');
+                $c_title = (stripos($c_name, 'programme') === false && stripos($c_name, 'program') === false) ? $c_name . ' Programmes' : $c_name;
+                $db_categories[$c_slug] = [
+                    'id'    => (int)$dc['id'],
+                    'label' => strtoupper($c_name),
+                    'title' => $c_title,
+                    'icon'  => $c_icon,
+                    'slug'  => $c_slug
+                ];
+            }
+        }
+    } catch (\Throwable $e) {}
+}
+
+if (!isset($db_categories['integrated'])) {
+    $db_categories['integrated'] = [
+        'id'    => 6,
+        'label' => 'INTEGRATED',
+        'title' => 'Integrated Programmes',
+        'icon'  => 'fa-cubes',
+        'slug'  => 'integrated'
+    ];
+}
+
+if (empty($db_categories)) {
+    $db_categories = [
+        'undergraduate' => ['id'=>3, 'label'=>'UNDERGRADUATE', 'title'=>'Under Graduate Programmes', 'icon'=>'fa-graduation-cap', 'slug'=>'undergraduate'],
+        'postgraduate'  => ['id'=>2, 'label'=>'POSTGRADUATE',  'title'=>'Post Graduate Programmes',  'icon'=>'fa-book',           'slug'=>'postgraduate'],
+        'doctoral'      => ['id'=>1, 'label'=>'DOCTORAL',      'title'=>'Doctoral (Ph.D) Programmes',  'icon'=>'fa-university',     'slug'=>'doctoral'],
+        'diploma'       => ['id'=>4, 'label'=>'DIPLOMA',       'title'=>'Diploma Programmes',        'icon'=>'fa-certificate',    'slug'=>'diploma'],
+        'certificate'   => ['id'=>5, 'label'=>'CERTIFICATE',   'title'=>'Certificate Programmes',    'icon'=>'fa-file-text-o',    'slug'=>'certificate'],
+        'integrated'    => ['id'=>6, 'label'=>'INTEGRATED',    'title'=>'Integrated Programmes',     'icon'=>'fa-cubes',          'slug'=>'integrated']
+    ];
+}
+
+$tab_categories = $db_categories;
+$allowed_types = array_keys($tab_categories);
+
 // Clean get parameter (handle trailing slash from URL rewrite)
 $raw_type = isset($_GET['type']) ? $_GET['type'] : (isset($_GET['id']) ? $_GET['id'] : '');
 $page_type = strtolower(trim($raw_type, "/ \t\n\r\0\x0B"));
 
+// Common alias normalization
+$alias_map = [
+    'phd'                  => 'doctoral',
+    'doc'                  => 'doctoral',
+    'graduation'           => 'undergraduate',
+    'ug'                   => 'undergraduate',
+    'post-graduation'      => 'postgraduate',
+    'pg'                   => 'postgraduate',
+    'integrated-programmes'=> 'integrated',
+    'integrated-programme' => 'integrated'
+];
+if (isset($alias_map[$page_type])) {
+    $page_type = $alias_map[$page_type];
+}
+
 // Also check URI if rewrite didn't pass $_GET
 if (empty($page_type) && isset($_SERVER['REQUEST_URI'])) {
-    foreach (['undergraduate', 'postgraduate', 'diploma', 'doctoral', 'certificate'] as $chk) {
+    foreach ($allowed_types as $chk) {
         if (stripos($_SERVER['REQUEST_URI'], $chk) !== false) {
             $page_type = $chk;
             break;
@@ -15,13 +102,11 @@ if (empty($page_type) && isset($_SERVER['REQUEST_URI'])) {
     }
 }
 
-$allowed_types = ['undergraduate', 'postgraduate', 'diploma', 'doctoral', 'certificate'];
 if (!in_array($page_type, $allowed_types)) {
-    $page_type = 'undergraduate';
+    $page_type = in_array('undergraduate', $allowed_types) ? 'undergraduate' : ($allowed_types[0] ?? 'undergraduate');
 }
 
 // Fetch all active courses directly from admin panel database table `course`
-global $db;
 $all_programs = [];
 $deg_heading = '85+ programs across every degree level.';
 
@@ -32,7 +117,7 @@ if (isset($db) && is_object($db)) {
             FROM course c 
             LEFT JOIN program p ON c.program = p.id 
             LEFT JOIN department d ON c.department = d.id 
-            WHERE c.status = 1 
+            WHERE (c.status = 1 OR c.status IS NULL) 
             ORDER BY c.id ASC
         ");
         
@@ -42,43 +127,62 @@ if (isset($db) && is_object($db)) {
                 if (empty($c_name)) continue;
 
                 $p_name = strtolower(trim($rc['prog_name'] ?? ''));
+                $p_slug = !empty($rc['prog_slug']) ? strtolower(trim($rc['prog_slug'])) : '';
+                if (empty($p_slug)) {
+                    if (strpos($p_name, 'integ') !== false) $p_slug = 'integrated';
+                    elseif (strpos($p_name, 'post') !== false || strpos($p_name, 'pg') !== false) $p_slug = 'postgraduate';
+                    elseif (strpos($p_name, 'phd') !== false || strpos($p_name, 'doc') !== false) $p_slug = 'doctoral';
+                    elseif (strpos($p_name, 'dip') !== false) $p_slug = 'diploma';
+                    elseif (strpos($p_name, 'cert') !== false) $p_slug = 'certificate';
+                    elseif (strpos($p_name, 'grad') !== false || strpos($p_name, 'under') !== false) $p_slug = 'undergraduate';
+                }
                 $p_id = (int)($rc['program'] ?? 0);
                 
-                // Determine all applicable levels (UG, PG, Doctoral, Diploma, Certificate)
+                // Determine all applicable levels (UG, PG, Doctoral, Diploma, Certificate, Integrated, etc.)
                 $levels = [];
                 
+                // If program table defines a slug, use it directly
+                if (!empty($p_slug) && isset($tab_categories[$p_slug])) {
+                    $levels[] = $p_slug;
+                }
+
+                // Integrated Programmes (id 6 or keyword)
+                if ($p_id === 6 || strpos($p_name, 'integ') !== false || $p_slug === 'integrated' || stripos($c_name, 'bscbed') !== false || stripos($c_name, 'integrated') !== false || stripos($c_name, 'b.sc. b.ed') !== false || stripos($c_name, 'ba.bed') !== false || stripos($c_name, 'ba bed') !== false) {
+                    if (!in_array('integrated', $levels)) $levels[] = 'integrated';
+                }
+
                 // Certificate
                 if ($p_id === 5 || strpos($p_name, 'cert') !== false || stripos($c_name, 'cert') !== false || stripos($c_name, 'certificate') !== false || stripos($c_name, 'skill') !== false) {
-                    $levels[] = 'certificate';
+                    if (!in_array('certificate', $levels)) $levels[] = 'certificate';
                 }
 
                 // Diploma
                 if ($p_id === 4 || strpos($p_name, 'dip') !== false || stripos($c_name, 'diploma') !== false || stripos($c_name, 'poly') !== false || stripos($c_name, 'd.') === 0 || stripos($c_name, 'd.pharm') !== false || stripos($c_name, 'dca') !== false || stripos($c_name, 'pgdca') !== false || stripos($c_name, 'gnm') !== false || stripos($c_name, 'dmlt') !== false || stripos($c_name, 'd.el.ed') !== false) {
-                    $levels[] = 'diploma';
+                    if (!in_array('diploma', $levels)) $levels[] = 'diploma';
                 }
 
                 // Doctoral
                 if ($p_id === 1 || strpos($p_name, 'doc') !== false || strpos($p_name, 'phd') !== false || strpos($p_name, 'ph.d') !== false || stripos($c_name, 'ph.d') !== false || stripos($c_name, 'phd') !== false) {
-                    $levels[] = 'doctoral';
+                    if (!in_array('doctoral', $levels)) $levels[] = 'doctoral';
                 }
 
                 // Postgraduate
                 if ($p_id === 2 || strpos($p_name, 'post') !== false || strpos($p_name, 'pg') !== false || stripos($c_name, 'm.') === 0 || stripos($c_name, 'mba') !== false || stripos($c_name, 'mca') !== false || stripos($c_name, 'mds') !== false || stripos($c_name, 'm.tech') !== false || stripos($c_name, 'm.pharm') !== false || stripos($c_name, 'msc') !== false || stripos($c_name, 'm.sc') !== false || stripos($c_name, 'm.com') !== false || stripos($c_name, 'm.ed') !== false || stripos($c_name, 'm.lib') !== false || (stripos($c_name, 'ma') === 0 && strlen($c_name) <= 10)) {
-                    $levels[] = 'postgraduate';
+                    if (!in_array('postgraduate', $levels)) $levels[] = 'postgraduate';
                 }
 
                 // Undergraduate
-                if ($p_id === 3 || strpos($p_name, 'grad') !== false || strpos($p_name, 'under') !== false || strpos($p_name, 'ug') !== false || stripos($c_name, 'b.') === 0 || stripos($c_name, 'bba') !== false || stripos($c_name, 'bca') !== false || stripos($c_name, 'bds') !== false || stripos($c_name, 'b.tech') !== false || stripos($c_name, 'b.pharm') !== false || stripos($c_name, 'bsc') !== false || (stripos($c_name, 'ba') === 0 && stripos($c_name, 'ballb') === false && strlen($c_name) <= 10) || stripos($c_name, 'b.com') !== false || stripos($c_name, 'b.ed') !== false || stripos($c_name, 'bhms') !== false || stripos($c_name, 'bmlt') !== false || stripos($c_name, 'bhmct') !== false || stripos($c_name, 'b.lib') !== false || stripos($c_name, 'l.l.b') !== false || stripos($c_name, 'llb') !== false || stripos($c_name, 'ballb') !== false) {
-                    $levels[] = 'undergraduate';
+                if (!in_array('integrated', $levels) && ($p_id === 3 || strpos($p_name, 'grad') !== false || strpos($p_name, 'under') !== false || strpos($p_name, 'ug') !== false || stripos($c_name, 'b.') === 0 || stripos($c_name, 'bba') !== false || stripos($c_name, 'bca') !== false || stripos($c_name, 'bds') !== false || stripos($c_name, 'b.tech') !== false || stripos($c_name, 'b.pharm') !== false || stripos($c_name, 'bsc') !== false || (stripos($c_name, 'ba') === 0 && stripos($c_name, 'ballb') === false && strlen($c_name) <= 10) || stripos($c_name, 'b.com') !== false || stripos($c_name, 'b.ed') !== false || stripos($c_name, 'bhms') !== false || stripos($c_name, 'bmlt') !== false || stripos($c_name, 'bhmct') !== false || stripos($c_name, 'b.lib') !== false || stripos($c_name, 'l.l.b') !== false || stripos($c_name, 'llb') !== false || stripos($c_name, 'ballb') !== false)) {
+                    if (!in_array('undergraduate', $levels)) $levels[] = 'undergraduate';
                 }
 
                 if (empty($levels)) {
-                    $levels[] = 'undergraduate';
+                    $levels[] = !empty($p_slug) ? $p_slug : 'undergraduate';
                 }
 
                 // Extract Duration and Eligibility from details
-                $duration = '3-4 yrs';
-                $eligibility = '10+2 / Graduation';
+                $duration = '';
+                $eligibility = '';
                 
                 if (!empty($rc['details'])) {
                     $det_text = strip_tags($rc['details']);
@@ -86,43 +190,69 @@ if (isset($db) && is_object($db)) {
                         $duration = trim($dur_match[1]);
                     }
                     if (preg_match('/eligibility\s*[:\-]?\s*([^,\n\r<]+)/i', $det_text, $elig_match)) {
-                        $eligibility = trim($elig_match[1]);
+                        $raw_elig = trim($elig_match[1]);
+                        // Only accept short clean text without table header or paragraph noise
+                        if (
+                            strlen($raw_elig) <= 26 &&
+                            stripos($raw_elig, 'criteria') === false &&
+                            stripos($raw_elig, 'approved') === false &&
+                            stripos($raw_elig, 'seats') === false &&
+                            stripos($raw_elig, 'department') === false &&
+                            stripos($raw_elig, '&') !== 0 &&
+                            stripos($raw_elig, 'college') === false &&
+                            stripos($raw_elig, 'semesters') === false
+                        ) {
+                            $eligibility = $raw_elig;
+                        }
                     }
                 }
 
-                // Realistic default durations if not parsed
-                if ($duration === '3-4 yrs') {
-                    if (in_array('certificate', $levels) && count($levels) === 1) $duration = '6 Months';
+                // Standard concise durations (limited length)
+                if (empty($duration) || strlen($duration) > 16) {
+                    if (in_array('integrated', $levels)) $duration = '4 Years';
+                    elseif (in_array('certificate', $levels) && count($levels) === 1) $duration = '6 Months';
                     elseif (in_array('doctoral', $levels)) $duration = '3-5 yrs';
                     elseif (in_array('postgraduate', $levels)) $duration = '2 yrs';
                     elseif (in_array('diploma', $levels)) $duration = (stripos($c_name, 'pharm') !== false ? '2 yrs' : (stripos($c_name, 'hotel') !== false ? '1 yr / 6 Mo' : '3 yrs'));
-                    elseif (in_array('certificate', $levels)) $duration = '6 Months / 1 yr';
                     elseif (stripos($c_name, 'b.tech') !== false || stripos($c_name, 'b.pharm') !== false || stripos($c_name, 'nursing') !== false) $duration = '4 yrs';
                     elseif (stripos($c_name, 'bds') !== false || stripos($c_name, 'bhms') !== false || stripos($c_name, 'ballb') !== false) $duration = '5 yrs';
                     else $duration = '3 yrs';
                 }
 
-                if ($eligibility === '10+2 / Graduation') {
-                    if (in_array('certificate', $levels) && count($levels) === 1) $eligibility = '10+2 / Open';
+                // Standard concise eligibility (short & clean like all other cards)
+                if (empty($eligibility) || strlen($eligibility) > 26) {
+                    if (in_array('integrated', $levels)) $eligibility = '10+2 Science 50%';
+                    elseif (in_array('certificate', $levels) && count($levels) === 1) $eligibility = '10+2 Any Stream';
                     elseif (in_array('doctoral', $levels)) $eligibility = 'Master Degree 55%';
-                    elseif (in_array('postgraduate', $levels)) $eligibility = 'Graduation 50%';
+                    elseif (in_array('postgraduate', $levels)) $eligibility = (stripos($c_name, 'm.tech') !== false ? 'B.Tech / BE' : (stripos($c_name, 'mca') !== false ? 'BCA / Grad' : 'Graduation 50%'));
                     elseif (in_array('diploma', $levels)) $eligibility = (stripos($c_name, 'pharm') !== false ? '10+2 PCB/PCM' : '10th / 10+2 Pass');
-                    elseif (in_array('certificate', $levels)) $eligibility = '10+2 Any Stream';
                     elseif (stripos($c_name, 'b.tech') !== false) $eligibility = '10+2 PCM 50%';
                     elseif (stripos($c_name, 'b.pharm') !== false || stripos($c_name, 'nursing') !== false) $eligibility = '10+2 PCB 50%';
                     elseif (stripos($c_name, 'bds') !== false || stripos($c_name, 'bhms') !== false) $eligibility = 'NEET-UG / 10+2 PCB';
+                    elseif (stripos($c_name, 'b.ed') !== false) $eligibility = 'Graduation 50%';
                     else $eligibility = '10+2 Any Stream';
+                }
+
+                // Final safety limit
+                $eligibility = mb_strimwidth($eligibility, 0, 26, '...');
+                $duration = mb_strimwidth($duration, 0, 16, '...');
+
+                // Clean card title display
+                $card_title = $c_name;
+                if (stripos($card_title, '4 Years Integrated') !== false) {
+                    $card_title = 'B.Sc. B.Ed.';
                 }
 
                 $all_programs[] = [
                     'id'          => $rc['id'],
-                    'title'       => $c_name,
+                    'title'       => $card_title,
+                    'full_title'  => $c_name,
                     'levels'      => $levels,
                     'level'       => $levels[0],
                     'duration'    => $duration,
                     'eligibility' => $eligibility,
                     'department'  => $rc['dept_title'] ?? '',
-                    'tag'         => 'FEATURED',
+                    'tag'         => (in_array('integrated', $levels) ? 'NEW' : 'FEATURED'),
                     'detail_url'  => href('eligibility.php', 'id=' . $rc['id'])
                 ];
             }
@@ -147,6 +277,41 @@ if (isset($db) && is_object($db)) {
                     $all_programs[] = $ac;
                 }
             }
+
+            // Ensure Integrated Programmes courses are present if database does not contain them yet
+            $has_integrated = false;
+            foreach ($all_programs as $p) {
+                if (!empty($p['levels']) && in_array('integrated', $p['levels'])) {
+                    $has_integrated = true;
+                    break;
+                }
+            }
+            if (!$has_integrated) {
+                $all_programs[] = [
+                    'id'          => 55,
+                    'title'       => 'B.Sc. B.Ed.',
+                    'full_title'  => 'B.Sc. B.Ed. (4 Years Integrated)',
+                    'levels'      => ['integrated'],
+                    'level'       => 'integrated',
+                    'duration'    => '4 Years',
+                    'eligibility' => '10+2 Science (PCM/PCB) 50%',
+                    'department'  => 'Faculty of Education & Science',
+                    'tag'         => 'NEW',
+                    'detail_url'  => href('eligibility.php', 'id=55')
+                ];
+                $all_programs[] = [
+                    'id'          => 56,
+                    'title'       => 'BA B.Ed.',
+                    'full_title'  => 'BA B.Ed. (4 Years Integrated)',
+                    'levels'      => ['integrated'],
+                    'level'       => 'integrated',
+                    'duration'    => '4 Years',
+                    'eligibility' => '10+2 Any Stream 50%',
+                    'department'  => 'Faculty of Education & Arts',
+                    'tag'         => 'POPULAR',
+                    'detail_url'  => href('eligibility.php', 'id=56')
+                ];
+            }
         }
     } catch (\Throwable $e) {}
 }
@@ -154,6 +319,10 @@ if (isset($db) && is_object($db)) {
 // Fallback comprehensive courses list if database is empty
 if (empty($all_programs)) {
     $all_programs = [
+        // Integrated Programmes
+        ['id'=>55, 'title'=>'B.Sc. B.Ed.', 'full_title'=>'B.Sc. B.Ed. (4 Years Integrated)', 'level'=>'integrated', 'levels'=>['integrated'], 'duration'=>'4 Years', 'eligibility'=>'10+2 Science (PCM/PCB) 50%', 'tag'=>'NEW', 'detail_url'=>href('eligibility.php', 'id=55')],
+        ['id'=>56, 'title'=>'BA B.Ed.', 'full_title'=>'BA B.Ed. (4 Years Integrated)', 'level'=>'integrated', 'levels'=>['integrated'], 'duration'=>'4 Years', 'eligibility'=>'10+2 Any Stream 50%', 'tag'=>'POPULAR', 'detail_url'=>href('eligibility.php', 'id=56')],
+
         // Undergraduate
         ['title'=>'B.Tech CSE', 'level'=>'undergraduate', 'duration'=>'4 yrs', 'eligibility'=>'10+2 PCM 60%', 'tag'=>'FEATURED'],
         ['title'=>'B.Tech Mechanical', 'level'=>'undergraduate', 'duration'=>'4 yrs', 'eligibility'=>'10+2 PCM 50%', 'tag'=>'FEATURED'],
@@ -222,14 +391,6 @@ if (empty($all_programs)) {
         ['title'=>'Certificate in Foreign Language (German/French)', 'level'=>'certificate', 'duration'=>'3 months', 'eligibility'=>'Open to All Students', 'tag'=>'POPULAR'],
     ];
 }
-
-$tab_categories = [
-    'undergraduate' => ['label'=>'UNDERGRADUATE', 'title'=>'Under Graduate Programmes', 'icon'=>'fa-graduation-cap'],
-    'postgraduate'  => ['label'=>'POSTGRADUATE',  'title'=>'Post Graduate Programmes',  'icon'=>'fa-book'],
-    'doctoral'      => ['label'=>'DOCTORAL',      'title'=>'Doctoral (Ph.D) Programmes',  'icon'=>'fa-university'],
-    'diploma'       => ['label'=>'DIPLOMA',       'title'=>'Diploma Programmes',        'icon'=>'fa-certificate'],
-    'certificate'   => ['label'=>'CERTIFICATE',   'title'=>'Certificate Programmes',    'icon'=>'fa-file-text-o']
-];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -447,11 +608,12 @@ $tab_categories = [
   justify-content: space-between;
   border: 1px solid rgba(0, 0, 0, 0.04);
   position: relative;
+  cursor: pointer;
 }
 .bu-prog-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 16px 36px rgba(10, 27, 84, 0.12);
-  border-color: rgba(255, 193, 7, 0.4);
+  border-color: rgba(255, 193, 7, 0.5);
 }
 .bu-prog-card-top {
   display: flex;
@@ -471,6 +633,9 @@ $tab_categories = [
   letter-spacing: 0.8px;
   text-transform: uppercase;
   color: #D99B00;
+  background: rgba(217, 155, 0, 0.1);
+  padding: 3px 8px;
+  border-radius: 4px;
 }
 .bu-prog-card-title {
   font-family: 'Playfair Display', Georgia, serif;
@@ -480,13 +645,21 @@ $tab_categories = [
   margin: 0 0 18px 0;
   line-height: 1.3;
 }
+.bu-prog-card-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.bu-prog-card:hover .bu-prog-card-title a {
+  color: #061D7C;
+}
 .bu-prog-card-details {
   display: flex;
   flex-direction: column;
   gap: 8px;
   border-top: 1px solid #F1F5F9;
   padding-top: 14px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 .bu-prog-detail-row {
   display: flex;
@@ -502,32 +675,66 @@ $tab_categories = [
   color: #0F172A;
   font-weight: 700;
   text-align: right;
-  max-width: 60%;
+  max-width: 65%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.bu-prog-card-apply {
+.bu-prog-card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.bu-prog-card-view {
+  flex: 1;
   background: #FAF7F2;
   color: #0A1B54;
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 11.5px;
+  font-weight: 700;
   text-align: center;
-  padding: 10px 16px;
+  padding: 10px 8px;
   border-radius: 6px;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border: 1px solid rgba(10, 27, 84, 0.1);
+  border: 1px solid rgba(10, 27, 84, 0.15);
   transition: all 0.22s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
+}
+.bu-prog-card-view:hover {
+  background: #0A1B54;
+  border-color: #0A1B54;
+  color: #FFC107;
+  text-decoration: none;
+}
+.bu-prog-card-apply {
+  flex: 1;
+  background: #FFC107;
+  color: #0A1B54;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-align: center;
+  padding: 10px 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid #FFC107;
+  transition: all 0.22s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 .bu-prog-card-apply:hover {
-  background: #FFC107;
-  border-color: #FFC107;
-  color: #0A1B54;
+  background: #061D7C;
+  border-color: #061D7C;
+  color: #FFFFFF;
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.35);
+  box-shadow: 0 4px 12px rgba(6, 29, 124, 0.25);
 }
 
 /* No results state */
@@ -647,11 +854,17 @@ $tab_categories = [
         ?>
           <div class="bu-prog-grid-pane <?php echo ($t_key === $page_type) ? 'active' : ''; ?>" id="pane-<?php echo $t_key; ?>" data-category="<?php echo $t_key; ?>">
             <?php if (!empty($category_items)): ?>
-              <?php foreach ($category_items as $item): ?>
+              <?php foreach ($category_items as $item): 
+                $course_url = !empty($item['id']) ? href('eligibility.php', 'id=' . $item['id']) : (!empty($item['detail_url']) ? $item['detail_url'] : href('course.php'));
+                $apply_name = !empty($item['full_title']) ? $item['full_title'] : (!empty($item['title']) ? $item['title'] : '');
+                $apply_url  = href('enquiry.php') . (!empty($apply_name) ? '?course=' . urlencode($apply_name) : '');
+              ?>
                 <div class="bu-prog-card" 
                      data-title="<?php echo htmlspecialchars(strtolower($item['title'] ?? '')); ?>" 
                      data-eligibility="<?php echo htmlspecialchars(strtolower($item['eligibility'] ?? '')); ?>" 
-                     data-level="<?php echo $t_key; ?>">
+                     data-level="<?php echo $t_key; ?>"
+                     onclick="window.location.href='<?php echo $course_url; ?>';"
+                     title="Click to view course specifications, duration, intake & eligibility">
                   <div>
                     <div class="bu-prog-card-top">
                       <span class="bu-prog-card-icon">
@@ -662,7 +875,11 @@ $tab_categories = [
                       </span>
                       <span class="bu-prog-card-tag"><?php echo htmlspecialchars($item['tag'] ?? 'FEATURED'); ?></span>
                     </div>
-                    <h3 class="bu-prog-card-title"><?php echo htmlspecialchars($item['title'] ?? ''); ?></h3>
+                    <h3 class="bu-prog-card-title">
+                      <a href="<?php echo $course_url; ?>" onclick="event.stopPropagation();">
+                        <?php echo htmlspecialchars($item['title'] ?? ''); ?>
+                      </a>
+                    </h3>
                   </div>
 
                   <div>
@@ -676,9 +893,14 @@ $tab_categories = [
                         <strong><?php echo htmlspecialchars($item['eligibility'] ?? '10+2 Pass'); ?></strong>
                       </div>
                     </div>
-                    <a href="<?php echo href('enquiry.php'); ?>" class="bu-prog-card-apply">
-                      Apply Now <i class="fa fa-arrow-right ml-1"></i>
-                    </a>
+                    <div class="bu-prog-card-actions">
+                      <a href="<?php echo $course_url; ?>" class="bu-prog-card-view" onclick="event.stopPropagation();">
+                        Details <i class="fa fa-info-circle ml-1"></i>
+                      </a>
+                      <a href="<?php echo $apply_url; ?>" class="bu-prog-card-apply" onclick="event.stopPropagation();">
+                        Apply Now <i class="fa fa-arrow-right ml-1"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
               <?php endforeach; ?>
@@ -736,7 +958,8 @@ document.addEventListener('DOMContentLoaded', function() {
     filterGrid();
 
     if (updateUrl && window.history.pushState) {
-      const baseUrl = window.location.pathname.replace(/\/+(undergraduate|postgraduate|diploma|doctoral|certificate)\/?$/i, '');
+      const catRegex = new RegExp('/+(' + validCats.join('|') + ')/?$', 'i');
+      const baseUrl = window.location.pathname.replace(catRegex, '').replace(/\/+$/, '');
       const newUrl = baseUrl + '/' + categoryKey + '/';
       window.history.pushState({ category: categoryKey }, '', newUrl);
     }
@@ -766,9 +989,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  const validCats = <?php echo json_encode(array_keys($tab_categories)); ?>;
+
   function detectActiveCategory() {
-    const validCats = ['undergraduate', 'postgraduate', 'diploma', 'doctoral', 'certificate'];
-    
     // 1. From Hash (#diploma)
     const hash = window.location.hash.replace('#', '').toLowerCase();
     if (validCats.includes(hash)) return hash;
@@ -807,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('a[href*="programmes"]').forEach(function(link) {
     link.addEventListener('click', function(e) {
       const href = (this.getAttribute('href') || '').toLowerCase();
-      for (const cat of ['undergraduate', 'postgraduate', 'diploma', 'doctoral', 'certificate']) {
+      for (const cat of validCats) {
         if (href.indexOf(cat) !== -1) {
           e.preventDefault();
           switchTab(cat, true);

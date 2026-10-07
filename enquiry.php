@@ -294,6 +294,9 @@ if(isset($_POST['submit']))
 				}
 			 });
 	   });
+       if ($("#course").val()) {
+           $("#course").trigger("change");
+       }
    });
 
    function updateFileName(input, targetId) {
@@ -376,11 +379,35 @@ if(isset($_POST['submit']))
               <select name="course" id="course" class="bu-form-control" required>
                 <option value="">-- Choose Desired Course --</option>
                 <?php
-                $courses = $db->get('course');
+                $requested_course = isset($_REQUEST['course']) ? trim($_REQUEST['course']) : '';
+                $courses = [];
+                if (isset($db) && is_object($db)) {
+                    try {
+                        $courses = $db->get('course');
+                    } catch (\Throwable $e) {}
+                }
+                $has_integrated_option = false;
                 if(is_array($courses) && count($courses) > 0) {
                   foreach($courses as $icourse) {
-                    echo '<option value="'.$icourse['id'].'">'.$icourse['course'].'</option>';
+                    $c_id = $icourse['id'];
+                    $c_title = $icourse['course'];
+                    if (stripos($c_title, 'integrated') !== false || stripos($c_title, 'bscbed') !== false || stripos($c_title, 'b.sc. b.ed') !== false) {
+                        $has_integrated_option = true;
+                    }
+                    $is_sel = false;
+                    if (!empty($requested_course)) {
+                        if ($c_id == $requested_course || strcasecmp($c_title, $requested_course) === 0 || stripos($c_title, $requested_course) !== false || stripos($requested_course, $c_title) !== false) {
+                            $is_sel = true;
+                        }
+                    }
+                    echo '<option value="'.$c_id.'"'.($is_sel ? ' selected' : '').'>'.$c_title.'</option>';
                   }
+                }
+                // Fallback option for B.Sc. B.Ed. Integrated dual degree if not yet in database
+                if (!$has_integrated_option) {
+                    $bsc_sel = (!empty($requested_course) && (stripos($requested_course, 'b.sc') !== false || stripos($requested_course, 'integrated') !== false));
+                    echo '<option value="55"'.($bsc_sel ? ' selected' : '').'>B.Sc. B.Ed. (4 Years Integrated)</option>';
+                    echo '<option value="56">BA B.Ed. (4 Years Integrated)</option>';
                 }
                 ?>
               </select>

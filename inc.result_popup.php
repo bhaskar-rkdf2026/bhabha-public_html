@@ -58,6 +58,34 @@ if (isset($db) && is_object($db)) {
 if (empty($popupNotices)) {
     $popupNotices = [
         [
+            'tag' => 'RESULT NOTIFICATION • B.SC. B.ED',
+            'title' => '📖 B.Sc. B.Ed – 6th Semester (Regular)',
+            'description' => 'June-2026 examination results declared (05 Oct 2026). All concerned students please check your results online.',
+            'link' => $pop['result_btn_link'],
+            'color_class' => 'is-green'
+        ],
+        [
+            'tag' => 'RESULT NOTIFICATION • B.SC. B.ED',
+            'title' => '📖 B.Sc. B.Ed – 5th, 3rd & 1st Semester (Ex)',
+            'description' => 'June-2026 examination results declared (05 Oct 2026). All concerned students please check your results online.',
+            'link' => $pop['result_btn_link'],
+            'color_class' => 'is-gold'
+        ],
+        [
+            'tag' => 'RESULT NOTIFICATION • M.SC.',
+            'title' => '🔬 M.Sc. – 2nd Semester (Regular) – All Branches',
+            'description' => 'June-2026 post-graduate results declared (05 Oct 2026). All concerned students please check your results online.',
+            'link' => $pop['result_btn_link'],
+            'color_class' => 'is-blue'
+        ],
+        [
+            'tag' => 'RESULT NOTIFICATION • M.SC.',
+            'title' => '🔬 M.Sc. – 1st Semester (Ex) – All Branches',
+            'description' => 'June-2026 post-graduate examination results declared (05 Oct 2026). All concerned students please check your results online.',
+            'link' => $pop['result_btn_link'],
+            'color_class' => 'is-purple'
+        ],
+        [
             'tag' => 'RESULT NOTIFICATION • B.PHARM',
             'title' => '🎓 B.Pharm – 4th Semester (Regular)',
             'description' => 'Examination results declared and published on the official portal.',
@@ -463,6 +491,20 @@ $mainResultLink = bu_pop_resolve_url(!empty($pop['result_btn_link']) ? $pop['res
 .bu-notif-card.is-green .bu-notif-tag {
   color: #059669;
 }
+.bu-notif-card.is-purple {
+  border-left: 4px solid #6D28D9;
+  background: #FAF5FF;
+}
+.bu-notif-card.is-purple .bu-notif-tag {
+  color: #6D28D9;
+}
+.bu-notif-card.is-red {
+  border-left: 4px solid #B91C1C;
+  background: #FEF2F2;
+}
+.bu-notif-card.is-red .bu-notif-tag {
+  color: #B91C1C;
+}
 
 .bu-notif-tag {
   font-size: 9.5px;
@@ -698,7 +740,7 @@ $mainResultLink = bu_pop_resolve_url(!empty($pop['result_btn_link']) ? $pop['res
 
 <script>
 (function() {
-  var STORAGE_KEY = 'bu_result_popup_dismissed_v2_date';
+  var STORAGE_KEY = 'bu_result_popup_dismissed_v3_date';
 
   function shouldShowPopup() {
     try {

@@ -69,7 +69,7 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
 
         <!-- =================== 2. SCHOOLS & INSTITUTES =================== -->
         <?php 
-          $schoolsPages = ['institute.php', 'department.php', 'sub_department.php', 'course.php', 'branch.php'];
+          $schoolsPages = ['program.php', 'institute.php', 'department.php', 'sub_department.php', 'course.php', 'branch.php'];
           $isSchoolsActive = isSubActive($schoolsPages, $currPage, 'schools', $secParam);
         ?>
         <li class="<?php echo $isSchoolsActive; ?>">
@@ -78,6 +78,7 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
           </a>
           <ul class="submenu">
             <li><a href="section_hub.php?section=schools" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Institutes Hub</a></li>
+            <li><a href="program.php"><i class="mdi mdi-circle-outline"></i> Program Categories</a></li>
             <li><a href="institute.php"><i class="mdi mdi-circle-outline"></i> Faculties & Institutes</a></li>
             <li><a href="department.php"><i class="mdi mdi-circle-outline"></i> Departments</a></li>
             <li><a href="sub_department.php"><i class="mdi mdi-circle-outline"></i> Sub Departments</a></li>

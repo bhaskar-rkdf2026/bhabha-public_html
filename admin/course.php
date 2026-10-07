@@ -28,7 +28,7 @@ if(isset($_POST['submit']))
 					"course" => $_POST['course'],
 					"department" => $_POST['department'],
 					"details" => $_POST['details'],
-					"status" => $_POST['status']
+					"status" => isset($_POST['status']) ? 1 : 0
 					 );
 					
 					$id = $db->insert(DBTAB,$data);
@@ -44,7 +44,7 @@ if(isset($_POST['submit']))
 					"course" => $_POST['course'],
 					"department" => $_POST['department'],
 					"details" => $_POST['details'],
-					"status" => $_POST['status']
+					"status" => isset($_POST['status']) ? 1 : 0
 					);
 
 					$db->where('id',$_REQUEST['id']);
@@ -110,12 +110,15 @@ if($action=="delete")
                 <form action="" method="post" enctype="multipart/form-data">
                   
                   <div class="form-group col-xs-12">
-                    <label>Select Program</label>
-                    <select name="program" class="form-control">
-                    <option value="">Select Program</option>
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <label class="mb-0">Select Program / Category</label>
+                      <a href="program.php?action=add" target="_blank" class="font-12 text-primary"><i class="mdi mdi-plus-circle"></i> + Add New Category</a>
+                    </div>
+                    <select name="program" class="form-control" required>
+                    <option value="">Select Program / Category</option>
                     
                          <?php
-		$program = $db->get('program');
+		$program = $db->rawQuery("SELECT * FROM program WHERE (status = 1 OR status IS NULL) ORDER BY sort_order ASC, id ASC");
          if(is_array($program) && count($program)>0)
           {
               foreach($program as $iprogram)
@@ -123,10 +126,10 @@ if($action=="delete")
                 ?>
                 <option value="<?php echo $iprogram['id']?>"
                 <?php if($action=="edit"){
-						 if($iprogram['id']==$aryData['program']){?> selected="selected" <?php }}?><?php if($action=="add"){ if($iprogram['id']==$_POST['program']){?> selected="selected" <?php }}?>
+						 if($iprogram['id']==$aryData['program']){?> selected="selected" <?php }}?><?php if($action=="add"){ if(isset($_POST['program']) && $iprogram['id']==$_POST['program']){?> selected="selected" <?php }}?>
                 
                 
-                ><?php echo $iprogram['program']?></option>
+                ><?php echo htmlspecialchars($iprogram['program'])?></option>
                 <?php
 			  }
 		  }?>
@@ -188,36 +191,55 @@ if($action=="delete")
             <div class="card m-b-20">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-sm-10">
-                    <h4 class="mt-0 header-title"><?php echo TITLE; ?></h4>
+                  <div class="col-sm-8">
+                    <h4 class="mt-0 header-title"><?php echo TITLE; ?> Directory</h4>
                   </div>
-                  <div class="col-sm-2"> <a class="btn btn-primary" style="float:right" href="<?php echo PAGE;?>?action=add">Add <?php echo TITLE; ?></a> </div>
+                  <div class="col-sm-4 text-right">
+                    <a class="btn btn-outline-primary mr-1" href="program.php"><i class="mdi mdi-layers mr-1"></i> Manage Categories</a>
+                    <a class="btn btn-primary" href="<?php echo PAGE;?>?action=add"><i class="mdi mdi-plus-circle mr-1"></i> Add <?php echo TITLE; ?></a>
+                  </div>
                 </div>
                 <br>
                 <div style="margin-left:10px; margin-right:10px;"> <?php echo msg($stat);?></div>
                 <div class="table-responsive">
                   <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <?php
-		$aryData = $db->get(DBTAB);
+		$aryData = $db->rawQuery("
+            SELECT c.*, p.program AS prog_name, d.title AS dept_title 
+            FROM course c 
+            LEFT JOIN program p ON c.program = p.id 
+            LEFT JOIN department d ON c.department = d.id 
+            ORDER BY c.id DESC
+        ");
          if(is_array($aryData) && count($aryData)>0)
           {
-  ?>
+   ?>
                     <thead>
                       <tr>
+                        <th style="width:40px;">#</th>
                         <th>Course</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th>Program Category</th>
+                        <th>Department</th>
+                        <th style="width:70px; text-align:center;">Status</th>
+                        <th style="width:130px; text-align:center;">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
               foreach($aryData as $iList)
               {
+                $statusBadge = ($iList['status'] == 1) ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-secondary">Inactive</span>';
                 ?>
                       <tr>
-                        <td><?php echo ucfirst($iList['course']);?></td>
-                        <td><?php echo $iList['status'];?></td>
-                        <td><a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=edit" class="btn btn-sm btn-info">Edit</a>  <a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=delete" onclick="return deletex();" class="btn btn-sm btn-danger">Delete</a></td>
+                        <td><?php echo $iList['id'];?></td>
+                        <td><strong><?php echo htmlspecialchars($iList['course']);?></strong></td>
+                        <td><span class="badge badge-info" style="font-size:12px;"><?php echo htmlspecialchars($iList['prog_name'] ?? 'Uncategorized');?></span></td>
+                        <td><?php echo htmlspecialchars($iList['dept_title'] ?? 'N/A');?></td>
+                        <td class="text-center"><?php echo $statusBadge;?></td>
+                        <td class="text-center">
+                          <a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=edit" class="btn btn-sm btn-info"><i class="mdi mdi-pencil"></i> Edit</a>  
+                          <a href="<?php echo PAGE;?>?id=<?php echo $iList['id']?>&action=delete" onclick="return deletex();" class="btn btn-sm btn-danger"><i class="mdi mdi-delete"></i> Delete</a>
+                        </td>
                       </tr>
                       <?php
               }
@@ -228,7 +250,7 @@ if($action=="delete")
           {
           ?>
                       <tr>
-                        <td colspan="5" class="list-tr">No Records Found.</td>
+                        <td colspan="6" class="list-tr">No Records Found.</td>
                       </tr>
                       <?php
           }
