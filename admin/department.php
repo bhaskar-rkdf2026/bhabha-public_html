@@ -127,6 +127,8 @@ if (isset($_POST['submit'])) {
         "description"      => trim($_POST['description'] ?? ''),
         "approval_text"    => trim($_POST['approval_text'] ?? ''),
         "affiliation_text" => trim($_POST['affiliation_text'] ?? ''),
+        "approval_tag"     => trim($_POST['approval_tag'] ?? ''),
+        "affiliation_tag"  => trim($_POST['affiliation_tag'] ?? ''),
         "about_lead"       => trim($_POST['about_lead'] ?? ''),
         "about_full"       => trim($_POST['about_full'] ?? ''),
         "vision"           => trim($_POST['vision'] ?? ''),
@@ -339,11 +341,25 @@ if ($action == "delete") {
                           <small class="text-muted">e.g. <code>fa fa-laptop</code>, <code>fa fa-flask</code>, <code>fa fa-cogs</code></small>
                         </div>
                         <div class="form-group col-md-4">
-                          <label class="font-weight-bold">Approval Text (e.g. AICTE / PCI / NCTE)</label>
-                          <input type="text" name="approval_text" class="form-control" value="<?php echo htmlspecialchars($aryData['approval_text'] ?? $_POST['approval_text'] ?? 'Approved by Statutory Regulatory Authorities');?>"/>
+                          <label class="font-weight-bold text-primary">Approval Badge Tag (Hero Tag 1) *</label>
+                          <input type="text" name="approval_tag" class="form-control" value="<?php echo htmlspecialchars($aryData['approval_tag'] ?? $_POST['approval_tag'] ?? '');?>" placeholder="e.g. NCTE / Recognized, AICTE / Recognized, PCI / Recognized"/>
+                          <small class="text-muted">Top badge on department card (e.g. <strong>NCTE / Recognized</strong> for Education)</small>
                         </div>
                         <div class="form-group col-md-4">
-                          <label class="font-weight-bold">Affiliation Text</label>
+                          <label class="font-weight-bold text-primary">Affiliation Badge Tag (Hero Tag 2)</label>
+                          <input type="text" name="affiliation_tag" class="form-control" value="<?php echo htmlspecialchars($aryData['affiliation_tag'] ?? $_POST['affiliation_tag'] ?? 'Bhabha University Bhopal');?>" placeholder="e.g. Bhabha University Bhopal"/>
+                          <small class="text-muted">Second top badge (default: Bhabha University Bhopal)</small>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-md-6">
+                          <label class="font-weight-bold">Full Approval Text (Banner / Overview bar)</label>
+                          <input type="text" name="approval_text" class="form-control" value="<?php echo htmlspecialchars($aryData['approval_text'] ?? $_POST['approval_text'] ?? 'Approved by Statutory Regulatory Authorities');?>"/>
+                          <small class="text-muted">e.g. Approved by National Council for Teacher Education (NCTE)</small>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label class="font-weight-bold">Full Affiliation Text</label>
                           <input type="text" name="affiliation_text" class="form-control" value="<?php echo htmlspecialchars($aryData['affiliation_text'] ?? $_POST['affiliation_text'] ?? 'Affiliated with Bhabha University, Bhopal');?>"/>
                         </div>
                       </div>

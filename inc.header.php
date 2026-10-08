@@ -91,6 +91,9 @@ $hc = getHeaderConfig();
                   $is_news = (isset($tlink['type']) && $tlink['type'] === 'news') || 
                              (isset($tlink['id']) && $tlink['id'] === 't9') || 
                              (stripos($tlink['label'], 'news') !== false);
+                  $is_alumni = (isset($tlink['type']) && $tlink['type'] === 'alumni') || 
+                               (isset($tlink['id']) && $tlink['id'] === 't1') || 
+                               (stripos($tlink['label'], 'alumni') !== false);
                 ?>
                 <?php if ($is_news): ?>
                   <!-- Top Bar News & Media Dropdown -->
@@ -105,6 +108,21 @@ $hc = getHeaderConfig();
                       <a href="<?php echo htmlspecialchars(!empty($hc['blog_url']) ? $hc['blog_url'] : 'blogs.php'); ?>"><i class="fa fa-rss text-primary"></i> Research &amp; Tech Blogs</a>
                       <a href="<?php echo href("gallery.php"); ?>"><i class="fa fa-picture-o text-warning"></i> Photo Gallery</a>
                       <a href="<?php echo href("notice.php"); ?>"><i class="fa fa-bullhorn text-danger"></i> Official Notices</a>
+                    </div>
+                  </li>
+                <?php elseif ($is_alumni): ?>
+                  <!-- Top Bar Alumni Dropdown -->
+                  <li class="bu-hide-mobile bu-topbar-alumni-drop">
+                    <a href="<?php echo htmlspecialchars($tlink_url); ?>" class="bu-topbar-alumni-link" target="<?php echo !empty($tlink['target']) ? htmlspecialchars($tlink['target']) : '_self'; ?>">
+                      <?php echo htmlspecialchars($tlink['label']); ?> <i class="fa fa-angle-down ml-1" style="font-size:10px;"></i>
+                    </a>
+                    <div class="bu-topbar-alumni-menu">
+                      <a href="<?php echo href("alumni.php#association"); ?>"><i class="fa fa-university"></i> Alumni Association</a>
+                      <a href="<?php echo href("alumni.php#registration"); ?>"><i class="fa fa-pencil-square-o"></i> Alumni Registration</a>
+                      <a href="<?php echo href("alumni.php#membership"); ?>"><i class="fa fa-users"></i> Alumni Membership</a>
+                      <a href="<?php echo href("alumni.php#events"); ?>"><i class="fa fa-calendar"></i> Events &amp; Networking</a>
+                      <a href="<?php echo href("alumni.php#achievements"); ?>"><i class="fa fa-trophy"></i> Alumni Achievements</a>
+                      <a href="<?php echo href("alumni.php#interaction"); ?>"><i class="fa fa-comments-o"></i> Student Interaction</a>
                     </div>
                   </li>
                 <?php else: ?>
@@ -423,16 +441,27 @@ $hc = getHeaderConfig();
                 </li>
 
               <?php elseif ($i_type === 'campus-life'): ?>
-                <!-- Campus Life Dropdown -->
+                <!-- Campus Life Dropdown (17 Dimensions of Campus Life) -->
                 <li class="bu-nav-item">
                   <a href="<?php echo href("campus-life.php");?>" class="bu-nav-link"><?php echo htmlspecialchars($i_label); ?> <i class="fa fa-angle-down"></i></a>
-                  <ul class="bu-dropdown">
-                    <li><a href="<?php echo href("campus-life.php"); ?>"><i class="fa fa-compass text-warning mr-2"></i> Campus Life Overview</a></li>
-                    <li><a href="<?php echo href("campus-life.php#events"); ?>"><i class="fa fa-calendar-check-o text-info mr-2"></i> Events &amp; Celebrations</a></li>
-                    <li><a href="<?php echo href("clubs.php"); ?>"><i class="fa fa-users text-success mr-2"></i> Student Clubs &amp; Societies</a></li>
-                    <li><a href="<?php echo href("campus-life.php#sports"); ?>"><i class="fa fa-futbol-o text-warning mr-2"></i> Sports &amp; Recreation</a></li>
-                    <li><a href="<?php echo href("campus-life.php#hostels"); ?>"><i class="fa fa-home text-danger mr-2"></i> Hostels &amp; Dining</a></li>
-                    <li><a href="<?php echo href("campus-life.php#facilities"); ?>"><i class="fa fa-building-o text-primary mr-2"></i> Campus Infrastructure</a></li>
+                  <ul class="bu-dropdown bu-dropdown-2col" style="min-width: 590px;">
+                    <li><a href="<?php echo href("infrastructure.php"); ?>"><i class="fa fa-building-o text-warning mr-2"></i> Campus &amp; Infrastructure</a></li>
+                    <li><a href="<?php echo href("academic.php"); ?>"><i class="fa fa-book text-info mr-2"></i> Academics &amp; Learning</a></li>
+                    <li><a href="<?php echo href("hostel.php"); ?>"><i class="fa fa-home text-danger mr-2"></i> Hostel &amp; Residential Life</a></li>
+                    <li><a href="<?php echo href("cafeteria.php"); ?>"><i class="fa fa-cutlery text-warning mr-2"></i> Cafeteria &amp; Food</a></li>
+                    <li><a href="<?php echo href("transportation.php"); ?>"><i class="fa fa-bus text-primary mr-2"></i> Transportation</a></li>
+                    <li><a href="<?php echo href("library.php"); ?>"><i class="fa fa-bookmark text-success mr-2"></i> Library &amp; Digital Resources</a></li>
+                    <li><a href="<?php echo href("it-labs.php"); ?>"><i class="fa fa-laptop text-info mr-2"></i> IT &amp; Computer Labs</a></li>
+                    <li><a href="<?php echo href("health-wellness.php"); ?>"><i class="fa fa-heartbeat text-danger mr-2"></i> Health &amp; Wellness</a></li>
+                    <li><a href="<?php echo href("sports.php"); ?>"><i class="fa fa-futbol-o text-success mr-2"></i> Sports &amp; Fitness</a></li>
+                    <li><a href="<?php echo href("events.php"); ?>"><i class="fa fa-calendar-check-o text-warning mr-2"></i> Arts, Culture &amp; Events</a></li>
+                    <li><a href="<?php echo href("clubs.php"); ?>"><i class="fa fa-users text-primary mr-2"></i> Student Clubs &amp; Organizations</a></li>
+                    <li><a href="<?php echo href("community-service.php"); ?>"><i class="fa fa-leaf text-success mr-2"></i> Community Service &amp; Environment</a></li>
+                    <li><a href="<?php echo href("entrepreneurship.php"); ?>"><i class="fa fa-rocket text-warning mr-2"></i> Entrepreneurship &amp; Career Dev.</a></li>
+                    <li><a href="<?php echo href("student-safety.php"); ?>"><i class="fa fa-shield text-danger mr-2"></i> Student Safety &amp; Support</a></li>
+                    <li><a href="<?php echo href("student-media.php"); ?>"><i class="fa fa-bullhorn text-info mr-2"></i> Student Media &amp; Communication</a></li>
+                    <li><a href="<?php echo href("alumni.php"); ?>"><i class="fa fa-graduation-cap text-warning mr-2"></i> Alumni</a></li>
+                    <li><a href="<?php echo href("gallery.php"); ?>"><i class="fa fa-picture-o text-primary mr-2"></i> Campus Gallery</a></li>
                   </ul>
                 </li>
 
@@ -633,6 +662,26 @@ $hc = getHeaderConfig();
         return;
       } else if (!e.target.closest('.bu-topbar-news-menu')) {
         document.querySelectorAll('.bu-topbar-news-drop.active').forEach(function(d) {
+          d.classList.remove('active');
+        });
+      }
+
+      // Alumni Topbar Dropdown Toggle (for touch devices / mobile)
+      var alumniToggle = e.target.closest('.bu-topbar-alumni-link');
+      if (alumniToggle && (window.innerWidth <= 991 || e.target.closest('.fa-angle-down'))) {
+        e.preventDefault();
+        e.stopPropagation();
+        var alumniParent = alumniToggle.closest('.bu-topbar-alumni-drop');
+        var wasAlumniActive = alumniParent.classList.contains('active');
+        document.querySelectorAll('.bu-topbar-alumni-drop.active').forEach(function(d) {
+          d.classList.remove('active');
+        });
+        if (!wasAlumniActive) {
+          alumniParent.classList.add('active');
+        }
+        return;
+      } else if (!e.target.closest('.bu-topbar-alumni-menu')) {
+        document.querySelectorAll('.bu-topbar-alumni-drop.active').forEach(function(d) {
           d.classList.remove('active');
         });
       }

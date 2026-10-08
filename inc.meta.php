@@ -398,6 +398,116 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   text-shadow: none !important;
 }
 
+/* ---- Alumni Topbar Dropdown (Clean Modern Light Theme) ---- */
+.bu-topbar-alumni-drop {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  z-index: 999999 !important;
+}
+.bu-topbar-alumni-drop > a.bu-topbar-alumni-link {
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-decoration: none !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+  text-transform: uppercase !important;
+  padding: 3px 6px !important;
+  border-radius: 3px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+.bu-topbar-alumni-drop:hover > a.bu-topbar-alumni-link,
+.bu-topbar-alumni-drop.active > a.bu-topbar-alumni-link {
+  color: #FFC107 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  text-decoration: none !important;
+}
+.bu-topbar-alumni-menu {
+  display: none !important;
+  position: absolute !important;
+  top: 100% !important;
+  margin-top: 6px !important;
+  left: 0 !important;
+  min-width: 255px !important;
+  width: max-content !important;
+  background: #ffffff !important;
+  border: 1px solid #E2E8F0 !important;
+  border-top: 3px solid #FFC107 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 16px 36px rgba(10, 27, 84, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  padding: 8px !important;
+  z-index: 99999999 !important;
+  box-sizing: border-box !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+.bu-topbar-alumni-menu::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -8px !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 8px !important;
+  background: transparent !important;
+}
+.bu-topbar-alumni-drop:hover > .bu-topbar-alumni-menu,
+.bu-topbar-alumni-drop.active > .bu-topbar-alumni-menu {
+  display: flex !important;
+}
+.bu-topbar-links .bu-topbar-alumni-menu a,
+.bu-topbar-alumni-drop .bu-topbar-alumni-menu a,
+.bu-topbar-alumni-menu a {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  min-width: 235px !important;
+  box-sizing: border-box !important;
+  padding: 8px 12px !important;
+  margin: 0 !important;
+  border-radius: 6px !important;
+  color: #0A1B54 !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  letter-spacing: 0.1px !important;
+  border-right: none !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  transition: all 0.2s ease !important;
+  line-height: 1.25 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+.bu-topbar-alumni-menu a i {
+  font-size: 14px !important;
+  width: 22px !important;
+  text-align: center !important;
+  margin-right: 10px !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+  color: #D99B00 !important;
+  transition: transform 0.2s ease !important;
+}
+.bu-topbar-alumni-menu a:hover {
+  background: #FFF8E1 !important;
+  border-color: #FFE082 !important;
+  color: #0A1B54 !important;
+  padding-left: 15px !important;
+  transform: none !important;
+}
+.bu-topbar-alumni-menu a:hover i {
+  color: #B45309 !important;
+  transform: scale(1.15) !important;
+}
+
 /* Info Corner (Mobile Dropdown) */
 .bu-topbar-dropdown {
   position: relative !important;
@@ -1006,6 +1116,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 /* 2-COLUMN MEGA DROPDOWN LAYOUT (About, Schools, Admissions) */
 @media (min-width: 992px) {
   .bu-dropdown-2col {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
     min-width: 490px !important;
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;

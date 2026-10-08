@@ -173,7 +173,7 @@
 
 <div class="bu-footer-copyright">
   <div class="bu-footer-container">
-    <span>&copy; <?php echo date('Y'); ?> Bhabha University. All Rights Reserved. Designed & Developed by <a href="https://wecrescent.com/" target="_blank" style="color: #FFC107; text-decoration: none; font-weight: bold;">Crescent</a></span>
+    <span>&copy; <?php echo date('Y'); ?> Bhabha University. All Rights Reserved. Designed & Developed by <a href="https://wecrescent.com/" target="_blank" style="color: #FFC107; text-decoration: none; font-weight: bold;">Crescent</a> | Maintained by <a href="<?php echo href('bhabhaitcell.php'); ?>" style="color: #FFC107; text-decoration: none; font-weight: bold;">Bhabha IT Cell</a></span>
   </div>
 </div>
 

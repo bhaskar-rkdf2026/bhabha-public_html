@@ -23,10 +23,12 @@ if(isset($_POST['submit']))
 	if($_REQUEST['action']=="add" && count($stat) == 0)	
 	{
 		$data = Array(
-					"institute" => $_POST['institute'],
-					"title" => $_POST['title'],
-					"content" => $_POST['content'],
-					"status" => $_POST['status']
+					"institute"        => $_POST['institute'],
+					"title"            => $_POST['title'],
+					"approval_tag"     => trim($_POST['approval_tag'] ?? ''),
+					"affiliation_tag"  => trim($_POST['affiliation_tag'] ?? ''),
+					"content"          => $_POST['content'],
+					"status"           => $_POST['status']
 					 );
 					$id = $db->insert(DBTAB,$data);
 					unset($_POST);
@@ -37,10 +39,12 @@ if(isset($_POST['submit']))
 	elseif($_REQUEST['action']=="edit" && count($stat) == 0)	
 	{
 		$data = Array(
-					"institute" => $_POST['institute'],
-					"title" => $_POST['title'],
-					"content" => $_POST['content'],
-					"status" => $_POST['status']
+					"institute"        => $_POST['institute'],
+					"title"            => $_POST['title'],
+					"approval_tag"     => trim($_POST['approval_tag'] ?? ''),
+					"affiliation_tag"  => trim($_POST['affiliation_tag'] ?? ''),
+					"content"          => $_POST['content'],
+					"status"           => $_POST['status']
 					 );
 			 
 					$db->where('id',$_REQUEST['id']);
@@ -129,7 +133,20 @@ if($action=="delete")
                   </div>
                   <div class="form-group col-xs-12">
                     <label>Title Or Department Name</label>
-                    <input type="text" name="title" class="form-control"  value="<?php if($action=="edit"){echo $aryData['title'];}else{echo $_POST['title'];}?>"/>
+                    <input type="text" name="title" class="form-control"  value="<?php if($action=="edit"){echo htmlspecialchars($aryData['title']);}else{echo htmlspecialchars($_POST['title'] ?? '');}?>"/>
+                  </div>
+                  
+                  <div class="row" style="margin-left: 0; margin-right: 0;">
+                    <div class="form-group col-md-6" style="padding-left: 0;">
+                      <label>Approval Badge Tag (Optional Override)</label>
+                      <input type="text" name="approval_tag" class="form-control" placeholder="Leave blank to inherit from institute" value="<?php if($action=="edit"){echo htmlspecialchars($aryData['approval_tag'] ?? '');}else{echo htmlspecialchars($_POST['approval_tag'] ?? '');}?>"/>
+                      <small class="text-muted">e.g. AICTE / Recognized, NCTE / Recognized (Inherits from institute if blank)</small>
+                    </div>
+                    <div class="form-group col-md-6" style="padding-right: 0;">
+                      <label>Affiliation Badge Tag (Optional Override)</label>
+                      <input type="text" name="affiliation_tag" class="form-control" placeholder="Leave blank to inherit institute name" value="<?php if($action=="edit"){echo htmlspecialchars($aryData['affiliation_tag'] ?? '');}else{echo htmlspecialchars($_POST['affiliation_tag'] ?? '');}?>"/>
+                      <small class="text-muted">e.g. Bhabha University (Inherits institute name if blank)</small>
+                    </div>
                   </div>
                   
                  

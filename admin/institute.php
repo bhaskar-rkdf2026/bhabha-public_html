@@ -132,6 +132,8 @@ if (isset($_POST['submit'])) {
         "est_year"                => trim($_POST['est_year'] ?? ''),
         "approval_text"           => trim($_POST['approval_text'] ?? ''),
         "affiliation_text"        => trim($_POST['affiliation_text'] ?? ''),
+        "approval_tag"            => trim($_POST['approval_tag'] ?? ''),
+        "affiliation_tag"         => trim($_POST['affiliation_tag'] ?? ''),
         "about_institute"         => trim($_POST['about_institute'] ?? ''),
         "principal_message"       => trim($_POST['principal_message'] ?? ''),
         "principal_name"          => trim($_POST['principal_name'] ?? ''),
@@ -385,11 +387,24 @@ if ($action == "delete") {
 
                       <div class="row">
                         <div class="form-group col-md-6">
-                          <label class="font-weight-bold">Approval Text</label>
-                          <input type="text" name="approval_text" class="form-control" value="<?php echo htmlspecialchars($aryData['approval_text'] ?? $_POST['approval_text'] ?? 'Approved by AICTE / PCI / UGC & Govt. of MP');?>"/>
+                          <label class="font-weight-bold text-primary">Approval Badge Tag (Hero Tag 1) *</label>
+                          <input type="text" name="approval_tag" class="form-control" value="<?php echo htmlspecialchars($aryData['approval_tag'] ?? $_POST['approval_tag'] ?? '');?>" placeholder="e.g. AICTE / Recognized, PCI / Recognized, NCTE / Recognized"/>
+                          <small class="text-muted">Short badge text displayed on institute overview &amp; header</small>
                         </div>
                         <div class="form-group col-md-6">
-                          <label class="font-weight-bold">Affiliation Text</label>
+                          <label class="font-weight-bold text-primary">Affiliation Badge Tag (Hero Tag 2)</label>
+                          <input type="text" name="affiliation_tag" class="form-control" value="<?php echo htmlspecialchars($aryData['affiliation_tag'] ?? $_POST['affiliation_tag'] ?? 'Bhabha University');?>" placeholder="e.g. Bhabha University"/>
+                          <small class="text-muted">Short affiliation tag (default: Bhabha University)</small>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group col-md-6">
+                          <label class="font-weight-bold">Full Approval Text (Hero Pills / Fast Facts)</label>
+                          <input type="text" name="approval_text" class="form-control" value="<?php echo htmlspecialchars($aryData['approval_text'] ?? $_POST['approval_text'] ?? 'Approved by Statutory Regulatory Authorities');?>"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label class="font-weight-bold">Full Affiliation Text</label>
                           <input type="text" name="affiliation_text" class="form-control" value="<?php echo htmlspecialchars($aryData['affiliation_text'] ?? $_POST['affiliation_text'] ?? 'Constituent Institute of Bhabha University, Bhopal');?>"/>
                         </div>
                       </div>

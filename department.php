@@ -2316,9 +2316,37 @@ section.bu-section-block {
             
             <!-- Left Column: Content & CTA -->
             <div class="bu-dept-hero-left">
+              <?php
+              // Dynamic Approval & Affiliation Badges
+              $dept_approval_badge = !empty($aryData['approval_tag']) ? $aryData['approval_tag'] : null;
+              if (empty($dept_approval_badge)) {
+                  $apprText = $aryData['approval_text'] ?? '';
+                  $deptTitle = $aryData['title'] ?? '';
+                  if (stripos($apprText, 'NCTE') !== false || stripos($deptTitle, 'education') !== false) {
+                      $dept_approval_badge = 'NCTE / Recognized';
+                  } elseif (stripos($apprText, 'PCI') !== false || stripos($deptTitle, 'pharmacy') !== false) {
+                      $dept_approval_badge = 'PCI / Recognized';
+                  } elseif (stripos($apprText, 'DCI') !== false || stripos($deptTitle, 'dental') !== false) {
+                      $dept_approval_badge = 'DCI / Recognized';
+                  } elseif (stripos($apprText, 'BCI') !== false || stripos($deptTitle, 'law') !== false) {
+                      $dept_approval_badge = 'BCI / Recognized';
+                  } elseif (stripos($apprText, 'INC') !== false || stripos($deptTitle, 'nursing') !== false) {
+                      $dept_approval_badge = 'INC / Recognized';
+                  } elseif (stripos($apprText, 'NCH') !== false || stripos($deptTitle, 'homoeo') !== false) {
+                      $dept_approval_badge = 'NCH / AYUSH Recognized';
+                  } elseif (stripos($apprText, 'Paramedical') !== false || stripos($deptTitle, 'paramedical') !== false) {
+                      $dept_approval_badge = 'State Paramedical Council';
+                  } elseif (stripos($apprText, 'AICTE') !== false) {
+                      $dept_approval_badge = 'AICTE / Recognized';
+                  } else {
+                      $dept_approval_badge = 'UGC / Recognized';
+                  }
+              }
+              $dept_affiliation_badge = !empty($aryData['affiliation_tag']) ? $aryData['affiliation_tag'] : 'Bhabha University Bhopal';
+              ?>
               <div class="bu-dept-badge-row">
-                <span class="bu-badge bu-badge-gold"><i class="fa fa-certificate"></i> AICTE / Recognized</span>
-                <span class="bu-badge bu-badge-navy"><i class="fa fa-university"></i> Bhabha University Bhopal</span>
+                <span class="bu-badge bu-badge-gold"><i class="fa fa-certificate"></i> <?php echo htmlspecialchars($dept_approval_badge); ?></span>
+                <span class="bu-badge bu-badge-navy"><i class="fa fa-university"></i> <?php echo htmlspecialchars($dept_affiliation_badge); ?></span>
               </div>
 
               <h1 class="bu-dept-title">Faculty of <em><?php echo htmlspecialchars($aryData['title']);?></em></h1>

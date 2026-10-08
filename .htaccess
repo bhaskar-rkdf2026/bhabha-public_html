@@ -125,6 +125,9 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 <IfModule mod_rewrite.c>
 RewriteEngine On 
 
+# Map library page before directory check (since /library/ directory exists for backend PHP code)
+RewriteRule ^library/?$ library.php [NC,L,QSA]
+
 # Bypass rewriting for real files and directories
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
@@ -175,6 +178,17 @@ RewriteRule advisory/?$				advisory.php			[NC,L,QSA]
 RewriteRule approvals/?$				approvals.php			[NC,L,QSA]
 RewriteRule gallery/?$				gallery.php					[NC,L,QSA]
 RewriteRule campus-life/?$			campus-life.php				[NC,L,QSA]
+RewriteRule hostel/?$				hostel.php					[NC,L,QSA]
+RewriteRule cafeteria/?$				cafeteria.php				[NC,L,QSA]
+RewriteRule transportation/?$		transportation.php			[NC,L,QSA]
+RewriteRule library/?$				library.php					[NC,L,QSA]
+RewriteRule it-labs/?$				it-labs.php					[NC,L,QSA]
+RewriteRule health-wellness/?$		health-wellness.php			[NC,L,QSA]
+RewriteRule sports/?$				sports.php					[NC,L,QSA]
+RewriteRule community-service/?$		community-service.php		[NC,L,QSA]
+RewriteRule entrepreneurship/?$		entrepreneurship.php		[NC,L,QSA]
+RewriteRule student-safety/?$		student-safety.php			[NC,L,QSA]
+RewriteRule student-media/?$			student-media.php			[NC,L,QSA]
 RewriteRule homeopathy/?$			homeopathy.php				[NC,L,QSA]
 RewriteRule bhmch/?$				bhmch.php					[NC,L,QSA]
 RewriteRule eligibility/(.*)/?$		eligibility.php?id=$1		[NC,L,QSA]

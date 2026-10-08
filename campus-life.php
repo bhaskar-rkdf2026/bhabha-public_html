@@ -867,6 +867,7 @@ if (!function_exists('bu_cl_img_url')) {
       $inItems = !empty($inSec['items']) ? $inSec['items'] : [];
       ?>
       <section id="facilities" style="scroll-margin-top: 100px;">
+        <div id="hostels" style="scroll-margin-top: 100px;"></div>
         <div class="bu-cl-sec-header">
           <span class="bu-cl-badge"><i class="fa <?php echo htmlspecialchars($inBadgeIcon); ?>"></i> <?php echo htmlspecialchars($inBadge); ?></span>
           <h2 class="bu-cl-title"><?php echo $inTitle; ?></h2>

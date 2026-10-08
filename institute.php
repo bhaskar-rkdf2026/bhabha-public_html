@@ -1586,8 +1586,37 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
         <li class="active"><?php echo htmlspecialchars($aryData['institute_name']);?></li>
       </ul>
 
+      <?php
+      // Dynamic Approval & Affiliation Badges
+      $inst_approval_badge = !empty($aryData['approval_tag']) ? $aryData['approval_tag'] : (!empty($department['approval_tag']) ? $department['approval_tag'] : null);
+      if (empty($inst_approval_badge)) {
+          $iName = $aryData['institute_name'] ?? '';
+          $iAppr = $aryData['approval_text'] ?? '';
+          if (stripos($iName, 'education') !== false || stripos($iAppr, 'NCTE') !== false) {
+              $inst_approval_badge = 'NCTE / Recognized';
+          } elseif (stripos($iName, 'pharmacy') !== false || stripos($iName, 'pharmaceutical') !== false || stripos($iAppr, 'PCI') !== false) {
+              $inst_approval_badge = 'PCI / Recognized';
+          } elseif (stripos($iName, 'dental') !== false || stripos($iAppr, 'DCI') !== false) {
+              $inst_approval_badge = 'DCI / Recognized';
+          } elseif (stripos($iName, 'law') !== false || stripos($iAppr, 'BCI') !== false) {
+              $inst_approval_badge = 'BCI / Recognized';
+          } elseif (stripos($iName, 'nursing') !== false || stripos($iAppr, 'INC') !== false) {
+              $inst_approval_badge = 'INC / Recognized';
+          } elseif (stripos($iName, 'homoeo') !== false || stripos($iAppr, 'NCH') !== false) {
+              $inst_approval_badge = 'NCH / AYUSH Recognized';
+          } elseif (stripos($iName, 'paramedical') !== false || stripos($iAppr, 'paramedical') !== false) {
+              $inst_approval_badge = 'Paramedical Council';
+          } elseif (stripos($iName, 'engineering') !== false || stripos($iName, 'technology') !== false || stripos($iName, 'management') !== false || stripos($iAppr, 'AICTE') !== false) {
+              $inst_approval_badge = 'AICTE / Recognized';
+          } else {
+              $inst_approval_badge = 'UGC / Recognized';
+          }
+      }
+      $inst_affiliation_badge = !empty($aryData['affiliation_tag']) ? $aryData['affiliation_tag'] : (!empty($department['affiliation_tag']) ? $department['affiliation_tag'] : 'Bhabha University');
+      ?>
+
       <div class="bu-inst-hero-badge">
-        <i class="<?php echo $inst_icon;?>"></i> Bhabha University &bull; UGC Recognized
+        <i class="<?php echo $inst_icon;?>"></i> <?php echo htmlspecialchars($inst_affiliation_badge);?> &bull; <?php echo htmlspecialchars($inst_approval_badge);?>
       </div>
 
       <h1 class="bu-inst-hero-title"><?php echo htmlspecialchars($aryData['institute_name']);?></h1>
@@ -1627,11 +1656,11 @@ if (mb_strlen($about_plain, 'UTF-8') > 360) {
           <!-- Left: Title, Tagline, Approvals, Lead & Actions -->
           <div class="bu-inst-hero-left">
             <div class="bu-inst-badge-row">
-              <span class="bu-badge bu-badge-navy"><i class="<?php echo $inst_icon;?>"></i> Bhabha University</span>
+              <span class="bu-badge bu-badge-navy"><i class="<?php echo $inst_icon;?>"></i> <?php echo htmlspecialchars($inst_affiliation_badge);?></span>
               <?php if(!empty($aryData['est_year'])): ?>
               <span class="bu-badge bu-badge-gold"><i class="fa fa-calendar-check-o"></i> <?php echo htmlspecialchars($aryData['est_year']);?></span>
               <?php endif; ?>
-              <span class="bu-badge bu-badge-green"><i class="fa fa-shield"></i> UGC Recognized</span>
+              <span class="bu-badge bu-badge-green"><i class="fa fa-shield"></i> <?php echo htmlspecialchars($inst_approval_badge);?></span>
             </div>
 
             <h2 class="bu-inst-title" style="font-size: clamp(20px, 2.2vw, 28px); margin-bottom: 6px;"><?php echo htmlspecialchars($aryData['institute_name']);?></h2>

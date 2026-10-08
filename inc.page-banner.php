@@ -27,8 +27,9 @@ $breadcrumbs   = $breadcrumbs   ?? [['label' => 'Home', 'url' => URL_ROOT], ['la
   position: relative;
   overflow: hidden;
   width: 100%;
-  float: left;
+  display: block;
   clear: both;
+  box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 .bu-inner-hero::before {
@@ -254,6 +255,112 @@ $breadcrumbs   = $breadcrumbs   ?? [['label' => 'Home', 'url' => URL_ROOT], ['la
   transition: color 0.2s;
 }
 .bu-content-body a:hover { color: #D99B00; }
+
+/* ---- INNER PAGE FEATURED FACILITY MEDIA (Standard Across All Campus Pages) ---- */
+.bu-page-featured-media {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 18px 0 28px 0;
+  box-shadow: 0 8px 24px rgba(10,27,84,0.08);
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+}
+.bu-page-featured-media img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.bu-page-featured-media:hover img {
+  transform: scale(1.015);
+}
+.bu-page-featured-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(5,18,53,0.88) 100%);
+  color: #ffffff !important;
+  padding: 30px 22px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bu-page-featured-caption i {
+  color: #FFC107 !important;
+  font-size: 16px;
+}
+
+/* ---- CRITICAL READABILITY FIX: Dark CTA Banners / Cards ---- */
+.bu-dark-cta,
+.bu-banner-cta,
+.bu-hostel-banner-cta,
+.bu-sports-banner,
+.bu-trans-banner,
+.bu-citc-banner,
+[class*="-banner-cta"],
+[class*="-sports-banner"] {
+  background: linear-gradient(135deg, #051235 0%, #0A1B54 60%, #162B75 100%) !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+  padding: 26px 28px !important;
+  margin-top: 25px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 20px !important;
+  flex-wrap: wrap !important;
+  border: 1px solid rgba(255,193,7,0.2) !important;
+  box-shadow: 0 8px 24px rgba(10,27,84,0.15) !important;
+}
+.bu-dark-cta h1, .bu-dark-cta h2, .bu-dark-cta h3, .bu-dark-cta h4,
+.bu-banner-cta h1, .bu-banner-cta h2, .bu-banner-cta h3, .bu-banner-cta h4,
+.bu-hostel-banner-cta h1, .bu-hostel-banner-cta h2, .bu-hostel-banner-cta h3, .bu-hostel-banner-cta h4,
+.bu-sports-banner h1, .bu-sports-banner h2, .bu-sports-banner h3, .bu-sports-banner h4,
+[class*="-banner-cta"] h1, [class*="-banner-cta"] h2, [class*="-banner-cta"] h3, [class*="-banner-cta"] h4 {
+  color: #ffffff !important;
+  margin: 0 0 6px 0 !important;
+  font-weight: 800 !important;
+  border-left: none !important;
+  padding-left: 0 !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+.bu-dark-cta p,
+.bu-banner-cta p,
+.bu-hostel-banner-cta p,
+.bu-sports-banner p,
+[class*="-banner-cta"] p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  margin: 0 !important;
+  font-size: 13.5px !important;
+  line-height: 1.55 !important;
+}
+
+/* Button inside CTA */
+.bu-btn-primary {
+  background: linear-gradient(135deg, #FFC107 0%, #D99B00 100%) !important;
+  color: #0A1B54 !important;
+  font-weight: 800 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 11px 22px !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 13.5px !important;
+  transition: all 0.25s ease !important;
+}
+.bu-btn-primary:hover {
+  background: #ffffff !important;
+  color: #0A1B54 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2) !important;
+}
 
 /* --- Responsive --- */
 @media (max-width: 991px) {
