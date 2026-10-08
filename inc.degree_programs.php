@@ -9,35 +9,149 @@ if (!$deg_sec || $deg_sec['status'] != 1) {
 }
 
 $deg_heading = !empty($deg_sec['heading']) ? $deg_sec['heading'] : '85+ programs across<br>every degree level.';
-$deg_extra = !empty($deg_sec['extra_data']) ? json_decode($deg_sec['extra_data'], true) : [];
-$all_programs = $deg_extra['programs'] ?? [];
 
+// Fetch active courses directly from database table `course`
+$all_programs = [];
+if (isset($db) && is_object($db)) {
+    try {
+        $raw_courses = $db->rawQuery("
+            SELECT c.*, p.program AS prog_name, d.title AS dept_title 
+            FROM course c 
+            LEFT JOIN program p ON c.program = p.id 
+            LEFT JOIN department d ON c.department = d.id 
+            WHERE (c.status = 1 OR c.status IS NULL) 
+            ORDER BY c.id ASC
+        ");
+        
+        if (!empty($raw_courses) && is_array($raw_courses)) {
+            $prog_id_map = [
+                1 => 'doctoral',
+                2 => 'postgraduate',
+                3 => 'undergraduate',
+                4 => 'diploma',
+                5 => 'certificate',
+                6 => 'integrated'
+            ];
+            
+            foreach ($raw_courses as $rc) {
+                $c_name = trim($rc['course']);
+                if (empty($c_name)) continue;
+                $c_id = (int)$rc['id'];
+                $p_id = (int)($rc['program'] ?? 0);
+                
+                $levels = [];
+                if (!empty($prog_id_map[$p_id])) {
+                    $levels[] = $prog_id_map[$p_id];
+                }
+                
+                // Cross-tag integrated programs (e.g. B.Sc. B.Ed.)
+                if ($p_id === 6 || stripos($c_name, 'bscbed') !== false || stripos($c_name, 'integrated') !== false || stripos($c_name, 'b.sc. b.ed') !== false || stripos($c_name, 'ba.bed') !== false) {
+                    if (!in_array('integrated', $levels)) $levels[] = 'integrated';
+                }
+
+                // Cross-tag dual diploma/certificate courses
+                if (stripos($c_name, 'certificate/diploma') !== false) {
+                    if (!in_array('certificate', $levels)) $levels[] = 'certificate';
+                    if (!in_array('diploma', $levels)) $levels[] = 'diploma';
+                }
+
+                // Title-based fallback if program ID unassigned
+                if (empty($levels)) {
+                    if (stripos($c_name, 'm.') === 0 || stripos($c_name, 'mba') !== false || stripos($c_name, 'mca') !== false || stripos($c_name, 'm.tech') !== false || stripos($c_name, 'm.pharm') !== false) {
+                        $levels[] = 'postgraduate';
+                    } elseif (stripos($c_name, 'd.') === 0 || stripos($c_name, 'diploma') !== false) {
+                        $levels[] = 'diploma';
+                    } else {
+                        $levels[] = 'undergraduate';
+                    }
+                }
+                
+                // Extract duration and eligibility from details text
+                $duration = '';
+                $eligibility = '';
+                if (!empty($rc['details'])) {
+                    $det_text = strip_tags($rc['details']);
+                    if (preg_match('/(\d+(?:\.\d+)?\s*(?:years?|yrs?|months?))/i', $det_text, $dur_match)) {
+                        $duration = trim($dur_match[1]);
+                    }
+                    if (preg_match('/eligibility\s*[:\-]?\s*([^,\n\r<]+)/i', $det_text, $elig_match)) {
+                        $raw_elig = trim($elig_match[1]);
+                        if (
+                            strlen($raw_elig) <= 26 &&
+                            stripos($raw_elig, 'criteria') === false &&
+                            stripos($raw_elig, 'approved') === false &&
+                            stripos($raw_elig, 'seats') === false &&
+                            stripos($raw_elig, 'department') === false &&
+                            stripos($raw_elig, '&') !== 0 &&
+                            stripos($raw_elig, 'college') === false &&
+                            stripos($raw_elig, 'semesters') === false
+                        ) {
+                            $eligibility = $raw_elig;
+                        }
+                    }
+                }
+                
+                // Default durations by level
+                if (empty($duration)) {
+                    if (in_array('doctoral', $levels)) $duration = '3-5 Years';
+                    elseif (in_array('postgraduate', $levels)) $duration = '2 Years';
+                    elseif (in_array('integrated', $levels)) $duration = '4 Years';
+                    elseif (in_array('diploma', $levels)) $duration = '2-3 Years';
+                    elseif (in_array('certificate', $levels)) $duration = '6 Months';
+                    else $duration = (stripos($c_name, 'b.tech') !== false || stripos($c_name, 'b.pharm') !== false) ? '4 Years' : '3 Years';
+                }
+                
+                // Default eligibility by level
+                if (empty($eligibility)) {
+                    if (in_array('doctoral', $levels)) $eligibility = "Master's Degree";
+                    elseif (in_array('postgraduate', $levels)) $eligibility = 'Graduation 50%';
+                    elseif (in_array('integrated', $levels)) $eligibility = '10+2 50%';
+                    elseif (in_array('diploma', $levels)) $eligibility = '10th / 10+2';
+                    elseif (in_array('certificate', $levels)) $eligibility = '10+2 Any Stream';
+                    else $eligibility = (stripos($c_name, 'b.tech') !== false) ? '10+2 PCM 60%' : ((stripos($c_name, 'b.pharm') !== false) ? '10+2 PCB/PCM' : '10+2 Any Stream');
+                }
+                
+                $disp_title = (strcasecmp($c_name, 'b.tech cse') === 0 || strcasecmp($c_name, 'btech cse') === 0) ? 'B.Tech' : $c_name;
+                
+                $all_programs[] = [
+                    'id'          => $c_id,
+                    'title'       => $disp_title,
+                    'levels'      => $levels,
+                    'duration'    => $duration,
+                    'eligibility' => $eligibility,
+                    'tag'         => 'FEATURED'
+                ];
+            }
+        }
+    } catch (\Throwable $e) {}
+}
+
+// Supplement Certificate & Integrated with popular offerings if few exist in DB
 $cert_count = count(array_filter($all_programs, function($p) {
-    return (!empty($p['levels']) && in_array('certificate', $p['levels'])) || ($p['level'] ?? '') === 'certificate';
+    return in_array('certificate', $p['levels'] ?? []);
 }));
-
-if ($cert_count === 0) {
+if ($cert_count < 4) {
     $all_programs = array_merge($all_programs, [
-        ['title'=>'Hotel Management Diploma/Certificate', 'levels'=>['diploma','certificate'], 'level'=>'certificate', 'duration'=>'6 Mo / 1 yr', 'eligibility'=>'10+2 Any Stream', 'tag'=>'FEATURED'],
-        ['title'=>'Media certificate/diploma Courses', 'levels'=>['diploma','certificate'], 'level'=>'certificate', 'duration'=>'6 Mo / 1 yr', 'eligibility'=>'10+2 Any Stream', 'tag'=>'FEATURED'],
-        ['title'=>'Certificate in Digital Marketing & AI Tools', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'10+2 Any Stream', 'tag'=>'TRENDING'],
-        ['title'=>'Certificate in Cyber Security & Ethical Hacking', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'10+2 / IT Interest', 'tag'=>'FEATURED'],
-        ['title'=>'Certificate in Full Stack Web Development', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'10+2 / BCA / B.Tech', 'tag'=>'FEATURED'],
-        ['title'=>'Certificate in Data Science & Machine Learning', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'10+2 with Math / Grad', 'tag'=>'FEATURED'],
-        ['title'=>'Certificate in Dental Assistant & Oral Hygiene', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'10+2 PCB / Any', 'tag'=>'POPULAR'],
-        ['title'=>'Certificate in Hospital Administration', 'levels'=>['certificate'], 'level'=>'certificate', 'duration'=>'6 Months', 'eligibility'=>'Graduation / 10+2', 'tag'=>'POPULAR'],
+        ['id'=>0, 'title'=>'Certificate in Digital Marketing & AI Tools', 'levels'=>['certificate'], 'duration'=>'6 Months', 'eligibility'=>'10+2 Any Stream', 'tag'=>'TRENDING'],
+        ['id'=>0, 'title'=>'Certificate in Cyber Security & Ethical Hacking', 'levels'=>['certificate'], 'duration'=>'6 Months', 'eligibility'=>'10+2 / IT Interest', 'tag'=>'FEATURED'],
+        ['id'=>0, 'title'=>'Certificate in Full Stack Web Development', 'levels'=>['certificate'], 'duration'=>'6 Months', 'eligibility'=>'10+2 / BCA / B.Tech', 'tag'=>'FEATURED'],
+        ['id'=>0, 'title'=>'Certificate in Dental Assistant & Oral Hygiene', 'levels'=>['certificate'], 'duration'=>'6 Months', 'eligibility'=>'10+2 PCB / Any', 'tag'=>'POPULAR'],
     ]);
 }
 
 $integ_count = count(array_filter($all_programs, function($p) {
-    return (!empty($p['levels']) && in_array('integrated', $p['levels'])) || ($p['level'] ?? '') === 'integrated';
+    return in_array('integrated', $p['levels'] ?? []);
 }));
-
-if ($integ_count === 0) {
+if ($integ_count < 2) {
     $all_programs = array_merge([
-        ['id'=>55, 'title'=>'B.Sc. B.Ed.', 'levels'=>['integrated'], 'level'=>'integrated', 'duration'=>'4 Years', 'eligibility'=>'10+2 Science 50%', 'tag'=>'NEW'],
-        ['title'=>'BA B.Ed.', 'levels'=>['integrated'], 'level'=>'integrated', 'duration'=>'4 Years', 'eligibility'=>'10+2 Any Stream 50%', 'tag'=>'POPULAR'],
+        ['id'=>17, 'title'=>'BA B.Ed.', 'levels'=>['integrated'], 'duration'=>'4 Years', 'eligibility'=>'10+2 Any Stream 50%', 'tag'=>'POPULAR'],
     ], $all_programs);
+}
+
+// Fallback to extra_data from homepage_sections if course table is empty
+if (empty($all_programs)) {
+    $deg_extra = !empty($deg_sec['extra_data']) ? json_decode($deg_sec['extra_data'], true) : [];
+    $all_programs = $deg_extra['programs'] ?? [];
 }
 
 $tab_categories = [
@@ -78,18 +192,23 @@ $tab_categories = [
       foreach ($tab_categories as $tab_key => $tab_label): 
         $g_idx++;
         // Filter programs for this tab
-        $tab_items = array_filter($all_programs, function($p) use ($tab_key) {
+        $tab_items = array_values(array_filter($all_programs, function($p) use ($tab_key) {
             if (!empty($p['levels']) && is_array($p['levels'])) {
                 return in_array($tab_key, $p['levels']);
             }
             return isset($p['level']) && strtolower(trim($p['level'])) === strtolower($tab_key);
-        });
+        }));
+        
+        $total_tab_count = count($tab_items);
+        // Limit to 8 cards per tab on homepage
+        $display_items = array_slice($tab_items, 0, 8);
       ?>
         <!-- ============ <?php echo strtoupper($tab_key); ?> GRID ============ -->
         <div class="bu-deg-grid <?php echo ($g_idx === 1) ? 'active' : ''; ?>" id="<?php echo $tab_key; ?>">
-          <?php if (!empty($tab_items)): ?>
-            <?php foreach ($tab_items as $item): 
-              $tab_item_url = !empty($item['id']) ? href('eligibility.php', 'id=' . $item['id']) : href('programmes.php', 'type=' . $tab_key);
+          <?php if (!empty($display_items)): ?>
+            <?php foreach ($display_items as $item): 
+              $c_id = !empty($item['id']) ? (int)$item['id'] : 0;
+              $tab_item_url = $c_id ? href('eligibility.php', 'id=' . $c_id) : href('programmes.php', 'type=' . $tab_key);
             ?>
               <div class="bu-deg-card" onclick="window.location.href='<?php echo $tab_item_url; ?>';" style="cursor:pointer;" title="Click to view details">
                 <div class="bu-deg-card-top">
@@ -123,7 +242,7 @@ $tab_categories = [
     <!-- View All Programmes Link -->
     <div style="text-align: center; margin-top: 40px;">
       <a href="<?php echo href('programmes.php'); ?>" class="bu-deg-view-all-btn">
-        Explore All 85+ Academic Programmes &nbsp;→
+        Explore All Academic Programmes &nbsp;→
       </a>
     </div>
 
@@ -388,6 +507,7 @@ $tab_categories = [
   .bu-deg-card-title {
     font-size: 20px !important;
   }
+}
 .bu-deg-view-all-btn {
   display: inline-flex !important;
   align-items: center !important;

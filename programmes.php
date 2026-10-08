@@ -126,58 +126,52 @@ if (isset($db) && is_object($db)) {
                 $c_name = trim($rc['course']);
                 if (empty($c_name)) continue;
 
-                $p_name = strtolower(trim($rc['prog_name'] ?? ''));
-                $p_slug = !empty($rc['prog_slug']) ? strtolower(trim($rc['prog_slug'])) : '';
-                if (empty($p_slug)) {
-                    if (strpos($p_name, 'integ') !== false) $p_slug = 'integrated';
-                    elseif (strpos($p_name, 'post') !== false || strpos($p_name, 'pg') !== false) $p_slug = 'postgraduate';
-                    elseif (strpos($p_name, 'phd') !== false || strpos($p_name, 'doc') !== false) $p_slug = 'doctoral';
-                    elseif (strpos($p_name, 'dip') !== false) $p_slug = 'diploma';
-                    elseif (strpos($p_name, 'cert') !== false) $p_slug = 'certificate';
-                    elseif (strpos($p_name, 'grad') !== false || strpos($p_name, 'under') !== false) $p_slug = 'undergraduate';
-                }
                 $p_id = (int)($rc['program'] ?? 0);
                 
-                // Determine all applicable levels (UG, PG, Doctoral, Diploma, Certificate, Integrated, etc.)
-                $levels = [];
+                // Authoritative program mapping directly from database table `program`
+                $prog_id_map = [
+                    1 => 'doctoral',
+                    2 => 'postgraduate',
+                    3 => 'undergraduate',
+                    4 => 'diploma',
+                    5 => 'certificate',
+                    6 => 'integrated'
+                ];
                 
-                // If program table defines a slug, use it directly
-                if (!empty($p_slug) && isset($tab_categories[$p_slug])) {
+                $levels = [];
+                if (!empty($prog_id_map[$p_id])) {
+                    $levels[] = $prog_id_map[$p_id];
+                } elseif (!empty($p_slug) && isset($tab_categories[$p_slug])) {
                     $levels[] = $p_slug;
+                } elseif (!empty($p_name)) {
+                    if (stripos($p_name, 'integ') !== false) $levels[] = 'integrated';
+                    elseif (stripos($p_name, 'post') !== false || stripos($p_name, 'pg') !== false) $levels[] = 'postgraduate';
+                    elseif (stripos($p_name, 'phd') !== false || stripos($p_name, 'doc') !== false) $levels[] = 'doctoral';
+                    elseif (stripos($p_name, 'dip') !== false) $levels[] = 'diploma';
+                    elseif (stripos($p_name, 'cert') !== false) $levels[] = 'certificate';
+                    elseif (stripos($p_name, 'under') !== false || stripos($p_name, 'ug') !== false) $levels[] = 'undergraduate';
                 }
 
-                // Integrated Programmes (id 6 or keyword)
-                if ($p_id === 6 || strpos($p_name, 'integ') !== false || $p_slug === 'integrated' || stripos($c_name, 'bscbed') !== false || stripos($c_name, 'integrated') !== false || stripos($c_name, 'b.sc. b.ed') !== false || stripos($c_name, 'ba.bed') !== false || stripos($c_name, 'ba bed') !== false) {
+                // Cross-tag integrated programs (e.g. B.Sc. B.Ed.)
+                if ($p_id === 6 || stripos($c_name, 'bscbed') !== false || stripos($c_name, 'integrated') !== false || stripos($c_name, 'b.sc. b.ed') !== false || stripos($c_name, 'ba.bed') !== false) {
                     if (!in_array('integrated', $levels)) $levels[] = 'integrated';
                 }
 
-                // Certificate
-                if ($p_id === 5 || strpos($p_name, 'cert') !== false || stripos($c_name, 'cert') !== false || stripos($c_name, 'certificate') !== false || stripos($c_name, 'skill') !== false) {
+                // Cross-tag dual diploma/certificate courses
+                if (stripos($c_name, 'certificate/diploma') !== false) {
                     if (!in_array('certificate', $levels)) $levels[] = 'certificate';
-                }
-
-                // Diploma
-                if ($p_id === 4 || strpos($p_name, 'dip') !== false || stripos($c_name, 'diploma') !== false || stripos($c_name, 'poly') !== false || stripos($c_name, 'd.') === 0 || stripos($c_name, 'd.pharm') !== false || stripos($c_name, 'dca') !== false || stripos($c_name, 'pgdca') !== false || stripos($c_name, 'gnm') !== false || stripos($c_name, 'dmlt') !== false || stripos($c_name, 'd.el.ed') !== false) {
                     if (!in_array('diploma', $levels)) $levels[] = 'diploma';
                 }
 
-                // Doctoral
-                if ($p_id === 1 || strpos($p_name, 'doc') !== false || strpos($p_name, 'phd') !== false || strpos($p_name, 'ph.d') !== false || stripos($c_name, 'ph.d') !== false || stripos($c_name, 'phd') !== false) {
-                    if (!in_array('doctoral', $levels)) $levels[] = 'doctoral';
-                }
-
-                // Postgraduate
-                if ($p_id === 2 || strpos($p_name, 'post') !== false || strpos($p_name, 'pg') !== false || stripos($c_name, 'm.') === 0 || stripos($c_name, 'mba') !== false || stripos($c_name, 'mca') !== false || stripos($c_name, 'mds') !== false || stripos($c_name, 'm.tech') !== false || stripos($c_name, 'm.pharm') !== false || stripos($c_name, 'msc') !== false || stripos($c_name, 'm.sc') !== false || stripos($c_name, 'm.com') !== false || stripos($c_name, 'm.ed') !== false || stripos($c_name, 'm.lib') !== false || (stripos($c_name, 'ma') === 0 && strlen($c_name) <= 10)) {
-                    if (!in_array('postgraduate', $levels)) $levels[] = 'postgraduate';
-                }
-
-                // Undergraduate
-                if (!in_array('integrated', $levels) && ($p_id === 3 || strpos($p_name, 'grad') !== false || strpos($p_name, 'under') !== false || strpos($p_name, 'ug') !== false || stripos($c_name, 'b.') === 0 || stripos($c_name, 'bba') !== false || stripos($c_name, 'bca') !== false || stripos($c_name, 'bds') !== false || stripos($c_name, 'b.tech') !== false || stripos($c_name, 'b.pharm') !== false || stripos($c_name, 'bsc') !== false || (stripos($c_name, 'ba') === 0 && stripos($c_name, 'ballb') === false && strlen($c_name) <= 10) || stripos($c_name, 'b.com') !== false || stripos($c_name, 'b.ed') !== false || stripos($c_name, 'bhms') !== false || stripos($c_name, 'bmlt') !== false || stripos($c_name, 'bhmct') !== false || stripos($c_name, 'b.lib') !== false || stripos($c_name, 'l.l.b') !== false || stripos($c_name, 'llb') !== false || stripos($c_name, 'ballb') !== false)) {
-                    if (!in_array('undergraduate', $levels)) $levels[] = 'undergraduate';
-                }
-
+                // Fallback for unassigned courses based on degree title
                 if (empty($levels)) {
-                    $levels[] = !empty($p_slug) ? $p_slug : 'undergraduate';
+                    if (stripos($c_name, 'm.') === 0 || stripos($c_name, 'mba') !== false || stripos($c_name, 'mca') !== false || stripos($c_name, 'm.tech') !== false || stripos($c_name, 'm.pharm') !== false) {
+                        $levels[] = 'postgraduate';
+                    } elseif (stripos($c_name, 'd.') === 0 || stripos($c_name, 'diploma') !== false) {
+                        $levels[] = 'diploma';
+                    } else {
+                        $levels[] = 'undergraduate';
+                    }
                 }
 
                 // Extract Duration and Eligibility from details
@@ -324,7 +318,7 @@ if (empty($all_programs)) {
         ['id'=>56, 'title'=>'BA B.Ed.', 'full_title'=>'BA B.Ed. (4 Years Integrated)', 'level'=>'integrated', 'levels'=>['integrated'], 'duration'=>'4 Years', 'eligibility'=>'10+2 Any Stream 50%', 'tag'=>'POPULAR', 'detail_url'=>href('eligibility.php', 'id=56')],
 
         // Undergraduate
-        ['title'=>'B.Tech CSE', 'level'=>'undergraduate', 'duration'=>'4 yrs', 'eligibility'=>'10+2 PCM 60%', 'tag'=>'FEATURED'],
+        ['title'=>'B.Tech', 'level'=>'undergraduate', 'duration'=>'4 yrs', 'eligibility'=>'10+2 PCM 60%', 'tag'=>'FEATURED'],
         ['title'=>'B.Tech Mechanical', 'level'=>'undergraduate', 'duration'=>'4 yrs', 'eligibility'=>'10+2 PCM 50%', 'tag'=>'FEATURED'],
         ['title'=>'B.Tech Civil', 'level'=>'undergraduate', 'duration'=>'4 yrs', 'eligibility'=>'10+2 PCM 50%', 'tag'=>'POPULAR'],
         ['title'=>'B.Tech EC', 'level'=>'undergraduate', 'duration'=>'4 yrs', 'eligibility'=>'10+2 PCM 50%', 'tag'=>'POPULAR'],

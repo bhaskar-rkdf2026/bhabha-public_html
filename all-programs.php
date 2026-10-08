@@ -344,7 +344,7 @@
         else:
             // Fallback Static Array
             $static_programs = [
-                ['title'=>'B.Tech CSE', 'level'=>'undergraduate', 'lbl'=>'UG', 'dur'=>'4 yrs', 'elig'=>'10+2 PCM 60%', 'seats'=>'240'],
+                ['title'=>'B.Tech', 'level'=>'undergraduate', 'lbl'=>'UG', 'dur'=>'4 yrs', 'elig'=>'10+2 PCM 60%', 'seats'=>'240'],
                 ['title'=>'MBBS', 'level'=>'undergraduate', 'lbl'=>'UG', 'dur'=>'5.5 yrs', 'elig'=>'NEET-UG', 'seats'=>'150'],
                 ['title'=>'B.Pharm', 'level'=>'undergraduate', 'lbl'=>'UG', 'dur'=>'4 yrs', 'elig'=>'10+2 PCB/PCM', 'seats'=>'100'],
                 ['title'=>'BA LLB', 'level'=>'undergraduate', 'lbl'=>'UG', 'dur'=>'5 yrs', 'elig'=>'10+2 50%', 'seats'=>'60'],

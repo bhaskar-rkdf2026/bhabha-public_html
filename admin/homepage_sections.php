@@ -1,6 +1,15 @@
 <?php  
 require_once('config.php');
 checksession($_SESSION[LOGIN_ADMIN]['userName'], 'index.php');
+require_once('inc.homepage_sections_schema.php');
+
+// Automatic database self-healing check (safe & non-blocking)
+try {
+    bu_ensure_homepage_sections_schema($db);
+} catch (\Throwable $e) {
+    error_log("bu_ensure_homepage_sections_schema error: " . $e->getMessage());
+}
+
 $stat = array();
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 define("PAGE", 'homepage_sections.php');
@@ -16,48 +25,67 @@ if (!empty($_SESSION['error'])) {
     unset($_SESSION['error']);
 }
 
-// Helper to resolve media URL for admin previews
-function bu_admin_media_url($path) {
-    if (empty($path)) return '';
-    $path = trim($path);
-    if (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0 || strpos($path, '//') === 0) {
-        return $path;
+// Manual database schema sync trigger
+if ($action == "sync_db") {
+    try {
+        $syncRes = bu_ensure_homepage_sections_schema($db);
+        $_SESSION["success"] = 'Homepage sections table and all 14 section rows verified successfully.';
+    } catch (\Throwable $e) {
+        $_SESSION["error"] = 'Schema sync error: ' . $e->getMessage();
     }
-    return '../' . ltrim($path, '/');
+    redirect(PAGE);
+}
+
+// Helper to resolve media URL for admin previews
+if (!function_exists('bu_admin_media_url')) {
+    function bu_admin_media_url($path) {
+        if (empty($path)) return '';
+        $path = trim($path);
+        if (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0 || strpos($path, '//') === 0) {
+            return $path;
+        }
+        return '../' . ltrim($path, '/');
+    }
 }
 
 // Quick status toggle via GET
 if ($action == "toggle_status" && isset($_GET['id'])) {
     $id = intval($_GET['id']);
-    $db->where('id', $id);
-    $curr = $db->getOne(DBTAB);
-    if ($curr) {
-        $newStatus = ($curr['status'] == 1) ? 0 : 1;
+    try {
         $db->where('id', $id);
-        $db->update(DBTAB, ['status' => $newStatus]);
-        $_SESSION["success"] = 'Status updated successfully';
+        $curr = $db->getOne(DBTAB);
+        if ($curr) {
+            $newStatus = ($curr['status'] == 1) ? 0 : 1;
+            $db->where('id', $id);
+            $db->update(DBTAB, ['status' => $newStatus]);
+            $_SESSION["success"] = 'Status updated successfully';
+        }
+    } catch (\Throwable $e) {
+        $_SESSION["error"] = 'Status toggle error: ' . $e->getMessage();
     }
     redirect(PAGE);
 }
 
 // Helper for file upload
-function bu_handle_upload($fileArray, $targetDir = '../upload/media/') {
-    if (!isset($fileArray['name']) || empty($fileArray['name'])) {
+if (!function_exists('bu_handle_upload')) {
+    function bu_handle_upload($fileArray, $targetDir = '../upload/media/') {
+        if (!isset($fileArray['name']) || empty($fileArray['name'])) {
+            return null;
+        }
+        if (!is_dir($targetDir)) {
+            @mkdir($targetDir, 0777, true);
+        }
+        $origName = basename($fileArray['name']);
+        $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
+        $allowed = ['mp4', 'webm', 'ogg', 'jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf'];
+        if (in_array($ext, $allowed)) {
+            $newFile = md5(microtime() . $origName) . '.' . $ext;
+            if (move_uploaded_file($fileArray['tmp_name'], $targetDir . $newFile)) {
+                return ltrim(str_replace('../', '', $targetDir), '/') . $newFile;
+            }
+        }
         return null;
     }
-    if (!is_dir($targetDir)) {
-        @mkdir($targetDir, 0777, true);
-    }
-    $origName = basename($fileArray['name']);
-    $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
-    $allowed = ['mp4', 'webm', 'ogg', 'jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf'];
-    if (in_array($ext, $allowed)) {
-        $newFile = md5(microtime() . $origName) . '.' . $ext;
-        if (move_uploaded_file($fileArray['tmp_name'], $targetDir . $newFile)) {
-            return ltrim(str_replace('../', '', $targetDir), '/') . $newFile;
-        }
-    }
-    return null;
 }
 
 // Handle Edit Submission
@@ -299,24 +327,12 @@ if (isset($_POST['submit'])) {
                 'footer_button_url'  => trim($_POST['reels_btn_url'] ?? 'https://www.instagram.com/bhabhauniversitybhopal/')
             ];
         } 
-        // 8. DEGREE PROGRAMS
+        // 8. DEGREE PROGRAMS (Dyna-linked to course table)
         elseif ($secKey == 'degree_programs') {
-            $progs = [];
-            if (isset($_POST['deg_title']) && is_array($_POST['deg_title'])) {
-                foreach ($_POST['deg_title'] as $k => $dtitle) {
-                    $dtitleTrim = trim($dtitle);
-                    if (!empty($dtitleTrim)) {
-                        $progs[] = [
-                            'level'       => trim($_POST['deg_level'][$k] ?? 'undergraduate'),
-                            'title'       => $dtitleTrim,
-                            'tag'         => trim($_POST['deg_tag'][$k] ?? 'FEATURED'),
-                            'duration'    => trim($_POST['deg_duration'][$k] ?? ''),
-                            'eligibility' => trim($_POST['deg_eligibility'][$k] ?? '')
-                        ];
-                    }
-                }
-            }
-            $extraArray = ['programs' => $progs];
+            $extraArray = [
+                'source'      => 'course_table',
+                'description' => 'Courses are dynamically fetched from Course Master (admin/course.php)'
+            ];
         } 
         // 9. INFRASTRUCTURE GRID
         elseif ($secKey == 'infrastructure_grid') {
@@ -501,13 +517,16 @@ if (isset($_POST['submit'])) {
                 "status"      => isset($_POST['status']) ? 1 : 0
             ];
             
-            $db->where('id', $id);
-            $db->update(DBTAB, $data);
-            
-            unset($_POST);
-            unset($_SESSION['form']);
-            $_SESSION["success"] = 'Section Updated Successfully';
-            redirect(PAGE);
+            try {
+                $db->where('id', $id);
+                $db->update(DBTAB, $data);
+                unset($_POST);
+                unset($_SESSION['form']);
+                $_SESSION["success"] = 'Section Updated Successfully';
+                redirect(PAGE);
+            } catch (\Throwable $e) {
+                $stat['error'] = 'Failed to update section: ' . $e->getMessage();
+            }
         }
     }
 }
@@ -650,8 +669,17 @@ if (isset($_POST['submit'])) {
         
         <?php if ($action == "edit"): 
             $secId = intval($_GET['id'] ?? ($_POST['id'] ?? 0));
-            $db->where('id', $secId);
-            $aryData = $db->getOne(DBTAB);
+            $aryData = null;
+            try {
+                $db->where('id', $secId);
+                $aryData = $db->getOne(DBTAB);
+            } catch (\Throwable $e) {
+                try {
+                    bu_ensure_homepage_sections_schema($db);
+                    $db->where('id', $secId);
+                    $aryData = $db->getOne(DBTAB);
+                } catch (\Throwable $e2) {}
+            }
             if (!$aryData) {
                 redirect(PAGE);
             }
@@ -1264,54 +1292,72 @@ if (isset($_POST['submit'])) {
                   </div>
                   <?php endif; ?>
 
-                  <!-- 7. DEGREE PROGRAMS TABS & CARDS -->
+                  <!-- 7. DEGREE PROGRAMS (CONNECTED TO COURSE MASTER) -->
                   <?php if ($aryData['section_key'] == 'degree_programs'): 
-                    $programs = $extra['programs'] ?? [];
+                    // Query live active courses from course table for preview
+                    $live_courses = [];
+                    try {
+                        $live_courses = $db->rawQuery("
+                            SELECT c.id, c.course, c.program, c.details, p.program AS prog_name 
+                            FROM course c 
+                            LEFT JOIN program p ON c.program = p.id 
+                            WHERE (c.status = 1 OR c.status IS NULL) 
+                            ORDER BY c.id ASC
+                        ");
+                    } catch (\Throwable $e) {}
                   ?>
-                  <div class="simple-card-group">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <div class="simple-card-title mb-0">
-                        <i class="fa fa-th-large text-primary"></i> Degree Programs Cards (85+ Programs Tab)
+                  <div class="card mb-4" style="border: 2px solid #0A1B54; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(10,27,84,0.08);">
+                    <div class="card-header text-white d-flex flex-wrap justify-content-between align-items-center" style="background-color: #0A1B54 !important; padding: 14px 20px;">
+                      <div>
+                        <h5 class="mb-1 text-white font-weight-bold"><i class="fa fa-graduation-cap text-warning mr-1"></i> Course Master Live Integration (Active)</h5>
+                        <small style="color: #cbd5e1;">Courses on the Homepage are loaded automatically from the central Course Master. You do not need to create duplicate cards here.</small>
                       </div>
-                      <button type="button" class="btn btn-sm btn-success" onclick="addDegreeProgramRow()"><i class="fa fa-plus"></i> Add New Program</button>
+                      <div class="mt-2 mt-md-0">
+                        <a href="course.php" class="btn btn-warning btn-sm font-weight-bold" target="_blank"><i class="fa fa-list"></i> Open Course Master</a>
+                        <a href="course.php?action=add" class="btn btn-success btn-sm font-weight-bold ml-1" target="_blank"><i class="fa fa-plus"></i> Add New Course</a>
+                      </div>
                     </div>
-                    <div id="degProgramRowsContainer" class="row">
-                      <?php foreach ($programs as $k => $p): ?>
-                      <div class="col-md-4 col-sm-6 mb-3 deg-prog-item">
-                        <div class="simple-item-box">
-                          <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.deg-prog-item').remove();">&times; Remove</button>
-                          <label class="text-primary font-weight-bold">Program #<?php echo $k + 1; ?></label>
-                          <div class="form-group mb-1">
-                            <small class="text-muted">Tab Level</small>
-                            <select name="deg_level[]" class="form-control form-control-sm font-weight-bold">
-                              <option value="undergraduate" <?php echo (($p['level'] ?? '') === 'undergraduate') ? 'selected' : ''; ?>>Undergraduate</option>
-                              <option value="postgraduate" <?php echo (($p['level'] ?? '') === 'postgraduate') ? 'selected' : ''; ?>>Postgraduate</option>
-                              <option value="diploma" <?php echo (($p['level'] ?? '') === 'diploma') ? 'selected' : ''; ?>>Diploma</option>
-                              <option value="doctoral" <?php echo (($p['level'] ?? '') === 'doctoral') ? 'selected' : ''; ?>>Doctoral (Ph.D)</option>
-                              <option value="certificate" <?php echo (($p['level'] ?? '') === 'certificate') ? 'selected' : ''; ?>>Certificate</option>
-                            </select>
-                          </div>
-                          <div class="form-group mb-1">
-                            <small class="text-muted">Program Title</small>
-                            <input type="text" name="deg_title[]" class="form-control form-control-sm font-weight-bold" value="<?php echo htmlspecialchars($p['title'] ?? ''); ?>" placeholder="e.g. B.Tech CSE">
-                          </div>
-                          <div class="row">
-                            <div class="col-6 form-group mb-1">
-                              <small class="text-muted">Tag Badge</small>
-                              <input type="text" name="deg_tag[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($p['tag'] ?? 'FEATURED'); ?>" placeholder="FEATURED">
-                            </div>
-                            <div class="col-6 form-group mb-1">
-                              <small class="text-muted">Duration</small>
-                              <input type="text" name="deg_duration[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($p['duration'] ?? ''); ?>" placeholder="e.g. 4 yrs">
-                            </div>
-                          </div>
-                          <div class="form-group mb-0">
-                            <small class="text-muted">Eligibility</small>
-                            <input type="text" name="deg_eligibility[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($p['eligibility'] ?? ''); ?>" placeholder="e.g. 10+2 PCM 60%">
-                          </div>
-                        </div>
+                    <div class="card-body bg-light" style="padding: 20px;">
+                      <div class="alert alert-info mb-3" style="background-color: #e0f2fe; border-color: #bae6fd; color: #0369a1;">
+                        <i class="fa fa-info-circle mr-1"></i> <strong>How it works:</strong> The homepage dynamically displays the top 8 courses from each academic level (Undergraduate, Postgraduate, Diploma, etc.) directly from your <code>course</code> database table. To add, edit details, or change eligibility, use the <strong>Course Master</strong> menu.
                       </div>
-                      <?php endforeach; ?>
+                      <div class="table-responsive bg-white rounded border">
+                        <table class="table table-sm table-hover mb-0">
+                          <thead class="thead-light">
+                            <tr>
+                              <th style="width: 70px;">ID</th>
+                              <th>Course Name</th>
+                              <th>Level / Program</th>
+                              <th>Duration / Eligibility</th>
+                              <th class="text-right" style="width: 170px;">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php if (!empty($live_courses)): 
+                              foreach (array_slice($live_courses, 0, 15) as $lc): 
+                                $det = strip_tags($lc['details'] ?? '');
+                                if (strlen($det) > 65) $det = substr($det, 0, 62) . '...';
+                            ?>
+                            <tr>
+                              <td><span class="badge badge-secondary">#<?php echo $lc['id']; ?></span></td>
+                              <td><strong class="text-primary"><?php echo htmlspecialchars($lc['course']); ?></strong></td>
+                              <td><span class="badge badge-info"><?php echo htmlspecialchars($lc['prog_name'] ?: 'Undergraduate'); ?></span></td>
+                              <td><small class="text-muted"><?php echo htmlspecialchars($det ?: 'Standard Criteria'); ?></small></td>
+                              <td class="text-right">
+                                <a href="course.php?id=<?php echo $lc['id']; ?>&action=edit" target="_blank" class="btn btn-xs btn-outline-primary"><i class="fa fa-pencil"></i> Edit Course</a>
+                              </td>
+                            </tr>
+                            <?php endforeach; else: ?>
+                            <tr><td colspan="5" class="text-center py-3 text-muted">No courses found in database table.</td></tr>
+                            <?php endif; ?>
+                          </tbody>
+                        </table>
+                      </div>
+                      <?php if (count($live_courses) > 15): ?>
+                        <div class="text-center mt-3">
+                          <small class="text-muted">Showing 15 of <?php echo count($live_courses); ?> active courses. <a href="course.php" target="_blank" class="font-weight-bold">View and manage all courses in Course Master →</a></small>
+                        </div>
+                      <?php endif; ?>
                     </div>
                   </div>
                   <?php endif; ?>
@@ -1696,6 +1742,10 @@ if (isset($_POST['submit'])) {
                     <h4 class="mt-0 header-title"><i class="fa fa-list text-primary"></i> Homepage Sections List</h4>
                     <p class="text-muted mb-0">Manage and update all major interactive, branding, and content sections of the Bhabha University Home Page.</p>
                   </div>
+                  <div>
+                    <a href="<?php echo PAGE; ?>?action=sync_db" class="btn btn-sm btn-outline-primary" title="Check &amp; Sync Database Table"><i class="fa fa-database"></i> Sync DB Schema</a>
+                    <a href="fix_homepage_sections_db.php" class="btn btn-sm btn-outline-info ml-1" title="Run Database Diagnostic Wizard"><i class="fa fa-wrench"></i> Diagnostics</a>
+                  </div>
                 </div>
                 
                 <div style="margin-bottom:15px;"> <?php echo msg($stat); ?></div>
@@ -1715,9 +1765,25 @@ if (isset($_POST['submit'])) {
                     </thead>
                     <tbody>
                       <?php
-                      $db->orderBy('id', 'ASC');
-                      $sections = $db->get(DBTAB);
-                      if (is_array($sections) && count($sections) > 0) {
+                      $sections = [];
+                      $queryErr = null;
+                      try {
+                          $db->orderBy('id', 'ASC');
+                          $sections = $db->get(DBTAB);
+                      } catch (\Throwable $e) {
+                          $queryErr = $e->getMessage();
+                          try {
+                              bu_ensure_homepage_sections_schema($db);
+                              $db->orderBy('id', 'ASC');
+                              $sections = $db->get(DBTAB);
+                              $queryErr = null;
+                          } catch (\Throwable $e2) {
+                              $queryErr = $e2->getMessage();
+                          }
+                      }
+                      if ($queryErr) {
+                          echo '<tr><td colspan="7" class="text-center text-danger font-weight-bold p-4"><i class="fa fa-exclamation-triangle"></i> Database table error: ' . htmlspecialchars($queryErr) . '<br><a href="'.PAGE.'?action=sync_db" class="btn btn-sm btn-primary mt-2"><i class="fa fa-refresh"></i> Run Auto-Repair Now</a></td></tr>';
+                      } elseif (is_array($sections) && count($sections) > 0) {
                           $i = 1;
                           foreach ($sections as $sec) {
                               $statusHtml = ($sec['status'] == 1) 
@@ -1821,47 +1887,6 @@ function addWhyBhabhaRow() {
         <div class="form-group mb-0">
           <small class="text-muted">Explore Details Link / URL</small>
           <input type="text" name="why_url[]" class="form-control form-control-sm" value="about.php" placeholder="about.php">
-        </div>
-      </div>
-    `;
-    container.appendChild(div);
-}
-
-function addDegreeProgramRow() {
-    const container = document.getElementById('degProgramRowsContainer');
-    const div = document.createElement('div');
-    div.className = 'col-md-4 col-sm-6 mb-3 deg-prog-item';
-    div.innerHTML = `
-      <div class="simple-item-box" style="border-color:#28a745;">
-        <button type="button" class="btn btn-xs btn-danger btn-delete-row" onclick="this.closest('.deg-prog-item').remove();">&times; Remove</button>
-        <label class="text-success font-weight-bold">New Program</label>
-        <div class="form-group mb-1">
-          <small class="text-muted">Tab Level</small>
-          <select name="deg_level[]" class="form-control form-control-sm font-weight-bold">
-            <option value="undergraduate">Undergraduate</option>
-            <option value="postgraduate">Postgraduate</option>
-            <option value="diploma">Diploma</option>
-            <option value="doctoral">Doctoral (Ph.D)</option>
-            <option value="certificate">Certificate</option>
-          </select>
-        </div>
-        <div class="form-group mb-1">
-          <small class="text-muted">Program Title</small>
-          <input type="text" name="deg_title[]" class="form-control form-control-sm font-weight-bold" placeholder="e.g. B.Tech AI & ML">
-        </div>
-        <div class="row">
-          <div class="col-6 form-group mb-1">
-            <small class="text-muted">Tag Badge</small>
-            <input type="text" name="deg_tag[]" class="form-control form-control-sm" value="FEATURED" placeholder="FEATURED">
-          </div>
-          <div class="col-6 form-group mb-1">
-            <small class="text-muted">Duration</small>
-            <input type="text" name="deg_duration[]" class="form-control form-control-sm" placeholder="e.g. 4 yrs">
-          </div>
-        </div>
-        <div class="form-group mb-0">
-          <small class="text-muted">Eligibility</small>
-          <input type="text" name="deg_eligibility[]" class="form-control form-control-sm" placeholder="e.g. 10+2 PCM">
         </div>
       </div>
     `;

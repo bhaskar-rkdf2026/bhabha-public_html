@@ -442,6 +442,16 @@ src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
 <!--Start of Tawk.to Script (Loaded on Idle/Interaction for Peak Core Web Vitals)-->
 <script type="text/javascript">
 (function(){
+  // Suppress third-party Tawk.to Back-Forward Cache telemetry error logs in console
+  var _origErr = console.error;
+  console.error = function() {
+    var msg = (arguments.length > 0 && typeof arguments[0] === 'string') ? arguments[0] : '';
+    if (msg.indexOf('Back-Forward Cache') !== -1 || msg.indexOf('tawk.to') !== -1 || msg.indexOf('Tawk/Logger') !== -1) {
+      return;
+    }
+    _origErr.apply(console, arguments);
+  };
+
   var loaded = false;
   function loadTawk() {
     if (loaded) return;
@@ -455,6 +465,20 @@ src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
     s1.setAttribute('crossorigin','*');
     document.body.appendChild(s1);
   }
+
+  // Gracefully close active chat WebSockets before page enters Back-Forward Cache
+  window.addEventListener('pagehide', function() {
+    if (window.Tawk_API && typeof window.Tawk_API.shutdown === 'function') {
+      try { window.Tawk_API.shutdown(); } catch(e) {}
+    }
+  });
+
+  window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+      loaded = false;
+    }
+  });
+
   if ('requestIdleCallback' in window) {
     requestIdleCallback(function() { setTimeout(loadTawk, 2500); }, { timeout: 4000 });
   } else {
