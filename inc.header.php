@@ -27,8 +27,8 @@ $hc = getHeaderConfig();
                 <div class="bu-info-col">
                   <div class="bu-info-head"><i class="fa fa-graduation-cap"></i> Student &amp; Staff Logins</div>
                   <a href="<?php echo htmlspecialchars($hc['erp_resultsoft_url']); ?>" target="_blank" style="color: #FFC107 !important; font-weight: 700;"><i class="fa fa-file-text-o text-warning"></i> Resultsoft Portal</a>
-                  <a href="<?php echo htmlspecialchars($hc['erp_student_url']); ?>" target="_blank"><i class="fa fa-user-graduate text-warning"></i> Student ERP Login</a>
-                  <a href="<?php echo htmlspecialchars($hc['erp_faculty_url']); ?>" target="_blank"><i class="fa fa-chalkboard-teacher text-info"></i> Faculty Portal Login</a>
+                  <a href="<?php echo htmlspecialchars($hc['erp_student_url']); ?>" target="_blank"><i class="fa fa-graduation-cap text-warning"></i> Student ERP Login</a>
+                  <a href="<?php echo htmlspecialchars($hc['erp_faculty_url']); ?>" target="_blank"><i class="fa fa-briefcase text-info"></i> Faculty Portal Login</a>
                   <a href="<?php echo htmlspecialchars($hc['erp_student_url']); ?>" target="_blank"><i class="fa fa-id-card text-success"></i> ERP System Login</a>
                   <a href="<?php echo htmlspecialchars($hc['erp_oap_url']); ?>" target="_blank"><i class="fa fa-shield text-danger"></i> OAP Admin Login</a>
                   <a href="<?php echo htmlspecialchars($hc['webmail_url']); ?>" target="_blank"><i class="fa fa-envelope text-primary"></i> Official Web Mail</a>

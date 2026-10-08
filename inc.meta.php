@@ -69,8 +69,10 @@ $bu_robots_tag = ($bu_seo && !empty($bu_seo['robots_tag']) && $bu_seo['robots_ta
 <link rel="dns-prefetch" href="https://code.jquery.com">
 <!-- Modern Google Fonts with display=swap -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
-<!-- Font Awesome Icons (Instant Local Loading with CDN Fallback) -->
+<!-- Font Awesome Icons (Instant Local Loading with 4.7.0 and 6.5.1 CDN) -->
 <link rel="stylesheet" href="<?php echo URL_CSS;?>font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="<?php echo URL_CSS;?>bootstrap.min.css" rel="stylesheet">
 <!-- BU Global Page Redesign CSS -->
 <?php 

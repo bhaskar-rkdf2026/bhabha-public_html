@@ -1060,4 +1060,27 @@ footer .row:last-child {
   background: var(--light-gray) !important;
 }
 
+/* ============================================================
+   Font Awesome Fallback Mappings (Guarantees no empty icons)
+   ============================================================ */
+.fa-user-graduate:before {
+  content: "\f19d"; /* graduation-cap */
+}
+.fa-chalkboard-teacher:before {
+  content: "\f0c0"; /* users/faculty */
+}
+.fa-user-circle:before,
+.fa-user-circle-o:before {
+  content: "\f2bd"; /* user-circle */
+}
+.fa-id-card:before,
+.fa-drivers-license:before {
+  content: "\f2c2"; /* id-card */
+}
+.fa-id-card-o:before,
+.fa-drivers-license-o:before {
+  content: "\f2c3";
+}
+
+
 
