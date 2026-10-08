@@ -968,4 +968,15 @@ function getHeaderConfig() {
 
     return $default;
 }
+
+if (!function_exists('normFa')) {
+    function normFa($icon) {
+        $icon = trim($icon ?? '');
+        if (empty($icon)) return 'fa fa-circle';
+        if (strpos($icon, 'fa ') !== 0 && strpos($icon, 'fas ') !== 0 && strpos($icon, 'far ') !== 0 && strpos($icon, 'fab ') !== 0) {
+            return 'fa ' . (strpos($icon, 'fa-') === 0 ? $icon : 'fa-' . $icon);
+        }
+        return $icon;
+    }
+}
 ?>

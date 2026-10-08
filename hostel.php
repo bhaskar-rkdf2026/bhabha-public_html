@@ -1,11 +1,45 @@
-<?php include('config.php'); ?>
+<?php 
+include('config.php'); 
+
+// Dynamic CMS query
+$dbPage = $db->where('page_key', 'hostel')->getOne('site_portal_pages');
+$dbContent = !empty($dbPage['content_data']) ? json_decode($dbPage['content_data'], true) : [];
+
+$page_title_raw = !empty($dbPage['page_title']) ? $dbPage['page_title'] : 'Hostel & Residential Life - Bhabha University Bhopal';
+$page_badge     = !empty($dbPage['badge']) ? $dbPage['badge'] : 'A Home Away From Home';
+$page_heading   = !empty($dbPage['heading']) ? $dbPage['heading'] : 'On-Campus <em>Student Residences</em>';
+$page_sub       = !empty($dbPage['subheading']) ? $dbPage['subheading'] : 'Comfortable, secure, and modern on-campus living facilities for boys and girls with 24x7 power backup, high-speed Wi-Fi, hygienic dining, and dedicated wardens.';
+$page_icon      = !empty($dbContent['page_icon']) ? normFa($dbContent['page_icon']) : 'fa-home';
+
+$featured_img   = !empty($dbContent['featured_image']) ? (strpos($dbContent['featured_image'], 'upload/') === 0 ? URL_ROOT . $dbContent['featured_image'] : URL_UPLOAD . $dbContent['featured_image']) : URL_UPLOAD . 'infrastructure/f26b29937f258d4966b0be4de6bea02d.jpg';
+$img_caption    = !empty($dbContent['image_caption']) ? $dbContent['image_caption'] : 'Bhabha University On-Campus Residential Hostel Blocks & Living Quarters';
+$overview_lead  = !empty($dbContent['overview_lead']) ? $dbContent['overview_lead'] : 'Bhabha University provides comprehensive residential accommodations that foster holistic academic progress, personal camaraderie, and peace of mind. Nestled within our lush <strong>32-acre secured campus</strong> in Bhopal, the university offers separate, spacious hostels for male and female scholars with full residential oversight.';
+$overview_p2    = !empty($dbContent['overview_p2']) ? $dbContent['overview_p2'] : 'The hostel community brings together students from diverse states and cultural backgrounds across India and international regions, creating a truly inclusive, cosmopolitan fraternity. Every resident enjoys an environment engineered for focused study, sound rest, and vibrant peer collaboration.';
+
+$features       = !empty($dbContent['features']) ? $dbContent['features'] : [
+  ['icon' => 'fa-bed', 'title' => 'Furnished Rooms', 'desc' => 'Single, double, and triple sharing rooms equipped with ergonomic study tables, cushioned chairs, wardrobes, and quality mattresses.'],
+  ['icon' => 'fa-cutlery', 'title' => 'Hygienic Dining Mess', 'desc' => 'Modern steam-powered kitchen serving 4 nutritious, wholesome meals daily under FSSAI supervision.'],
+  ['icon' => 'fa-wifi', 'title' => 'High-Speed Campus Wi-Fi', 'desc' => 'Dedicated fiber-optic internet connectivity available across all hostel wings for academic research and virtual lectures.'],
+  ['icon' => 'fa-shield', 'title' => '24x7 CCTV & Security', 'desc' => 'Round-the-clock trained security guards, biometric turnstile entry, and 100+ high-definition surveillance cameras ensuring total safety.'],
+  ['icon' => 'fa-bolt', 'title' => 'Continuous Power & Water', 'desc' => 'Uninterrupted electricity with silent heavy-duty generator backup and multi-stage commercial RO purified drinking water stations.'],
+  ['icon' => 'fa-user-md', 'title' => 'Medical & Emergency Care', 'desc' => 'On-campus health clinic with resident doctors, routine wellness checkups, first-aid suites, and 24x7 ambulance service on standby.']
+];
+
+$detail_title   = !empty($dbContent['detail_title']) ? $dbContent['detail_title'] : 'Room Types & Hostel Wings';
+$detail_rich    = !empty($dbContent['detail_rich']) ? $dbContent['detail_rich'] : '';
+
+$cta_title      = !empty($dbContent['cta_title']) ? $dbContent['cta_title'] : 'Need Hostel Admission Guidance?';
+$cta_desc       = !empty($dbContent['cta_desc']) ? $dbContent['cta_desc'] : 'Contact the Chief Warden Office for room availability, allotment rules, and fee details.';
+$cta_btn_text   = !empty($dbContent['cta_btn_text']) ? $dbContent['cta_btn_text'] : 'Apply for Hostel';
+$cta_btn_url    = !empty($dbContent['cta_btn_url']) ? $dbContent['cta_btn_url'] : 'enquiry.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hostel &amp; Residential Life - Bhabha University Bhopal</title>
+<title><?php echo strip_tags($page_title_raw); ?> - Bhabha University Bhopal</title>
 <meta name="description" content="Discover secure, comfortable, and modern on-campus hostel facilities for boys and girls at Bhabha University Bhopal. Features 24x7 security, hygienic mess, high-speed Wi-Fi, and recreational spaces.">
 <meta name="keywords" content="Bhabha University hostel, student accommodation Bhopal, boys hostel, girls hostel, university mess, campus residence Bhopal">
 <?php include('inc.meta.php'); ?>
@@ -120,13 +154,13 @@
 
   <!-- INNER BANNER -->
   <?php
-  $page_title    = 'Hostel &amp; <em>Residential Life</em>';
-  $page_subtitle = 'Comfortable, secure, and modern on-campus living facilities for boys and girls with 24x7 power backup, high-speed Wi-Fi, hygienic dining, and dedicated wardens.';
-  $page_icon     = 'fa-home';
+  $page_title    = $page_heading;
+  $page_subtitle = $page_sub;
+  $page_icon     = $page_icon;
   $breadcrumbs   = [
     ['label' => 'Home', 'url' => URL_ROOT],
     ['label' => 'Campus Life', 'url' => href('campus-life.php')],
-    ['label' => 'Hostel & Residential Life', 'url' => '#'],
+    ['label' => strip_tags($page_title_raw), 'url' => '#'],
   ];
   include('inc.page-banner.php');
   ?>
@@ -138,25 +172,21 @@
 
       <!-- Section 1: Overview -->
       <div class="bu-content-card">
-        <span class="bu-content-label">A Home Away From Home</span>
-        <h2 class="bu-content-h2">On-Campus <em>Student Residences</em></h2>
+        <span class="bu-content-label"><?php echo htmlspecialchars($page_badge); ?></span>
+        <h2 class="bu-content-h2"><?php echo $page_heading; ?></h2>
         <div class="bu-content-divider"></div>
 
         <!-- Authentic University Facility Image -->
         <div class="bu-page-featured-media">
-          <img src="<?php echo URL_UPLOAD; ?>infrastructure/f26b29937f258d4966b0be4de6bea02d.jpg" alt="Bhabha University Student Hostel Residences" loading="lazy">
+          <img src="<?php echo $featured_img; ?>" alt="<?php echo htmlspecialchars(strip_tags($page_heading)); ?>" loading="lazy" onerror="this.onerror=null; this.src='<?php echo URL_UPLOAD; ?>infrastructure/f26b29937f258d4966b0be4de6bea02d.jpg';">
           <div class="bu-page-featured-caption">
-            <i class="fa fa-home"></i> Bhabha University On-Campus Residential Hostel Blocks &amp; Living Quarters
+            <i class="<?php echo $page_icon; ?>"></i> <?php echo htmlspecialchars($img_caption); ?>
           </div>
         </div>
 
         <div class="bu-content-body">
-          <p>
-            Bhabha University provides comprehensive residential accommodations that foster holistic academic progress, personal camaraderie, and peace of mind. Nestled within our lush <strong>32-acre secured campus</strong> in Bhopal, the university offers separate, spacious hostels for male and female scholars with full residential oversight.
-          </p>
-          <p>
-            The hostel community brings together students from diverse states and cultural backgrounds across India and international regions, creating a truly inclusive, cosmopolitan fraternity. Every resident enjoys an environment engineered for focused study, sound rest, and vibrant peer collaboration.
-          </p>
+          <p><?php echo $overview_lead; ?></p>
+          <?php if (!empty($overview_p2)): ?><p><?php echo $overview_p2; ?></p><?php endif; ?>
         </div>
       </div>
 
@@ -167,106 +197,95 @@
         <div class="bu-content-divider"></div>
 
         <div class="bu-hostel-feature-grid">
+          <?php foreach ($features as $f): ?>
           <div class="bu-hostel-feature-card">
-            <div class="bu-hostel-icon"><i class="fa fa-bed"></i></div>
-            <h4>Furnished Rooms</h4>
-            <p>Single, double, and triple sharing rooms equipped with ergonomic study tables, cushioned chairs, wardrobes, and quality mattresses.</p>
+            <div class="bu-hostel-icon"><i class="<?php echo normFa($f['icon'] ?? 'fa-check'); ?>"></i></div>
+            <h4><?php echo htmlspecialchars($f['title'] ?? ''); ?></h4>
+            <p><?php echo htmlspecialchars($f['desc'] ?? ''); ?></p>
           </div>
-          <div class="bu-hostel-feature-card">
-            <div class="bu-hostel-icon"><i class="fa fa-cutlery"></i></div>
-            <h4>Hygienic Dining Mess</h4>
-            <p>Modern steam-powered kitchen serving 4 nutritious, wholesome meals daily (Breakfast, Lunch, Evening Snacks &amp; Dinner) under FSSAI supervision.</p>
-          </div>
-          <div class="bu-hostel-feature-card">
-            <div class="bu-hostel-icon"><i class="fa fa-wifi"></i></div>
-            <h4>High-Speed Campus Wi-Fi</h4>
-            <p>Dedicated fiber-optic internet connectivity available across all hostel wings for academic research and virtual lectures.</p>
-          </div>
-          <div class="bu-hostel-feature-card">
-            <div class="bu-hostel-icon"><i class="fa fa-shield"></i></div>
-            <h4>24x7 CCTV &amp; Security</h4>
-            <p>Round-the-clock trained security guards, biometric turnstile entry, and 100+ high-definition surveillance cameras ensuring total safety.</p>
-          </div>
-          <div class="bu-hostel-feature-card">
-            <div class="bu-hostel-icon"><i class="fa fa-bolt"></i></div>
-            <h4>Continuous Power &amp; Water</h4>
-            <p>Uninterrupted electricity with silent heavy-duty generator backup and multi-stage commercial RO purified drinking water stations.</p>
-          </div>
-          <div class="bu-hostel-feature-card">
-            <div class="bu-hostel-icon"><i class="fa fa-user-md"></i></div>
-            <h4>Medical &amp; Emergency Care</h4>
-            <p>On-campus health clinic with resident doctors, routine wellness checkups, first-aid suites, and 24x7 ambulance service on standby.</p>
-          </div>
+          <?php endforeach; ?>
         </div>
       </div>
 
-      <!-- Section 3: Room Categories & Details -->
-      <div class="bu-content-card">
-        <span class="bu-content-label">Accommodation Options</span>
-        <h2 class="bu-content-h2">Room Types &amp; <em>Hostel Wings</em></h2>
-        <div class="bu-content-divider"></div>
-        <div class="bu-content-body">
-          <p>Hostel accommodations are allotted on a first-come, first-served basis at the time of admission enrollment. We offer multiple occupancy configurations suited to student preferences:</p>
-
-          <table class="bu-table-custom">
-            <thead>
-              <tr>
-                <th>Wing / Category</th>
-                <th>Occupancy</th>
-                <th>Facilities Included</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Boys' Hostel Block A &amp; B</strong></td>
-                <td>Double / Triple Sharing</td>
-                <td>Attached balcony, study desk, wardrobe, Wi-Fi, laundry facility</td>
-                <td><span style="color:#10B981; font-weight:700;"><i class="fa fa-check-circle"></i> Available</span></td>
-              </tr>
-              <tr>
-                <td><strong>Girls' Hostel Block C &amp; D</strong></td>
-                <td>Double / Triple Sharing</td>
-                <td>Self-contained security perimeter, dedicated common room, Wi-Fi, RO water</td>
-                <td><span style="color:#10B981; font-weight:700;"><i class="fa fa-check-circle"></i> Available</span></td>
-              </tr>
-              <tr>
-                <td><strong>Executive AC Rooms</strong></td>
-                <td>Single / Double (Air-Conditioned)</td>
-                <td>Air conditioning, geyser, individual study unit, attached modern washroom</td>
-                <td><span style="color:#D99B00; font-weight:700;"><i class="fa fa-clock-o"></i> Limited Seats</span></td>
-              </tr>
-            </tbody>
-          </table>
+      <?php if (!empty($detail_rich)): ?>
+        <!-- Section 3: Rich Custom Details (from Admin) -->
+        <div class="bu-content-card">
+          <span class="bu-content-label">Detailed Information</span>
+          <h2 class="bu-content-h2"><?php echo htmlspecialchars($detail_title); ?></h2>
+          <div class="bu-content-divider"></div>
+          <div class="bu-content-body">
+            <?php echo $detail_rich; ?>
+          </div>
         </div>
-      </div>
+      <?php else: ?>
+        <!-- Section 3: Room Categories & Details (Default) -->
+        <div class="bu-content-card">
+          <span class="bu-content-label">Accommodation Options</span>
+          <h2 class="bu-content-h2"><?php echo htmlspecialchars($detail_title); ?></h2>
+          <div class="bu-content-divider"></div>
+          <div class="bu-content-body">
+            <p>Hostel accommodations are allotted on a first-come, first-served basis at the time of admission enrollment. We offer multiple occupancy configurations suited to student preferences:</p>
 
-      <!-- Section 4: Rules & Code of Conduct -->
-      <div class="bu-content-card">
-        <span class="bu-content-label">Discipline &amp; Safety</span>
-        <h2 class="bu-content-h2">Hostel Code of <em>Conduct &amp; Timings</em></h2>
-        <div class="bu-content-divider"></div>
-        <div class="bu-content-body">
-          <p>To preserve harmony, focus, and mutual safety, all residential students are required to adhere to the university hostel regulations:</p>
-          
-          <ul class="bu-hostel-rules-list">
-            <li><i class="fa fa-check"></i> <strong>Gate Timings:</strong> Students must report back to their respective hostels by <strong>8:30 PM</strong> (Boys) and <strong>8:00 PM</strong> (Girls).</li>
-            <li><i class="fa fa-check"></i> <strong>Zero Tolerance for Ragging:</strong> Ragging in any form is strictly prohibited by law and university charter. Violators face immediate suspension and legal reporting.</li>
-            <li><i class="fa fa-check"></i> <strong>Leave &amp; Night-Out Permissions:</strong> Night-outs or leaves require written warden approval along with authenticated parental consent via SMS/Call.</li>
-            <li><i class="fa fa-check"></i> <strong>Visitor Protocol:</strong> Parents and guardians may visit resident scholars in designated guest lounges between 10:00 AM and 6:00 PM with proper identity verification.</li>
-            <li><i class="fa fa-check"></i> <strong>Substance-Free Zone:</strong> The entire campus and residential blocks are strictly tobacco-free, alcohol-free, and narcotic-free zones.</li>
-          </ul>
+            <table class="bu-table-custom">
+              <thead>
+                <tr>
+                  <th>Wing / Category</th>
+                  <th>Occupancy</th>
+                  <th>Facilities Included</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Boys' Hostel Block A &amp; B</strong></td>
+                  <td>Double / Triple Sharing</td>
+                  <td>Attached balcony, study desk, wardrobe, Wi-Fi, laundry facility</td>
+                  <td><span style="color:#10B981; font-weight:700;"><i class="fa fa-check-circle"></i> Available</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Girls' Hostel Block C &amp; D</strong></td>
+                  <td>Double / Triple Sharing</td>
+                  <td>Self-contained security perimeter, dedicated common room, Wi-Fi, RO water</td>
+                  <td><span style="color:#10B981; font-weight:700;"><i class="fa fa-check-circle"></i> Available</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Executive AC Rooms</strong></td>
+                  <td>Single / Double (Air-Conditioned)</td>
+                  <td>Air conditioning, geyser, individual study unit, attached modern washroom</td>
+                  <td><span style="color:#D99B00; font-weight:700;"><i class="fa fa-clock-o"></i> Limited Seats</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <!-- Hostel Admission CTA Banner -->
-        <div class="bu-hostel-banner-cta">
-          <div>
-            <h3 style="font-size:20px; font-weight:800; color:#ffffff !important; margin:0 0 6px;"><i class="fa fa-home text-warning mr-2"></i> Need Hostel Admission Guidance?</h3>
-            <p style="font-size:13.5px; color:rgba(255,255,255,0.92) !important; margin:0;">Contact the Chief Warden Office for room availability, allotment rules, and fee details.</p>
+        <!-- Section 4: Rules & Code of Conduct -->
+        <div class="bu-content-card">
+          <span class="bu-content-label">Discipline &amp; Safety</span>
+          <h2 class="bu-content-h2">Hostel Code of <em>Conduct &amp; Timings</em></h2>
+          <div class="bu-content-divider"></div>
+          <div class="bu-content-body">
+            <p>To preserve harmony, focus, and mutual safety, all residential students are required to adhere to the university hostel regulations:</p>
+            
+            <ul class="bu-hostel-rules-list">
+              <li><i class="fa fa-check"></i> <strong>Gate Timings:</strong> Students must report back to their respective hostels by <strong>8:30 PM</strong> (Boys) and <strong>8:00 PM</strong> (Girls).</li>
+              <li><i class="fa fa-check"></i> <strong>Zero Tolerance for Ragging:</strong> Ragging in any form is strictly prohibited by law and university charter. Violators face immediate suspension and legal reporting.</li>
+              <li><i class="fa fa-check"></i> <strong>Leave &amp; Night-Out Permissions:</strong> Night-outs or leaves require written warden approval along with authenticated parental consent via SMS/Call.</li>
+              <li><i class="fa fa-check"></i> <strong>Visitor Protocol:</strong> Parents and guardians may visit resident scholars in designated guest lounges between 10:00 AM and 6:00 PM with proper identity verification.</li>
+              <li><i class="fa fa-check"></i> <strong>Substance-Free Zone:</strong> The entire campus and residential blocks are strictly tobacco-free, alcohol-free, and narcotic-free zones.</li>
+            </ul>
           </div>
-          <div>
-            <a href="<?php echo href('enquiry.php'); ?>" class="bu-btn-primary" style="white-space:nowrap;">Apply for Hostel <i class="fa fa-arrow-right"></i></a>
-          </div>
+        </div>
+      <?php endif; ?>
+
+      <!-- Hostel Admission CTA Banner -->
+      <div class="bu-hostel-banner-cta">
+        <div>
+          <h3 style="font-size:20px; font-weight:800; color:#ffffff !important; margin:0 0 6px;"><i class="<?php echo $page_icon; ?> text-warning mr-2"></i> <?php echo htmlspecialchars($cta_title); ?></h3>
+          <p style="font-size:13.5px; color:rgba(255,255,255,0.92) !important; margin:0;"><?php echo htmlspecialchars($cta_desc); ?></p>
+        </div>
+        <div>
+          <a href="<?php echo href($cta_btn_url); ?>" class="bu-btn-primary" style="white-space:nowrap;"><?php echo htmlspecialchars($cta_btn_text); ?> <i class="fa fa-arrow-right"></i></a>
         </div>
       </div>
 

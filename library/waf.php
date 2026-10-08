@@ -181,7 +181,11 @@ class BU_Security_WAF {
             }
         }
         if (isset($_GET['page'])) {
-            $_GET['page'] = (int)$_GET['page'];
+            if (is_numeric($_GET['page'])) {
+                $_GET['page'] = (int)$_GET['page'];
+            } else {
+                $_GET['page'] = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$_GET['page']);
+            }
         }
     }
 

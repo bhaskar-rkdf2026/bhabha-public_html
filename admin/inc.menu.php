@@ -6,14 +6,16 @@
 $currPage = basename($_SERVER['PHP_SELF']);
 $secParam = isset($_GET['section']) ? $_GET['section'] : '';
 
-function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
-    if (!empty($targetSec) && $targetSec === $sec && $curr === 'section_hub.php') {
-        return 'active';
+if (!function_exists('isSubActive')) {
+    function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
+        if (!empty($targetSec) && $targetSec === $sec && $curr === 'section_hub.php') {
+            return 'active';
+        }
+        if (is_array($pages) && in_array($curr, $pages)) {
+            return 'active';
+        }
+        return '';
     }
-    if (is_array($pages) && in_array($curr, $pages)) {
-        return 'active';
-    }
-    return '';
 }
 ?>
 <div class="left side-menu">
@@ -198,8 +200,23 @@ function isSubActive($pages, $curr, $targetSec = '', $sec = '') {
             <i class="mdi mdi-compass-outline"></i> <span>Campus Life</span>
           </a>
           <ul class="submenu">
-            <li><a href="campus_life.php?page=overview" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-compass"></i> Campus Life Overview</a></li>
+            <li><a href="campus_life.php" style="color:#FFC107 !important; font-weight:700;"><i class="mdi mdi-view-grid-outline"></i> ★ Campus Life Hub</a></li>
+            <li><a href="campus_life.php?page=overview"><i class="mdi mdi-compass"></i> Campus Life Overview</a></li>
             <li><a href="campus_life.php?page=clubs"><i class="mdi mdi-account-group"></i> Clubs &amp; Societies</a></li>
+            <li><a href="campus_life.php?page=hostel"><i class="mdi mdi-home-city-outline"></i> Hostel &amp; Residences</a></li>
+            <li><a href="campus_life.php?page=cafeteria"><i class="mdi mdi-silverware-fork-knife"></i> Cafeteria &amp; Food</a></li>
+            <li><a href="campus_life.php?page=transportation"><i class="mdi mdi-bus"></i> Transport &amp; Routes</a></li>
+            <li><a href="campus_life.php?page=library"><i class="mdi mdi-book-open-page-variant"></i> Central Library</a></li>
+            <li><a href="campus_life.php?page=it-labs"><i class="mdi mdi-laptop"></i> IT &amp; Computer Labs</a></li>
+            <li><a href="campus_life.php?page=health-wellness"><i class="mdi mdi-heart-pulse"></i> Health &amp; Wellness</a></li>
+            <li><a href="campus_life.php?page=sports"><i class="mdi mdi-soccer"></i> Sports &amp; Fitness</a></li>
+            <li><a href="campus_life.php?page=community-service"><i class="mdi mdi-hand-heart"></i> Community Service &amp; NSS</a></li>
+            <li><a href="campus_life.php?page=entrepreneurship"><i class="mdi mdi-rocket-launch-outline"></i> Entrepreneurship Cell</a></li>
+            <li><a href="campus_life.php?page=student-safety"><i class="mdi mdi-shield-check-outline"></i> Student Safety &amp; Support</a></li>
+            <li><a href="campus_life.php?page=student-media"><i class="mdi mdi-bullhorn-outline"></i> Student Media &amp; FM</a></li>
+            <li><a href="infrastructure.php"><i class="mdi mdi-city"></i> Infrastructure Module</a></li>
+            <li><a href="events.php"><i class="mdi mdi-calendar-star"></i> Events &amp; Fests Module</a></li>
+            <li><a href="gallery.php"><i class="mdi mdi-image-multiple-outline"></i> Campus Gallery</a></li>
           </ul>
         </li>
 
