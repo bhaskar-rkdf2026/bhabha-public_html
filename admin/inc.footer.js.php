@@ -12,13 +12,16 @@
 <script src="assets/pages/dashboard.js"></script>
 <?php endif; ?>
 <!-- App js -->
-<script src="<?php echo URL_JS;?>app.js"></script>
+<script src="<?php echo URL_JS;?>app.js?v=<?php echo time(); ?>"></script>
 
 <!-- Auto-Scroll & Sticky Active Tab in Admin Sidebar -->
 <script>
 $(document).ready(function() {
+  // Ensure server-rendered active submenu has class 'in'
+  $('#sidebar-menu li.active > ul.submenu').addClass('collapse in').attr('aria-expanded', 'true');
+
   function scrollToActiveMenu() {
-    var $activeItem = $('#sidebar-menu li.active > a.active, #sidebar-menu li.active, #sidebar-menu a.active').first();
+    var $activeItem = $('#sidebar-menu ul.submenu li.active > a, #sidebar-menu ul.submenu a.active, #sidebar-menu li.active > a.active, #sidebar-menu li.active').first();
     if ($activeItem.length) {
       var $container = $('.slimscroll-menu');
       if ($container.length) {
@@ -32,13 +35,13 @@ $(document).ready(function() {
         if (typeof $container.slimScroll === 'function') {
           $container.slimScroll({ scrollTo: targetScroll + 'px' });
         } else {
-          $container.animate({ scrollTop: targetScroll }, 200);
+          $container.scrollTop(targetScroll);
         }
       }
     }
   }
 
-  // Trigger on load with multi-stage timers to ensure MetisMenu & SlimScroll are ready
+  // Multi-stage trigger ensures SlimScroll and MetisMenu have painted
   setTimeout(scrollToActiveMenu, 100);
   setTimeout(scrollToActiveMenu, 300);
   setTimeout(scrollToActiveMenu, 600);

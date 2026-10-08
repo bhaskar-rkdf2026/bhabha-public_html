@@ -223,11 +223,74 @@ table.dataTable.dtr-column > tbody > tr.parent th.control:before {
 /* =================== SIDEBAR SUBMENU & ACCORDION STYLES =================== */
 #sidebar-menu ul.submenu {
   list-style: none !important;
+  background: rgba(0, 0, 0, 0.22) !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+/* Collapsed Submenus - Completely hidden & never leak out */
+#sidebar-menu ul.submenu.collapse,
+#sidebar-menu ul.submenu.collapse:not(.in):not(.show),
+#sidebar-menu ul.submenu[aria-expanded="false"]:not(.collapsing) {
+  display: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  pointer-events: none !important;
+}
+
+#sidebar-menu ul.submenu.collapse:not(.in):not(.show) > li,
+#sidebar-menu ul.submenu[aria-expanded="false"]:not(.collapsing) > li {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+}
+
+/* Expanded Submenus */
+#sidebar-menu ul.submenu.collapse.in,
+#sidebar-menu ul.submenu.collapse.show,
+#sidebar-menu ul.submenu.in,
+#sidebar-menu ul.submenu.show,
+#sidebar-menu li.active > ul.submenu.collapse.in,
+#sidebar-menu li.active > ul.submenu.collapse.show,
+#sidebar-menu ul.submenu[aria-expanded="true"] {
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   padding: 4px 0 6px 0 !important;
   margin: 0 10px 6px 18px !important;
-  background: rgba(0, 0, 0, 0.22) !important;
   border-left: 2px solid rgba(255, 193, 7, 0.35) !important;
-  border-radius: 0 8px 8px 0 !important;
+  pointer-events: auto !important;
+}
+
+#sidebar-menu ul.submenu.collapse.in > li,
+#sidebar-menu ul.submenu.collapse.show > li,
+#sidebar-menu ul.submenu[aria-expanded="true"] > li {
+  display: block !important;
+  height: auto !important;
+  overflow: visible !important;
+  visibility: visible !important;
+}
+
+/* Collapsing Transition (while opening/closing smoothly) */
+#sidebar-menu ul.submenu.collapsing {
+  position: relative !important;
+  height: 0;
+  overflow: hidden !important;
+  display: block !important;
+  visibility: visible !important;
+  padding: 0 !important;
+  margin: 0 10px 0 18px !important;
+  border: none !important;
+  transition: height 0.3s ease !important;
 }
 
 #sidebar-menu ul.submenu li {
