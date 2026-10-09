@@ -30,8 +30,11 @@ $chanc_recogs = !empty($chanc_extra['recognitions']) ? $chanc_extra['recognition
     <div class="bu-chancellor-img-col">
       <div class="bu-chancellor-img-wrapper">
         <?php if(!empty($chancellor_video_url)): ?>
-          <video id="chancellor-video" src="<?php echo $chancellor_video_url; ?>" class="bu-chancellor-img" autoplay playsinline muted loop preload="metadata" poster="<?php echo URL_IMG;?>vcpic.jpg" style="background:#000;"></video>
-          <button id="chancellor-mute-btn" class="bu-chancellor-mute-btn" onclick="toggleChancellorMute()">
+          <video id="chancellor-video" class="bu-chancellor-img" playsinline muted loop preload="none" poster="<?php echo URL_IMG;?>vcpic.jpg" data-src="<?php echo $chancellor_video_url; ?>" style="background:#000;"></video>
+          <button id="chancellor-play-btn" class="bu-chancellor-play-btn" onclick="toggleChancellorPlay()" title="Play / Pause Video" aria-label="Play video">
+            <i class="fa fa-play"></i>
+          </button>
+          <button id="chancellor-mute-btn" class="bu-chancellor-mute-btn" onclick="toggleChancellorMute()" title="Toggle Mute" aria-label="Toggle mute" style="display:none;">
             <i class="fa fa-volume-off"></i>
           </button>
         <?php else: ?>
@@ -122,13 +125,13 @@ video.bu-chancellor-img {
   position: absolute !important;
   top: 15px !important;
   right: 15px !important;
-  background: rgba(0,0,0,0.6) !important;
+  background: rgba(0,0,0,0.65) !important;
   color: #fff !important;
-  border: none !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
   border-radius: 50% !important;
   width: 40px !important;
   height: 40px !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
   cursor: pointer !important;
   z-index: 10 !important;
   display: flex !important;
@@ -137,8 +140,33 @@ video.bu-chancellor-img {
   transition: all 0.3s !important;
 }
 .bu-chancellor-mute-btn:hover {
-  background: rgba(255,193,7,0.9) !important;
-  color: #000 !important;
+  background: rgba(255,193,7,0.95) !important;
+  color: #040F4A !important;
+}
+.bu-chancellor-play-btn {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  background: rgba(10, 27, 84, 0.88) !important;
+  color: #FFC107 !important;
+  border: 2px solid #FFC107 !important;
+  border-radius: 50% !important;
+  width: 58px !important;
+  height: 58px !important;
+  font-size: 20px !important;
+  cursor: pointer !important;
+  z-index: 9 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35) !important;
+  transition: all 0.3s ease !important;
+}
+.bu-chancellor-play-btn:hover {
+  background: #FFC107 !important;
+  color: #0A1B54 !important;
+  transform: translate(-50%, -50%) scale(1.1) !important;
 }
 .bu-chancellor-quote-card {
   position: absolute !important;
@@ -296,18 +324,87 @@ video.bu-chancellor-img {
 </style>
 
 <script>
-function toggleChancellorMute() {
-  var video = document.getElementById("chancellor-video");
-  var btnIcon = document.querySelector("#chancellor-mute-btn i");
-  if (video.muted) {
-    video.muted = false;
-    btnIcon.classList.remove("fa-volume-off");
-    btnIcon.classList.add("fa-volume-up");
-  } else {
-    video.muted = true;
-    btnIcon.classList.remove("fa-volume-up");
-    btnIcon.classList.add("fa-volume-off");
+(function() {
+  var video   = document.getElementById("chancellor-video");
+  var playBtn = document.getElementById("chancellor-play-btn");
+  var muteBtn = document.getElementById("chancellor-mute-btn");
+  if (!video) return;
+
+  var isLoaded = false;
+  function loadAndInitVideo(autoPlay) {
+    if (!isLoaded) {
+      isLoaded = true;
+      var dataSrc = video.getAttribute("data-src");
+      if (dataSrc) {
+        video.src = dataSrc;
+        video.load();
+      }
+    }
+    if (autoPlay) {
+      var p = video.play();
+      if (p !== undefined) {
+        p.then(function() {
+          if (playBtn) playBtn.style.display = "none";
+          if (muteBtn) muteBtn.style.display = "flex";
+        }).catch(function() {
+          if (playBtn) playBtn.style.display = "flex";
+        });
+      }
+    }
   }
-}
+
+  window.toggleChancellorPlay = function() {
+    loadAndInitVideo(false);
+    if (video.paused) {
+      var p = video.play();
+      if (p !== undefined) {
+        p.then(function() {
+          if (playBtn) playBtn.style.display = "none";
+          if (muteBtn) muteBtn.style.display = "flex";
+        });
+      }
+    } else {
+      video.pause();
+      if (playBtn) {
+        playBtn.style.display = "flex";
+        playBtn.innerHTML = '<i class="fa fa-play"></i>';
+      }
+    }
+  };
+
+  window.toggleChancellorMute = function() {
+    var btnIcon = document.querySelector("#chancellor-mute-btn i");
+    if (video.muted) {
+      video.muted = false;
+      if (btnIcon) {
+        btnIcon.classList.remove("fa-volume-off");
+        btnIcon.classList.add("fa-volume-up");
+      }
+    } else {
+      video.muted = true;
+      if (btnIcon) {
+        btnIcon.classList.remove("fa-volume-up");
+        btnIcon.classList.add("fa-volume-off");
+      }
+    }
+  };
+
+  // Deferred lazy load: only request video file when user scrolls near the Chancellor section
+  if ("IntersectionObserver" in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          loadAndInitVideo(true);
+          obs.unobserve(video);
+        }
+      });
+    }, { rootMargin: "180px 0px" });
+    obs.observe(video);
+  } else {
+    window.addEventListener("scroll", function onFirstScroll() {
+      loadAndInitVideo(true);
+    }, { once: true, passive: true });
+  }
+})();
 </script>
 

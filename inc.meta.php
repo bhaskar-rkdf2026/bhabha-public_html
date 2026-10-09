@@ -71,7 +71,6 @@ $bu_robots_tag = ($bu_seo && !empty($bu_seo['robots_tag']) && $bu_seo['robots_ta
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 <!-- Font Awesome Icons (Instant Local Loading with 4.7.0 and 6.5.1 CDN) -->
 <link rel="stylesheet" href="<?php echo URL_CSS;?>font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="<?php echo URL_CSS;?>bootstrap.min.css" rel="stylesheet">
 <!-- BU Global Page Redesign CSS -->
@@ -1787,7 +1786,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 	<!-- Responsive CSS -->
 	<link href="<?php echo URL_CSS;?>responsive.css" rel="stylesheet">
 	<!-- BU Comprehensive Responsive CSS (All Devices) -->
-	<link href="<?php echo URL_CSS;?>bu-responsive.css?v=<?php echo time(); ?>" rel="stylesheet">
+	<?php $bu_resp_ver = @filemtime(__DIR__ . '/css/bu-responsive.css') ?: '20260926'; ?>
+	<link href="<?php echo URL_CSS;?>bu-responsive.css?v=<?php echo $bu_resp_ver; ?>" rel="stylesheet">
 	<!-- SELECT MENU -->
 	<link href="<?php echo URL_CSS;?>breaking-news-ticker.css" rel="stylesheet">
 	<!-- SIDE MENU -->
@@ -1798,7 +1798,6 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
     <style>
       marquee{

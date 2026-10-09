@@ -161,11 +161,11 @@ $hc = getHeaderConfig();
         <!-- DESKTOP: Social Media Icons -->
         <?php if ($hc['show_social_links'] == '1'): ?>
         <div class="bu-topbar-socials bu-hide-mobile">
-          <?php if (!empty($hc['facebook_url'])): ?><a href="<?php echo htmlspecialchars($hc['facebook_url']); ?>" target="_blank" class="bu-social-btn bu-fb" title="Facebook"><i class="fa fa-facebook"></i></a><?php endif; ?>
-          <?php if (!empty($hc['instagram_url'])): ?><a href="<?php echo htmlspecialchars($hc['instagram_url']); ?>" target="_blank" class="bu-social-btn bu-insta" title="Instagram"><i class="fa fa-instagram"></i></a><?php endif; ?>
-          <?php if (!empty($hc['twitter_url'])): ?><a href="<?php echo htmlspecialchars($hc['twitter_url']); ?>" target="_blank" class="bu-social-btn bu-tw" title="Twitter / X"><i class="fa fa-twitter"></i></a><?php endif; ?>
-          <?php if (!empty($hc['youtube_url'])): ?><a href="<?php echo htmlspecialchars($hc['youtube_url']); ?>" target="_blank" class="bu-social-btn bu-yt" title="YouTube"><i class="fa fa-youtube-play"></i></a><?php endif; ?>
-          <?php if (!empty($hc['linkedin_url'])): ?><a href="<?php echo htmlspecialchars($hc['linkedin_url']); ?>" target="_blank" class="bu-social-btn bu-li" title="LinkedIn"><i class="fa fa-linkedin"></i></a><?php endif; ?>
+          <?php if (!empty($hc['facebook_url'])): ?><a href="<?php echo htmlspecialchars($hc['facebook_url']); ?>" target="_blank" rel="noopener noreferrer" class="bu-social-btn bu-fb" title="Facebook"><i class="fa fa-facebook"></i></a><?php endif; ?>
+          <?php if (!empty($hc['instagram_url'])): ?><a href="<?php echo htmlspecialchars($hc['instagram_url']); ?>" target="_blank" rel="noopener noreferrer" class="bu-social-btn bu-insta" title="Instagram"><i class="fa fa-instagram"></i></a><?php endif; ?>
+          <?php if (!empty($hc['twitter_url'])): ?><a href="<?php echo htmlspecialchars($hc['twitter_url']); ?>" target="_blank" rel="noopener noreferrer" class="bu-social-btn bu-tw" title="Twitter / X"><i class="fa fa-twitter"></i></a><?php endif; ?>
+          <?php if (!empty($hc['youtube_url'])): ?><a href="<?php echo htmlspecialchars($hc['youtube_url']); ?>" target="_blank" rel="noopener noreferrer" class="bu-social-btn bu-yt" title="YouTube"><i class="fa fa-youtube-play"></i></a><?php endif; ?>
+          <?php if (!empty($hc['linkedin_url'])): ?><a href="<?php echo htmlspecialchars($hc['linkedin_url']); ?>" target="_blank" rel="noopener noreferrer" class="bu-social-btn bu-li" title="LinkedIn"><i class="fa fa-linkedin"></i></a><?php endif; ?>
         </div>
         <?php endif; ?>
       </div>

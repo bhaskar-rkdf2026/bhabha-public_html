@@ -1725,36 +1725,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Scripts -->
 <?php include('inc.footer.js.php');?>
-<script>
-window.addEventListener('DOMContentLoaded', function() {
-  var hero = document.querySelector('.bu-inner-hero');
-  var nav = document.querySelector('.bu-alumni-sticky-nav');
-  var p1 = document.elementFromPoint(600, 200);
-  var p2 = document.elementFromPoint(600, 300);
-  var info = {
-    hero: hero ? {
-      rect: hero.getBoundingClientRect(),
-      bg: window.getComputedStyle(hero).backgroundColor,
-      bgImg: window.getComputedStyle(hero).backgroundImage,
-      display: window.getComputedStyle(hero).display,
-      visibility: window.getComputedStyle(hero).visibility,
-      zIndex: window.getComputedStyle(hero).zIndex,
-      position: window.getComputedStyle(hero).position,
-      color: window.getComputedStyle(hero).color,
-      htmlSnippet: hero.outerHTML.substring(0, 300)
-    } : null,
-    nav: nav ? {
-      rect: nav.getBoundingClientRect(),
-      display: window.getComputedStyle(nav).display,
-      position: window.getComputedStyle(nav).position,
-      top: window.getComputedStyle(nav).top,
-      zIndex: window.getComputedStyle(nav).zIndex
-    } : null,
-    element_at_600_200: p1 ? { tag: p1.tagName, className: p1.className, id: p1.id, outerHTML: p1.outerHTML.substring(0, 300) } : null,
-    element_at_600_300: p2 ? { tag: p2.tagName, className: p2.className, id: p2.id, outerHTML: p2.outerHTML.substring(0, 300) } : null
-  };
-  fetch('http://localhost/bhabha-public_html/debug_inspect.php', { method: 'POST', body: JSON.stringify(info) });
-});
-</script>
 </body>
 </html>

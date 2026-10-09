@@ -61,11 +61,14 @@ $portalPage = function_exists('getPortalPage') ? getPortalPage('mandatory-disclo
                     <tbody>
                       <?php 
                         $defaultDocs = [
-                          ['title' => 'Mandatory Public Disclosure — Bhabha University Bhopal', 'url' => URL_ROOT . 'upload/media/12dfaac45ab95d2c718f63563d7c5a28.pdf']
+                          ['title' => 'Mandatory Public Disclosure — Bhabha University Bhopal', 'url' => (defined('URL_UPLOAD') ? URL_UPLOAD : URL_ROOT . 'upload/') . 'media/12dfaac45ab95d2c718f63563d7c5a28.pdf']
                         ];
                         $docsList = (!empty($portalPage['data']['docs']) && is_array($portalPage['data']['docs'])) ? $portalPage['data']['docs'] : $defaultDocs;
                         foreach ($docsList as $d): 
-                          $dUrl = strpos($d['url'], 'http') === 0 ? $d['url'] : URL_ROOT . ltrim($d['url'], '/');
+                          $rawUrl = $d['url'];
+                          // Sanitize localhost/127.0.0.1 if stored in database
+                          $rawUrl = preg_replace('#https?://(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', (defined('URL_ROOT') ? URL_ROOT : '/'), $rawUrl);
+                          $dUrl = preg_match('/^(https?:\/\/|\/|#)/i', $rawUrl) ? $rawUrl : (defined('URL_ROOT') ? URL_ROOT : '/') . ltrim($rawUrl, '/');
                         ?>
                         <tr>
                           <td style="width:80px; text-align:center; vertical-align:middle;">

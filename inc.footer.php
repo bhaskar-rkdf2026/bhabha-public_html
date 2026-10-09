@@ -13,9 +13,9 @@
       <div class="bu-footer-col">
         <h4 class="bu-footer-heading">QUICK LINKS</h4>
         <ul class="bu-footer-links">
-          <li><a href="https://dte.mponline.gov.in/portal/services/onlinecounselling/counshomepage/home.aspx" target="_blank"><i class="fa fa-angle-right"></i> M.P. Online Counselling</a></li>
-          <li><a href="http://www.mptechedu.org/" target="_blank"><i class="fa fa-angle-right"></i> Directorate of Technical Education M.P.</a></li>
-          <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> Anti-Ragging</a></li>
+          <li><a href="https://dte.mponline.gov.in/portal/services/onlinecounselling/counshomepage/home.aspx" target="_blank" rel="noopener noreferrer"><i class="fa fa-angle-right"></i> M.P. Online Counselling</a></li>
+          <li><a href="https://dte.mponline.gov.in/" target="_blank" rel="noopener noreferrer"><i class="fa fa-angle-right"></i> Directorate of Technical Education M.P.</a></li>
+          <li><a href="https://www.antiragging.in/" target="_blank" rel="noopener noreferrer"><i class="fa fa-angle-right"></i> Anti-Ragging</a></li>
           <li><a href="<?php echo href("research.php"); ?>"><i class="fa fa-angle-right"></i> Research &amp; Innovation</a></li>
           <li><a href="<?php echo href("iqac.php"); ?>"><i class="fa fa-angle-right"></i> IQAC Cell</a></li>
           <li><a href="<?php echo href("jobs.php"); ?>"><i class="fa fa-angle-right"></i> Job Openings &amp; Recruitment</a></li>
@@ -27,7 +27,7 @@
           <li><a href="<?php echo href("hbkportal.php"); ?>"><i class="fa fa-angle-right"></i> Dr Homi Bhabha Online Knowledge Portal</a></li>
           <li><a href="<?php echo href("clubs.php"); ?>"><i class="fa fa-angle-right"></i> University Clubs &amp; Societies</a></li>
           <li><a href="<?php echo href("events.php"); ?>"><i class="fa fa-angle-right"></i> Activities &amp; Events</a></li>
-          <li><a href="https://ncte.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> NCTE</a></li>
+          <li><a href="https://ncte.gov.in/website/index.aspx" target="_blank" rel="noopener noreferrer"><i class="fa fa-angle-right"></i> NCTE</a></li>
         </ul>
       </div>
 
@@ -44,13 +44,13 @@
           <li><a href="<?php echo href('enquiry.php'); ?>"><i class="fa fa-angle-right"></i> Admission Enquiry</a></li>
           <li><a href="<?php echo href('news.php'); ?>"><i class="fa fa-angle-right"></i> Latest News Updates</a></li>
           <li><a href="https://voters.eci.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> Voter Portal</a></li>
-          <li><a href="https://scholarshipportal.mp.nic.in/Index.aspx" target="_blank"><i class="fa fa-angle-right"></i> MP Scholarship Portal 2.0</a></li>
-          <li><a href="https://scholarships.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> National Scholarship Portal</a></li>
-          <li><a href="https://drive.google.com/file/d/1jhIfUzZbjtOWSCnYu77C0MM5C8U5vumt/view" target="_blank"><i class="fa fa-angle-right"></i> Prospectus 2024-25</a></li>
+          <li><a href="https://hescholarship.mp.gov.in/" target="_blank" rel="noopener noreferrer"><i class="fa fa-angle-right"></i> MP Scholarship Portal 2.0</a></li>
+          <li><a href="https://scholarships.gov.in/" target="_blank" rel="noopener noreferrer"><i class="fa fa-angle-right"></i> National Scholarship Portal</a></li>
+          <li><a href="https://drive.google.com/file/d/1jhIfUzZbjtOWSCnYu77C0MM5C8U5vumt/view" target="_blank" rel="noopener noreferrer"><i class="fa fa-angle-right"></i> Prospectus 2024-25</a></li>
           <li><a href="<?php echo href("faculties.php"); ?>"><i class="fa fa-angle-right"></i> Staff Details</a></li>
           <li><a href="<?php echo href("auditreport.php"); ?>"><i class="fa fa-angle-right"></i> Income Expenditure / Audit</a></li>
-          <li><a href="http://www.mppurc.mp.gov.in/" target="_blank"><i class="fa fa-angle-right"></i> MPPURC</a></li>
-          <li><a href="https://www.antiragging.in/" target="_blank"><i class="fa fa-angle-right"></i> Ragging Prevention</a></li>
+          <li><a href="http://mpnvva.in/" target="_blank" rel="noopener noreferrer"><i class="fa fa-angle-right"></i> MPPURC</a></li>
+          <li><a href="https://www.antiragging.in/" target="_blank" rel="noopener noreferrer"><i class="fa fa-angle-right"></i> Ragging Prevention</a></li>
         </ul>
       </div>
 
@@ -130,13 +130,13 @@
 
         <h4 class="bu-footer-heading" style="margin-top: 30px;">SOCIAL LINKS</h4>
         <div class="bu-footer-socials" style="margin-top: 15px;">
-          <a href="https://www.facebook.com/BhabhaUniversityIndia/" target="_blank" class="bu-social-badge" title="Facebook"><i class="fa fa-facebook"></i></a>
-          <a href="https://www.instagram.com/bhabhauniversitybhopal/" target="_blank" class="bu-social-badge" title="Instagram"><i class="fa fa-instagram"></i></a>
-          <a href="https://twitter.com/bhabhaUniversty" target="_blank" class="bu-social-badge" title="Twitter"><i class="fa fa-twitter"></i></a>
-          <a href="https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g" target="_blank" class="bu-social-badge" title="YouTube"><i class="fa fa-youtube-play"></i></a>
-          <a href="https://in.linkedin.com/company/bhabha-university" target="_blank" class="bu-social-badge" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
-          <a href="https://in.pinterest.com/buwebsite2020/" target="_blank" class="bu-social-badge" title="Pinterest"><i class="fa fa-pinterest"></i></a>
-          <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" class="bu-social-badge" title="Google Mail"><i class="fa fa-google"></i></a>
+          <a href="https://www.facebook.com/bhabha.university/" target="_blank" rel="noopener noreferrer" class="bu-social-badge" title="Facebook"><i class="fa fa-facebook"></i></a>
+          <a href="https://www.instagram.com/bhabhauniversitybhopal/" target="_blank" rel="noopener noreferrer" class="bu-social-badge" title="Instagram"><i class="fa fa-instagram"></i></a>
+          <a href="https://twitter.com/bhabhaUniversty" target="_blank" rel="noopener noreferrer" class="bu-social-badge" title="Twitter"><i class="fa fa-twitter"></i></a>
+          <a href="https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g" target="_blank" rel="noopener noreferrer" class="bu-social-badge" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+          <a href="https://in.linkedin.com/company/bhabha-university" target="_blank" rel="noopener noreferrer" class="bu-social-badge" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+          <a href="https://in.pinterest.com/buwebsite2020/" target="_blank" rel="noopener noreferrer" class="bu-social-badge" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+          <a href="mailto:info@bhabhauniversity.edu.in" class="bu-social-badge" title="Official Email"><i class="fa fa-envelope"></i></a>
         </div>
       </div>
 
@@ -817,7 +817,8 @@
         <img src="<?php echo URL_ROOT;?>new-media/image/highest-package-60lpa.png" 
              alt="Highest Package 60 LPA - Mr. Anurag Kumar at China Petroleum Pipeline Engineering Co. Ltd." 
              class="bu-hp-poster-img" 
-             loading="eager"
+             loading="lazy"
+             decoding="async"
              onerror="this.src='<?php echo URL_ROOT;?>upload/media/highest-package-60lpa.png'">
       </div>
       

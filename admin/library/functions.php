@@ -889,7 +889,7 @@ function getHeaderConfig() {
         ['id' => 't2', 'label' => 'NIRF', 'url' => 'nirf.php', 'target' => '_self', 'show' => '1'],
         ['id' => 't3', 'label' => 'NAD', 'url' => 'page.php?id=25', 'target' => '_self', 'show' => '1'],
         ['id' => 't4', 'label' => 'IQAC', 'url' => 'iqac.php', 'target' => '_self', 'show' => '1'],
-        ['id' => 't5', 'label' => 'Public Disclosure', 'url' => (defined('URL_UPLOAD') ? URL_UPLOAD : '') . 'media/12dfaac45ab95d2c718f63563d7c5a28.pdf', 'target' => '_blank', 'show' => '1'],
+        ['id' => 't5', 'label' => 'Public Disclosure', 'url' => (defined('URL_UPLOAD') ? URL_UPLOAD : (defined('URL_ROOT') ? URL_ROOT . 'upload/' : 'upload/')) . 'media/12dfaac45ab95d2c718f63563d7c5a28.pdf', 'target' => '_blank', 'show' => '1'],
         ['id' => 't6', 'label' => 'Verification', 'url' => 'https://bhabha.accsofterp.com/AccSoft/EducationVerificationForm.aspx', 'target' => '_blank', 'show' => '1'],
         ['id' => 't7', 'label' => 'Webmail', 'url' => 'https://webmail.bhabhauniversity.edu.in/', 'target' => '_blank', 'show' => '1'],
         ['id' => 't8', 'label' => 'Blog', 'url' => 'blogs.php', 'target' => '_self', 'show' => '1'],
@@ -926,7 +926,7 @@ function getHeaderConfig() {
         'erp_links'          => $default_erp_links,
         'top_quick_links'    => $default_top_quick_links,
 
-        'facebook_url'       => 'https://www.facebook.com/BhabhaUniversityIndia/',
+        'facebook_url'       => 'https://www.facebook.com/bhabha.university/',
         'instagram_url'      => 'https://www.instagram.com/bhabhauniversitybhopal/',
         'twitter_url'        => 'https://twitter.com/bhabhaUniversty',
         'youtube_url'        => 'https://www.youtube.com/channel/UCHyRBhcOyXt2CvTAW6JzP-g',
@@ -957,12 +957,33 @@ function getHeaderConfig() {
         'nirf_url'           => 'nirf.php',
         'nad_url'            => 'page.php?id=25',
         'iqac_url'           => 'iqac.php',
-        'disclosure_url'     => (defined('URL_UPLOAD') ? URL_UPLOAD : '') . 'media/12dfaac45ab95d2c718f63563d7c5a28.pdf',
+        'disclosure_url'     => (defined('URL_UPLOAD') ? URL_UPLOAD : (defined('URL_ROOT') ? URL_ROOT . 'upload/' : 'upload/')) . 'media/12dfaac45ab95d2c718f63563d7c5a28.pdf',
         'verification_url'   => 'https://bhabha.accsofterp.com/AccSoft/EducationVerificationForm.aspx',
         'blog_url'           => 'blogs.php',
     ];
 
-    if (!isset($db) || !is_object($db)) return $default;
+    $sanitizeHeaderUrls = function($data) use (&$sanitizeHeaderUrls) {
+        if (is_array($data)) {
+            foreach ($data as $k => $v) {
+                $data[$k] = $sanitizeHeaderUrls($v);
+            }
+            return $data;
+        }
+        if (is_string($data)) {
+            $root = defined('URL_ROOT') ? URL_ROOT : 'https://www.bhabhauniversity.edu.in/';
+            // Convert any localhost/127.0.0.1 references to dynamic root
+            $data = preg_replace('#https?://(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', $root, $data);
+            $data = preg_replace('#//(?:localhost|127\.0\.0\.1)(?::\d+)?/bhabha-public_html/#i', $root, $data);
+            // Convert outdated Facebook URL to verified active page
+            if (strpos($data, 'facebook.com/BhabhaUniversityIndia') !== false) {
+                $data = str_replace('facebook.com/BhabhaUniversityIndia/', 'facebook.com/bhabha.university/', $data);
+                $data = str_replace('facebook.com/BhabhaUniversityIndia', 'facebook.com/bhabha.university/', $data);
+            }
+        }
+        return $data;
+    };
+
+    if (!isset($db) || !is_object($db)) return $sanitizeHeaderUrls($default);
 
     try {
         $db->where('field', 'header_config_json');
@@ -980,11 +1001,11 @@ function getHeaderConfig() {
                 if (empty($merged['erp_links']) || !is_array($merged['erp_links'])) {
                     $merged['erp_links'] = $default_erp_links;
                 }
-                return $merged;
+                return $sanitizeHeaderUrls($merged);
             }
         }
     } catch (\Throwable $e) {}
 
-    return $default;
+    return $sanitizeHeaderUrls($default);
 }
 ?>

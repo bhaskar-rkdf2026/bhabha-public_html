@@ -98,10 +98,15 @@ if (isset($_POST['save_header_settings'])) {
         'nirf_url'           => 'nirf.php',
         'nad_url'            => 'page.php?id=25',
         'iqac_url'           => 'iqac.php',
-        'disclosure_url'     => (defined('URL_UPLOAD') ? URL_UPLOAD : '') . 'media/12dfaac45ab95d2c718f63563d7c5a28.pdf',
+        'disclosure_url'     => 'upload/media/12dfaac45ab95d2c718f63563d7c5a28.pdf',
         'verification_url'   => 'https://bhabha.accsofterp.com/AccSoft/EducationVerificationForm.aspx',
         'blog_url'           => 'blogs.php',
     ];
+
+    // Sanitize any localhost/127.0.0.1 references before persisting to DB
+    if (function_exists('clean_localhost_urls')) {
+        $config = clean_localhost_urls($config);
+    }
 
     $json_value = json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 

@@ -208,7 +208,7 @@
     "https://www.advocatekhoj.com/lawschool/schoolinfo.php?SchoolId=1094&College=Faculty_of_Law,_Bhabha_University",
     "https://yappe.in/madhya-pradesh/bhopal/bhabha-engineering-research-institute/442846",
     "https://in.linkedin.com/company/bhabha-university",
-    "https://www.facebook.com/BhabhaUniversityIndia"
+    "https://www.facebook.com/bhabha.university/"
   ],
   "telephone": "+91 91111 05431",
   "url": "https://www.bhabhauniversity.edu.in/"
@@ -217,21 +217,36 @@
 <!--Google Search console code -->
 <meta name="google-site-verification" content="QCDmWuWAGYoxiMTf-Lg564W2DoEuzUbZKVCjQuYULyY" />
 
-<!-- Meta Pixel Code -->
+<!-- Meta Pixel Code (Deferred for Core Web Vitals & Fast Rendering) -->
 <script>
 if (typeof window.__chromium_devtools_metrics_reporter !== 'function') {
   window.__chromium_devtools_metrics_reporter = function() {};
 }
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1044262718273018');
-fbq('track', 'PageView');
+(function() {
+  var loaded = false;
+  function initFB() {
+    if (loaded) return;
+    loaded = true;
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1044262718273018');
+    fbq('track', 'PageView');
+  }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(function() { setTimeout(initFB, 1500); }, { timeout: 3000 });
+  } else {
+    setTimeout(initFB, 2000);
+  }
+  ['scroll', 'mousemove', 'touchstart', 'click'].forEach(function(evt) {
+    window.addEventListener(evt, initFB, { once: true, passive: true });
+  });
+})();
 </script>
 <noscript><img loading="lazy" height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1044262718273018&ev=PageView&noscript=1"
