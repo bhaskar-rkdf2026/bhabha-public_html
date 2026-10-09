@@ -15,6 +15,11 @@
   
   <nav class="navbar-custom">
     <ul class="navbar-right d-flex list-inline float-right mb-0 align-items-center" style="height:70px;">
+      <li class="list-inline-item mr-2 d-none d-sm-inline-block">
+        <a href="dashboard.php?action=sync_all_db" class="btn btn-sm btn-outline-success font-weight-bold px-2 py-1" style="border-radius:20px; font-size:11.5px; border-color:#10B981; color:#059669;" title="Sync All Database Tables">
+          <i class="fa fa-sync-alt mr-1"></i> DB Sync
+        </a>
+      </li>
       <li class="dropdown notification-list">
         <div class="dropdown notification-list nav-pro-img">
           <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user d-flex align-items-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false" style="padding:0 15px;gap:10px;">

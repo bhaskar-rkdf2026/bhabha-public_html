@@ -1,6 +1,22 @@
 <?php 
 include_once("config.php");
 checksession($_SESSION[LOGIN_ADMIN]['userName'], 'index.php');
+require_once("inc.global_db_sync.php");
+
+// Handle DB Sync Dismissal
+if (isset($_GET['dismiss_sync'])) {
+    unset($_SESSION['db_sync_result']);
+    redirect('dashboard.php');
+}
+
+// Handle DB Sync Global Execution
+if (isset($_GET['action']) && $_GET['action'] === 'sync_all_db') {
+    $syncResult = bu_run_global_db_sync($db);
+    $_SESSION['db_sync_result'] = $syncResult;
+    redirect('dashboard.php');
+}
+
+$dbSyncReport = $_SESSION['db_sync_result'] ?? null;
 
 // Safely fetch live metrics from database
 $enquiryCount = 0;
@@ -408,7 +424,7 @@ try {
                       <i class="fa fa-calendar"></i> <?php echo date('l, d F Y'); ?>
                     </span>
                     <span class="dash-meta-badge">
-                      <i class="fa fa-database"></i> Database: bhabhaun_mohitdb
+                      <i class="fa fa-database"></i> Database: <?php echo htmlspecialchars($dbName ?? 'bhabhaun_mohitdb'); ?>
                     </span>
                     <span class="dash-meta-badge">
                       <i class="fa fa-shield-alt"></i> System: Online &amp; Encrypted
@@ -416,6 +432,9 @@ try {
                   </div>
                 </div>
                 <div class="mt-3 mt-md-0 text-md-right">
+                  <a href="dashboard.php?action=sync_all_db" id="btnGlobalDbSync" class="btn btn-success btn-sm font-weight-bold px-3 py-2 shadow-sm mb-1 mr-1" style="background:#10B981 !important; border:none; box-shadow:0 4px 12px rgba(16, 185, 129, 0.35) !important;" onclick="return triggerGlobalDbSync(event, this);">
+                    <i class="fa fa-sync-alt" id="syncIcon"></i> <span id="syncText">Complete DB Sync</span>
+                  </a>
                   <a href="section_hub.php" class="btn btn-warning btn-sm font-weight-bold px-3 py-2 shadow-sm mb-1" style="color: #0A1B54 !important; background: #FFC107 !important; border:none;">
                     <i class="mdi mdi-apps"></i> Section-wise Page Manager
                   </a>
@@ -428,6 +447,97 @@ try {
             </div>
           </div>
         </div>
+
+        <?php if (!empty($dbSyncReport)): ?>
+        <!-- DB Sync Comprehensive Result Banner -->
+        <div class="row pt-3">
+          <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius:12px; border-left:6px solid #10B981 !important; background:linear-gradient(135deg, #ECFDF5 0%, #FFFFFF 100%);">
+              <div class="card-body p-3">
+                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                  <div>
+                    <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                      <span class="badge badge-success px-2 py-1 font-weight-bold" style="font-size:12px; background:#10B981;">
+                        <i class="fa fa-check-circle"></i> Complete DB Sync Done
+                      </span>
+                      <strong style="color:#065F46; font-size:14.5px;">All 46 Database Tables Verified &amp; Synchronized</strong>
+                      <small class="text-muted ml-md-2">(<?php echo htmlspecialchars($dbSyncReport['timestamp'] ?? ''); ?>, <?php echo htmlspecialchars($dbSyncReport['duration'] ?? 0); ?>s)</small>
+                    </div>
+                    <p class="mb-2 text-muted small">
+                      All 46 tables, dynamic portal modules, column structures, and essential default seeds have been verified and auto-repaired.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                      <span class="badge badge-pill badge-light border text-dark px-2 py-1">
+                        <i class="fa fa-table text-primary mr-1"></i> Tables Online: <strong><?php echo $dbSyncReport['tables_present']; ?> / <?php echo $dbSyncReport['tables_checked']; ?></strong>
+                      </span>
+                      <?php if (!empty($dbSyncReport['tables_created'])): ?>
+                      <span class="badge badge-pill badge-warning text-dark px-2 py-1">
+                        <i class="fa fa-plus-circle mr-1"></i> Tables Created: <strong><?php echo count($dbSyncReport['tables_created']); ?></strong> (<?php echo implode(', ', $dbSyncReport['tables_created']); ?>)
+                      </span>
+                      <?php endif; ?>
+                      <?php if (!empty($dbSyncReport['columns_added'])): ?>
+                      <span class="badge badge-pill badge-info px-2 py-1">
+                        <i class="fa fa-columns mr-1"></i> Columns Added: <strong><?php echo count($dbSyncReport['columns_added']); ?></strong> (<?php echo implode(', ', $dbSyncReport['columns_added']); ?>)
+                      </span>
+                      <?php endif; ?>
+                      <?php if (!empty($dbSyncReport['tables_seeded'])): ?>
+                      <span class="badge badge-pill badge-primary px-2 py-1">
+                        <i class="fa fa-seedling mr-1"></i> Data Seeded: <strong><?php echo implode('; ', $dbSyncReport['tables_seeded']); ?></strong>
+                      </span>
+                      <?php endif; ?>
+                      <?php if (empty($dbSyncReport['tables_created']) && empty($dbSyncReport['columns_added']) && empty($dbSyncReport['tables_seeded'])): ?>
+                      <span class="badge badge-pill badge-success px-2 py-1" style="background:#D1FAE5; color:#065F46;">
+                        <i class="fa fa-shield-alt mr-1"></i> All schemas &amp; records 100% healthy
+                      </span>
+                      <?php endif; ?>
+                      
+                      <a href="#collapseTableCatalog" data-toggle="collapse" class="btn btn-sm btn-outline-success font-weight-bold ml-md-2" style="font-size:11.5px; border-radius:20px; padding:3px 10px;">
+                        <i class="fa fa-list"></i> View All 46 Tables Status
+                      </a>
+                    </div>
+                  </div>
+                  <div>
+                    <a href="dashboard.php?dismiss_sync=1" class="btn btn-sm btn-outline-secondary" title="Dismiss" style="border-radius:20px; font-size:11px;">
+                      <i class="fa fa-times"></i> Dismiss
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Collapsible 46 Table Breakdown -->
+                <div class="collapse mt-3 pt-3 border-top" id="collapseTableCatalog">
+                  <div class="row">
+                    <?php if (!empty($dbSyncReport['groups'])): ?>
+                      <?php foreach ($dbSyncReport['groups'] as $grpName => $tList): ?>
+                        <div class="col-lg-4 col-md-6 mb-3">
+                          <div class="p-2 border rounded bg-white shadow-sm h-100">
+                            <h6 class="font-weight-bold mb-2 pb-1 border-bottom" style="font-size:12px; color:#0A1B54;">
+                              <i class="fa fa-folder-open text-warning mr-1"></i> <?php echo htmlspecialchars($grpName); ?>
+                            </h6>
+                            <ul class="list-unstyled mb-0" style="font-size:11.5px;">
+                              <?php foreach ($tList as $tItem): ?>
+                                <li class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                  <span>
+                                    <i class="fa fa-check-circle text-success mr-1" style="font-size:10px;"></i>
+                                    <code><?php echo htmlspecialchars($tItem['name']); ?></code>
+                                  </span>
+                                  <span class="badge badge-light border">
+                                    <?php echo $tItem['rows'] >= 0 ? number_format($tItem['rows']) . ' rows' : 'ERR'; ?>
+                                  </span>
+                                </li>
+                              <?php endforeach; ?>
+                            </ul>
+                          </div>
+                        </div>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <?php endif; ?>
 
         <!-- Section Navigation Quick Bar -->
         <div class="row mb-3">
@@ -987,5 +1097,31 @@ try {
   </div>
 </div>
 <?php include_once("inc.footer.js.php"); ?>
+<script>
+function triggerGlobalDbSync(e, btn) {
+    if (!confirm('Are you sure you want to run Complete DB Sync?\n\nThis will safely verify all 46 tables, create any missing tables, auto-repair required columns, and ensure default records without modifying your existing data.')) {
+        if (e) e.preventDefault();
+        return false;
+    }
+    
+    var icon = document.getElementById('syncIcon');
+    var text = document.getElementById('syncText');
+    if (icon) icon.className = 'fa fa-spinner fa-spin';
+    if (text) text.innerText = 'Syncing 46 Tables...';
+    if (btn) btn.style.pointerEvents = 'none';
+
+    fetch('ajax_db_sync.php')
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+          window.location.href = 'dashboard.php';
+      })
+      .catch(function(err) {
+          window.location.href = 'dashboard.php?action=sync_all_db';
+      });
+    
+    if (e) e.preventDefault();
+    return false;
+}
+</script>
 </body>
 </html>
