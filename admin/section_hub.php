@@ -326,7 +326,7 @@ $sections = [
             ],
             [
                 'title'       => 'Online Fee Payment Instructions',
-                'nav_path'    => 'Frontend Nav > Admissions > Online Fee Payment',
+                'nav_path'    => 'Frontend Nav > Academics > Pay Online Fee',
                 'live_url'    => URL_ROOT . 'page.php?id=2',
                 'edit_url'    => 'pages.php?action=edit&id=2',
                 'icon'        => 'mdi mdi-credit-card-outline',

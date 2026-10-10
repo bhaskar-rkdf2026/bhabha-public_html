@@ -369,6 +369,7 @@ $hc = getHeaderConfig();
                         <li><a href="<?php echo href("academic.php")?>">Academic Calendar</a></li>
                         <li><a href="<?php echo href("page.php","id=9");?>">MOU &amp; Collaborations</a></li>
                         <li><a href="<?php echo href("page.php","id=8");?>">Online Video Resources</a></li>
+                        <li><a href="<?php echo href("page.php","id=2");?>">Pay Online Fee</a></li>
                       </ul>
                     </div>
                     <!-- Column 2: Examinations -->
