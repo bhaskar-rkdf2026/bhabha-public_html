@@ -48,6 +48,59 @@ if (!function_exists('bu_admin_media_url')) {
     }
 }
 
+if (!function_exists('bu_parse_video_url')) {
+    function bu_parse_video_url($url) {
+        $url = trim($url ?? '');
+        if (empty($url)) {
+            return [
+                'type' => 'empty',
+                'id' => '',
+                'embed' => '',
+                'preview' => '',
+                'url' => ''
+            ];
+        }
+
+        // Vimeo
+        if (preg_match('#(?:vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/[^\/]+\/videos\/|album\/(?:\d+\/)?video\/|manage\/videos\/|video\/|)|player\.vimeo\.com\/video\/)(\d+)(?:\/([a-zA-Z0-9]+))?#i', $url, $m)) {
+            $vidId = $m[1];
+            $hashParam = '';
+            if (!empty($m[2])) {
+                $hashParam = '&h=' . $m[2];
+            } elseif (preg_match('/[?&]h=([a-zA-Z0-9]+)/i', $url, $hm)) {
+                $hashParam = '&h=' . $hm[1];
+            }
+            return [
+                'type' => 'vimeo',
+                'id' => $vidId,
+                'embed' => 'https://player.vimeo.com/video/' . $vidId . '?autoplay=1&loop=1&muted=1&background=1&autopause=0&controls=0&playsinline=1' . $hashParam,
+                'preview' => 'https://player.vimeo.com/video/' . $vidId . '?autoplay=0&controls=1' . $hashParam,
+                'url' => $url
+            ];
+        }
+
+        // YouTube
+        if (preg_match('#(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})#i', $url, $m)) {
+            $vidId = $m[1];
+            return [
+                'type' => 'youtube',
+                'id' => $vidId,
+                'embed' => 'https://www.youtube-nocookie.com/embed/' . $vidId . '?autoplay=1&mute=1&loop=1&playlist=' . $vidId . '&controls=0&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&modestbranding=1&playsinline=1',
+                'preview' => 'https://www.youtube-nocookie.com/embed/' . $vidId . '?autoplay=0&controls=1',
+                'url' => $url
+            ];
+        }
+
+        return [
+            'type' => 'direct',
+            'id' => '',
+            'embed' => '',
+            'preview' => '',
+            'url' => $url
+        ];
+    }
+}
+
 // Quick status toggle via GET
 if ($action == "toggle_status" && isset($_GET['id'])) {
     $id = intval($_GET['id']);
@@ -157,7 +210,27 @@ if (isset($_POST['submit'])) {
                     }
                 }
             }
-            $extraArray = ['recognitions' => $recogs];
+
+            $mediaType = trim($_POST['chanc_media_type'] ?? 'video');
+            $videoFit  = trim($_POST['chanc_video_fit'] ?? 'portrait');
+            $imgUrl    = trim($_POST['chanc_image_url'] ?? '');
+            if (isset($_FILES['chanc_image_file']) && !empty($_FILES['chanc_image_file']['name'])) {
+                $upImg = bu_handle_upload($_FILES['chanc_image_file'], '../upload/media/');
+                if ($upImg) {
+                    $imgUrl = $upImg;
+                }
+            }
+
+            if ($mediaType === 'image' && !empty($imgUrl)) {
+                $mediaUrl = $imgUrl;
+            }
+
+            $extraArray = [
+                'recognitions' => $recogs,
+                'media_type'   => $mediaType,
+                'video_fit'    => $videoFit,
+                'image_url'    => $imgUrl
+            ];
         } 
         // 3. WHY BHABHA (6+ Feature Points)
         elseif ($secKey == 'why_bhabha') {
@@ -773,40 +846,105 @@ if (isset($_POST['submit'])) {
                   <?php endif; ?>
                   
                   <!-- Main Media / Video URL & Live Preview for Chancellor -->
-                  <?php if (in_array($aryData['section_key'], ['chancellor_welcome'])): ?>
+                  <?php if (in_array($aryData['section_key'], ['chancellor_welcome'])): 
+                    $chancMediaType = $extra['media_type'] ?? (preg_match('/\.(jpg|jpeg|png|webp|gif)$/i', $aryData['media_url']) ? 'image' : 'video');
+                    $chancVideoFit  = $extra['video_fit'] ?? 'portrait';
+                    $chancImageUrl  = !empty($extra['image_url']) ? $extra['image_url'] : (preg_match('/\.(jpg|jpeg|png|webp|gif)$/i', $aryData['media_url']) ? $aryData['media_url'] : 'assets/images/vcpic.jpg');
+                  ?>
                   <div class="simple-card-group">
-                    <div class="simple-card-title"><i class="fa fa-video-camera text-primary"></i> Video / Media File &amp; Live Preview</div>
-                    <div class="row">
-                      <div class="col-md-7 form-group">
-                        <label>Media / Video URL</label>
-                        <input type="text" name="media_url" class="form-control" value="<?php echo htmlspecialchars($aryData['media_url']); ?>" />
-                        <small class="help-tip">Relative path (e.g. <code>upload/video/bhabha_video.mp4</code>) or full external link</small>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <div class="simple-card-title mb-0">
+                        <i class="fa fa-photo text-primary"></i> Chancellor Media (Video or Photo Mode)
                       </div>
-                      <div class="col-md-5 form-group">
-                        <label>Or Upload New Video / Image</label>
-                        <input type="file" name="media_file" class="form-control-file" />
-                        <small class="help-tip">Uploads directly to <code>upload/media/</code></small>
+                      <div class="btn-group btn-group-toggle">
+                        <label class="btn btn-sm <?php echo ($chancMediaType === 'video') ? 'btn-primary active font-weight-bold' : 'btn-outline-primary'; ?>" id="lbl_mtype_vid" onclick="toggleChancellorMediaType('video')">
+                          <input type="radio" name="chanc_media_type" value="video" id="mtype_vid" <?php echo ($chancMediaType === 'video') ? 'checked' : ''; ?> style="display:none;"> <i class="fa fa-video-camera"></i> Video Mode
+                        </label>
+                        <label class="btn btn-sm <?php echo ($chancMediaType === 'image') ? 'btn-success active font-weight-bold' : 'btn-outline-success'; ?>" id="lbl_mtype_img" onclick="toggleChancellorMediaType('image')">
+                          <input type="radio" name="chanc_media_type" value="image" id="mtype_img" <?php echo ($chancMediaType === 'image') ? 'checked' : ''; ?> style="display:none;"> <i class="fa fa-image"></i> Photo / Image Mode
+                        </label>
                       </div>
                     </div>
-                    <?php if (!empty($aryData['media_url'])): 
-                      $mResolved = bu_admin_media_url($aryData['media_url']);
-                      $isVid = preg_match('/\.(mp4|webm|ogg)$/i', $aryData['media_url']);
-                    ?>
-                    <div class="mt-2">
-                      <small class="font-weight-bold text-muted d-block">Current Media Preview:</small>
-                      <?php if ($isVid): ?>
-                        <video src="<?php echo $mResolved; ?>" controls class="bu-live-video-preview"></video>
-                      <?php else: ?>
-                        <div class="bu-live-thumb-wrap">
-                          <img src="<?php echo $mResolved; ?>" alt="Media" class="bu-live-thumb-img">
-                          <div>
-                            <span class="font-weight-bold d-block"><?php echo basename($aryData['media_url']); ?></span>
-                            <a href="<?php echo $mResolved; ?>" target="_blank" class="small text-primary"><i class="fa fa-external-link"></i> Open Full View</a>
-                          </div>
+
+                    <!-- 1. VIDEO SETTINGS PANEL -->
+                    <div id="chanc_video_panel" style="<?php echo ($chancMediaType === 'image') ? 'display:none;' : ''; ?>">
+                      <div class="row">
+                        <div class="col-md-7 form-group">
+                          <label class="font-weight-bold"><i class="fa fa-film text-info"></i> Video URL (Vimeo / YouTube / .mp4)</label>
+                          <input type="text" name="media_url" class="form-control" value="<?php echo htmlspecialchars($aryData['media_url']); ?>" placeholder="https://vimeo.com/... or https://youtube.com/... or new-media/image/hero/sadhna-mam.mp4" />
+                          <small class="help-tip">Paste <strong>Vimeo</strong> link, <strong>YouTube</strong> link, or local <strong>.mp4</strong> path.</small>
                         </div>
+                        <div class="col-md-5 form-group">
+                          <label class="font-weight-bold"><i class="fa fa-upload text-info"></i> Or Upload Video File (.mp4)</label>
+                          <input type="file" name="media_file" class="form-control-file" accept="video/mp4,video/webm" />
+                          <small class="help-tip">Uploads directly to <code>upload/media/</code></small>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-7 form-group">
+                          <label class="font-weight-bold"><i class="fa fa-arrows-alt text-secondary"></i> Video Fit Mode (Black Space Remove)</label>
+                          <select name="chanc_video_fit" class="form-control form-control-sm">
+                            <option value="portrait" <?php echo ($chancVideoFit === 'portrait') ? 'selected' : ''; ?>>Portrait / Full Bleed 9:16 (Recommended for Phone/Vertical Video - NO Black Bars)</option>
+                            <option value="landscape" <?php echo ($chancVideoFit === 'landscape') ? 'selected' : ''; ?>>Landscape / Widescreen 16:9 (Cover Full Box)</option>
+                            <option value="fit" <?php echo ($chancVideoFit === 'fit') ? 'selected' : ''; ?>>Fit Center (Standard)</option>
+                          </select>
+                          <small class="help-tip">Default <strong>Portrait</strong> option removes all black borders on the sides for phone/reel videos.</small>
+                        </div>
+                      </div>
+
+                      <?php if (!empty($aryData['media_url']) && $chancMediaType !== 'image'): 
+                        $vInfo = bu_parse_video_url($aryData['media_url']);
+                        $mResolved = bu_admin_media_url($aryData['media_url']);
+                        $isVid = preg_match('/\.(mp4|webm|ogg)$/i', $aryData['media_url']);
+                      ?>
+                      <div class="mt-2">
+                        <small class="font-weight-bold text-muted d-block mb-1">Current Video Preview:</small>
+                        <?php if ($vInfo['type'] === 'vimeo' || $vInfo['type'] === 'youtube'): ?>
+                          <div class="mt-2" style="max-width:320px;">
+                            <div class="embed-responsive embed-responsive-16by9 rounded shadow-sm border" style="background:#000;">
+                              <iframe class="embed-responsive-item" src="<?php echo $vInfo['preview']; ?>" allowfullscreen></iframe>
+                            </div>
+                            <span class="badge badge-success mt-1"><i class="fa fa-check"></i> <?php echo ucfirst($vInfo['type']); ?> Video (ID: <?php echo htmlspecialchars($vInfo['id']); ?>)</span>
+                          </div>
+                        <?php elseif ($isVid): ?>
+                          <video src="<?php echo $mResolved; ?>" controls class="bu-live-video-preview" style="max-height:160px;"></video>
+                        <?php endif; ?>
+                      </div>
                       <?php endif; ?>
                     </div>
-                    <?php endif; ?>
+
+                    <!-- 2. PHOTO / IMAGE SETTINGS PANEL -->
+                    <div id="chanc_image_panel" style="<?php echo ($chancMediaType !== 'image') ? 'display:none;' : ''; ?>">
+                      <div class="row">
+                        <div class="col-md-7 form-group">
+                          <label class="font-weight-bold"><i class="fa fa-picture-o text-success"></i> Chancellor Photo / Image URL</label>
+                          <input type="text" name="chanc_image_url" class="form-control" value="<?php echo htmlspecialchars($chancImageUrl); ?>" placeholder="assets/images/vcpic.jpg or upload/media/..." />
+                          <small class="help-tip">Image path or external URL (e.g. <code>assets/images/vcpic.jpg</code>)</small>
+                        </div>
+                        <div class="col-md-5 form-group">
+                          <label class="font-weight-bold"><i class="fa fa-upload text-success"></i> Or Upload New Photo (.jpg, .png, .webp)</label>
+                          <input type="file" name="chanc_image_file" class="form-control-file" accept="image/*" />
+                          <small class="help-tip">Recommended: Portrait photo (600x700px)</small>
+                        </div>
+                      </div>
+
+                      <?php if (!empty($chancImageUrl)): 
+                        $imgResolved = bu_admin_media_url($chancImageUrl);
+                      ?>
+                      <div class="mt-2">
+                        <small class="font-weight-bold text-muted d-block mb-1">Current Photo Preview:</small>
+                        <div class="bu-live-thumb-wrap">
+                          <img src="<?php echo $imgResolved; ?>" alt="Chancellor" class="bu-live-thumb-img" style="width:70px; height:80px; object-fit:cover; border-radius:4px;">
+                          <div>
+                            <span class="font-weight-bold d-block"><?php echo basename($chancImageUrl); ?></span>
+                            <a href="<?php echo $imgResolved; ?>" target="_blank" class="small text-primary"><i class="fa fa-external-link"></i> View Full Image</a>
+                          </div>
+                        </div>
+                      </div>
+                      <?php endif; ?>
+                    </div>
+
                   </div>
                   <?php endif; ?>
                   
@@ -830,16 +968,28 @@ if (isset($_POST['submit'])) {
                       <label class="text-primary font-weight-bold"><i class="fa fa-film"></i> Primary Hero Video (Background Loop)</label>
                       <div class="row">
                         <div class="col-md-7 form-group mb-1">
-                          <small class="text-muted">Video 1 URL / Relative Path</small>
-                          <input type="text" name="media_url" class="form-control form-control-sm" value="<?php echo htmlspecialchars($aryData['media_url']); ?>" placeholder="new-media/image/hero/bhabha_2.mp4">
+                          <small class="text-muted">Video 1 URL (Vimeo / YouTube / .mp4)</small>
+                          <input type="text" name="media_url" class="form-control form-control-sm" value="<?php echo htmlspecialchars($aryData['media_url']); ?>" placeholder="https://vimeo.com/... or https://youtu.be/... or new-media/image/hero/bhabha_2.mp4">
                         </div>
                         <div class="col-md-5 form-group mb-1">
                           <small class="text-muted">Or Upload Video 1 (.mp4)</small>
                           <input type="file" name="media_file" class="form-control-file">
                         </div>
                       </div>
-                      <?php if (!empty($aryData['media_url'])): ?>
+                      <small class="text-muted d-block mb-2"><i class="fa fa-info-circle text-info"></i> Supports <strong>Vimeo</strong> URLs (e.g. <code>https://vimeo.com/123456789</code>), <strong>YouTube</strong> URLs, or local/uploaded <strong>.mp4</strong> video files.</small>
+                      <?php if (!empty($aryData['media_url'])): 
+                        $v1Info = bu_parse_video_url($aryData['media_url']);
+                        if ($v1Info['type'] === 'vimeo' || $v1Info['type'] === 'youtube'):
+                      ?>
+                        <div class="mt-2" style="max-width:320px;">
+                          <div class="embed-responsive embed-responsive-16by9 rounded shadow-sm border" style="background:#000;">
+                            <iframe class="embed-responsive-item" src="<?php echo $v1Info['preview']; ?>" allowfullscreen></iframe>
+                          </div>
+                          <span class="badge badge-success mt-1"><i class="fa fa-check"></i> <?php echo ucfirst($v1Info['type']); ?> Video (ID: <?php echo htmlspecialchars($v1Info['id']); ?>)</span>
+                        </div>
+                      <?php else: ?>
                         <video src="<?php echo bu_admin_media_url($aryData['media_url']); ?>" controls class="bu-live-video-preview" style="max-height:140px;"></video>
+                      <?php endif; ?>
                       <?php endif; ?>
                     </div>
 
@@ -848,16 +998,28 @@ if (isset($_POST['submit'])) {
                       <label class="text-primary font-weight-bold"><i class="fa fa-film"></i> Secondary / Fallback Hero Video</label>
                       <div class="row">
                         <div class="col-md-7 form-group mb-1">
-                          <small class="text-muted">Video 2 URL / Path</small>
-                          <input type="text" name="hero_video_2" class="form-control form-control-sm" value="<?php echo htmlspecialchars($heroVid2); ?>" placeholder="new-media/image/hero/bhabha_1.mp4">
+                          <small class="text-muted">Video 2 URL (Vimeo / YouTube / .mp4)</small>
+                          <input type="text" name="hero_video_2" class="form-control form-control-sm" value="<?php echo htmlspecialchars($heroVid2); ?>" placeholder="https://vimeo.com/... or https://youtu.be/... or new-media/image/hero/bhabha_1.mp4">
                         </div>
                         <div class="col-md-5 form-group mb-1">
                           <small class="text-muted">Or Upload Video 2 (.mp4)</small>
                           <input type="file" name="hero_video2_file" class="form-control-file">
                         </div>
                       </div>
-                      <?php if (!empty($heroVid2)): ?>
+                      <small class="text-muted d-block mb-2"><i class="fa fa-info-circle text-info"></i> Fallback video or alternate source. Supports <strong>Vimeo</strong>, <strong>YouTube</strong>, or <strong>.mp4</strong>.</small>
+                      <?php if (!empty($heroVid2)): 
+                        $v2Info = bu_parse_video_url($heroVid2);
+                        if ($v2Info['type'] === 'vimeo' || $v2Info['type'] === 'youtube'):
+                      ?>
+                        <div class="mt-2" style="max-width:320px;">
+                          <div class="embed-responsive embed-responsive-16by9 rounded shadow-sm border" style="background:#000;">
+                            <iframe class="embed-responsive-item" src="<?php echo $v2Info['preview']; ?>" allowfullscreen></iframe>
+                          </div>
+                          <span class="badge badge-success mt-1"><i class="fa fa-check"></i> <?php echo ucfirst($v2Info['type']); ?> Video (ID: <?php echo htmlspecialchars($v2Info['id']); ?>)</span>
+                        </div>
+                      <?php else: ?>
                         <video src="<?php echo bu_admin_media_url($heroVid2); ?>" controls class="bu-live-video-preview" style="max-height:140px;"></video>
+                      <?php endif; ?>
                       <?php endif; ?>
                     </div>
 
@@ -1051,20 +1213,32 @@ if (isset($_POST['submit'])) {
                           
                           <div class="row">
                             <div class="col-md-7 form-group mb-1">
-                              <small class="text-muted">Video URL / Path</small>
-                              <input type="text" name="vt_tab_video[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($tVid); ?>" placeholder="upload/video/... or new-media/...">
+                              <small class="text-muted">Video URL (Vimeo / YouTube / .mp4)</small>
+                              <input type="text" name="vt_tab_video[]" class="form-control form-control-sm" value="<?php echo htmlspecialchars($tVid); ?>" placeholder="https://vimeo.com/... or https://youtu.be/... or upload/video/...">
                             </div>
                             <div class="col-md-5 form-group mb-1">
                               <small class="text-muted">Or Upload Video (.mp4)</small>
                               <input type="file" name="vt_tab_file[]" class="form-control-file">
                             </div>
                           </div>
+                          <small class="text-muted d-block mb-1"><i class="fa fa-info-circle text-info"></i> Supports <strong>Vimeo</strong> link, <strong>YouTube</strong> link, or uploaded <strong>.mp4</strong></small>
 
-                          <?php if (!empty($tVid)): ?>
+                          <?php if (!empty($tVid)): 
+                            $vtInfo = bu_parse_video_url($tVid);
+                            if ($vtInfo['type'] === 'vimeo' || $vtInfo['type'] === 'youtube'):
+                          ?>
+                            <div class="mt-2" style="max-width:300px;">
+                              <small class="text-muted font-weight-bold d-block mb-1"><i class="fa fa-play-circle"></i> Live Video Preview (<?php echo ucfirst($vtInfo['type']); ?>):</small>
+                              <div class="embed-responsive embed-responsive-16by9 rounded shadow-sm border" style="background:#000;">
+                                <iframe class="embed-responsive-item" src="<?php echo $vtInfo['preview']; ?>" allowfullscreen></iframe>
+                              </div>
+                            </div>
+                          <?php else: ?>
                             <div class="mt-2">
                               <small class="text-muted font-weight-bold d-block"><i class="fa fa-play-circle"></i> Live Video Preview:</small>
                               <video src="<?php echo bu_admin_media_url($tVid); ?>" controls class="bu-live-video-preview" style="max-height:130px;"></video>
                             </div>
+                          <?php endif; ?>
                           <?php endif; ?>
                         </div>
                       </div>
@@ -2065,14 +2239,15 @@ function addVirtualTourTab() {
         </div>
         <div class="row">
           <div class="col-md-7 form-group mb-1">
-            <small class="text-muted">Video URL / Path</small>
-            <input type="text" name="vt_tab_video[]" class="form-control form-control-sm" placeholder="upload/video/... or new-media/...">
+            <small class="text-muted">Video URL (Vimeo / YouTube / .mp4)</small>
+            <input type="text" name="vt_tab_video[]" class="form-control form-control-sm" placeholder="https://vimeo.com/... or https://youtu.be/... or upload/video/...">
           </div>
           <div class="col-md-5 form-group mb-1">
             <small class="text-muted">Or Upload Video (.mp4)</small>
             <input type="file" name="vt_tab_file[]" class="form-control-file">
           </div>
         </div>
+        <small class="text-muted d-block mb-1"><i class="fa fa-info-circle text-info"></i> Supports Vimeo, YouTube link or .mp4</small>
       </div>
     `;
     container.appendChild(div);
@@ -2107,6 +2282,30 @@ function addVirtualTourCard() {
       </div>
     `;
     container.appendChild(div);
+}
+function toggleChancellorMediaType(type) {
+    var vPanel = document.getElementById('chanc_video_panel');
+    var iPanel = document.getElementById('chanc_image_panel');
+    var radV = document.getElementById('mtype_vid');
+    var radI = document.getElementById('mtype_img');
+    var lblV = document.getElementById('lbl_mtype_vid');
+    var lblI = document.getElementById('lbl_mtype_img');
+    if (!vPanel || !iPanel) return;
+    if (type === 'image') {
+        vPanel.style.display = 'none';
+        iPanel.style.display = 'block';
+        if (radI) radI.checked = true;
+        if (radV) radV.checked = false;
+        if (lblI) { lblI.className = 'btn btn-sm btn-success active font-weight-bold'; }
+        if (lblV) { lblV.className = 'btn btn-sm btn-outline-primary'; }
+    } else {
+        vPanel.style.display = 'block';
+        iPanel.style.display = 'none';
+        if (radV) radV.checked = true;
+        if (radI) radI.checked = false;
+        if (lblV) { lblV.className = 'btn btn-sm btn-primary active font-weight-bold'; }
+        if (lblI) { lblI.className = 'btn btn-sm btn-outline-success'; }
+    }
 }
 </script>
 

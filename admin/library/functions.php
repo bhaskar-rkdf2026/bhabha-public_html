@@ -1008,4 +1008,65 @@ function getHeaderConfig() {
 
     return $sanitizeHeaderUrls($default);
 }
+
+if (!function_exists('bu_parse_video_url')) {
+    /**
+     * Parses a video URL/path and returns player info:
+     * - type: 'vimeo', 'youtube', 'direct', or 'empty'
+     * - id: video ID (if YouTube or Vimeo)
+     * - embed: embed URL for background loop (autoplay, muted, loop, no chrome)
+     * - preview: embed URL for admin preview (with controls)
+     * - url: original or sanitized URL
+     */
+    function bu_parse_video_url($url) {
+        $url = trim($url ?? '');
+        if (empty($url)) {
+            return [
+                'type' => 'empty',
+                'id' => '',
+                'embed' => '',
+                'preview' => '',
+                'url' => ''
+            ];
+        }
+
+        // Vimeo: supports vimeo.com/123456789, player.vimeo.com/video/123456789, channels, manage, etc.
+        if (preg_match('#(?:vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/[^\/]+\/videos\/|album\/(?:\d+\/)?video\/|manage\/videos\/|video\/|)|player\.vimeo\.com\/video\/)(\d+)(?:\/([a-zA-Z0-9]+))?#i', $url, $m)) {
+            $vidId = $m[1];
+            $hashParam = '';
+            if (!empty($m[2])) {
+                $hashParam = '&h=' . $m[2];
+            } elseif (preg_match('/[?&]h=([a-zA-Z0-9]+)/i', $url, $hm)) {
+                $hashParam = '&h=' . $hm[1];
+            }
+            return [
+                'type' => 'vimeo',
+                'id' => $vidId,
+                'embed' => 'https://player.vimeo.com/video/' . $vidId . '?autoplay=1&loop=1&muted=1&background=1&autopause=0&controls=0&playsinline=1' . $hashParam,
+                'preview' => 'https://player.vimeo.com/video/' . $vidId . '?autoplay=0&controls=1' . $hashParam,
+                'url' => $url
+            ];
+        }
+
+        // YouTube: supports youtube.com/watch?v=ID, youtu.be/ID, youtube.com/embed/ID, youtube.com/shorts/ID
+        if (preg_match('#(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})#i', $url, $m)) {
+            $vidId = $m[1];
+            return [
+                'type' => 'youtube',
+                'id' => $vidId,
+                'embed' => 'https://www.youtube-nocookie.com/embed/' . $vidId . '?autoplay=1&mute=1&loop=1&playlist=' . $vidId . '&controls=0&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&modestbranding=1&playsinline=1',
+                'preview' => 'https://www.youtube-nocookie.com/embed/' . $vidId . '?autoplay=0&controls=1',
+                'url' => $url
+            ];
+        }
+
+        return [
+            'type' => 'direct',
+            'id' => '',
+            'embed' => '',
+            'preview' => '',
+            'url' => $url
+        ];
+    }
+}
 ?>

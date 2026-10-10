@@ -36,8 +36,17 @@ if (strpos($vt_cta_url, 'http') !== 0 && strpos($vt_cta_url, '/') !== 0 && strpo
     $vt_cta_url = URL_ROOT . $vt_cta_url;
 }
 
-$first_tab_video = !empty($vt_tabs[0]['video_url']) ? $vt_tabs[0]['video_url'] : 'upload/video/bhabha_video.mp4';
-$main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], 'http') === 0 ? $vt_sec['media_url'] : URL_ROOT . ltrim($vt_sec['media_url'], '/')) : (strpos($first_tab_video, 'http') === 0 ? $first_tab_video : URL_ROOT . ltrim($first_tab_video, '/'));
+$first_tab_raw = !empty($vt_tabs[0]['video_url']) ? trim($vt_tabs[0]['video_url']) : 'upload/video/bhabha_video.mp4';
+$parsed_first = function_exists('bu_parse_video_url') ? bu_parse_video_url($first_tab_raw) : ['type' => 'direct'];
+$initial_type = $parsed_first['type'];
+
+if ($initial_type === 'vimeo') {
+    $initial_src = "https://player.vimeo.com/video/{$parsed_first['id']}?autoplay=1&loop=1&muted=1&background=1&autopause=0&controls=0&playsinline=1&title=0&byline=0&portrait=0&badge=0&dnt=1";
+} elseif ($initial_type === 'youtube') {
+    $initial_src = "https://www.youtube-nocookie.com/embed/{$parsed_first['id']}?autoplay=1&mute=1&loop=1&playlist={$parsed_first['id']}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1";
+} else {
+    $initial_src = strpos($first_tab_raw, 'http') === 0 ? $first_tab_raw : URL_ROOT . ltrim($first_tab_raw, '/');
+}
 ?>
 
 <style>
@@ -143,13 +152,37 @@ $main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], '
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+  height: 480px;
 }
 .bu-hvt-video {
   width: 100%;
-  height: 480px;
+  height: 100%;
   object-fit: cover;
   display: block;
   transform: scale(1.05); /* slightly zoom in to hide encoded black bars */
+}
+.bu-hvt-iframe-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: block;
+  overflow: hidden;
+  z-index: 1;
+}
+.bu-hvt-iframe {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) scale(1.35) !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 135% !important;
+  min-height: 135% !important;
+  border: 0 !important;
+  display: block !important;
+  pointer-events: none !important;
 }
 .bu-hvt-player-overlay {
   position: absolute;
@@ -318,12 +351,16 @@ $main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], '
 /* Responsive */
 @media (max-width: 991px) {
   .bu-hvt-grid { grid-template-columns: 1fr; }
-  .bu-hvt-video { height: 380px; }
+  .bu-hvt-player-wrap { height: 380px; }
+  .bu-hvt-video,
+  .bu-hvt-iframe-wrap { height: 100%; }
   .bu-hvt-side-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
 }
 @media (max-width: 575px) {
   .bu-hvt-section { padding: 60px 16px 50px; }
-  .bu-hvt-video { height: 260px; }
+  .bu-hvt-player-wrap { height: 260px; }
+  .bu-hvt-video,
+  .bu-hvt-iframe-wrap { height: 100%; }
   .bu-hvt-side-cards { grid-template-columns: 1fr; }
   .bu-hvt-tab-btn { font-size: 10px; padding: 5px 10px; }
   .bu-hvt-controls-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -363,10 +400,20 @@ $main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], '
         </div>
 
         <video id="buHvtVideo" class="bu-hvt-video" loop muted playsinline preload="none"
-               poster="<?php echo $vt_poster;?>">
-          <source id="buHvtSource" src="<?php echo $main_video_url; ?>" type="video/mp4">
+               poster="<?php echo $vt_poster;?>" style="<?php echo ($initial_type === 'vimeo' || $initial_type === 'youtube') ? 'display:none;' : 'display:block;'; ?>">
+          <source id="buHvtSource" src="<?php echo ($initial_type === 'direct') ? htmlspecialchars($initial_src) : ''; ?>" type="video/mp4">
           Your browser does not support HTML5 video.
         </video>
+
+        <!-- Vimeo / YouTube Responsive Embed Iframe Container -->
+        <div id="buHvtIframeWrap" class="bu-hvt-iframe-wrap" style="<?php echo ($initial_type === 'vimeo' || $initial_type === 'youtube') ? 'display:block;' : 'display:none;'; ?>">
+          <iframe id="buHvtIframe" class="bu-hvt-iframe" 
+                  src="<?php echo ($initial_type === 'vimeo' || $initial_type === 'youtube') ? htmlspecialchars($initial_src) : ''; ?>" 
+                  frameborder="0" 
+                  allow="autoplay; fullscreen; picture-in-picture; encrypted-media" 
+                  allowfullscreen
+                  title="Virtual Tour Video Player"></iframe>
+        </div>
 
         <!-- Controls -->
         <div class="bu-hvt-controls-bar">
@@ -381,7 +428,18 @@ $main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], '
 
           <div class="bu-hvt-tabs">
             <?php foreach ($vt_tabs as $idx => $tab): 
-              $tab_url = strpos($tab['video_url'], 'http') === 0 ? $tab['video_url'] : URL_ROOT . ltrim($tab['video_url'], '/');
+              $raw_tab_url = trim($tab['video_url'] ?? '');
+              $parsed = function_exists('bu_parse_video_url') ? bu_parse_video_url($raw_tab_url) : ['type' => 'direct'];
+              $tab_type = $parsed['type'];
+              
+              if ($tab_type === 'vimeo') {
+                  $tab_src = "https://player.vimeo.com/video/{$parsed['id']}?autoplay=1&loop=1&muted=1&background=1&autopause=0&controls=0&playsinline=1&title=0&byline=0&portrait=0&badge=0&dnt=1";
+              } elseif ($tab_type === 'youtube') {
+                  $tab_src = "https://www.youtube-nocookie.com/embed/{$parsed['id']}?autoplay=1&mute=1&loop=1&playlist={$parsed['id']}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1";
+              } else {
+                  $tab_src = strpos($raw_tab_url, 'http') === 0 ? $raw_tab_url : URL_ROOT . ltrim($raw_tab_url, '/');
+              }
+
               $rawTabIcon = trim($tab['icon'] ?? 'fa fa-video-camera');
               if (strpos($rawTabIcon, 'fa ') !== 0 && strpos($rawTabIcon, 'fas ') !== 0 && strpos($rawTabIcon, 'far ') !== 0 && strpos($rawTabIcon, 'fab ') !== 0) {
                   $tabIconClass = 'fa ' . (strpos($rawTabIcon, 'fa-') === 0 ? $rawTabIcon : 'fa-' . $rawTabIcon);
@@ -389,7 +447,11 @@ $main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], '
                   $tabIconClass = $rawTabIcon;
               }
             ?>
-              <button class="bu-hvt-tab-btn <?php echo $idx === 0 ? 'active' : ''; ?>" onclick="switchHvtVideo('<?php echo $tab_url; ?>', this)">
+              <button type="button" 
+                      class="bu-hvt-tab-btn <?php echo $idx === 0 ? 'active' : ''; ?>" 
+                      data-type="<?php echo htmlspecialchars($tab_type); ?>"
+                      data-src="<?php echo htmlspecialchars($tab_src); ?>"
+                      onclick="switchHvtVideo(this)">
                 <i class="<?php echo htmlspecialchars($tabIconClass); ?>"></i> <?php echo htmlspecialchars($tab['label']); ?>
               </button>
             <?php endforeach; ?>
@@ -429,37 +491,62 @@ $main_video_url = !empty($vt_sec['media_url']) ? (strpos($vt_sec['media_url'], '
 </section>
 
 <script>
-function switchHvtVideo(src, btn) {
-  var video  = document.getElementById('buHvtVideo');
-  var source = document.getElementById('buHvtSource');
-  if (!video) return;
+function switchHvtVideo(btn) {
+  if (!btn) return;
+  var type = btn.getAttribute('data-type') || 'direct';
+  var src  = btn.getAttribute('data-src')  || '';
+
+  var video        = document.getElementById('buHvtVideo');
+  var source       = document.getElementById('buHvtSource');
+  var iframeWrap   = document.getElementById('buHvtIframeWrap');
+  var iframe       = document.getElementById('buHvtIframe');
+  var playBtn      = document.getElementById('buHvtPlayBtn');
 
   /* Update active tab button */
   document.querySelectorAll('.bu-hvt-tab-btn').forEach(function(b) {
     b.classList.remove('active');
   });
-  if (btn) btn.classList.add('active');
+  btn.classList.add('active');
 
-  /* Set source directly on video element for reliable playback */
-  if (source) {
-    source.src = src;
-  }
-  video.src = src;
-  video.load();
-
-  var playPromise = video.play();
-  if (playPromise !== undefined) {
-    playPromise.then(function() {
-      var playBtn = document.getElementById('buHvtPlayBtn');
-      if (playBtn) playBtn.innerHTML = '<i class="fa fa-pause"></i>';
-    }).catch(function() {
-      /* Browser autoplay policy: ensure muted and retry */
-      video.muted = true;
-      video.play().then(function() {
-        var playBtn = document.getElementById('buHvtPlayBtn');
-        if (playBtn) playBtn.innerHTML = '<i class="fa fa-pause"></i>';
-      });
-    });
+  if (type === 'vimeo' || type === 'youtube') {
+    // 1. Pause and hide native video
+    if (video) {
+      video.pause();
+      video.style.display = 'none';
+    }
+    // 2. Show and load clean iframe
+    if (iframeWrap && iframe) {
+      iframeWrap.style.display = 'block';
+      iframe.src = src;
+    }
+    if (playBtn) {
+      playBtn.setAttribute('data-paused', 'false');
+      playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+    }
+  } else {
+    // 1. Clear and hide iframe
+    if (iframeWrap && iframe) {
+      iframe.src = '';
+      iframeWrap.style.display = 'none';
+    }
+    // 2. Show and play native video
+    if (video) {
+      video.style.display = 'block';
+      if (source) source.src = src;
+      video.src = src;
+      video.load();
+      var playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.then(function() {
+          if (playBtn) playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        }).catch(function() {
+          video.muted = true;
+          video.play().then(function() {
+            if (playBtn) playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+          });
+        });
+      }
+    }
   }
 }
 
@@ -468,24 +555,72 @@ document.addEventListener('DOMContentLoaded', function() {
   var playBtn = document.getElementById('buHvtPlayBtn');
   var muteBtn = document.getElementById('buHvtMuteBtn');
 
-  if (playBtn && video) {
+  if (playBtn) {
     playBtn.addEventListener('click', function() {
-      if (video.paused) {
-        video.play();
-        playBtn.innerHTML = '<i class="fa fa-pause"></i>';
-      } else {
-        video.pause();
-        playBtn.innerHTML = '<i class="fa fa-play"></i>';
+      var iframeWrap = document.getElementById('buHvtIframeWrap');
+      var iframe     = document.getElementById('buHvtIframe');
+      var isIframe   = iframeWrap && iframeWrap.style.display !== 'none';
+
+      if (isIframe && iframe) {
+        if (playBtn.getAttribute('data-paused') === 'true') {
+          // Play iframe
+          try {
+            iframe.contentWindow.postMessage('{"method":"play"}', '*');
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+          } catch(e) {}
+          playBtn.setAttribute('data-paused', 'false');
+          playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        } else {
+          // Pause iframe
+          try {
+            iframe.contentWindow.postMessage('{"method":"pause"}', '*');
+            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+          } catch(e) {}
+          playBtn.setAttribute('data-paused', 'true');
+          playBtn.innerHTML = '<i class="fa fa-play"></i>';
+        }
+      } else if (video) {
+        if (video.paused) {
+          video.play();
+          playBtn.innerHTML = '<i class="fa fa-pause"></i>';
+        } else {
+          video.pause();
+          playBtn.innerHTML = '<i class="fa fa-play"></i>';
+        }
       }
     });
   }
 
-  if (muteBtn && video) {
+  if (muteBtn) {
     muteBtn.addEventListener('click', function() {
-      video.muted = !video.muted;
-      muteBtn.innerHTML = video.muted
-        ? '<i class="fa fa-volume-off"></i>'
-        : '<i class="fa fa-volume-up"></i>';
+      var iframeWrap = document.getElementById('buHvtIframeWrap');
+      var iframe     = document.getElementById('buHvtIframe');
+      var isIframe   = iframeWrap && iframeWrap.style.display !== 'none';
+
+      if (isIframe && iframe) {
+        if (muteBtn.getAttribute('data-muted') === 'false') {
+          // Mute iframe
+          try {
+            iframe.contentWindow.postMessage('{"method":"setVolume","value":0}', '*');
+            iframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+          } catch(e) {}
+          muteBtn.setAttribute('data-muted', 'true');
+          muteBtn.innerHTML = '<i class="fa fa-volume-off"></i>';
+        } else {
+          // Unmute iframe
+          try {
+            iframe.contentWindow.postMessage('{"method":"setVolume","value":1}', '*');
+            iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+          } catch(e) {}
+          muteBtn.setAttribute('data-muted', 'false');
+          muteBtn.innerHTML = '<i class="fa fa-volume-up"></i>';
+        }
+      } else if (video) {
+        video.muted = !video.muted;
+        muteBtn.innerHTML = video.muted
+          ? '<i class="fa fa-volume-off"></i>'
+          : '<i class="fa fa-volume-up"></i>';
+      }
     });
   }
 });

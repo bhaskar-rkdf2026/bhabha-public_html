@@ -14,9 +14,42 @@ $chanc_heading = !empty($chanc_sec['heading']) ? $chanc_sec['heading'] : "A lega
 $chanc_quote = !empty($chanc_sec['quote']) ? $chanc_sec['quote'] : '“We bridge academic brilliance with industrial pragmatism.”';
 $chanc_author = !empty($chanc_sec['author']) ? $chanc_sec['author'] : 'DR. SADHNA KAPOOR · CHANCELLOR';
 $chanc_desc = !empty($chanc_sec['content']) ? $chanc_sec['content'] : "<p><strong>Dr. Sadhna Kapoor</strong> is the Chancellor of BHABHA University. A visionary and a selfless leader with exceptional entrepreneurial, interpersonal, social and administrative skills; Dr. Sadhna Kapoor is passionate about technology and innovation, community development, social service, and interdisciplinary teaching and research.</p>\n<p>She has been awarded the title of “Honorary Professor” by the Academic Union Oxford, UK, reflecting her global dedication to educational innovation and excellence.</p>";
-$chancellor_video_url = !empty($chanc_sec['media_url']) ? (strpos($chanc_sec['media_url'], 'http') === 0 ? $chanc_sec['media_url'] : URL_ROOT . ltrim($chanc_sec['media_url'], '/')) : URL_ROOT . "new-media/image/hero/sadhna-mam.mp4";
-
 $chanc_extra = !empty($chanc_sec['extra_data']) ? json_decode($chanc_sec['extra_data'], true) : [];
+$chanc_media_type = $chanc_extra['media_type'] ?? '';
+$chanc_video_fit  = $chanc_extra['video_fit'] ?? 'portrait';
+$chanc_image_url  = !empty($chanc_extra['image_url']) ? $chanc_extra['image_url'] : '';
+
+$chanc_raw_media = !empty($chanc_sec['media_url']) ? trim($chanc_sec['media_url']) : "new-media/image/hero/sadhna-mam.mp4";
+
+// Check if user selected photo mode or provided an image file
+$is_image_mode = ($chanc_media_type === 'image' || (!empty($chanc_raw_media) && preg_match('/\.(jpg|jpeg|png|webp|gif|svg)$/i', $chanc_raw_media)));
+
+$is_embed = false;
+$is_video = false;
+$is_image = false;
+$embed_src = '';
+$video_url = '';
+$image_url = '';
+
+if ($is_image_mode) {
+    $is_image = true;
+    $active_img = !empty($chanc_image_url) ? $chanc_image_url : (!empty($chanc_raw_media) && preg_match('/\.(jpg|jpeg|png|webp|gif|svg)$/i', $chanc_raw_media) ? $chanc_raw_media : 'assets/images/vcpic.jpg');
+    $image_url = (strpos($active_img, 'http') === 0 ? $active_img : URL_ROOT . ltrim($active_img, '/'));
+} else {
+    $vInfo = function_exists('bu_parse_video_url') ? bu_parse_video_url($chanc_raw_media) : ['type' => 'direct', 'url' => $chanc_raw_media];
+    $is_embed = ($vInfo['type'] === 'vimeo' || $vInfo['type'] === 'youtube');
+    if ($is_embed) {
+        if ($vInfo['type'] === 'vimeo') {
+            $embed_src = "https://player.vimeo.com/video/{$vInfo['id']}?autoplay=1&loop=1&muted=1&autopause=0&controls=0&playsinline=1&title=0&byline=0&portrait=0&badge=0&dnt=1" . (!empty($vInfo['hashParam']) ? $vInfo['hashParam'] : '');
+        } else { // youtube
+            $embed_src = "https://www.youtube-nocookie.com/embed/{$vInfo['id']}?autoplay=1&mute=1&loop=1&playlist={$vInfo['id']}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1";
+        }
+    } else {
+        $is_video = true;
+        $video_url = (strpos($chanc_raw_media, 'http') === 0 ? $chanc_raw_media : URL_ROOT . ltrim($chanc_raw_media, '/'));
+    }
+}
+
 $chanc_recogs = !empty($chanc_extra['recognitions']) ? $chanc_extra['recognitions'] : [
     ['title' => 'UGC', 'label' => 'RECOGNISED'],
     ['title' => 'MPPURC', 'label' => 'APPROVED'],
@@ -26,19 +59,25 @@ $chanc_recogs = !empty($chanc_extra['recognitions']) ? $chanc_extra['recognition
 <section class="bu-chancellor-section">
   <div class="bu-chancellor-container">
     
-    <!-- LEFT: Image & Gold Quote Card -->
+    <!-- LEFT: Media (Embed / Video / Image) & Gold Quote Card -->
     <div class="bu-chancellor-img-col">
       <div class="bu-chancellor-img-wrapper">
-        <?php if(!empty($chancellor_video_url)): ?>
-          <video id="chancellor-video" class="bu-chancellor-img" playsinline muted loop preload="none" poster="<?php echo URL_IMG;?>vcpic.jpg" data-src="<?php echo $chancellor_video_url; ?>" style="background:#000;"></video>
-          <button id="chancellor-play-btn" class="bu-chancellor-play-btn" onclick="toggleChancellorPlay()" title="Play / Pause Video" aria-label="Play video">
-            <i class="fa fa-play"></i>
-          </button>
-          <button id="chancellor-mute-btn" class="bu-chancellor-mute-btn" onclick="toggleChancellorMute()" title="Toggle Mute" aria-label="Toggle mute" style="display:none;">
+        <?php if ($is_embed): ?>
+          <div class="bu-chancellor-iframe-wrap bu-chancellor-fit-<?php echo htmlspecialchars($chanc_video_fit); ?>">
+            <iframe class="bu-chancellor-iframe" 
+                    src="<?php echo htmlspecialchars($embed_src); ?>" 
+                    frameborder="0" 
+                    allow="autoplay; fullscreen; picture-in-picture; encrypted-media" 
+                    allowfullscreen 
+                    title="Chancellor Message Video"></iframe>
+          </div>
+        <?php elseif ($is_video): ?>
+          <video id="chancellor-video" class="bu-chancellor-img" playsinline muted autoplay loop preload="metadata" poster="<?php echo URL_IMG;?>vcpic.jpg" src="<?php echo htmlspecialchars($video_url); ?>" style="background:#000; cursor:pointer;" title="Click to Play / Pause"></video>
+          <button id="chancellor-mute-btn" class="bu-chancellor-mute-btn" onclick="toggleChancellorMute(event)" title="Toggle Sound" aria-label="Toggle mute">
             <i class="fa fa-volume-off"></i>
           </button>
         <?php else: ?>
-          <img loading="lazy" src="<?php echo URL_IMG;?>vcpic.jpg" alt="Dr. Sadhna Kapoor, Chancellor Bhabha University" class="bu-chancellor-img" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
+          <img loading="lazy" src="<?php echo htmlspecialchars($image_url); ?>" alt="<?php echo htmlspecialchars($chanc_author); ?>" class="bu-chancellor-img" onerror="this.src='<?php echo URL_IMG;?>vcpic.jpg'">
         <?php endif; ?>
         <div class="bu-chancellor-quote-card">
           <p class="bu-quote-text"><?php echo htmlspecialchars($chanc_quote); ?></p>
@@ -101,6 +140,7 @@ $chanc_recogs = !empty($chanc_extra['recognitions']) ? $chanc_extra['recognition
 }
 .bu-chancellor-img {
   width: 100% !important;
+  height: 520px !important;
   max-height: 520px !important;
   object-fit: cover !important;
   object-position: center top !important;
@@ -120,6 +160,59 @@ video.bu-chancellor-img {
   object-position: center top !important;
   background: #000 !important;
   border-radius: 6px !important;
+}
+img.bu-chancellor-img {
+  width: 100% !important;
+  height: 520px !important;
+  max-height: 520px !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  background: #061D7C !important;
+  border-radius: 6px !important;
+}
+.bu-chancellor-iframe-wrap {
+  width: 100% !important;
+  height: 520px !important;
+  max-height: 520px !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.12) !important;
+  background: #000 !important;
+  position: relative !important;
+}
+
+/* Portrait / 9:16 Full Bleed (Removes Black Bars on Sides for Phone/Reels) */
+.bu-chancellor-fit-portrait .bu-chancellor-iframe {
+  position: absolute !important;
+  top: 50% !important;
+  left: 0 !important;
+  transform: translateY(-50%) !important;
+  width: 100% !important;
+  height: 180% !important;
+  min-height: 180% !important;
+  border: 0 !important;
+  display: block !important;
+}
+
+/* Landscape / 16:9 Full Bleed (Removes Black Bars for Widescreen Video) */
+.bu-chancellor-fit-landscape .bu-chancellor-iframe {
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  height: 100% !important;
+  width: 180% !important;
+  min-width: 180% !important;
+  border: 0 !important;
+  display: block !important;
+}
+
+/* Fit Center */
+.bu-chancellor-fit-fit .bu-chancellor-iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  display: block !important;
 }
 .bu-chancellor-mute-btn {
   position: absolute !important;
@@ -144,29 +237,7 @@ video.bu-chancellor-img {
   color: #040F4A !important;
 }
 .bu-chancellor-play-btn {
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  background: rgba(10, 27, 84, 0.88) !important;
-  color: #FFC107 !important;
-  border: 2px solid #FFC107 !important;
-  border-radius: 50% !important;
-  width: 58px !important;
-  height: 58px !important;
-  font-size: 20px !important;
-  cursor: pointer !important;
-  z-index: 9 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.35) !important;
-  transition: all 0.3s ease !important;
-}
-.bu-chancellor-play-btn:hover {
-  background: #FFC107 !important;
-  color: #0A1B54 !important;
-  transform: translate(-50%, -50%) scale(1.1) !important;
+  display: none !important;
 }
 .bu-chancellor-quote-card {
   position: absolute !important;
@@ -281,7 +352,8 @@ video.bu-chancellor-img {
   .bu-chancellor-img-wrapper {
     max-width: 400px !important;
   }
-  .bu-chancellor-img {
+  .bu-chancellor-img,
+  .bu-chancellor-iframe-wrap {
     height: 440px !important;
   }
   .bu-chancellor-quote-card {
@@ -305,7 +377,8 @@ video.bu-chancellor-img {
   .bu-chancellor-section {
     padding: 50px 16px !important;
   }
-  .bu-chancellor-img {
+  .bu-chancellor-img,
+  .bu-chancellor-iframe-wrap {
     height: 360px !important;
   }
   .bu-chancellor-quote-card {
@@ -326,53 +399,22 @@ video.bu-chancellor-img {
 <script>
 (function() {
   var video   = document.getElementById("chancellor-video");
-  var playBtn = document.getElementById("chancellor-play-btn");
   var muteBtn = document.getElementById("chancellor-mute-btn");
   if (!video) return;
 
-  var isLoaded = false;
-  function loadAndInitVideo(autoPlay) {
-    if (!isLoaded) {
-      isLoaded = true;
-      var dataSrc = video.getAttribute("data-src");
-      if (dataSrc) {
-        video.src = dataSrc;
-        video.load();
-      }
-    }
-    if (autoPlay) {
-      var p = video.play();
-      if (p !== undefined) {
-        p.then(function() {
-          if (playBtn) playBtn.style.display = "none";
-          if (muteBtn) muteBtn.style.display = "flex";
-        }).catch(function() {
-          if (playBtn) playBtn.style.display = "flex";
-        });
-      }
+  function initVideo() {
+    video.muted = true;
+    var p = video.play();
+    if (p !== undefined) {
+      p.catch(function() {
+        video.muted = true;
+        video.play();
+      });
     }
   }
 
-  window.toggleChancellorPlay = function() {
-    loadAndInitVideo(false);
-    if (video.paused) {
-      var p = video.play();
-      if (p !== undefined) {
-        p.then(function() {
-          if (playBtn) playBtn.style.display = "none";
-          if (muteBtn) muteBtn.style.display = "flex";
-        });
-      }
-    } else {
-      video.pause();
-      if (playBtn) {
-        playBtn.style.display = "flex";
-        playBtn.innerHTML = '<i class="fa fa-play"></i>';
-      }
-    }
-  };
-
-  window.toggleChancellorMute = function() {
+  window.toggleChancellorMute = function(e) {
+    if (e && e.stopPropagation) e.stopPropagation();
     var btnIcon = document.querySelector("#chancellor-mute-btn i");
     if (video.muted) {
       video.muted = false;
@@ -389,21 +431,30 @@ video.bu-chancellor-img {
     }
   };
 
-  // Deferred lazy load: only request video file when user scrolls near the Chancellor section
+  video.addEventListener("click", function() {
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  });
+
+  // IntersectionObserver to auto play / pause based on viewport visibility
   if ("IntersectionObserver" in window) {
     var obs = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
-          loadAndInitVideo(true);
-          obs.unobserve(video);
+          initVideo();
+        } else {
+          if (!video.paused) {
+            video.pause();
+          }
         }
       });
-    }, { rootMargin: "180px 0px" });
+    }, { rootMargin: "150px 0px" });
     obs.observe(video);
   } else {
-    window.addEventListener("scroll", function onFirstScroll() {
-      loadAndInitVideo(true);
-    }, { once: true, passive: true });
+    initVideo();
   }
 })();
 </script>

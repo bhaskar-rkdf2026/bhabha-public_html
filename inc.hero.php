@@ -12,12 +12,32 @@ if ($hero_sec && isset($hero_sec['status']) && $hero_sec['status'] == 0) {
 $hero_label = !empty($hero_sec['title']) ? $hero_sec['title'] : 'AERIAL · BHOPAL CAMPUS';
 $hero_heading = !empty($hero_sec['heading']) ? $hero_sec['heading'] : '32 acres of<br><em>living, learning</em> landscape.';
 $hero_sub = !empty($hero_sec['subheading']) ? $hero_sec['subheading'] : "From the medical quadrangle to the engineering labs — a bird's-eye view of the community our students call home.";
-$hero_video = !empty($hero_sec['media_url']) ? (strpos($hero_sec['media_url'], 'http') === 0 ? $hero_sec['media_url'] : URL_ROOT . ltrim($hero_sec['media_url'], '/')) : URL_ROOT . "new-media/image/hero/bhabha_3.mp4";
-
+$raw_video_1 = !empty($hero_sec['media_url']) ? trim($hero_sec['media_url']) : 'new-media/image/hero/bhabha_3.mp4';
 $hero_extra = !empty($hero_sec['extra_data']) ? json_decode($hero_sec['extra_data'], true) : [];
+$raw_video_2 = !empty($hero_extra['video_2']) ? trim($hero_extra['video_2']) : 'new-media/image/hero/bhabha_1.mp4';
+
 $hero_poster_default = file_exists(PATH_ROOT . '/new-media/image/campus-aerial.webp') ? URL_ROOT . "new-media/image/campus-aerial.webp" : URL_ROOT . "new-media/image/campus-aerial.png";
 $hero_poster = !empty($hero_extra['poster']) ? (strpos($hero_extra['poster'], 'http') === 0 ? $hero_extra['poster'] : URL_ROOT . ltrim($hero_extra['poster'], '/')) : $hero_poster_default;
-$hero_video_2 = !empty($hero_extra['video_2']) ? (strpos($hero_extra['video_2'], 'http') === 0 ? $hero_extra['video_2'] : URL_ROOT . ltrim($hero_extra['video_2'], '/')) : URL_ROOT . "new-media/image/hero/bhabha_1.mp4";
+
+$v1_info = function_exists('bu_parse_video_url') ? bu_parse_video_url($raw_video_1) : ['type' => 'direct'];
+$v2_info = function_exists('bu_parse_video_url') ? bu_parse_video_url($raw_video_2) : ['type' => 'direct'];
+
+$is_embed = false;
+$embed_src = '';
+$embed_provider = '';
+
+if ($v1_info['type'] === 'vimeo' || $v1_info['type'] === 'youtube') {
+    $is_embed = true;
+    $embed_src = $v1_info['embed'];
+    $embed_provider = $v1_info['type'];
+} elseif ($v1_info['type'] === 'empty' && ($v2_info['type'] === 'vimeo' || $v2_info['type'] === 'youtube')) {
+    $is_embed = true;
+    $embed_src = $v2_info['embed'];
+    $embed_provider = $v2_info['type'];
+}
+
+$hero_video_direct = (strpos($raw_video_1, 'http') === 0 ? $raw_video_1 : URL_ROOT . ltrim($raw_video_1, '/'));
+$hero_video_2_direct = (!empty($raw_video_2) && $v2_info['type'] === 'direct') ? (strpos($raw_video_2, 'http') === 0 ? $raw_video_2 : URL_ROOT . ltrim($raw_video_2, '/')) : '';
 $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
     ['number' => '8500', 'suffix' => '+', 'commas' => true, 'label' => 'STUDENTS'],
     ['number' => '750', 'suffix' => '+', 'commas' => false, 'label' => 'FACULTY'],
@@ -32,14 +52,31 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
 <!-- ============ HERO VIDEO SECTION ============ -->
 <section class="bu-hero-fw" id="buHeroSection">
 
-  <!-- Background Video (Infinite Autoplay Loop with Deferred Fast Preloading) -->
-  <video class="bu-hero-video" id="buHeroVideo" autoplay loop muted playsinline preload="metadata" poster="<?php echo $hero_poster;?>">
-    <source src="<?php echo $hero_video;?>" type="video/mp4">
-    <?php if(!empty($hero_video_2)): ?>
-      <source src="<?php echo $hero_video_2;?>" type="video/mp4">
-    <?php endif; ?>
-    Your browser does not support the video tag.
-  </video>
+  <!-- Default Poster Image Layer (Always visible before / while video loads) -->
+  <div class="bu-hero-poster-layer" style="background-image: url('<?php echo htmlspecialchars($hero_poster); ?>');"></div>
+
+  <?php if ($is_embed): ?>
+    <!-- 3rd-Party Embed Background Video (Vimeo / YouTube) -->
+    <div class="bu-hero-embed-wrap" data-provider="<?php echo htmlspecialchars($embed_provider); ?>">
+      <iframe class="bu-hero-embed" 
+              src="<?php echo htmlspecialchars($embed_src); ?>" 
+              frameborder="0" 
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media" 
+              allowfullscreen 
+              tabindex="-1"
+              aria-hidden="true"
+              title="Hero Background Video"></iframe>
+    </div>
+  <?php else: ?>
+    <!-- Background HTML5 Video (Infinite Autoplay Loop with Deferred Fast Preloading) -->
+    <video class="bu-hero-video" id="buHeroVideo" autoplay loop muted playsinline preload="metadata" poster="<?php echo $hero_poster;?>">
+      <source src="<?php echo $hero_video_direct;?>" type="video/mp4">
+      <?php if(!empty($hero_video_2_direct)): ?>
+        <source src="<?php echo $hero_video_2_direct;?>" type="video/mp4">
+      <?php endif; ?>
+      Your browser does not support the video tag.
+    </video>
+  <?php endif; ?>
 
   <!-- Gradient Overlay (Dark Navy at bottom-left for crisp text legibility) -->
   <div class="bu-fwslide-overlay"></div>
@@ -114,7 +151,49 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
   min-height: 500px !important;
   overflow: hidden !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
+  background: #040F4A url('<?php echo $hero_poster; ?>') center center / cover no-repeat !important;
+}
+
+/* Default Poster Layer */
+.bu-hero-poster-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  z-index: 0 !important;
+}
+
+/* 3rd-Party Embed Background (Vimeo / YouTube full cover) */
+.bu-hero-embed-wrap {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
   background: #040F4A !important;
+}
+
+.bu-hero-embed {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 140vw !important;
+  height: 140vh !important;
+  min-width: 135% !important;
+  min-height: 135% !important;
+  border: 0 !important;
+  pointer-events: none !important;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .bu-hero-embed {
+    width: 135vw !important;
+    height: 76vw !important;
+  }
 }
 
 /* Background Video - Cropped & Scaled to hide burned-in video logos/text */
@@ -126,10 +205,10 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
   min-height: 100% !important;
   width: 100% !important;
   height: 100% !important;
-  transform: translate(-50%, -50%) !important;
+  transform: translate(-50%, -50%) scale(1.04) !important;
   object-fit: cover !important;
   object-position: center center !important;
-  z-index: 0 !important;
+  z-index: 1 !important;
   transition: opacity 0.5s ease-in-out !important;
 }
 
@@ -150,7 +229,7 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
       rgba(4, 15, 74, 0.65) 0%,
       transparent 60%
     ) !important;
-  z-index: 1 !important;
+  z-index: 2 !important;
 }
 
 /* Text Content (Bottom-Left with Reduced Bottom Padding) */
@@ -158,7 +237,7 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
   position: absolute !important;
   bottom: 35px !important;
   left: 60px !important;
-  z-index: 2 !important;
+  z-index: 3 !important;
   max-width: 850px !important;
   animation: buFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
@@ -463,8 +542,36 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
     setTimeout(playVideo, 100);
   }
 
+  function fitHeroEmbed() {
+    var iframe = document.querySelector('.bu-hero-embed');
+    var wrap = document.querySelector('.bu-hero-embed-wrap');
+    if (!iframe || !wrap) return;
+
+    var w = wrap.offsetWidth || window.innerWidth;
+    var h = wrap.offsetHeight || (window.innerHeight * 0.68);
+    if (!w || !h) return;
+
+    // Calculate dimensions to ensure edge-to-edge full width cover without letterbox
+    var baseRatio = 16 / 9;
+    var currentRatio = w / h;
+    var scale = 1.35; // 35% extra zoom covers non-16:9/4:3 videos edge-to-edge
+    var newW, newH;
+
+    if (currentRatio > baseRatio) {
+      newW = w * scale;
+      newH = (w / baseRatio) * scale;
+    } else {
+      newW = (h * baseRatio) * scale;
+      newH = h * scale;
+    }
+
+    iframe.style.width = Math.ceil(newW) + 'px';
+    iframe.style.height = Math.ceil(newH) + 'px';
+  }
+
   function initAll() {
     initHeroVideo();
+    fitHeroEmbed();
 
     // IntersectionObserver for Stats Counter
     if ('IntersectionObserver' in window) {
@@ -490,6 +597,8 @@ $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
     // Safety fallback: ensure counters animate even if observer threshold is missed
     setTimeout(startCounterAnimation, 600);
   }
+
+  window.addEventListener('resize', fitHeroEmbed);
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAll);
