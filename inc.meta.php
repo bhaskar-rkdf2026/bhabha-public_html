@@ -63,6 +63,7 @@ $bu_robots_tag = ($bu_seo && !empty($bu_seo['robots_tag']) && $bu_seo['robots_ta
 <!-- Preconnect & DNS-Prefetch for External CDNs and Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
@@ -78,18 +79,25 @@ $bu_robots_tag = ($bu_seo && !empty($bu_seo['robots_tag']) && $bu_seo['robots_ta
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap"></noscript>
 
-<!-- Critical Local Core CSS (Bootstrap, Core Icons & Global System) -->
+<!-- Critical Local Core CSS & Font Awesome (Full Reliability Loading) -->
 <link rel="stylesheet" href="<?php echo URL_CSS;?>bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo URL_CSS;?>font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <?php 
 $bu_css_ver = @filemtime(__DIR__ . '/css/bu-global.css') ?: '20260926';
 ?>
 <link href="<?php echo URL_CSS;?>bu-global.css?v=<?php echo $bu_css_ver; ?>" rel="stylesheet">
-<!-- Secondary FontAwesome 6 CDN (Non-render-blocking) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
 
 <style>
+/* Font Awesome Glyph Integrity Rule (Prevents text-font override of icon glyphs) */
+.fa, [class*="fa-"], [class^="fa-"] {
+  font-family: FontAwesome, "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
 /* ============================================================
    BHABHA UNIVERSITY - NEW MODERN HEADER STYLES (Navy & Gold)
    ============================================================ */
