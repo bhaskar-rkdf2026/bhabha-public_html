@@ -626,6 +626,48 @@ $hc = getHeaderConfig();
     }
 
     /* ---- Topbar Dropdown Toggles (Info Corner & ERP Login) ---- */
+    var erpDropdown = document.querySelector('.bu-erp-dropdown');
+    if (erpDropdown) {
+      var erpTimer;
+      erpDropdown.addEventListener('mouseenter', function() {
+        clearTimeout(erpTimer);
+        erpDropdown.classList.add('active');
+      });
+      erpDropdown.addEventListener('mouseleave', function() {
+        erpTimer = setTimeout(function() {
+          erpDropdown.classList.remove('active');
+        }, 280);
+      });
+    }
+
+    var newsDrop = document.querySelector('.bu-topbar-news-drop');
+    if (newsDrop) {
+      var newsTimer;
+      newsDrop.addEventListener('mouseenter', function() {
+        clearTimeout(newsTimer);
+        newsDrop.classList.add('active');
+      });
+      newsDrop.addEventListener('mouseleave', function() {
+        newsTimer = setTimeout(function() {
+          newsDrop.classList.remove('active');
+        }, 280);
+      });
+    }
+
+    var alumniDrop = document.querySelector('.bu-topbar-alumni-drop');
+    if (alumniDrop) {
+      var alumniTimer;
+      alumniDrop.addEventListener('mouseenter', function() {
+        clearTimeout(alumniTimer);
+        alumniDrop.classList.add('active');
+      });
+      alumniDrop.addEventListener('mouseleave', function() {
+        alumniTimer = setTimeout(function() {
+          alumniDrop.classList.remove('active');
+        }, 280);
+      });
+    }
+
     document.addEventListener('click', function(e) {
       // ERP Dropdown Click Toggle
       var erpToggle = e.target.closest('.bu-erp-toggle-link');

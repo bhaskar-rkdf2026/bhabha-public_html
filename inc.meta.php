@@ -244,6 +244,16 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
   flex-direction: column !important;
   gap: 5px !important;
 }
+.bu-erp-menu::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -14px !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 14px !important;
+  background: transparent !important;
+  display: block !important;
+}
 .bu-erp-dropdown:hover > .bu-erp-menu,
 .bu-erp-dropdown.active > .bu-erp-menu {
   display: flex !important;
