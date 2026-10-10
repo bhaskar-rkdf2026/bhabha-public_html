@@ -814,11 +814,13 @@
 
     <div class="bu-hp-modal-body">
       <div class="bu-hp-poster-wrap">
-        <img src="<?php echo URL_ROOT;?>new-media/image/highest-package-60lpa.png" 
+        <img src="<?php echo URL_ROOT;?>new-media/image/highest-package-60lpa.webp" 
              alt="Highest Package 60 LPA - Mr. Anurag Kumar at China Petroleum Pipeline Engineering Co. Ltd." 
              class="bu-hp-poster-img" 
              loading="lazy"
              decoding="async"
+             width="280"
+             height="360"
              onerror="this.src='<?php echo URL_ROOT;?>upload/media/highest-package-60lpa.png'">
       </div>
       

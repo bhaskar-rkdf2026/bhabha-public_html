@@ -15,7 +15,8 @@ $hero_sub = !empty($hero_sec['subheading']) ? $hero_sec['subheading'] : "From th
 $hero_video = !empty($hero_sec['media_url']) ? (strpos($hero_sec['media_url'], 'http') === 0 ? $hero_sec['media_url'] : URL_ROOT . ltrim($hero_sec['media_url'], '/')) : URL_ROOT . "new-media/image/hero/bhabha_3.mp4";
 
 $hero_extra = !empty($hero_sec['extra_data']) ? json_decode($hero_sec['extra_data'], true) : [];
-$hero_poster = !empty($hero_extra['poster']) ? (strpos($hero_extra['poster'], 'http') === 0 ? $hero_extra['poster'] : URL_ROOT . ltrim($hero_extra['poster'], '/')) : URL_ROOT . "new-media/image/campus-aerial.png";
+$hero_poster_default = file_exists(PATH_ROOT . '/new-media/image/campus-aerial.webp') ? URL_ROOT . "new-media/image/campus-aerial.webp" : URL_ROOT . "new-media/image/campus-aerial.png";
+$hero_poster = !empty($hero_extra['poster']) ? (strpos($hero_extra['poster'], 'http') === 0 ? $hero_extra['poster'] : URL_ROOT . ltrim($hero_extra['poster'], '/')) : $hero_poster_default;
 $hero_video_2 = !empty($hero_extra['video_2']) ? (strpos($hero_extra['video_2'], 'http') === 0 ? $hero_extra['video_2'] : URL_ROOT . ltrim($hero_extra['video_2'], '/')) : URL_ROOT . "new-media/image/hero/bhabha_1.mp4";
 $hero_stats = !empty($hero_extra['stats']) ? $hero_extra['stats'] : [
     ['number' => '8500', 'suffix' => '+', 'commas' => true, 'label' => 'STUDENTS'],

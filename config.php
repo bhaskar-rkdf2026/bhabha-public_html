@@ -11,6 +11,20 @@ if (file_exists(PATH_LIB . "waf.php")) {
     require_once(PATH_LIB . "waf.php");
 }
 
+// Enable high-performance GZIP output compression if client accepts it
+if (!headers_sent() && !ini_get('zlib.output_compression') && extension_loaded('zlib')) {
+    if (isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
+        @ini_set('zlib.output_compression', '1');
+        @ini_set('zlib.output_compression_level', '6');
+    }
+}
+
+// Set public cache limiter on public-facing pages to prevent restrictive no-store headers
+if (strpos($_SERVER['REQUEST_URI'] ?? '', '/admin') === false && !headers_sent()) {
+    @session_cache_limiter('public');
+    @session_cache_expire(1440);
+}
+
 @session_start();
 if (!headers_sent()) {
     @header("Permissions-Policy: unload=*");

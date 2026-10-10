@@ -67,17 +67,27 @@ $bu_robots_tag = ($bu_seo && !empty($bu_seo['robots_tag']) && $bu_seo['robots_ta
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 <link rel="dns-prefetch" href="https://code.jquery.com">
-<!-- Modern Google Fonts with display=swap -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
-<!-- Font Awesome Icons (Instant Local Loading with 4.7.0 and 6.5.1 CDN) -->
+
+<!-- Preload Largest Contentful Paint (LCP) Hero Poster Image -->
+<?php if ($bu_route === 'index.php' || empty($bu_route)): ?>
+<link rel="preload" as="image" href="<?php echo URL_ROOT;?>new-media/image/campus-aerial.webp" type="image/webp" fetchpriority="high">
+<?php endif; ?>
+
+<!-- Modern Google Fonts with display=swap (Non-render-blocking) -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap"></noscript>
+
+<!-- Critical Local Core CSS (Bootstrap, Core Icons & Global System) -->
+<link rel="stylesheet" href="<?php echo URL_CSS;?>bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo URL_CSS;?>font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link href="<?php echo URL_CSS;?>bootstrap.min.css" rel="stylesheet">
-<!-- BU Global Page Redesign CSS -->
 <?php 
 $bu_css_ver = @filemtime(__DIR__ . '/css/bu-global.css') ?: '20260926';
 ?>
 <link href="<?php echo URL_CSS;?>bu-global.css?v=<?php echo $bu_css_ver; ?>" rel="stylesheet">
+<!-- Secondary FontAwesome 6 CDN (Non-render-blocking) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
 
 <style>
 /* ============================================================
@@ -1763,41 +1773,36 @@ body { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 </style>
 
 
-	<!-- Full Calender CSS -->
-	<!-- Owl Carousel CSS -->
-	<link href="<?php echo URL_CSS;?>owl.carousel.css" rel="stylesheet">
-	<!-- Pretty Photo CSS -->
-	<link href="<?php echo URL_CSS;?>prettyPhoto.css" rel="stylesheet">
-	<!-- Bx-Slider StyleSheet CSS -->
-    <!-- DL Menu CSS -->
-    <link href="<?php echo URL_JS;?>dl-menu/component.css" rel="stylesheet">
-	<link href="<?php echo URL_SVG;?>style.css" rel="stylesheet">
-	<!-- Widget CSS -->
-	<link href="<?php echo URL_CSS;?>widget.css" rel="stylesheet">
-	<!-- Typography CSS -->
-	<link href="<?php echo URL_CSS;?>typography.css" rel="stylesheet">
-	<!-- Shortcodes CSS -->
-	<link href="<?php echo URL_CSS;?>shortcodes.css" rel="stylesheet">
-	<!-- Custom Main StyleSheet CSS -->
+	<!-- Core Responsive & Main Stylesheets -->
 	<link href="<?php echo URL_ROOT;?>style.css" rel="stylesheet">
-	<link href="<?php echo URL_CSS;?>validation.css" rel="stylesheet">
-	<!-- Color CSS -->
-	<link href="<?php echo URL_CSS;?>color.css" rel="stylesheet">
-	<!-- Responsive CSS -->
 	<link href="<?php echo URL_CSS;?>responsive.css" rel="stylesheet">
-	<!-- BU Comprehensive Responsive CSS (All Devices) -->
 	<?php $bu_resp_ver = @filemtime(__DIR__ . '/css/bu-responsive.css') ?: '20260926'; ?>
 	<link href="<?php echo URL_CSS;?>bu-responsive.css?v=<?php echo $bu_resp_ver; ?>" rel="stylesheet">
-	<!-- SELECT MENU -->
-	<link href="<?php echo URL_CSS;?>breaking-news-ticker.css" rel="stylesheet">
-	<!-- SIDE MENU -->
-	<link rel="stylesheet" href="<?php echo URL_CSS;?>jquery.sidr.dark.css">
-      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="<?php echo URL_JS;?>jquery.js"></script> 
-<!-- OWL Carousel CDN (for hero slider) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+	<!-- Defer jQuery to unblock browser parser & eliminate render-blocking JS -->
+	<script src="<?php echo URL_JS;?>jquery.js" defer></script> 
+
+	<!-- Non-Critical Plugin Styles (Asynchronous Loading) -->
+	<link href="<?php echo URL_CSS;?>owl.carousel.css" rel="stylesheet" media="print" onload="this.media='all'">
+	<link href="<?php echo URL_CSS;?>prettyPhoto.css" rel="stylesheet" media="print" onload="this.media='all'">
+	<link href="<?php echo URL_JS;?>dl-menu/component.css" rel="stylesheet" media="print" onload="this.media='all'">
+	<link href="<?php echo URL_SVG;?>style.css" rel="stylesheet" media="print" onload="this.media='all'">
+	<link href="<?php echo URL_CSS;?>widget.css" rel="stylesheet" media="print" onload="this.media='all'">
+	<link href="<?php echo URL_CSS;?>typography.css" rel="stylesheet" media="print" onload="this.media='all'">
+	<link href="<?php echo URL_CSS;?>shortcodes.css" rel="stylesheet" media="print" onload="this.media='all'">
+	<link href="<?php echo URL_CSS;?>validation.css" rel="stylesheet" media="print" onload="this.media='all'">
+	<link href="<?php echo URL_CSS;?>color.css" rel="stylesheet" media="print" onload="this.media='all'">
+	<link href="<?php echo URL_CSS;?>breaking-news-ticker.css" rel="stylesheet" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="<?php echo URL_CSS;?>jquery.sidr.dark.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" media="print" onload="this.media='all'">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" media="print" onload="this.media='all'">
+	<noscript>
+		<link href="<?php echo URL_CSS;?>owl.carousel.css" rel="stylesheet">
+		<link href="<?php echo URL_CSS;?>breaking-news-ticker.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+	</noscript>
 
     <style>
       marquee{

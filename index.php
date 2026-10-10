@@ -34,14 +34,32 @@
 
 
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-LLCX3DL60K"></script>
+<!-- Global site tag (gtag.js) - Google Analytics (Optimized Idle Loading) -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-LLCX3DL60K');
+
+  (function() {
+    var loaded = false;
+    function loadGA() {
+      if (loaded) return;
+      loaded = true;
+      var g = document.createElement('script');
+      g.async = true;
+      g.src = 'https://www.googletagmanager.com/gtag/js?id=G-LLCX3DL60K';
+      document.head.appendChild(g);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(function() { setTimeout(loadGA, 1500); }, { timeout: 3000 });
+    } else {
+      setTimeout(loadGA, 2000);
+    }
+    ['scroll', 'mousemove', 'touchstart', 'click'].forEach(function(evt) {
+      window.addEventListener(evt, loadGA, { once: true, passive: true });
+    });
+  })();
 </script>
 
 <script type="application/ld+json">

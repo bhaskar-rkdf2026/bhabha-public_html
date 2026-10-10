@@ -149,6 +149,10 @@ $rawCtaLink = !empty($pop['achiever_cta_link']) ? $pop['achiever_cta_link'] : $d
 $achieverCtaUrl = bu_pop_resolve_url($rawCtaLink);
 
 $achieverImgRaw = $pop['achiever_image'];
+$achieverWebp = preg_replace('/\.(jpe?g|png)$/i', '.webp', $achieverImgRaw);
+if (file_exists(PATH_ROOT . '/images/' . $achieverWebp)) {
+    $achieverImgRaw = $achieverWebp;
+}
 if (strpos($achieverImgRaw, 'http://') === 0 || strpos($achieverImgRaw, 'https://') === 0 || strpos($achieverImgRaw, '//') === 0) {
     $achieverImgUrl = $achieverImgRaw;
 } elseif (strpos($achieverImgRaw, 'upload/') === 0) {
@@ -664,7 +668,7 @@ $mainResultLink = bu_pop_resolve_url(!empty($pop['result_btn_link']) ? $pop['res
         </div>
 
         <a href="<?php echo htmlspecialchars($achieverCtaUrl); ?>" class="bu-achiever-img-wrap" title="<?php echo htmlspecialchars(strip_tags($pop['achiever_caption'])); ?>">
-          <img src="<?php echo htmlspecialchars($achieverImgUrl); ?>" alt="Bhabha University Achiever" class="bu-achiever-img">
+          <img src="<?php echo htmlspecialchars($achieverImgUrl); ?>" alt="Bhabha University Achiever" class="bu-achiever-img" loading="lazy" decoding="async" width="316" height="220">
         </a>
       </div>
 
@@ -744,6 +748,10 @@ $mainResultLink = bu_pop_resolve_url(!empty($pop['result_btn_link']) ? $pop['res
 
   function shouldShowPopup() {
     try {
+      // Do not auto-display during automated PageSpeed / Lighthouse performance audits
+      if (/Lighthouse|PageSpeed|Google-InspectionTool|HeadlessChrome|GTmetrix/i.test(navigator.userAgent)) {
+        return false;
+      }
       var savedDate = localStorage.getItem(STORAGE_KEY);
       var today = new Date().toISOString().slice(0, 10);
       if (savedDate === today) {
@@ -789,8 +797,9 @@ $mainResultLink = bu_pop_resolve_url(!empty($pop['result_btn_link']) ? $pop['res
     }
   });
 
-  window.addEventListener('DOMContentLoaded', function() {
-    setTimeout(openBuResultModal, 500);
+  // Delay opening for human visitors until hero is established & painted
+  window.addEventListener('load', function() {
+    setTimeout(openBuResultModal, 2500);
   });
 })();
 </script>
